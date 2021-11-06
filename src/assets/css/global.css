@@ -4,8 +4,9 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     height: 100vh;
+    min-width: 750px;
 }
-
+/* 当行文字超出隐藏 */
 .text-hidden {
     overflow: hidden;
     white-space: nowrap;
@@ -26,7 +27,7 @@
     height: 9px;
     background-color: #e13e3e;
 }
-
+/* 自定义输入框 */
 .el-input__inner{
     height: 36px;
     background-color: #e13e3e;
@@ -34,9 +35,34 @@
     border:0;
     color: #fffafa;
 }
+/* 自定义输入框前置图标样式 */
 .el-input__prefix{
     color: #fffafa;
 }
 .font-bold{
     font-weight: bold;
+}
+/* 自定义menu样式 */
+.el-menu-item{
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 3px;
+}
+.el-menu-item.is-active{
+    color: #313131;
+    font-size: 17px;
+    background-color: #f6f6f7;
+    font-weight: bold;
+}
+.el-menu-item:focus, .el-menu-item:hover{
+    background-color: #f6f6f7;
+}
+.font-12 {
+    font-size: 12px;
+}
+.font-14{
+    font-size: 14px;
+}
+.font-16{
+    font-size: 16px;
 }

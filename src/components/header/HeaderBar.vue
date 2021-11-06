@@ -38,7 +38,7 @@ export default {
 
 <style lang="less" scoped>
 .header-bar {
-  height: 60px;
+  height: 100%;
   display: flex;
   align-items: center;
 }

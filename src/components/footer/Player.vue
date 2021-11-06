@@ -6,8 +6,8 @@
       <img v-if="imgInfo.imgUrl" :src="imgInfo.imgUrl" alt="" />
       <i v-else class="iconfont icon-wangyiyun1"></i>
       <ul class="au-info">
-        <li>{{ imgInfo.name }}</li>
-        <li>{{ imgInfo.author }}</li>
+        <li class="font-14">{{ imgInfo.name }}</li>
+        <li class="font-12">{{ imgInfo.author }}</li>
       </ul>
     </div>
     <!-- 播放器 -->
@@ -87,8 +87,8 @@ export default {
       imgInfo: {
         //img区域信息，图片，歌名，歌手
         imgUrl: '',
-        name: '111',
-        author: '111'
+        name: '未知歌名',
+        author: '未知歌手名'
       },
       curren: 0
     }
@@ -232,7 +232,9 @@ export default {
 .player {
   display: flex;
   margin: 0 auto;
+  height: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 .song-info {
   display: flex;
@@ -248,7 +250,7 @@ export default {
   }
   .au-info {
     height: 40px;
-    margin: 10px;
+    margin:  10px;
     line-height: 20px;
   }
 }
@@ -256,7 +258,7 @@ export default {
   width: 300px;
   margin: 0 auto;
   display: flex;
-  line-height: 30px;
+  line-height: 1;
   justify-content: space-around;
   .iconfont {
     font-size: 18px;
@@ -266,7 +268,7 @@ export default {
   }
 }
 .time-progress {
-  line-height: 30px;
+  line-height: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -290,7 +292,7 @@ export default {
   .volume-slider {
     display: none;
     position: absolute;
-    top: -210px;
+    top: -220px;
     left: -3px;
     background-color: #ffffff;
     padding: 10px 0;

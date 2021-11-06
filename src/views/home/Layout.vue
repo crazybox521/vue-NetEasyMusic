@@ -1,5 +1,5 @@
 <template>
-  <el-container class="home-container">
+  <el-container class="layout-container">
     <!-- 头部 -->
     <el-header>
       <HeaderBar></HeaderBar>
@@ -9,7 +9,7 @@
       <el-aside width="200px">
         <el-menu default-active="1" @select="handleSelect">
           <el-menu-item
-            :index="index + 1+''"
+            :index="index + 1 + ''"
             v-for="(item, index) in menuList"
             :key="index"
           >
@@ -99,31 +99,28 @@ export default {
 @import '../../assets/less/lessConfig.less';
 .el-header,
 .el-footer {
-  line-height: 60px;
+  height: 9vh !important;
 }
 .el-header {
   background-color: @headRed;
   color: @bgWhite;
 }
 .el-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   background-color: @bgWhite;
-  outline: 1px solid @border;
+}
+.el-aside{
+  padding-top: 16px;
 }
 .el-main {
-  background-color: #e9eef3;
+  background-color: #ffffff;
   color: #333;
   padding: 0;
-  height: 100%;
+  height: 82vh;
   margin: 0;
   overflow-y: scroll;
 }
 
-.home-container {
-  margin-bottom: 40px;
+.layout-container {
   height: 100%;
 }
 
