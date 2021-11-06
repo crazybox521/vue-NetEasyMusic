@@ -1,0 +1,42 @@
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    height: 100vh;
+}
+
+.text-hidden {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 自定义滑块样式 */
+.el-slider__bar{
+    background-color: #ec4141;
+    height: 3px
+}
+.el-slider__runway{
+    height: 3px;
+}
+.el-slider__button{
+    border:0;
+    width: 9px;
+    height: 9px;
+    background-color: #e13e3e;
+}
+
+.el-input__inner{
+    height: 36px;
+    background-color: #e13e3e;
+    border-radius: 16px;
+    border:0;
+    color: #fffafa;
+}
+.el-input__prefix{
+    color: #fffafa;
+}
+.font-bold{
+    font-weight: bold;
+}

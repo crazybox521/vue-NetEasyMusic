@@ -7,7 +7,13 @@ const state = {
     musicList: [],
     isPlay: false,
     currenMusicId: 0,
-    currenIndex:0
+    currenIndex:0,
+    drawerMusicList:false,
+    currenMusicInfo:{
+        totalTime:0,
+        currenTime:0
+    },
+    keywords:''
 }
 
 const mutations = {
@@ -22,6 +28,18 @@ const mutations = {
     },
     setCurrenIndex(state, payload){
         state.currenIndex =payload
+    },
+    setDrawerMusicList(state,payload){
+        state.drawerMusicList=payload
+    },
+    setTotalTime(state,payload){
+        state.currenMusicInfo.totalTime=payload
+    },
+    setCurrenTime(state,payload){
+        state.currenMusicInfo.currenTime=payload
+    },
+    setKeywords(state,payload){
+        state.keywords =payload
     }
 }
 
