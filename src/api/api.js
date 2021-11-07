@@ -32,9 +32,36 @@ export const checkMusic = () => {
 
 }
 
+/* 获取音乐url 
+ * params
+ * id
+ */
 export const getMusicUrl = (id) => {
     return axios.get('/song/url', {
         params: {
+            id
+        }
+    })
+}
+
+/* 获取轮播图 */
+export const getBanner = () => {
+    return axios.get('/banner')
+}
+
+/* 获取推荐歌单 */
+export const getPersonalized = (limit) => {
+    return axios.get('/personalized', {
+        params: {
+            limit
+        }
+    })
+}
+
+/* 获取歌单详情 */
+export const getPlayListDetail=(id) => {
+    return axios.get('/playlist/detail',{
+        params:{
             id
         }
     })

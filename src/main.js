@@ -17,6 +17,15 @@ Vue.filter('timeFormat', function (time) {
   return minutes + ':' + seconds
 })
 
+Vue.filter('dateFormat', function (time) {
+  const t = new Date(time)
+  let year = t.getFullYear()
+  let mouth = t.getMonth() + 1
+  let day = t.getDay()
+  mouth = mouth < 10 ? '0' + mouth : mouth
+  day = day < 10 ? '0' + day : day
+  return year + '-' + mouth + '-' + day
+})
 new Vue({
   router,
   store,

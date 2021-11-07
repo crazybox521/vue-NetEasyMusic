@@ -4,8 +4,27 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     height: 100vh;
-    min-width: 750px;
+    min-width: 1200px;
 }
+
+@media screen and (max-width:750px) {
+    #app {
+        min-width: none;
+    }
+}
+
+.img {
+    width: 100%;
+}
+
+.img-h {
+    height: 100%;
+}
+
+.img-radius-4 {
+    border-radius: 4px;
+}
+
 /* 当行文字超出隐藏 */
 .text-hidden {
     overflow: hidden;
@@ -14,55 +33,150 @@
 }
 
 /* 自定义滑块样式 */
-.el-slider__bar{
+.el-slider__bar {
     background-color: #ec4141;
     height: 3px
 }
-.el-slider__runway{
+
+.el-slider__runway {
     height: 3px;
 }
-.el-slider__button{
-    border:0;
+
+.el-slider__button {
+    border: 0;
     width: 9px;
     height: 9px;
     background-color: #e13e3e;
 }
-/* 自定义输入框 */
-.el-input__inner{
+
+/* 自定义头部输入框 */
+.header-bar .el-input__inner {
     height: 36px;
+    line-height: 36px;
     background-color: #e13e3e;
     border-radius: 16px;
-    border:0;
+    border: 0;
     color: #fffafa;
 }
-/* 自定义输入框前置图标样式 */
-.el-input__prefix{
+
+/* 自定义头部输入框前置图标样式 */
+.header-bar .el-input__icon {
     color: #fffafa;
+    line-height: 36px;
 }
-.font-bold{
+
+/* 自定义歌单页搜索框 */
+.detail-search .el-input__inner {
+    height: 26px;
+    line-height: 26px;
+    color: #676767;
+    background-color: #f7f7f7;
+    border-radius: 16px;
+    border: 0;
+}
+
+/* 自定义歌单页搜索框图标居中 */
+.detail-search .el-input__icon {
+    line-height: 26px;
+    color: #3e3e3e;
+}
+
+
+.font-bold {
     font-weight: bold;
 }
+
 /* 自定义menu样式 */
-.el-menu-item{
+.el-menu-item {
     height: 40px;
     line-height: 40px;
     margin-bottom: 3px;
 }
-.el-menu-item.is-active{
+
+.el-menu-item.is-active {
     color: #313131;
     font-size: 17px;
     background-color: #f6f6f7;
     font-weight: bold;
 }
-.el-menu-item:focus, .el-menu-item:hover{
+
+.el-menu-item:focus,
+.el-menu-item:hover {
     background-color: #f6f6f7;
 }
+
 .font-12 {
     font-size: 12px;
 }
-.font-14{
+
+.font-14 {
     font-size: 14px;
 }
-.font-16{
+
+.font-16 {
     font-size: 16px;
+}
+
+.font-18 {
+    font-size: 18px;
+}
+
+.font-20 {
+    font-size: 20px;
+}
+
+.mleft-12 {
+    margin-left: 12px;
+}
+
+.mtop-10 {
+    margin-top: 10px;
+}
+
+/* 滚动条宽度 */
+::-webkit-scrollbar {
+    /* 对垂直有效 */
+    width: 8px;
+    /* 水平宽度 */
+    height: 8px;
+}
+
+/* 滚动条内滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #E8E8E8;
+}
+
+.right {
+    float: right;
+}
+
+/* flex居中加空隙中间  */
+.flex-around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* 设置鼠标处于element表格上的状态 */
+.el-table {
+    cursor: default;
+}
+
+.margin-center {
+    margin: 0 auto;
+}
+
+.w-100 {
+    width: 100px;
+}
+
+.w-150 {
+    width: 150px;
+}
+
+/* div制作的线条 */
+.div-line {
+    border-top: 1px solid #e0e0e0;
 }

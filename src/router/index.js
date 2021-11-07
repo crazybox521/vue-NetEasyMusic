@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Layout from '../views/home/Layout.vue'
 import HomePage from '../views/home/HomePage.vue'
-import SongList from '../views/search/SongsList.vue'
+import SearchList from '../views/search/SearchList.vue'
+import PlayListDetail from '../views/playlist/PlayListDetail.vue'
 Vue.use(VueRouter)
 const routes =[
     {
@@ -10,11 +11,14 @@ const routes =[
         component:Layout,
         children:[
             {
-                path:'songlist',
-                component:SongList
+                path:'search',
+                component:SearchList
             },{
                 path:'homepage',
                 component:HomePage
+            },{
+                path:'playlistdetail/:id',
+                component:PlayListDetail
             }
         ]
     }

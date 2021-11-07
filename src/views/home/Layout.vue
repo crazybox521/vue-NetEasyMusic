@@ -7,11 +7,11 @@
     <el-container>
       <!-- 左侧导航 -->
       <el-aside width="200px">
-        <el-menu default-active="1" @select="handleSelect">
+        <el-menu router default-active="/homepage" @select="handleSelect">
           <el-menu-item
-            :index="index + 1 + ''"
-            v-for="(item, index) in menuList"
-            :key="index"
+            :index="item.path"
+            v-for="item in menuList"
+            :key="item.path"
           >
             <span slot="title">{{ item.title }}</span>
           </el-menu-item>
@@ -19,7 +19,9 @@
       </el-aside>
       <!-- 主体 -->
       <el-main>
-        <router-view></router-view>
+        <div class="view-mian">
+          <router-view></router-view>
+        </div>
       </el-main>
       <!-- 抽屉显示播放列表 -->
       <el-drawer
@@ -27,12 +29,19 @@
         :visible.sync="drawerMusicList"
         :before-close="handMusicListClose"
       >
+        <div class="flex-around">
+          <div class="font-12 mleft-12">总 {{ length }} 首</div>
+          <div class="font-14">清空列表</div>
+        </div>
+
+        <el-divider></el-divider>
         <el-table
           :data="musicList"
           style="width: 100%"
           size="medium"
           stripe
           @row-dblclick="playMusic"
+          v-if="musicList.length != 0"
         >
           <el-table-column type="index" width="50"> </el-table-column>
           <el-table-column prop="name" label="音乐标题"> </el-table-column>
@@ -47,6 +56,7 @@
     </el-container>
     <el-footer>
       <!-- 底部播放器 -->
+      <div class="div-line"></div>
       <FooterBar></FooterBar>
     </el-footer>
   </el-container>
@@ -68,7 +78,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['musicList', 'drawerMusicList'])
+    ...mapState(['musicList', 'drawerMusicList']),
+    length(){
+      return this.musicList.length
+    }
   },
   methods: {
     /* 导航 */
@@ -108,7 +121,7 @@ export default {
 .el-footer {
   background-color: @bgWhite;
 }
-.el-aside{
+.el-aside {
   padding-top: 16px;
 }
 .el-main {
@@ -118,13 +131,12 @@ export default {
   height: 82vh;
   margin: 0;
   overflow-y: scroll;
+  .view-mian {
+    margin: 20px auto;
+    max-width: 1300px;
+  }
 }
-
 .layout-container {
   height: 100%;
-}
-
-.el-table {
-  cursor: default;
 }
 </style>

@@ -1,6 +1,11 @@
 <template>
   <div class="header-bar">
-    <img style="height: 100%" src="../../assets/img/logo.png" alt="" />
+    <img
+      @click="toHomePage"
+      style="height: 100%"
+      src="../../assets/img/logo.png"
+      alt=""
+    />
     <div class="btn-history">
       <i class="iconfont icon-arrow-left-bold"></i>
       <i class="iconfont icon-arrow-right"></i>
@@ -27,10 +32,12 @@ export default {
   },
   methods: {
     search() {
-        console.log(this.$route)
-        if(this.$route.path!='/songlist')
-        this.$router.push('/songlist')
-        this.$store.commit('setKeywords',this.keywords)
+      if(this.keywords=='') return
+      if (this.$route.path != '/search') this.$router.push('/search')
+      this.$store.commit('setKeywords', this.keywords)
+    },
+    toHomePage() {
+      if (this.$route.path != '/homepage') this.$router.push('/homepage')
     }
   }
 }

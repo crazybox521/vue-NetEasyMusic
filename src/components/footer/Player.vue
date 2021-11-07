@@ -214,7 +214,6 @@ export default {
           100
         percent = Math.floor(percent)
         this.curren = percent
-        console.log('percent', percent)
       }
     },
     /* 拖动进度条的回调，手动改变播放进度 */
@@ -238,8 +237,9 @@ export default {
 }
 .song-info {
   display: flex;
+  align-items: center;
   img {
-    margin: 5px 0;
+    margin: 0 10px;
     height: 50px;
     width: 50px;
     border-radius: 4px;
@@ -250,7 +250,7 @@ export default {
   }
   .au-info {
     height: 40px;
-    margin:  10px;
+    margin: 10px;
     line-height: 20px;
   }
 }
@@ -259,6 +259,7 @@ export default {
   margin: 0 auto;
   display: flex;
   line-height: 1;
+  padding-top: 6px;
   justify-content: space-around;
   .iconfont {
     font-size: 18px;

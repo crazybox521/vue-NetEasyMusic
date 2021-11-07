@@ -1,35 +1,35 @@
 
 /* 左侧导航信息 */
 export default [{
-        path: '',
+        path: '/homepage',
         title: '发现音乐'
     },
     {
-        path: '',
+        path: '/bo',
         title: '博客'
     },
     {
-        path: '',
+        path: '/video',
         title: '视频'
     },
     {
-        path: '',
+        path: '/frends',
         title: '朋友'
     },
     {
-        path: '',
+        path: '/zhibo',
         title: '直播'
     },
     {
-        path: '',
+        path: '/FM',
         title: '私人FM'
     },
     {
-        path: '',
+        path: '/zuijin',
         title: '最近播放'
     },
     {
-        path: '',
+        path: '/like',
         title: '我喜欢的音乐'
     }
 ]
