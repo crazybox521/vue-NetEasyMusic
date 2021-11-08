@@ -1,3 +1,10 @@
+/* 
+ *author:crazybox521
+ *time:2021/11/1
+ *
+ *
+ *
+*/
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -13,6 +20,7 @@
     }
 }
 
+/* 全局图片填满样式 */
 .img {
     width: 100%;
 }
@@ -23,6 +31,10 @@
 
 .img-radius-4 {
     border-radius: 4px;
+}
+
+.circle {
+    border-radius: 50%;
 }
 
 /* 当行文字超出隐藏 */
@@ -105,6 +117,7 @@
     background-color: #f6f6f7;
 }
 
+/* 全局字体大小 */
 .font-12 {
     font-size: 12px;
 }
@@ -125,15 +138,97 @@
     font-size: 20px;
 }
 
+/* 全局margin间距 */
 .mleft-12 {
     margin-left: 12px;
+}
+
+.mleft-20 {
+    margin-left: 20px;
+}
+
+.mleft-30 {
+    margin-left: 30px;
+}
+
+.mleft-200 {
+    margin-left: 200px;
+}
+
+.mright-10 {
+    margin-right: 10px;
+}
+
+.mright-20 {
+    margin-right: 20px;
 }
 
 .mtop-10 {
     margin-top: 10px;
 }
 
-/* 滚动条宽度 */
+.mtop-60 {
+    margin-top: 60px;
+}
+
+/* 全局宽度 */
+.w-100 {
+    width: 100px;
+}
+
+.w-150 {
+    width: 150px;
+}
+
+.w-200 {
+    width: 200px;
+}
+
+.w-300 {
+    width: 300px;
+}
+
+/* 全局利用margin水平居中 */
+.margin-center {
+    margin: 0 auto;
+}
+
+
+/* 全局鼠标样式 */
+.pointer {
+    cursor: pointer;
+}
+
+.default-cursor {
+    cursor: default;
+}
+
+/* 没有边框的按钮 */
+.no-btn {
+    outline: 0;
+    border: 0;
+    background-color: #ffffff;
+    color: #676767;
+}
+
+.no-btn:hover {
+    color: #373737;
+}
+
+/* 全局浮动样式 */
+.right {
+    float: right;
+}
+
+/* 清除边距塌陷和浮动 */
+.clearfix::after,
+.clearfix::before {
+    display: table;
+    content: "";
+    clear: both;
+}
+
+/* 全局滚动条宽度 */
 ::-webkit-scrollbar {
     /* 对垂直有效 */
     width: 8px;
@@ -148,11 +243,7 @@
     background-color: #E8E8E8;
 }
 
-.right {
-    float: right;
-}
-
-/* flex居中加空隙中间  */
+/* 全局flex垂直居中加空隙分布中间  */
 .flex-around {
     display: flex;
     justify-content: space-around;
@@ -162,18 +253,6 @@
 /* 设置鼠标处于element表格上的状态 */
 .el-table {
     cursor: default;
-}
-
-.margin-center {
-    margin: 0 auto;
-}
-
-.w-100 {
-    width: 100px;
-}
-
-.w-150 {
-    width: 150px;
 }
 
 /* div制作的线条 */

@@ -259,13 +259,27 @@ export default {
   margin: 0 auto;
   display: flex;
   line-height: 1;
-  padding-top: 6px;
+  margin-top: 6px;
   justify-content: space-around;
   .iconfont {
     font-size: 18px;
   }
-  li:nth-child(3) .iconfont {
-    font-size: 20px;
+  li {
+    font-size: 14px;
+    line-height: 32px;
+    &:nth-child(3) {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      background-color: #f4f4f4;
+      .iconfont{
+        margin-left: 9px;
+        font-size: 14px;
+      }
+    }
+    &:nth-child(3):hover {
+      background-color: #e5e5e5;
+    }
   }
 }
 .time-progress {
@@ -275,7 +289,7 @@ export default {
   align-items: center;
 }
 .timeSlider {
-  width: 300px;
+  width: 460px;
   margin: 0 10px;
 }
 .btn-other {

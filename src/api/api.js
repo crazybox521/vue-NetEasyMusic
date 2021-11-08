@@ -59,10 +59,24 @@ export const getPersonalized = (limit) => {
 }
 
 /* 获取歌单详情 */
-export const getPlayListDetail=(id) => {
-    return axios.get('/playlist/detail',{
-        params:{
+export const getPlayListDetail = (id) => {
+    return axios.get('/playlist/detail', {
+        params: {
             id
         }
     })
+}
+
+/* 获取音乐详情 */
+export const getMusicListByIds = (ids) => {
+    return axios.get('/song/detail', {
+        params: {
+            ids
+        }
+    })
+}
+
+/* 获取榜单 */
+export const getToplist=() => {
+    return axios.get('/toplist')
 }

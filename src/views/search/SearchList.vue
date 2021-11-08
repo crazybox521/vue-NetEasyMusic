@@ -4,7 +4,7 @@
     <div class="font-bold">找到 {{ total }} 首单曲</div>
     <el-skeleton v-if="isLoading" :rows="16" animated />
     <MusicList v-else :list="seachList"></MusicList>
-    <el-empty v-if="!total" :description="desInfo"></el-empty>
+    <el-empty v-if="!isLoading" :description="desInfo"></el-empty>
     
   </div>
 </template>

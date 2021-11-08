@@ -1,4 +1,5 @@
 <template>
+<!-- 头部工具栏区域组件 -->
   <div class="header-bar">
     <img
       @click="toHomePage"
@@ -7,8 +8,12 @@
       alt=""
     />
     <div class="btn-history">
-      <i class="iconfont icon-arrow-left-bold"></i>
-      <i class="iconfont icon-arrow-right"></i>
+      <button @click="goTo(-1)" class="btn-circle">
+        <i class="iconfont icon-arrow-left-bold"></i>
+      </button>
+      <button @click="goTo(1)" class="btn-circle">
+        <i class="iconfont icon-arrow-right"></i>
+      </button>
     </div>
     <div class="search-input">
       <el-input
@@ -32,12 +37,15 @@ export default {
   },
   methods: {
     search() {
-      if(this.keywords=='') return
+      if (this.keywords == '') return
       if (this.$route.path != '/search') this.$router.push('/search')
       this.$store.commit('setKeywords', this.keywords)
     },
     toHomePage() {
       if (this.$route.path != '/homepage') this.$router.push('/homepage')
+    },
+    goTo(step) {
+      this.$router.go(step)
     }
   }
 }
@@ -51,8 +59,18 @@ export default {
 }
 .btn-history {
   margin-left: 100px;
-  .iconfont {
+  /* 圆按钮 */
+  .btn-circle {
+    display: inline-block;
+    height: 26px;
+    width: 26px;
+    outline: 0;
+    border: 0;
+    background-color: #e13e3e;
+    color: #ffffff;
     margin-right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
   }
 }
 .search-input {

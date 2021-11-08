@@ -13,5 +13,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.footer-bar{
+  height: 99%;
+}
 </style>

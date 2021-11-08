@@ -9,16 +9,18 @@
       <!-- 歌单信息 -->
       <div class="detail-desc-info">
         <div class="info-title">
-          <el-tag type="danger">歌单</el-tag>
+          <Tag text="歌单"></Tag>
           <span class="mleft-12">{{ info.name }}</span>
         </div>
         <div class="author">
           <div class="author-img">
-            <img class="img-h" :src="info.creator.avatarUrl" alt="" />
+            <img class="img-h circle" :src="info.creator.avatarUrl" />
           </div>
           <div class="author-info">
             <span class="mleft-12 font-12">{{ info.creator.nickname }}</span>
-            <span class="mleft-12 font-12">{{ info.createTime |dateFormat }}</span>
+            <span class="mleft-12 font-12">{{
+              info.createTime | dateFormat
+            }}</span>
           </div>
         </div>
         <!-- 歌单按钮 -->
@@ -26,9 +28,11 @@
           <el-button type="danger" @click="playAll" round>播放全部</el-button>
           <el-button round>收藏({{ info.subscribedCount }})</el-button>
           <el-button round>分享({{ info.shareCount }})</el-button>
-          <el-button round>下载全部</el-button>
+          <el-button v-show="isShowMoreBtn" type="danger" round @click="loadCompletePlayList"
+            >加载完整歌单</el-button
+          >
         </ul>
-        <div class="detail-tag font-14">
+        <div class="detail-tag font-14" v-if="info.tags.length!==0">
           <span>标签 ：</span>
           <span v-for="(val, index) in info.tags" :key="index">{{ val }}</span>
         </div>
@@ -68,32 +72,40 @@
       </div>
     </div>
     <MusicList ref="listRef" :list="list"></MusicList>
-    <div v-if="!isLogin" class="margin-center w-150 mtop-10">
-      登录查看更多单曲
+    <div v-if="isShowMoreBtn " class="margin-center w-300 mtop-10">
+      <span>登录</span>
+      <span>或</span>
+      <span>点击加载完整歌单</span>
+      <span>查看更多单曲</span>
     </div>
   </div>
 </template>
 
 <script>
 import MusicList from '../../components/list/MusicList'
-import { getPlayListDetail } from '../../api/api'
+import Tag from '../../components/simple/Tag.vue'
+import { getPlayListDetail, getMusicListByIds } from '../../api/api'
 export default {
   components: {
-    MusicList
+    MusicList,Tag
   },
   data() {
     return {
       info: {},
       isLogin: false,
-      key: ''
+      key: '',
+      playList: []
     }
   },
   computed: {
     list() {
       let key = this.key.trim()
-      return this.info.tracks.filter((item) => {
+      return this.playList.filter((item) => {
         return item.name.match(key)
       })
+    },
+    isShowMoreBtn(){
+      return this.playList.length<this.info.trackCount
     }
   },
   created() {
@@ -106,11 +118,24 @@ export default {
       const { data: res } = await getPlayListDetail(id)
       if (res.code !== 200) return
       this.info = res.playlist
-      console.log(this.info.creator.avatarUrl)
+      this.playList = res.playlist.tracks
     },
     playAll() {
       /* 访问音乐列表组件的方法 */
       this.$refs.listRef.playMusicAll()
+    },
+    /* 加载完整歌单 */
+    async loadCompletePlayList() {
+      let idArr = []
+      this.info.trackIds.forEach((item) => {
+        idArr.push(item.id)
+      })
+      if (idArr.length === 0) return
+      console.log(idArr)
+      const { data: res } = await getMusicListByIds(idArr.join(','))
+      console.log('111')
+      if (res.code !== 200) return
+      this.playList = res.songs
     }
   }
 }

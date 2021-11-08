@@ -7,7 +7,7 @@
     <el-container>
       <!-- 左侧导航 -->
       <el-aside width="200px">
-        <el-menu router default-active="/homepage" @select="handleSelect">
+        <el-menu :default-active="activeMenu" @select="handleSelect">
           <el-menu-item
             :index="item.path"
             v-for="item in menuList"
@@ -74,18 +74,26 @@ export default {
   },
   data() {
     return {
-      menuList
+      menuList,
+      activeMenu: '/homepage'
     }
   },
   computed: {
     ...mapState(['musicList', 'drawerMusicList']),
-    length(){
+    length() {
       return this.musicList.length
     }
   },
   methods: {
     /* 导航 */
     handleSelect(key, keyPath) {
+      if (this.$route.path == key) return
+      if (key !== '/homepage') {
+        this.activeMenu = '/homepage'
+        console.log(this.activeMenu)
+        return
+      }
+      this.$router.push(key)
       console.log(key, keyPath)
     },
     handMusicListClose() {
@@ -110,15 +118,13 @@ export default {
 
 <style lang="less" scoped>
 @import '../../assets/less/lessConfig.less';
-.el-header,
-.el-footer {
-  height: 9vh !important;
-}
 .el-header {
+  height: 9vh !important;
   background-color: @headRed;
   color: @bgWhite;
 }
 .el-footer {
+  height: 11vh !important;
   background-color: @bgWhite;
 }
 .el-aside {
@@ -128,7 +134,7 @@ export default {
   background-color: #ffffff;
   color: #333;
   padding: 0;
-  height: 82vh;
+  height: 80vh;
   margin: 0;
   overflow-y: scroll;
   .view-mian {
