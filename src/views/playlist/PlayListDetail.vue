@@ -26,8 +26,8 @@
         <!-- 歌单按钮 -->
         <ul class="info-btn">
           <el-button type="danger" @click="playAll" round>播放全部</el-button>
-          <el-button round>收藏({{ info.subscribedCount }})</el-button>
-          <el-button round>分享({{ info.shareCount }})</el-button>
+          <el-button round>收藏({{ info.subscribedCount | countFormat }})</el-button>
+          <el-button round>分享({{ info.shareCount | countFormat }})</el-button>
           <el-button v-show="isShowMoreBtn" type="danger" round @click="loadCompletePlayList"
             >加载完整歌单</el-button
           >
@@ -38,7 +38,7 @@
         </div>
         <div class="num-info font-14">
           <span>歌曲 ：{{ info.trackCount }}</span>
-          <span class="mleft-12">播放 ：{{ info.playCount / 10000 }}万</span>
+          <span class="mleft-12">播放 ：{{ info.playCount | countFormat }}</span>
         </div>
         <!-- 歌单描述 -->
         <div class="font-14">
@@ -99,14 +99,14 @@ export default {
   },
   computed: {
     list() {
-      let key = this.key.trim()
+      let reg = new RegExp(this.key.trim(),'ig')
       return this.playList.filter((item) => {
-        return item.name.match(key)
+        return item.name.match(reg)
       })
     },
     isShowMoreBtn(){
       return this.playList.length<this.info.trackCount
-    }
+    },
   },
   created() {
     this.getPlayList(this.$route.params.id)

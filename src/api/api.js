@@ -76,7 +76,7 @@ export const getMusicListByIds = (ids) => {
     })
 }
 
-/* 获取榜单 */
+/* 获取排行榜信息 */
 export const getToplist=() => {
     return axios.get('/toplist')
 }

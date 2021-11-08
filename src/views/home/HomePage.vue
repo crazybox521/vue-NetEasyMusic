@@ -15,19 +15,7 @@
           <h2 class="font-20 font-bold">
             推荐歌单 <i class="iconfont icon-arrow-right"></i>
           </h2>
-          <ul class="play-list-wrapper">
-            <li
-              class="play-list-item"
-              v-for="item in recSongList"
-              :key="item.id"
-              @click="toPlayListDetail(item.id)"
-            >
-              <el-image lazy class="img img-radius-4" :src="item.picUrl" alt="" />
-              <div class="text-hidden">
-                {{ item.name }}
-              </div>
-            </li>
-          </ul>
+          <SongSheetList :recSongList="recSongList"></SongSheetList>
         </div>
       </el-tab-pane>
       <el-tab-pane label="专属定制" name="second">
@@ -40,23 +28,31 @@
       </el-tab-pane>
       <el-tab-pane label="排行榜" name="fourth">
         <div class="mtop-60"></div>
-        <el-skeleton :rows="16" v-if="guanfangList.length!==4" animated />
-        <div class="guanfang-list" v-if="guanfangList.length==4">
+        <el-skeleton :rows="16" v-if="guanfangList.length !== 4" animated />
+        <div class="guanfang-list" v-if="guanfangList.length == 4">
           <h2 class="font-bold font-20">官方榜</h2>
-          <div class="guanfang-item mtop-10" v-for="item in guanfangList"
-              :key="item.id"
-              @click="toPlayListDetail(item.id)">
+          <div
+            class="guanfang-item mtop-10"
+            v-for="item in guanfangList"
+            :key="item.id"
+            @click="toPlayListDetail(item.id)"
+          >
             <div class="guanfang">
-              <el-image lazy
+              <el-image
+                lazy
                 class="img-h img-radius-4"
                 :src="item.coverImgUrl"
                 alt=""
               />
               <ul class="mleft-30">
-                <li v-for="(music,index) in item.tracks" :key="music.id" class="default-cursor">
-                  <span class="mleft-12">{{index+1}}</span
-                  ><span class="mleft-12 geming">{{music.name}}</span
-                  ><span class="zuozhe mright-10">{{music.ar[0].name}}</span>
+                <li
+                  v-for="(music, index) in item.tracks"
+                  :key="music.id"
+                  class="default-cursor"
+                >
+                  <span class="mleft-12">{{ index + 1 }}</span
+                  ><span class="mleft-12 geming">{{ music.name }}</span
+                  ><span class="zuozhe mright-10">{{ music.ar[0].name }}</span>
                 </li>
               </ul>
             </div>
@@ -67,22 +63,10 @@
             </div>
           </div>
         </div>
-        <div class="global-list" v-if="guanfangList.length==4">
+        <div class="global-list" v-if="guanfangList.length == 4">
           <h2 class="font-bold font-20">全球榜</h2>
           <div class="play-list">
-            <ul class="play-list-wrapper">
-              <li
-                class="play-list-item"
-                v-for="item in globalList"
-                :key="item.id"
-                @click="toPlayListDetail(item.id)"
-              >
-                <el-image lazy class="img img-radius-4" :src="item.coverImgUrl"/>
-                <div class="text-hidden">
-                  {{ item.name }}
-                </div>
-              </li>
-            </ul>
+            <SongSheetList :recSongList="globalList"></SongSheetList>
           </div>
         </div>
       </el-tab-pane>
@@ -99,16 +83,23 @@
 </template>
 
 <script>
-import { getBanner, getPersonalized, getToplist,getPlayListDetail } from '../../api/api'
+import {
+  getBanner,
+  getPersonalized,
+  getToplist,
+  getPlayListDetail
+} from '../../api/api'
+import SongSheetList from '../../components/list/SongSheetList.vue'
 export default {
+  components: { SongSheetList },
   data() {
     return {
       imgList: [],
       recSongList: [],
       activeName: 'first',
-      guanfangListId:[],
-      guanfangList:[],
-      globalList:[]
+      guanfangListId: [],
+      guanfangList: [],
+      globalList: []
     }
   },
   created() {
@@ -135,54 +126,45 @@ export default {
         this.recSongList.push({ id, name, picUrl, playCount, trackCount })
       })
     },
-    // 跳转到歌单详情页 
-    toPlayListDetail(id) {
-      this.$router.push({ path: '/playlistdetail/' + id })
-    },
     // 处理tab点击事件
     handleClick() {
       console.log(this.activeName)
-      if(this.activeName=='fourth'){
+      if (this.activeName == 'fourth') {
         this.getTopList()
       }
     },
 
     /* 排行榜页 */
     async getTopList() {
+      /* 使用缓存的数据 */
+      if (this.guanfangList.length !== 0) return
       const { data: res } = await getToplist()
       if (res.code !== 200) return
-      res.list.slice(0,4).forEach((item) => {
+      /* 清空官方榜ID数组 */
+      this.guanfangListId = []
+      res.list.slice(0, 4).forEach((item) => {
         this.guanfangListId.push(item.id)
       })
-      this.globalList =res.list.slice(4)
+      this.globalList = res.list.slice(4)
       this.guanfangListId.forEach((item) => {
-         this.getPlayList(item)
+        this.getPlayList(item)
       })
     },
     /* 获取歌单详情 */
-     async getPlayList(id) {
+    async getPlayList(id) {
+      /* 清空官方榜数据数组 */
+      this.guanfangList = []
       const { data: res } = await getPlayListDetail(id)
       if (res.code !== 200) return
-      res.playlist.tracks = res.playlist.tracks.slice(0,5)
+      res.playlist.tracks = res.playlist.tracks.slice(0, 5)
       this.guanfangList.push(res.playlist)
-      console.log(this.guanfangList); 
-      
-    },
+      console.log(this.guanfangList)
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.play-list-wrapper {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  .play-list-item {
-    margin-bottom: 30px;
-    width: 19%;
-    margin-right: 1%;
-  }
-}
 .guanfang-item {
   margin-bottom: 20px;
 }
@@ -204,12 +186,15 @@ export default {
         &:nth-child(3) {
           background-color: #efefef;
         }
-        &:nth-child(4){
+        &:nth-child(4) {
           color: #666;
         }
         &:nth-child(5) {
           color: #666;
           background-color: #f9f9f9;
+        }
+        &:hover {
+          background-color: #f4f4f4;
         }
         .geming {
           color: #373737;
