@@ -1,5 +1,5 @@
 <template>
-<!-- 头部工具栏区域组件 -->
+  <!-- 头部工具栏区域组件 -->
   <div class="header-bar">
     <img
       @click="toHomePage"
@@ -15,6 +15,7 @@
         <i class="iconfont icon-arrow-right"></i>
       </button>
     </div>
+    <!-- 搜索框 -->
     <div class="search-input">
       <el-input
         style="width: 200px"
@@ -24,6 +25,9 @@
         clearable
         prefix-icon="el-icon-search"
       ></el-input>
+    </div>
+    <div class="login mleft-20">
+      <el-button type="danger" @click="loginView" round>未登录</el-button>
     </div>
   </div>
 </template>
@@ -46,6 +50,13 @@ export default {
     },
     goTo(step) {
       this.$router.go(step)
+    },
+    loginView() {
+      const h = this.$createElement
+      this.$notify({
+        title: '开发中',
+        message: h('i', { style: 'color: teal' }, '还在完善中')
+      })
     }
   }
 }

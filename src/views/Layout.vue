@@ -87,10 +87,15 @@ export default {
   methods: {
     /* 导航 */
     handleSelect(key, keyPath) {
-      if (this.$route.path == key) return
+      if (this.activeMenu == key) return
       if (key !== '/homepage') {
         this.activeMenu = '/homepage'
         console.log(this.activeMenu)
+        const h = this.$createElement
+        this.$notify({
+          title: '开发中',
+          message: h('i', { style: 'color: teal' }, '还在完善中')
+        })
         return
       }
       this.$router.push(key)

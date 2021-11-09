@@ -11,7 +11,7 @@
         {{ route.title }}
       </li>
     </ul>
-    <div class="home-page-view">
+    <div class="home-page-view" ref="ref">
       <router-view></router-view>
     </div>
   </div>
@@ -38,12 +38,24 @@ export default {
   },
   methods: {
     goTo(path) {
-      if (path == '/dingzhi' || path == '/zuixin') return
+      if (path == '/dingzhi' || path == '/zuixin') {
+        const h = this.$createElement
+        this.$notify({
+          title: '开发中',
+          message: h('i', { style: 'color: teal' }, '还在完善中')
+        })
+        return
+      }
+
       let pathFull = '/homepage' + path
       console.log(this.$route.path)
       if (this.$route.path == pathFull) return false
       this.setActive(path)
+      /*   window.scrollTo(0,0) */
       this.$router.push(pathFull)
+      /*  this.$nextTick(() => {
+        this.$refs.ref.scrollTop(0, 0)
+      }) */
     },
     setActive(path) {
       this.routeList.forEach((item) => {

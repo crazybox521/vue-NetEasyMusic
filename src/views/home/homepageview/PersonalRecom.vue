@@ -3,7 +3,7 @@
     <div class="swiper-wrapper">
       <el-carousel :interval="4000" type="card" height="200px">
         <el-carousel-item v-for="item in imgList" :key="item.imageUrl">
-          <img class="img" :src="item.imageUrl" alt="" />
+          <img class="img img-h" :src="item.imageUrl" @click="open(item.url)"/>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -40,8 +40,8 @@ export default {
       const { data: res } = await getBanner()
       if (res.code !== 200) return
       res.banners.forEach((item) => {
-        let { imageUrl, typeTitle } = item
-        this.imgList.push({ imageUrl, typeTitle })
+        let { imageUrl,url, typeTitle } = item
+        this.imgList.push({ imageUrl,url, typeTitle })
       })
     },
     // 获取歌单
@@ -52,6 +52,11 @@ export default {
         let { id, name, picUrl, playCount, trackCount } = item
         this.recSongList.push({ id, name, picUrl, playCount, trackCount })
       })
+    },
+    open(url){
+      console.log(url);
+      if(url!==null)
+      window.open(url)
     }
   }
 }

@@ -28,7 +28,8 @@
 .img-h {
     height: 100%;
 }
-.img-80{
+
+.img-80 {
     height: 80%;
 }
 
@@ -48,6 +49,10 @@
 }
 
 /* 自定义滑块样式 */
+.el-slider__button-wrapper {
+    top: -16px;
+}
+
 .el-slider__bar {
     background-color: #ec4141;
     height: 3px
@@ -140,7 +145,8 @@
 .font-20 {
     font-size: 20px;
 }
-.font-24{
+
+.font-24 {
     font-size: 24px;
 }
 
@@ -148,6 +154,7 @@
 .mleft-6 {
     margin-left: 6px;
 }
+
 .mleft-12 {
     margin-left: 12px;
 }
@@ -196,14 +203,16 @@
 .w-300 {
     width: 300px;
 }
-.w-500{
+
+.w-500 {
     width: 500px;
 }
 
-.h-100{
+.h-100 {
     height: 100px;
 }
-.h-80{
+
+.h-80 {
     height: 80px;
 }
 
@@ -234,7 +243,7 @@
     color: #373737;
 }
 
-.circle-btn{
+.circle-btn {
     display: block;
     height: 30px;
     padding: 0 16px;
@@ -244,6 +253,7 @@
     background-color: rgba(0, 0, 0, 0);
     border-radius: 15px;
 }
+
 /* 全局浮动样式 */
 .right {
     float: right;

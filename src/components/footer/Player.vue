@@ -6,8 +6,8 @@
       <img v-if="imgInfo.imgUrl" :src="imgInfo.imgUrl" alt="" />
       <i v-else class="iconfont icon-wangyiyun1"></i>
       <ul class="au-info">
-        <li class="font-14">{{ imgInfo.name }}</li>
-        <li class="font-12">{{ imgInfo.author }}</li>
+        <li class="font-14 w-200 text-hidden">{{ imgInfo.name }}</li>
+        <li class="font-12 w-200 text-hidden">{{ imgInfo.author }}</li>
       </ul>
     </div>
     <!-- 播放器 -->
@@ -129,8 +129,13 @@ export default {
     }
   },
   methods: {
-    changePlayModel() {},
-    changeSong() {},
+    changePlayModel() {
+      const h = this.$createElement
+      this.$notify({
+        title: '开发中',
+        message: h('i', { style: 'color: teal' }, '还在完善中')
+      })
+    },
     pause() {
       if (this.musicUrl.length === 0) return
       if (this.isPlay === false) {
@@ -140,7 +145,13 @@ export default {
       }
       this.$store.commit('setPlayState', !this.isPlay)
     },
-    openLyricView() {},
+    openLyricView() {
+      const h = this.$createElement
+      this.$notify({
+        title: '开发中',
+        message: h('i', { style: 'color: teal' }, '还在完善中')
+      })
+    },
     /* 获取音乐地址 */
     async getMusicUrl() {
       this.getImgInfo()
@@ -238,6 +249,7 @@ export default {
 .song-info {
   display: flex;
   align-items: center;
+  width: 300px;
   img {
     margin: 0 10px;
     height: 50px;
@@ -267,12 +279,13 @@ export default {
   li {
     font-size: 14px;
     line-height: 32px;
+    cursor: pointer;
     &:nth-child(3) {
       height: 32px;
       width: 32px;
       border-radius: 50%;
       background-color: #f4f4f4;
-      .iconfont{
+      .iconfont {
         margin-left: 9px;
         font-size: 14px;
       }
@@ -294,8 +307,8 @@ export default {
 }
 .btn-other {
   display: flex;
-  width: 100px;
-  justify-content: space-around;
+  width: 300px;
+  justify-content: flex-end;
 }
 /* 音量图标 */
 .volume-icon {
@@ -304,6 +317,7 @@ export default {
 
 .volume {
   position: relative;
+  margin-right: 20px;
   .volume-slider {
     display: none;
     position: absolute;
