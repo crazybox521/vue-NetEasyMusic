@@ -1,0 +1,354 @@
+<template>
+  <div class="play-list mtop-60">
+    <!-- 精品歌单banner -->
+    <div class="jingpin" v-if="hasHighInfo">
+      <img class="back-img" :src="highInfo.coverImgUrl" />
+      <img class="img-80" :src="highInfo.coverImgUrl" alt="" />
+      <div class="info-wrapper">
+        <div>
+          <button class="circle-btn">
+            <i class="iconfont icon-huiyuanhuangguanguanjun-xianxing"></i>
+            精品歌单
+          </button>
+        </div>
+        <div class="mtop-10">
+          <span>{{ highInfo.name }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- 标签区域 -->
+    <div class="list-tag mtop-10">
+      <!-- 全部标签弹出层容器 -->
+      <div class="layer-wrapper">
+        <button class="circle-btn tag-btn" @click="openLayer">
+          {{ tagBtn }} <i class="el-icon-arrow-right"></i>
+        </button>
+        <!-- 全部标签弹出层 -->
+        <div class="layer" v-show="showLayer" ref="layerRef">
+          <div class="h-80">全部歌单</div>
+          <div class="div-line"></div>
+          <div class="tag-list" v-for="z in allCats" :key="z.name">
+            <div class="tag-title">
+              <i
+                v-if="z.type == 0"
+                class="iconfont icon-diqiuquanqiu font-24"
+              ></i>
+              <i v-if="z.type == 1" class="iconfont icon-fengge font-24"></i>
+              <i v-if="z.type == 4" class="iconfont icon-zhuti font-24"></i>
+              <i v-if="z.type == 3" class="iconfont icon-smiling font-24"></i>
+              <i v-if="z.type == 2" class="iconfont icon-xiazai47 font-24"></i>
+              <span class="mleft-6">{{ z.name }}</span>
+            </div>
+            <ul>
+              <li v-for="i in z.sub" :key="i.name">
+                <button
+                  @click="changefromAll(i.name)"
+                  class="no-btn"
+                  :class="{ isActive: i.isActive }"
+                >
+                  {{ i.name }}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- 热门标签 -->
+      <ul class="tag-ul">
+        <li
+          class="mright-10 font-12"
+          v-for="h in hotCats"
+          :key="h.id"
+          :class="{ isActive: h.isActive }"
+          @click="changeCat(h.name)"
+        >
+          {{ h.name }}
+        </li>
+      </ul>
+    </div>
+    <el-skeleton class="mtop-10" v-show="isLoading" :rows="8" animated />
+    <SongSheetList v-show="!isLoading" :playlist="playList"></SongSheetList>
+    <div class="margin-center w-500">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="pageInfo.currentPage"
+        :page-size="50"
+        layout="prev, pager, next"
+        :total="pageInfo.total"
+        background
+      >
+      </el-pagination>
+    </div>
+  </div>
+</template>
+
+<script>
+import {
+  getAllCat,
+  getHotCat,
+  getPlayListByCat,
+  getHighquality
+} from '../../../api/api'
+import SongSheetList from '../../../components/list/SongSheetList.vue'
+export default {
+  components: {
+    SongSheetList
+  },
+  data() {
+    return {
+      hotCats: [],
+      allCats: [],
+      queryInfo: {
+        limit: 50,
+        order: 'hot',
+        cat: '华语',
+        offset: 0
+      },
+      pageInfo: {
+        total: 0,
+        currentPage: 1
+      },
+
+      playList: [],
+      highInfo: {},
+      isLoading: true,
+      hasHighInfo: true,
+      tagBtn: '华语',
+      showLayer: false
+    }
+  },
+  created() {
+    this.getHotCats()
+    this.getPlayList()
+  },
+  methods: {
+    /* 获取热门歌单分类 */
+    async getHotCats() {
+      const { data: res } = await getHotCat()
+      if (res.code !== 200) return
+      /* 使当前标签激活 */
+      res.tags.forEach((item) => {
+        item.isActive = false
+        if (item.name == this.tagBtn) item.isActive = true
+      })
+      this.hotCats = res.tags
+    },
+    /* 获取所有分类 */
+    async getAllCats() {
+      const { data: res } = await getAllCat()
+      if (res.code !== 200) return
+      let arr = []
+      for (let i = 0; i < 5; i++) {
+        arr.push({ type: i, name: res.categories[i], sub: [] })
+      }
+      res.sub.forEach((item) => {
+        item.isActive = false
+        switch (item.category) {
+          case 0:
+            arr[0].sub.push(item)
+            break
+          case 1:
+            arr[1].sub.push(item)
+            break
+          case 2:
+            arr[2].sub.push(item)
+            break
+          case 3:
+            arr[3].sub.push(item)
+            break
+          case 4:
+            arr[4].sub.push(item)
+            break
+        }
+         /* 使当前标签激活 */
+        if (item.name == this.tagBtn) {
+          item.isActive = true
+        }
+      })
+      this.allCats = arr
+    },
+    /* 根据分类获取歌单 */
+    async getPlayList() {
+      this.isLoading = true
+      this.getHighInfo(this.queryInfo.cat)
+      const { data: res } = await getPlayListByCat(this.queryInfo)
+      if (res.code !== 200) return
+      this.playList = res.playlists
+      this.pageInfo.total = res.total
+      this.isLoading = false
+    },
+    /* 分页器页数变化的回调 */
+    handleCurrentChange(val) {
+      console.log(val)
+      console.log(this.pageInfo.currentPage)
+      this.pageInfo.currentPage = val
+      this.queryInfo.offset = (val - 1) * 50
+      this.getPlayList()
+    },
+    /* 获取精品歌单第一首封面展示 */
+    async getHighInfo(cat) {
+      const { data: res } = await getHighquality(1, cat)
+      if (res.code !== 200) return
+      if (res.playlists.length === 0) {
+        this.highInfo = {}
+        this.hasHighInfo = false
+        return
+      }
+      this.highInfo = res.playlists[0]
+      this.hasHighInfo = true
+    },
+    changeCat(name) {
+      /* 重置页数 */
+      this.queryInfo.offset = 0
+      this.pageInfo.currentPage = 1
+      this.queryInfo.cat = name
+      this.tagBtn = name
+      this.hotCats.forEach((item) => {
+        if (item.isActive === true) item.isActive = false
+        if (item.name === name) item.isActive = true
+      })
+      this.getPlayList()
+    },
+    /* 全部歌单标签弹出层 开启按钮回调 */
+    openLayer() {
+      if (this.showLayer) return
+      this.getAllCats()
+      this.showLayer = true
+      /* 向window绑定关闭弹出层方法回调 */
+      setTimeout(() => {
+        window.addEventListener('click', this.closeLayer)
+      }, 10)
+    },
+    /* 关闭弹出层的方法 */
+    closeLayer(e) {
+      /* 判断触发回调的事件对象的target是否在layer里 */
+      if (!this.$refs.layerRef) return
+      if (!this.$refs.layerRef.contains(e.target)) {
+        console.log('触发关闭')
+        this.showLayer = false
+        window.removeEventListener('click', this.closeLayer)
+      }
+    },
+    /* 从弹出层访问了标签 */
+    changefromAll(cat) {
+      this.changeCat(cat)
+      console.log('主动选择标签关闭')
+      this.showLayer = false
+      window.removeEventListener('click', this.closeLayer)
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+/* 精品歌单banner */
+.jingpin {
+  background-color: rgba(0, 0, 0, 0);
+  height: 200px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  .back-img {
+    position: absolute;
+    top: -400px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+    filter: blur(45px);
+  }
+
+  .img-80 {
+    margin: 0 20px;
+    border-radius: 6px;
+    z-index: 2;
+  }
+  .info-wrapper {
+    z-index: 2;
+  }
+}
+/* 精品歌单下的标签区 */
+.list-tag {
+  display: flex;
+  justify-content: space-between;
+  .tag-ul {
+    display: flex;
+    align-items: center;
+    height: 26px;
+    li {
+      height: 26px;
+      line-height: 26px;
+      padding: 0 10px;
+      cursor: pointer;
+    }
+  }
+}
+/* 标签激活的样式 */
+.isActive {
+  background-color: #fdf5f5;
+  color: #ec4141;
+  border-radius: 13px;
+}
+/* 打开全部标签的按钮 */
+.tag-btn {
+  color: #343434;
+  border-color: #d8d8d8;
+  padding: 0 30px;
+  &:hover {
+    background-color: #f2f2f2;
+  }
+}
+/* 弹出层 */
+.layer-wrapper {
+  position: relative;
+  .layer {
+    position: absolute;
+    width: 720px;
+    top: 40px;
+    left: 0px;
+    background-color: #ffffff;
+    z-index: 99;
+    box-shadow: 0 0 8px #e5e5e5;
+    border-radius: 4px;
+    font-size: 14px;
+    .h-80 {
+      line-height: 80px;
+      padding-left: 20px;
+    }
+  }
+}
+/* 弹出层内的标签 */
+.tag-list {
+  display: flex;
+  line-height: 26px;
+  margin: 10px 0px 30px 0;
+  .tag-title {
+    width: 120px;
+    height: 26px;
+    color: #cfcfcf;
+    margin: 0 40px 0 20px;
+    .iconfont {
+      color: #b1b1b1;
+    }
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    li {
+      width: 100px;
+      height: 26px;
+
+      .no-btn {
+        cursor: pointer;
+        &:hover {
+          color: #ec4141;
+        }
+      }
+    }
+  }
+}
+</style>

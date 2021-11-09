@@ -64,9 +64,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import FooterBar from '../../components/footer/FooterBar.vue'
-import HeaderBar from '../../components/header/HeaderBar.vue'
-import menuList from '../../config/menuList'
+import FooterBar from '../components/footer/FooterBar.vue'
+import HeaderBar from '../components/header/HeaderBar.vue'
+import menuList from '../config/menuList'
 export default {
   components: {
     FooterBar,
@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '../../assets/less/lessConfig.less';
+@import '../assets/less/lessConfig.less';
 .el-header {
   height: 9vh !important;
   background-color: @headRed;
@@ -139,7 +139,7 @@ export default {
   overflow-y: scroll;
   .view-mian {
     margin: 20px auto;
-    max-width: 1300px;
+    max-width: 1260px;
   }
 }
 .layout-container {

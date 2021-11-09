@@ -77,6 +77,40 @@ export const getMusicListByIds = (ids) => {
 }
 
 /* 获取排行榜信息 */
-export const getToplist=() => {
+export const getToplist = () => {
     return axios.get('/toplist')
+}
+
+/* 获取歌单分类 */
+export const getAllCat = () => {
+    return axios.get('/playlist/catlist')
+}
+
+/* 获取热门歌单分类 */
+export const getHotCat = () => {
+    return axios.get('/playlist/hot')
+}
+
+/* 根据分类获取歌单 */
+export const getPlayListByCat = (obj) => {
+    const { limit, order, cat, offset } = obj
+    return axios.get('/top/playlist', {
+        params: {
+            limit, order, cat, offset
+        }
+    })
+}
+
+/* 精品歌单标签列表 */
+export const getHighqualityTags = () => {
+    return axios.get('/playlist/highquality/tags')
+}
+
+/* 获取精品歌单 */
+export const getHighquality = (limit, cat, before) => {
+    return axios.get('/top/playlist/highquality', {
+        params: {
+            limit, cat, before
+        }
+    })
 }
