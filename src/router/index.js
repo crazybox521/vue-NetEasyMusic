@@ -7,6 +7,7 @@ import PlayListDetail from "../views/playlist/PlayListDetail.vue"
 import PersonalRecom from "../views/home/homepageview/PersonalRecom.vue"
 import TopList from '../views/home/homepageview/TopList.vue'
 import PlayList from '../views/home/homepageview/PlayList.vue'
+import ArtistList from '../views/home/homepageview/ArtistList.vue'
 Vue.use(VueRouter);
 const routes = [
     {
@@ -32,6 +33,9 @@ const routes = [
                 },{
                     path:'playlist',
                     component:PlayList
+                },{
+                    path:'artistlist',
+                    component:ArtistList
                 }
             ],
         },
@@ -48,6 +52,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    document.title='网易云音乐客户端PC版'
     next()
 })
 
