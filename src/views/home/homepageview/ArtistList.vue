@@ -1,15 +1,113 @@
 <template>
-  <div class="artist-list">
-
+  <div class="artist-list mtop-60">
+    <div>
+      <div class="redio-list">
+        <span class="w-60">语种：</span>
+        <el-radio-group v-model="queryInfo.area">
+          <el-radio :label="ar.id" v-for="ar in artistData.area" :key="ar.id">{{
+            ar.value
+          }}</el-radio>
+        </el-radio-group>
+      </div>
+      <div class="redio-list">
+        <span class="w-60">分类：</span>
+        <el-radio-group v-model="queryInfo.type">
+          <el-radio :label="tp.id" v-for="tp in artistData.type" :key="tp.id">{{
+            tp.value
+          }}</el-radio>
+        </el-radio-group>
+      </div>
+      <div class="redio-list">
+        <span class="w-60">筛选：</span>
+        <el-radio-group v-model="queryInfo.initial">
+          <el-radio :label="i.id" v-for="i in artistData.initial" :key="i.id">{{
+            i.value
+          }}</el-radio>
+        </el-radio-group>
+      </div>
+    </div>
+    <div>
+      <Artist @loadMore="load" :list="artistList"></Artist>
+    </div>
+    <el-backtop target=".el-main" :bottom="100"></el-backtop>
   </div>
 </template>
 
 <script>
+import artistData from '../../../config/artistData'
+import Artist from '../../../components/list/Artist.vue'
+import { getArtistList } from '../../../api/api'
 export default {
-
+  components: {
+    Artist
+  },
+  data() {
+    return {
+      queryInfo: {
+        //查询信息
+        limit: 30,
+        area: -1,
+        offset: 0,
+        type: -1,
+        initial: '-1'
+      },
+      hasMore: true, // 是否还有更多歌手未加载
+      artistData, // 列表项
+      artistList: [], // 歌手列表
+      isLoading: false, // 正在获取歌手列表
+      mode: 'first'
+    }
+  },
+  created() {
+    this.getArtistList()
+  },
+  watch: {
+    queryInfo: {
+      deep: true,
+      handler() {
+        this.getArtistList()
+      }
+    }
+  },
+  methods: {
+    async getArtistList() {
+      /* 节流 */
+      if (this.isLoading) return
+      this.isLoading = true
+      /* 重置偏移量 */
+      if (this.mode == 'first') this.queryInfo.offset = 0
+      const { data: res } = await getArtistList(this.queryInfo)
+      if (res.code !== 200) return this.$message.error('获取失败')
+      if (this.mode == 'first') {
+        this.artistList = res.artists
+      } else {
+        this.artistList.push(...res.artists)
+      }
+      this.hasMore = res.more
+      this.isLoading = false
+      this.mode = 'first'
+    },
+    load(size) {
+      /* 这里有点问题，会多次触发，需要防抖动 */
+      if (this.isLoading) return
+      if (!this.hasMore) return this.$message.error('已经到底了')
+      this.mode = 'more'
+      this.queryInfo.offset = size + 30
+    }
+  }
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.redio-list {
+  display: flex;
+  flex-wrap: wrap;
+  .el-radio-group {
+    width: 80%;
+    .el-radio {
+      width: 50px;
+      height: 30px;
+    }
+  }
+}
 </style>

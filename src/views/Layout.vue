@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       menuList,
-      activeMenu: '/homepage'
+      activeMenu: '/personalrecom'
     }
   },
   computed: {
@@ -87,9 +87,9 @@ export default {
   methods: {
     /* 导航 */
     handleSelect(key, keyPath) {
-      if (this.activeMenu == key) return
-      if (key !== '/homepage') {
-        this.activeMenu = '/homepage'
+      if (this.$route.path == key) return
+      if (key !== '/personalrecom') {
+        this.activeMenu = '/personalrecom'
         console.log(this.activeMenu)
         const h = this.$createElement
         this.$notify({

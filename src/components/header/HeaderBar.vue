@@ -46,7 +46,7 @@ export default {
       this.$store.commit('setKeywords', this.keywords)
     },
     toHomePage() {
-      if (this.$route.path != '/homepage') this.$router.push('/homepage')
+      if (this.$route.path != '/homepage/personalrecom') this.$router.push('/homepage/personalrecom')
     },
     goTo(step) {
       this.$router.go(step)

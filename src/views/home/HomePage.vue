@@ -32,11 +32,18 @@ export default {
     }
   },
   created() {
-    let path = this.$route.path.slice(9)
+    let path = this.$route.path
     console.log(path)
     this.setActive(path)
   },
+  watch: {
+    $route(to, from) {
+      console.log(to, from, '111')
+      this.setActive(to.path)
+    }
+  },
   methods: {
+    /* 路由跳转 */
     goTo(path) {
       if (path == '/dingzhi' || path == '/zuixin') {
         const h = this.$createElement
@@ -46,17 +53,10 @@ export default {
         })
         return
       }
-
-      let pathFull = '/homepage' + path
-      console.log(this.$route.path)
-      if (this.$route.path == pathFull) return false
-      this.setActive(path)
-      /*   window.scrollTo(0,0) */
-      this.$router.push(pathFull)
-      /*  this.$nextTick(() => {
-        this.$refs.ref.scrollTop(0, 0)
-      }) */
+      if (this.$route.path == path) return false
+      this.$router.push(path)
     },
+    /* 激活导航 */
     setActive(path) {
       this.routeList.forEach((item) => {
         if (item.isActive == true) {

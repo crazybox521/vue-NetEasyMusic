@@ -114,3 +114,28 @@ export const getHighquality = (limit, cat, before) => {
         }
     })
 }
+
+/* 获取歌手列表 */
+export const getArtistList = (obj) => {
+    return axios.get('/artist/list', {
+        params: obj
+    })
+}
+
+/* 根据ID获取歌手详情 */
+export const queryArtistDetail = (id) => {
+    return axios.get('/artist/detail', {
+        params: {
+            id
+        }
+    })
+}
+
+/* 获取歌手热门50首 */
+export const getArtistTop =(id) => {
+    return axios.get('/artist/top/song',{
+        params:{
+            id
+        }
+    })
+}

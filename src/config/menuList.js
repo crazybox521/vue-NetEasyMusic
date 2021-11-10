@@ -1,7 +1,7 @@
 
 /* 左侧导航信息 */
 export default [{
-        path: '/homepage',
+        path: '/personalrecom',
         title: '发现音乐'
     },
     {
