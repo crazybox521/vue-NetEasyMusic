@@ -4,7 +4,11 @@
     <div class="detail-desc">
       <!-- 歌单图片 -->
       <div class="detail-img-wrapper">
-        <img class="img" :src="info.coverImgUrl" alt="" />
+        <img
+          class="img img-radius-4"
+          :src="info.coverImgUrl + '?param=300y300'"
+          alt=""
+        />
       </div>
       <!-- 歌单信息 -->
       <div class="detail-desc-info">
@@ -26,19 +30,27 @@
         <!-- 歌单按钮 -->
         <ul class="info-btn">
           <el-button type="danger" @click="playAll" round>播放全部</el-button>
-          <el-button round>收藏({{ info.subscribedCount | countFormat }})</el-button>
+          <el-button round
+            >收藏({{ info.subscribedCount | countFormat }})</el-button
+          >
           <el-button round>分享({{ info.shareCount | countFormat }})</el-button>
-          <el-button v-show="isShowMoreBtn" type="danger" round @click="loadCompletePlayList"
+          <el-button
+            v-show="isShowMoreBtn"
+            type="danger"
+            round
+            @click="loadCompletePlayList"
             >加载完整歌单</el-button
           >
         </ul>
-        <div class="detail-tag font-14" v-if="info.tags.length!==0">
+        <div class="detail-tag font-14" v-if="info.tags.length !== 0">
           <span>标签 ：</span>
           <span v-for="(val, index) in info.tags" :key="index">{{ val }}</span>
         </div>
         <div class="num-info font-14">
           <span>歌曲 ：{{ info.trackCount }}</span>
-          <span class="mleft-12">播放 ：{{ info.playCount | countFormat }}</span>
+          <span class="mleft-12"
+            >播放 ：{{ info.playCount | countFormat }}</span
+          >
         </div>
         <!-- 歌单描述 -->
         <div class="font-14">
@@ -72,7 +84,7 @@
       </div>
     </div>
     <MusicList ref="listRef" :list="list"></MusicList>
-    <div v-if="isShowMoreBtn " class="margin-center w-300 mtop-10">
+    <div v-if="isShowMoreBtn" class="margin-center w-300 mtop-10">
       <span>登录</span>
       <span>或</span>
       <span>点击加载完整歌单</span>
@@ -87,7 +99,8 @@ import Tag from '../../components/simple/Tag.vue'
 import { getPlayListDetail, getMusicListByIds } from '../../api/api'
 export default {
   components: {
-    MusicList,Tag
+    MusicList,
+    Tag
   },
   data() {
     return {
@@ -99,14 +112,14 @@ export default {
   },
   computed: {
     list() {
-      let reg = new RegExp(this.key.trim(),'ig')
+      let reg = new RegExp(this.key.trim(), 'ig')
       return this.playList.filter((item) => {
         return item.name.match(reg)
       })
     },
-    isShowMoreBtn(){
-      return this.playList.length<this.info.trackCount
-    },
+    isShowMoreBtn() {
+      return this.playList.length < this.info.trackCount
+    }
   },
   created() {
     this.getPlayList(this.$route.params.id)

@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
-/* import './config/elementConfig' */
+/* import './plugins/my-element' */
 
 import './assets/css/global.css'
 
@@ -29,9 +29,9 @@ Vue.filter('dateFormat', function (time) {
   return year + '-' + mouth + '-' + day
 })
 
-Vue.filter('countFormat',function(count){
-  if(count<10000) return count
-  else return Math.floor(count/10000)+'万'
+Vue.filter('countFormat', function (count) {
+  if (count < 10000) return count
+  else return Math.floor(count / 10000) + '万'
 })
 new Vue({
   router,

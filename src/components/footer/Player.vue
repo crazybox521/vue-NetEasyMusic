@@ -76,7 +76,9 @@
 <script>
 import { mapState } from 'vuex'
 import { getMusicUrl } from '../../api/api'
+import notifyMixin from '../../mixins/notifyMixin'
 export default {
+  mixins: [notifyMixin],
   data() {
     return {
       musicUrl: '', //音乐资源
@@ -124,17 +126,13 @@ export default {
       this.changeVolume()
     },
     currenMusicId() {
-      console.log('地址改变了')
+      console.log('播放的歌曲改变了')
       this.getMusicUrl()
     }
   },
   methods: {
     changePlayModel() {
-      const h = this.$createElement
-      this.$notify({
-        title: '开发中',
-        message: h('i', { style: 'color: teal' }, '还在完善中')
-      })
+      this.notice()
     },
     pause() {
       if (this.musicUrl.length === 0) return
@@ -146,11 +144,7 @@ export default {
       this.$store.commit('setPlayState', !this.isPlay)
     },
     openLyricView() {
-      const h = this.$createElement
-      this.$notify({
-        title: '开发中',
-        message: h('i', { style: 'color: teal' }, '还在完善中')
-      })
+      this.notice()
     },
     /* 获取音乐地址 */
     async getMusicUrl() {
@@ -183,7 +177,7 @@ export default {
           )
         } else {
           this.$store.commit('setPlayState', false)
-          this.$message.error('已经播放完了！')
+          this.$message.error('已经是最后一首了！')
         }
       }
     },

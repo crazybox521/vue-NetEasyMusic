@@ -160,7 +160,7 @@ export default {
             arr[4].sub.push(item)
             break
         }
-         /* 使当前标签激活 */
+        /* 使当前标签激活 */
         if (item.name == this.tagBtn) {
           item.isActive = true
         }
@@ -314,6 +314,7 @@ export default {
     box-shadow: 0 0 8px #e5e5e5;
     border-radius: 4px;
     font-size: 14px;
+    min-height: 400px;
     .h-80 {
       line-height: 80px;
       padding-left: 20px;
@@ -338,12 +339,14 @@ export default {
     display: flex;
     flex-wrap: wrap;
     width: 500px;
+
     li {
       width: 100px;
       height: 26px;
 
       .no-btn {
         cursor: pointer;
+        padding: 4px 10px;
         &:hover {
           color: #ec4141;
         }

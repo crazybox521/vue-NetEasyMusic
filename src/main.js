@@ -3,9 +3,10 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
-import './config/elementConfig'
+import './plugins/my-element'
 
 import './assets/css/global.css'
+import './assets/css/my-element.css'
 
 Vue.config.productionTip = false
 

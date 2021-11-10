@@ -18,7 +18,9 @@
 </template>
 
 <script>
+import notifyMixin from '../../mixins/notifyMixin'
 export default {
+  mixins:[notifyMixin],
   data() {
     return {
       routeList: [
@@ -46,11 +48,7 @@ export default {
     /* 路由跳转 */
     goTo(path) {
       if (path == '/dingzhi' || path == '/zuixin') {
-        const h = this.$createElement
-        this.$notify({
-          title: '开发中',
-          message: h('i', { style: 'color: teal' }, '还在完善中')
-        })
+        this.notice()
         return
       }
       if (this.$route.path == path) return false

@@ -33,7 +33,9 @@
 </template>
 
 <script>
+import notifyMixin from '../../mixins/notifyMixin'
 export default {
+  mixins:[notifyMixin],
   data() {
     return {
       keywords: ''
@@ -52,11 +54,7 @@ export default {
       this.$router.go(step)
     },
     loginView() {
-      const h = this.$createElement
-      this.$notify({
-        title: '开发中',
-        message: h('i', { style: 'color: teal' }, '还在完善中')
-      })
+      this.notice()
     }
   }
 }

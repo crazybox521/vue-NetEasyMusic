@@ -27,7 +27,7 @@
       </div>
     </div>
     <div>
-      <Artist @loadMore="load" :list="artistList"></Artist>
+      <Artist @loadMore="load" :list="artistList" :hasMore="hasMore"></Artist>
     </div>
     <el-backtop target=".el-main" :bottom="100"></el-backtop>
   </div>
@@ -88,7 +88,7 @@ export default {
       this.mode = 'first'
     },
     load(size) {
-      /* 这里有点问题，会多次触发，需要防抖动 */
+      /* 这里有点问题，会多次触发，需要节流*/
       if (this.isLoading) return
       if (!this.hasMore) return this.$message.error('已经到底了')
       this.mode = 'more'
@@ -102,11 +102,18 @@ export default {
 .redio-list {
   display: flex;
   flex-wrap: wrap;
+  line-height: 20px;
+  margin-top: 10px;
+  span {
+    height: 30px;
+    line-height: 30px;
+  }
   .el-radio-group {
     width: 80%;
     .el-radio {
-      width: 50px;
+      width: 60px;
       height: 30px;
+      line-height: 30px;
     }
   }
 }

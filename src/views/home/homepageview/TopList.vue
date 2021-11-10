@@ -1,24 +1,26 @@
 <template>
   <div class="top-list mtop-60">
     <el-skeleton :rows="16" v-if="guanfangList.length !== 4" animated />
+    <!-- 官方榜区域 -->
     <div class="guanfang-list" v-if="guanfangList.length == 4">
       <h2 class="font-bold font-20">官方榜</h2>
       <div
         class="guanfang-item mtop-10"
-        v-for="item in guanfangList"
+        v-for="(item, listIndex) in guanfangList"
         :key="item.id"
-        @click="toPlayListDetail(item.id)"
       >
         <div class="guanfang">
           <img
             class="img-h img-radius-4"
             :src="item.coverImgUrl"
+            @click="toPlayListDetail(item.id)"
           />
           <ul class="mleft-30">
             <li
               v-for="(music, index) in item.tracks"
               :key="music.id"
               class="default-cursor"
+              @dblclick="playMusic(music.id, listIndex, index)"
             >
               <span class="mleft-12">{{ index + 1 }}</span
               ><span class="mleft-12 geming">{{ music.name }}</span
@@ -27,12 +29,16 @@
           </ul>
         </div>
         <div class="mleft-200">
-          <button class="pointer no-btn mtop-10">
+          <button
+            class="pointer no-btn mtop-10"
+            @click="toPlayListDetail(item.id)"
+          >
             查看全部<i class="el-icon-arrow-right"></i>
           </button>
         </div>
       </div>
     </div>
+    <!-- 全球榜区域 -->
     <div class="global-list" v-if="guanfangList.length == 4">
       <h2 class="font-bold font-20">全球榜</h2>
       <SongSheetList :playlist="globalList"></SongSheetList>
@@ -41,17 +47,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getToplist, getPlayListDetail } from '../../../api/api'
 import SongSheetList from '../../../components/list/SongSheetList.vue'
 export default {
   components: { SongSheetList },
   data() {
     return {
-      guanfangListId: [],
-      guanfangList: [],
-      globalList: []
+      guanfangListId: [], //官方榜ID
+      guanfangList: [], //官方榜的列表
+      globalList: [] //全球榜列表
     }
   },
+  computed: {
+    ...mapState(['musicList'])
+  },
+
   created() {
     this.getTopList()
   },
@@ -85,7 +96,14 @@ export default {
     // 跳转到歌单详情页
     toPlayListDetail(id) {
       this.$router.push({ path: '/playlistdetail/' + id })
-    }
+    },
+    /* 播放音乐 */
+    playMusic(id, listIndex, index) {
+      this.$store.commit('setMusicList', this.guanfangList[listIndex].tracks)
+      this.$store.commit('setCurrenMusicId', id)
+      this.$store.commit('setPlayState', true)
+      this.$store.commit('setCurrenIndex', index)
+    },
   }
 }
 </script>

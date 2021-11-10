@@ -1,0 +1,111 @@
+/* 自定义滑块样式 */
+.el-slider__button-wrapper {
+    top: -16px;
+}
+
+.el-slider__bar {
+    background-color: #ec4141;
+    height: 3px
+}
+
+.el-slider__runway {
+    height: 3px;
+}
+
+.el-slider__button {
+    border: 0;
+    width: 9px;
+    height: 9px;
+    background-color: #e13e3e;
+}
+
+/* 自定义头部输入框 */
+.header-bar .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    background-color: #e13e3e;
+    border-radius: 16px;
+    border: 0;
+    color: #fffafa;
+}
+
+/* 自定义头部输入框前置图标样式 */
+.header-bar .el-input__icon {
+    color: #fffafa;
+    line-height: 36px;
+}
+
+/* 自定义歌单页搜索框 */
+.detail-search .el-input__inner {
+    height: 26px;
+    line-height: 26px;
+    color: #676767;
+    background-color: #f7f7f7;
+    border-radius: 16px;
+    border: 0;
+}
+
+/* 自定义歌单页搜索框图标居中 */
+.detail-search .el-input__icon {
+    line-height: 26px;
+    color: #3e3e3e;
+}
+
+/* 自定义menu样式 */
+.el-menu-item {
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 3px;
+}
+
+.el-menu-item.is-active {
+    color: #313131;
+    font-size: 17px;
+    background-color: #f6f6f7;
+    font-weight: bold;
+}
+
+.el-menu-item:focus,
+.el-menu-item:hover {
+    background-color: #f6f6f7;
+}
+
+/* 修改分页样式 */
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color: #ec4141;
+    color: #FFF;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+    color: #ec4141;
+}
+
+/* 单选框 */
+.el-radio__input.is-checked+.el-radio__label {
+    color: #ec4141;
+}
+
+.el-radio {
+    text-align: center;
+}
+
+.el-radio.is-checked {
+    background-color: #fdf5f5;
+    border-radius: 15px;
+    display: inline-block;
+}
+
+.el-radio__label {
+    padding: 0;
+}
+
+/* .el-radio__input.is-checked .el-radio__inner {
+    border-color: #ec4141;
+    
+}
+.el-radio__inner:hover {
+    border-color: #ec4141;
+} */
+.el-radio__inner {
+    display: none;
+}

@@ -63,11 +63,13 @@
 </template>
 
 <script>
+import notifyMixin from '../mixins/notifyMixin'
 import { mapState } from 'vuex'
 import FooterBar from '../components/footer/FooterBar.vue'
 import HeaderBar from '../components/header/HeaderBar.vue'
 import menuList from '../config/menuList'
 export default {
+  mixins:[notifyMixin],
   components: {
     FooterBar,
     HeaderBar
@@ -91,11 +93,7 @@ export default {
       if (key !== '/personalrecom') {
         this.activeMenu = '/personalrecom'
         console.log(this.activeMenu)
-        const h = this.$createElement
-        this.$notify({
-          title: '开发中',
-          message: h('i', { style: 'color: teal' }, '还在完善中')
-        })
+        this.notice()
         return
       }
       this.$router.push(key)
