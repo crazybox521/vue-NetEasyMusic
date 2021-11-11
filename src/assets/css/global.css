@@ -86,8 +86,14 @@
 .mleft-30 {
     margin-left: 30px;
 }
+.mleft-40 {
+    margin-left: 40px;
+}
 .mleft-200 {
     margin-left: 200px;
+}
+.mleft-300 {
+    margin-left: 300px;
 }
 .mright-10 {
     margin-right: 10px;
@@ -209,3 +215,5 @@
 .div-line {
     border-top: 1px solid #e0e0e0;
 }
+
+#nprogress .bar { background-color: #ffffff !important;}

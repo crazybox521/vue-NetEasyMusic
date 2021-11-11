@@ -19,8 +19,6 @@ const state = {
         totalTime:0,
         currenTime:0
     },
-    /* 搜索的关键字 */
-    keywords:''
 }
 
 const mutations = {
@@ -45,9 +43,7 @@ const mutations = {
     setCurrenTime(state,payload){
         state.currenMusicInfo.currenTime=payload
     },
-    setKeywords(state,payload){
-        state.keywords =payload
-    }
+
 }
 
 const store = new Vuex.Store({

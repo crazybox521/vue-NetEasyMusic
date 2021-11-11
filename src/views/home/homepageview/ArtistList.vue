@@ -29,7 +29,6 @@
     <div>
       <Artist @loadMore="load" :list="artistList" :hasMore="hasMore"></Artist>
     </div>
-    <el-backtop target=".el-main" :bottom="100"></el-backtop>
   </div>
 </template>
 

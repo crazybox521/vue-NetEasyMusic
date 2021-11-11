@@ -13,8 +13,8 @@
     <el-table-column width="50">
       <i class="el-icon-download"></i>
     </el-table-column>
-    <el-table-column prop="name" label="音乐标题"> </el-table-column>
-    <el-table-column prop="ar[0].name" label="歌手" width="180">
+    <el-table-column prop="name" label="音乐标题" show-overflow-tooltip> </el-table-column>
+    <el-table-column prop="ar[0].name" show-overflow-tooltip label="歌手" width="180">
     </el-table-column>
     <el-table-column prop="al.name" label="专辑名"> </el-table-column>
     <el-table-column prop="dt" label="时长" width="180">

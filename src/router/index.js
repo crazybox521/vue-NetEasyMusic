@@ -17,8 +17,6 @@ const routes = [
         component: Layout,
         redirect: 'homepage',
         children: [
-            /* 搜索展示页 */
-            { path: "search", component: SearchList, },
             /* 发现音乐页 */
             {
                 path: "homepage",
@@ -31,6 +29,8 @@ const routes = [
                     { path: '/artistlist', component: ArtistList }//歌手页
                 ],
             },
+           
+            { path: "search/:key", component: SearchList, },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
             { path: "artistdetail/:id", component: ArtistDetail, },//歌单详情页
         ],

@@ -21,7 +21,7 @@
         style="width: 200px"
         placeholder="搜索"
         v-model="keywords"
-        @change="search"
+        @change="toSearch"
         clearable
         prefix-icon="el-icon-search"
       ></el-input>
@@ -35,24 +35,29 @@
 <script>
 import notifyMixin from '../../mixins/notifyMixin'
 export default {
-  mixins:[notifyMixin],
+  mixins: [notifyMixin],
   data() {
     return {
       keywords: ''
     }
   },
   methods: {
-    search() {
+    /* 去搜索页面 */
+    toSearch() {
       if (this.keywords == '') return
-      if (this.$route.path != '/search') this.$router.push('/search')
-      this.$store.commit('setKeywords', this.keywords)
+      if (this.$route.path != '/search')
+        this.$router.push('/search/' + this.keywords)
     },
+    /* 网页logo点击回调 */
     toHomePage() {
-      if (this.$route.path != '/homepage/personalrecom') this.$router.push('/homepage/personalrecom')
+      if (this.$route.path != '/personalrecom')
+        this.$router.push('/personalrecom')
     },
+    /* 前进后退 */
     goTo(step) {
       this.$router.go(step)
     },
+    /* 登录页面 */
     loginView() {
       this.notice()
     }

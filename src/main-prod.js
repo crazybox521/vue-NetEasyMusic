@@ -6,6 +6,7 @@ import store from './store/index'
 /* import './plugins/my-element' */
 
 import './assets/css/global.css'
+import './assets/css/my-element.css'
 
 Vue.config.productionTip = false
 

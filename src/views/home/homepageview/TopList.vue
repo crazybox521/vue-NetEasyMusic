@@ -103,7 +103,7 @@ export default {
       this.$store.commit('setCurrenMusicId', id)
       this.$store.commit('setPlayState', true)
       this.$store.commit('setCurrenIndex', index)
-    },
+    }
   }
 }
 </script>
@@ -112,41 +112,39 @@ export default {
 .guanfang-item {
   margin-bottom: 20px;
 }
-.guanfang-list {
-  .guanfang {
-    display: flex;
-    height: 160px;
+.guanfang {
+  display: flex;
+  height: 160px;
 
-    ul {
-      flex-grow: 1;
-      li {
-        height: 32px;
-        line-height: 32px;
-        color: #f00;
-        background-color: #ffffff;
-        &:nth-child(1) {
-          background-color: #f9f9f9;
-        }
-        &:nth-child(3) {
-          background-color: #efefef;
-        }
-        &:nth-child(4) {
-          color: #666;
-        }
-        &:nth-child(5) {
-          color: #666;
-          background-color: #f9f9f9;
-        }
-        &:hover {
-          background-color: #f4f4f4;
-        }
-        .geming {
-          color: #373737;
-        }
-        .zuozhe {
-          float: right;
-          color: #9b9b9b;
-        }
+  ul {
+    flex-grow: 1;
+    li {
+      height: 32px;
+      line-height: 32px;
+      color: #f00;
+      background-color: #ffffff;
+      &:nth-child(1) {
+        background-color: #f9f9f9;
+      }
+      &:nth-child(3) {
+        background-color: #efefef;
+      }
+      &:nth-child(4) {
+        color: #666;
+      }
+      &:nth-child(5) {
+        color: #666;
+        background-color: #f9f9f9;
+      }
+      &:hover {
+        background-color: #f4f4f4;
+      }
+      .geming {
+        color: #373737;
+      }
+      .zuozhe {
+        float: right;
+        color: #9b9b9b;
       }
     }
   }

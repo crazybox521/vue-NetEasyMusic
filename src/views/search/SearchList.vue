@@ -4,13 +4,11 @@
     <div class="font-bold">找到 {{ total }} 首单曲</div>
     <el-skeleton v-if="isLoading" :rows="16" animated />
     <MusicList v-else :list="seachList"></MusicList>
-    <el-empty v-if="total==0" :description="desInfo"></el-empty>
-    
+    <el-empty v-if="total == 0" :description="desInfo"></el-empty>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { search } from '../../api/api.js'
 import MusicList from '../../components/list/MusicList'
 export default {
@@ -28,23 +26,22 @@ export default {
       total: 0,
       /* 检索到的列表 */
       seachList: [],
-      isLoading:true
+      isLoading: true
     }
   },
   computed: {
-    ...mapState(['keywords']),
-    desInfo(){
-      return '很抱歉，未能找到与'+this.keywords+'有关的单曲'
+    desInfo() {
+      return '很抱歉，未能找到与' + this.searchInfo.keywords + '有关的单曲'
     }
   },
   watch: {
-    keywords() {
-      this.searchInfo.keywords = this.keywords
+    '$route.params.key'(val) {
+      this.searchInfo.keywords = val
       this.search()
     }
   },
   created() {
-    this.searchInfo.keywords = this.keywords
+    this.searchInfo.keywords = this.$route.params.key
     this.search()
   },
   methods: {
@@ -55,7 +52,7 @@ export default {
       if (res.code !== 200) return this.$message.error('请求失败')
       this.seachList = res.result.songs
       this.total = res.result.songCount
-      this.isLoading =false
+      this.isLoading = false
     }
   }
 }

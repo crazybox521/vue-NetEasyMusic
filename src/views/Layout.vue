@@ -22,6 +22,7 @@
         <div class="view-mian">
           <router-view></router-view>
         </div>
+        <el-backtop target=".el-main" :bottom="100"></el-backtop>
       </el-main>
       <!-- 抽屉显示播放列表 -->
       <el-drawer
@@ -44,8 +45,8 @@
           v-if="musicList.length != 0"
         >
           <el-table-column type="index" width="50"> </el-table-column>
-          <el-table-column prop="name" label="音乐标题"> </el-table-column>
-          <el-table-column prop="ar[0].name" label="歌手"> </el-table-column>
+          <el-table-column prop="name" show-overflow-tooltip label="音乐标题"> </el-table-column>
+          <el-table-column prop="ar[0].name" show-overflow-tooltip label="歌手"> </el-table-column>
           <el-table-column prop="dt" label="时长">
             <template v-slot="scope">
               {{ (scope.row.dt / 1000) | timeFormat }}
@@ -140,6 +141,7 @@ export default {
   height: 80vh;
   margin: 0;
   overflow-y: scroll;
+  scrollbar-width: thin;
   .view-mian {
     margin: 20px auto;
     max-width: 1260px;

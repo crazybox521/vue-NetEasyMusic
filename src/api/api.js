@@ -1,14 +1,14 @@
 import axios from "axios";
 import NProgress from 'nprogress'
 /* 根路径 */
-axios.defaults.baseURL = 'http://localhost:8080';
+// axios.defaults.baseURL = 'http://localhost:8080';
 // axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 /* 配置拦截器，在config中给header添加Authorization */
 axios.interceptors.request.use((config) => {
     NProgress.start();
-    config.headers.Authorization = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
+    /*  config.headers.Authorization = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '' */
     return config
 })
 
@@ -132,8 +132,35 @@ export const queryArtistDetail = (id) => {
 }
 
 /* 获取歌手热门50首 */
-export const getArtistTop =(id) => {
-    return axios.get('/artist/top/song',{
+export const getArtistTop = (id) => {
+    return axios.get('/artist/top/song', {
+        params: {
+            id
+        }
+    })
+}
+
+/* 获取歌手专辑 */
+export const getArtistAlbum = (id, limit=50, offset = 0) => {
+    return axios.get('/artist/album', {
+        params: {
+            id, limit, offset
+        }
+    })
+}
+
+/* 获取专辑内容 */
+export const getAlbumDetail =(id) => {
+    return axios.get('/album',{
+        params:{
+            id
+        }
+    })
+}
+
+/* 获取歌手描述 */
+export const getIntro=(id) => {
+    return axios.get('/artist/desc',{
         params:{
             id
         }
