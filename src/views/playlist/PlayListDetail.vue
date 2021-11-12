@@ -14,7 +14,7 @@
       <div class="detail-desc-info">
         <div class="info-title">
           <Tag text="歌单"></Tag>
-          <span class="mleft-12">{{ info.name }}</span>
+          <span class="mleft-12 font-20 font-bold">{{ info.name }}</span>
         </div>
         <div class="author">
           <div class="author-img">

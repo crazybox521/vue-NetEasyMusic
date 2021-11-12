@@ -7,8 +7,12 @@
       <div class="mleft-40 list-content">
         <div>
           <span class="font-bold">{{ albumInfo.name }}</span>
-          <button class="no-btn mleft-20 font-20" @click="playMusicAll"><i class="el-icon-video-play"></i></button>
-          <button class="no-btn mleft-20 font-20"><i class="el-icon-folder-add"></i></button>
+          <button class="no-btn mleft-20 font-20" @click="playMusicAll">
+            <i class="el-icon-video-play"></i>
+          </button>
+          <button class="no-btn mleft-20 font-20">
+            <i class="el-icon-folder-add"></i>
+          </button>
         </div>
         <el-table
           :data="disList"
@@ -26,9 +30,9 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="right" v-show="total>10">
+        <div class="right" v-show="total > 10">
           <button class="pointer no-btn mtop-10" @click="toAlbumDetail">
-            查看全部{{total}}首<i class="el-icon-arrow-right"></i>
+            查看全部{{ total }}首<i class="el-icon-arrow-right"></i>
           </button>
         </div>
       </div>
@@ -45,13 +49,13 @@ export default {
     disList() {
       return this.list.slice(0, 10)
     },
-    total(){
+    total() {
       return this.list.length
     }
   },
   methods: {
     toAlbumDetail() {
-      this.$router.push({ path: `/playlistdetail/${this.albumInfo.id}` })
+      this.$router.push({ path: `/albumdetail/${this.albumInfo.id}` })
     },
     //  播放音乐
     playMusic(row) {

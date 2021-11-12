@@ -10,6 +10,7 @@ import TopList from '../views/home/homepageview/TopList.vue'
 import PlayList from '../views/home/homepageview/PlayList.vue'
 import ArtistList from '../views/home/homepageview/ArtistList.vue'
 import ArtistDetail from '../views/artist/ArtistDetail.vue'
+import AlbumDetail from '../views/album/AlbumDetail.vue'
 Vue.use(VueRouter);
 const routes = [
     {
@@ -33,6 +34,7 @@ const routes = [
             { path: "search/:key", component: SearchList, },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
             { path: "artistdetail/:id", component: ArtistDetail, },//歌单详情页
+            { path: "albumdetail/:id", component: AlbumDetail, },//歌单详情页
         ],
     },
     { path: '*', component: NotFound }//404
