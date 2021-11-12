@@ -123,6 +123,16 @@ export default {
     }
     .info-btn {
       margin: 5px 0;
+     
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .info-btn{
+    display: flex;
+    flex-wrap: wrap;
+    .el-button{
+      margin: 5px;
     }
   }
 }

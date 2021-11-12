@@ -229,5 +229,12 @@ input[type='checkbox'] {
   .detail-search{
     display: none;
   }
+  .info-btn{
+    display: flex;
+    flex-wrap: wrap;
+    .el-button{
+      margin: 5px;
+    }
+  }
 }
 </style>
