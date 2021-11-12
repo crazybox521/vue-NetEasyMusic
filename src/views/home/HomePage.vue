@@ -91,7 +91,7 @@ export default {
     overflow-x:scroll;
     padding-left:0;
     text-align: center;
-    transition: all 1s linear;
+    transition: all .5s linear;
     li{
       width: 20%;
       white-space: nowrap;

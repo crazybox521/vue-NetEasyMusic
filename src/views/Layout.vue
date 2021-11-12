@@ -153,7 +153,6 @@ export default {
   bottom: 0;
   width: 200px;
   height: 100%;
-  z-index: 99;
 }
 
 .main-right {
@@ -170,13 +169,12 @@ export default {
   .view-mian {
     height: 100%;
     width: 90%;
-    
     margin: 20px auto;
     max-width: 1200px;
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .aside {
     display: none;
   }
