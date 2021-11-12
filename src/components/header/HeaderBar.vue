@@ -92,10 +92,19 @@ export default {
 }
 @media screen and (max-width:768px) {
   .btn-history{
-    display: none;
+    margin: 0;
+    /* display: none; */
+    .btn-circle{
+      &:nth-child(2){
+        display: none;
+      }
+    }
   }
   .img-h{
     display: none;
+  }
+  .search-input{
+    margin: 0;
   }
 }
 </style>

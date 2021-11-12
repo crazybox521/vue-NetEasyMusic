@@ -279,8 +279,8 @@ export default {
       width: 32px;
       border-radius: 50%;
       background-color: #f4f4f4;
+      text-align: center;
       .iconfont {
-        margin-left: 9px;
         font-size: 14px;
       }
     }
@@ -327,22 +327,22 @@ export default {
   }
 }
 @media screen and(max-width:768px) {
-  .song-info{
+  .song-info {
     width: 100px;
   }
-  .btn-other{
+  .btn-other {
     display: none;
   }
-  .time-progress{
+  .time-progress {
     display: none;
   }
-  .player-bar{
+  .player-bar {
     width: auto;
-    li{
-      &:nth-child(1){
+    li {
+      &:nth-child(1) {
         display: none;
       }
-      &:nth-child(5){
+      &:nth-child(5) {
         display: none;
       }
     }
