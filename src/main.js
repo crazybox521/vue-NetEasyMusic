@@ -38,7 +38,7 @@ new Vue({
   router,
   store,
   render: h => h(App),
-  beforeCreate() {
+  /* beforeCreate() {
     // 有关浏览器类型的信息都藏在USER-AGENT里面，首先读取navigator.userAgent里面的信息，为了方便利用toLowerCase方法转成小写的形式
     var sUserAgent = navigator.userAgent.toLowerCase();
     //调用match方法进行匹配属于哪一类浏览器，一下判断都是移动端浏览器
@@ -57,5 +57,5 @@ new Vue({
     } else {
       //Pc端进入不需要其他操作
     }
-  }
+  } */
 }).$mount('#app')

@@ -354,4 +354,26 @@ export default {
     }
   }
 }
+@media screen and(max-width:768px) {
+  .tag-btn{
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+  .layer-wrapper{
+    .layer{
+      width: 90vw;
+    }
+  }
+  .list-tag {
+  .tag-ul {
+    overflow-x: auto;
+    li {
+      height: 26px;
+      line-height: 26px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+  }
+}
+}
 </style>

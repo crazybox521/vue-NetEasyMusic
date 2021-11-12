@@ -149,4 +149,12 @@ export default {
     }
   }
 }
+@media screen and (max-width:768px){
+  .guanfang{
+    img{
+      width: 60px;
+      height: 60px;
+      }
+  }
+}
 </style>

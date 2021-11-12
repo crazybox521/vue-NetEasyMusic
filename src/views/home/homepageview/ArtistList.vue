@@ -1,6 +1,7 @@
 <template>
   <div class="artist-list mtop-60">
-    <div>
+    <button @click="openTag" class="hidden">打开列表</button>
+    <div class="tag-wrapper" ref="tagRef">
       <div class="redio-list">
         <span class="w-60">语种：</span>
         <el-radio-group v-model="queryInfo.area">
@@ -54,7 +55,8 @@ export default {
       artistData, // 列表项
       artistList: [], // 歌手列表
       isLoading: false, // 正在获取歌手列表
-      mode: 'first'
+      mode: 'first',
+      showTagH5: false
     }
   },
   created() {
@@ -92,6 +94,11 @@ export default {
       if (!this.hasMore) return this.$message.error('已经到底了')
       this.mode = 'more'
       this.queryInfo.offset = size + 30
+    },
+    openTag() {
+      if (!this.showTagH5) this.$refs.tagRef.style.display = 'block'
+      else this.$refs.tagRef.style.display = 'none'
+      this.showTagH5 =!this.showTagH5
     }
   }
 }
@@ -113,6 +120,26 @@ export default {
       width: 60px;
       height: 30px;
       line-height: 30px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .tag-wrapper {
+    display: none;
+  }
+  .hidden{
+    display: block;
+    margin-top:70px;
+  }
+  .redio-list {
+    .el-radio-group {
+      width: 80%;
+      .el-radio {
+        margin-left: 10px;
+        width: 40px;
+        height: 30px;
+        line-height: 30px;
+      }
     }
   }
 }

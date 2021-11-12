@@ -326,4 +326,26 @@ export default {
     display: block;
   }
 }
+@media screen and(max-width:768px) {
+  .song-info{
+    width: 100px;
+  }
+  .btn-other{
+    display: none;
+  }
+  .time-progress{
+    display: none;
+  }
+  .player-bar{
+    width: auto;
+    li{
+      &:nth-child(1){
+        display: none;
+      }
+      &:nth-child(5){
+        display: none;
+      }
+    }
+  }
+}
 </style>

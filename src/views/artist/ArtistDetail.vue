@@ -4,7 +4,7 @@
       <img :src="imgUrl" class="img-h img-radius-4" />
       <div class="info">
         <h2 class="font-24 font-bold">{{ artistInfo.name }}</h2>
-        <div>
+        <div class="info-btn">
           <el-button round>收藏</el-button>
           <el-button round>个人主页</el-button>
         </div>
@@ -160,4 +160,9 @@ export default {
 .mtop-60:nth-child(1) {
   margin-top: 10px;
 }
+@media screen and (max-width:768px) {
+  .artist-info .img-h{
+    display: none;
+  }
+} 
 </style>

@@ -76,12 +76,26 @@ export default {
   position: fixed;
   left: 200px;
   padding-left: 30px;
-  top: 9vh;
+  top: 60px;
   z-index: 99;
   background-color: #ffffff;
   align-items: center;
   li {
     margin-right: 20px;
+  }
+}
+@media screen and (max-width:768px) {
+  .router-list{
+    left: 0;
+    width: 100%;
+    overflow-x:scroll;
+    padding-left:0;
+    text-align: center;
+    transition: all 1s linear;
+    li{
+      width: 20%;
+      white-space: nowrap;
+    }
   }
 }
 .home-page-view {

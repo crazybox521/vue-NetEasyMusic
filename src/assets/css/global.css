@@ -10,16 +10,15 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    height: 100vh;
-    min-width: 1200px;
 }
 
 @media screen and (max-width:750px) {
-    #app {
-        min-width: none;
-    }
+    
 }
 
+.hidden{
+    display: none;
+}
 /* 全局图片填满样式 */
 .img {
     width: 100%;
@@ -192,13 +191,21 @@
     /* 水平宽度 */
     height: 8px;
 }
-
+@media screen and (max-width:768px) {
+    ::-webkit-scrollbar {
+       
+        width: 2px;
+        
+        height: 1px;
+    }
+}
 /* 滚动条内滑块 */
 ::-webkit-scrollbar-thumb {
     border-radius: 7px;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #E8E8E8;
 }
+
 
 /* 全局flex垂直居中加空隙分布中间  */
 .flex-around {

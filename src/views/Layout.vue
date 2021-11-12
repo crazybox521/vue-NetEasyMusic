@@ -1,12 +1,8 @@
 <template>
-  <el-container class="layout-container">
-    <!-- 头部 -->
-    <el-header>
-      <HeaderBar></HeaderBar>
-    </el-header>
-    <el-container>
-      <!-- 左侧导航 -->
-      <el-aside width="200px">
+  <div class="layout">
+    <div class="header"><HeaderBar></HeaderBar></div>
+    <div class="main">
+      <div class="aside">
         <el-menu :default-active="activeMenu" @select="handleSelect">
           <el-menu-item
             :index="item.path"
@@ -16,15 +12,13 @@
             <span slot="title">{{ item.title }}</span>
           </el-menu-item>
         </el-menu>
-      </el-aside>
-      <!-- 主体 -->
-      <el-main>
+      </div>
+      <div class="main-right">
         <div class="view-mian">
           <router-view></router-view>
         </div>
-        <el-backtop target=".el-main" :bottom="100"></el-backtop>
-      </el-main>
-      <!-- 抽屉显示播放列表 -->
+        <el-backtop target=".view-mian" :bottom="100"></el-backtop>
+      </div>
       <el-drawer
         title="当前播放"
         :visible.sync="drawerMusicList"
@@ -45,8 +39,10 @@
           v-if="musicList.length != 0"
         >
           <el-table-column type="index" width="50"> </el-table-column>
-          <el-table-column prop="name" show-overflow-tooltip label="音乐标题"> </el-table-column>
-          <el-table-column prop="ar[0].name" show-overflow-tooltip label="歌手"> </el-table-column>
+          <el-table-column prop="name" show-overflow-tooltip label="音乐标题">
+          </el-table-column>
+          <el-table-column prop="ar[0].name" show-overflow-tooltip label="歌手">
+          </el-table-column>
           <el-table-column prop="dt" label="时长">
             <template v-slot="scope">
               {{ (scope.row.dt / 1000) | timeFormat }}
@@ -54,13 +50,12 @@
           </el-table-column>
         </el-table>
       </el-drawer>
-    </el-container>
-    <el-footer>
-      <!-- 底部播放器 -->
+    </div>
+    <div class="footer">
       <div class="div-line"></div>
       <FooterBar></FooterBar>
-    </el-footer>
-  </el-container>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -70,7 +65,7 @@ import FooterBar from '../components/footer/FooterBar.vue'
 import HeaderBar from '../components/header/HeaderBar.vue'
 import menuList from '../config/menuList'
 export default {
-  mixins:[notifyMixin],
+  mixins: [notifyMixin],
   components: {
     FooterBar,
     HeaderBar
@@ -122,32 +117,78 @@ export default {
 
 <style lang="less" scoped>
 @import '../assets/less/lessConfig.less';
-.el-header {
-  height: 9vh !important;
+
+.layout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  position: absolute;
   background-color: @headRed;
-  color: @bgWhite;
+  height: 60px;
+  width: 100%;
+  top: 0;
 }
-.el-footer {
-  height: 11vh !important;
-  background-color: @bgWhite;
+
+.main {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+  height: auto;
+  width: auto;
 }
-.el-aside {
-  padding-top: 16px;
+
+.aside {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  height: 100%;
 }
-.el-main {
-  background-color: #ffffff;
-  color: #333;
-  padding: 0;
-  height: 80vh;
-  margin: 0;
+
+.main-right {
+  position: absolute;
+  left: 200px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: auto;
   overflow-y: scroll;
+  overflow-x: hidden;
   scrollbar-width: thin;
   .view-mian {
+    height: 100%;
+    width: 90%;
+    
     margin: 20px auto;
-    max-width: 1260px;
+    max-width: 1200px;
   }
 }
-.layout-container {
-  height: 100%;
+
+@media screen and (max-width: 800px) {
+  .aside {
+    display: none;
+  }
+
+  .main-right {
+    left: 0;
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
 }
 </style>

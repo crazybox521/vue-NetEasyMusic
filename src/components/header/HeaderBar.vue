@@ -3,9 +3,8 @@
   <div class="header-bar">
     <img
       @click="toHomePage"
-      style="height: 100%"
+      class="img-h"
       src="../../assets/img/logo.png"
-      alt=""
     />
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
@@ -73,6 +72,7 @@ export default {
 }
 .btn-history {
   margin-left: 100px;
+  display: flex;
   /* 圆按钮 */
   .btn-circle {
     display: inline-block;
@@ -89,5 +89,13 @@ export default {
 }
 .search-input {
   margin-left: 10px;
+}
+@media screen and (max-width:768px) {
+  .btn-history{
+    display: none;
+  }
+  .img-h{
+    display: none;
+  }
 }
 </style>

@@ -225,4 +225,9 @@ input[type='checkbox'] {
   color: #34538b;
   cursor: pointer;
 }
+@media screen and (max-width:768px) {
+  .detail-search{
+    display: none;
+  }
+}
 </style>
