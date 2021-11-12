@@ -1,6 +1,6 @@
 <template>
   <div class="artist-list mtop-60">
-    <button @click="openTag" class="hidden">打开列表</button>
+    <button @click="openTag" class="hidden">{{showH5Info}}列表</button>
     <div class="tag-wrapper" ref="tagRef">
       <div class="redio-list">
         <span class="w-60">语种：</span>
@@ -40,6 +40,11 @@ import { getArtistList } from '../../../api/api'
 export default {
   components: {
     Artist
+  },
+  computed:{
+    showH5Info(){
+      return this.showTagH5?'关闭':'打开'
+    }
   },
   data() {
     return {

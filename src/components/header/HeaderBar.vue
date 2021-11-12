@@ -92,7 +92,7 @@ export default {
 }
 @media screen and (max-width:768px) {
   .btn-history{
-    margin: 0;
+    margin-left: 10px;
     /* display: none; */
     .btn-circle{
       &:nth-child(2){

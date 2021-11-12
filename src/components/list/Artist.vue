@@ -14,7 +14,7 @@
       >
         <el-image
           lazy
-          class="img img-h img-radius-4"
+          class="img  img-radius-4"
           :src="item.img1v1Url + '?param=200y200'"
         />
         <div class="text-hidden">

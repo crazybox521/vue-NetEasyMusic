@@ -126,6 +126,7 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
+  min-width: 300px;
 }
 
 .header {
@@ -152,6 +153,7 @@ export default {
   bottom: 0;
   width: 200px;
   height: 100%;
+  z-index: 99;
 }
 
 .main-right {
