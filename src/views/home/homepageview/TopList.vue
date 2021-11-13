@@ -22,8 +22,8 @@
               class="default-cursor"
               @dblclick="playMusic(music.id, listIndex, index)"
             >
-              <span class="mleft-12">{{ index + 1 }}</span
-              ><span class="mleft-12 geming">{{ music.name }}</span
+              <span class="mleft-12 text-hidden">{{ index + 1 }}</span
+              ><span class="mleft-12 geming text-hidden">{{ music.name }}</span
               ><span class="zuozhe mright-10">{{ music.ar[0].name }}</span>
             </li>
           </ul>
@@ -139,6 +139,9 @@ export default {
       &:hover {
         background-color: #f4f4f4;
       }
+      span{
+        display: inline-block;
+      }
       .geming {
         color: #373737;
       }
@@ -149,11 +152,20 @@ export default {
     }
   }
 }
+@media screen and(max-width:1100px) {
+  .geming{
+    max-width: 280px;
+  }
+}
 @media screen and (max-width:768px){
   .guanfang{
     img{
       width: 60px;
       height: 60px;
+      }
+      .geming{
+        
+        width: 80px;
       }
   }
 }

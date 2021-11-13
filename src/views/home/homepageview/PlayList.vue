@@ -183,6 +183,7 @@ export default {
       console.log(this.pageInfo.currentPage)
       this.pageInfo.currentPage = val
       this.queryInfo.offset = (val - 1) * 50
+      document.querySelector('.main-right').scrollTop=0
       this.getPlayList()
     },
     /* 获取精品歌单第一首封面展示 */

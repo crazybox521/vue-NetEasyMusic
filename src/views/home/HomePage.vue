@@ -1,4 +1,5 @@
 <template>
+<!-- 发现音乐页容器及导航 -->
   <div class="home-page">
     <ul class="router-list">
       <li
@@ -20,7 +21,7 @@
 <script>
 import notifyMixin from '../../mixins/notifyMixin'
 export default {
-  mixins:[notifyMixin],
+  mixins: [notifyMixin],
   data() {
     return {
       routeList: [
@@ -84,15 +85,15 @@ export default {
     margin-right: 20px;
   }
 }
-@media screen and (max-width:768px) {
-  .router-list{
+@media screen and (max-width: 768px) {
+  .router-list {
     left: 0;
     width: 100%;
-    overflow-x:scroll;
-    padding-left:0;
+    overflow-x: scroll;
+    padding-left: 0;
     text-align: center;
-    transition: all .5s linear;
-    li{
+    transition: all 0.5s linear;
+    li {
       width: 20%;
       white-space: nowrap;
     }

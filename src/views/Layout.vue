@@ -3,7 +3,7 @@
     <div class="header"><HeaderBar></HeaderBar></div>
     <div class="main">
       <div class="aside">
-        <el-menu :default-active="activeMenu" @select="handleSelect">
+        <el-menu router :default-active="activeMenu" @select="handleSelect">
           <el-menu-item
             :index="item.path"
             v-for="item in menuList"
@@ -38,7 +38,14 @@
           @row-dblclick="playMusic"
           v-if="musicList.length != 0"
         >
-          <el-table-column type="index" width="50"> </el-table-column>
+          <el-table-column type="index" width="50">
+            <template v-slot="scope">
+              <span style="color: red" v-if="currenMusicId == scope.row.id"
+                ><i class="iconfont icon-sound"></i
+              ></span>
+              <span v-else>{{ scope.$index + 1 }}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="name" show-overflow-tooltip label="音乐标题">
           </el-table-column>
           <el-table-column prop="ar[0].name" show-overflow-tooltip label="歌手">
@@ -72,28 +79,30 @@ export default {
   },
   data() {
     return {
-      menuList,
       activeMenu: '/personalrecom'
     }
   },
   computed: {
-    ...mapState(['musicList', 'drawerMusicList']),
+    ...mapState(['musicList', 'drawerMusicList', 'currenMusicId', 'isLogin']),
     length() {
       return this.musicList.length
+    },
+    menuList() {
+      return this.isLogin
+        ? menuList
+        : menuList.filter((item) => !item.checkLogin)
     }
+  },
+  created() {
+    if (window.localStorage.getItem('activeMenu'))
+      this.activeMenu = window.localStorage.getItem('activeMenu')
   },
   methods: {
     /* 导航 */
     handleSelect(key, keyPath) {
-      if (this.$route.path == key) return
-      if (key !== '/personalrecom') {
-        this.activeMenu = '/personalrecom'
-        console.log(this.activeMenu)
-        this.notice()
-        return
-      }
-      this.$router.push(key)
       console.log(key, keyPath)
+      window.localStorage.setItem('activeMenu', key)
+      this.activeMenu = key
     },
     handMusicListClose() {
       this.$store.commit('setDrawerMusicList', false)

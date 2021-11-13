@@ -2,7 +2,7 @@
   <div class="album-list mtop-60">
     <div class="list-container">
       <div style="width: 200px">
-        <img class="img img-radius-4" @click="toAlbumDetail" :src="albumInfo.picUrl" />
+        <img class="img img-radius-4" @click="toAlbumDetail" :src="albumInfo.picUrl+'?param=300y300'" />
       </div>
       <div class="mleft-40 list-content">
         <div>

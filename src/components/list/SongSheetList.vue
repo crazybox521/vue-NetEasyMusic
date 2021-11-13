@@ -2,11 +2,19 @@
   <ul class="song-sheet-list">
     <li
       class="song-sheet-item"
-      v-for="(item,index) in playlist"
-      :key="item.id+''+index"
+      v-for="(item, index) in playlist"
+      :key="item.id + '' + index"
       @click="toPlayListDetail(item.id)"
     >
-      <el-image lazy class="img img-radius-4" :src="item.picUrl?item.picUrl:item.coverImgUrl" />
+      <el-image
+        lazy
+        class="img img-radius-4"
+        :src="
+          item.picUrl
+            ? item.picUrl + '?param=300y300'
+            : item.coverImgUrl + '?param=300y300'
+        "
+      />
       <div class="text-hidden">
         {{ item.name }}
       </div>

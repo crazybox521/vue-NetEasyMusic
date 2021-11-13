@@ -190,3 +190,12 @@ export const getAcount =() => {
 export const getRecommend=() => {
     return axios.get('/recommend/resource')
 }
+
+/* 获取喜欢的音乐ID列表 */
+export const getLikeIdList =(uid) => {
+    return axios.get('/likelist',{
+        params:{
+            uid
+        }
+    })
+}

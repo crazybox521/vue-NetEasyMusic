@@ -1,4 +1,5 @@
 <template>
+<!-- 歌单详情 -->
   <div class="play-list-detail" v-if="this.info.creator">
     <!-- 歌单图片及信息 -->
     <div class="detail-desc">

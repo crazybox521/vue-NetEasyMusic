@@ -24,29 +24,31 @@
     <div class="login-info mleft-12" @click="loginView">
       <el-avatar icon="el-icon-user-solid" :src="avatarUrl"></el-avatar>
     </div>
-    <div class="login-info mleft-10 font-14 text-hidden">{{name}}</div>
+    <div class="login-info mleft-10 font-14 text-hidden">{{ name }}</div>
   </div>
 </template>
 
 <script>
-import {getAcount} from '../../api/api'
+import { mapState } from 'vuex'
+import { getAcount } from '../../api/api'
 export default {
   data() {
     return {
       keywords: '',
-      account:{},
-      info:{}
+      account: {},
+      info: {}
     }
   },
-  computed:{
-    name(){
-      return this.info.nickname?this.info.nickname:'未登录'
+  computed: {
+    ...mapState(['isLogin']),
+    name() {
+      return this.info.nickname ? this.info.nickname : '未登录'
     },
-    avatarUrl(){
-      return this.info.avatarUrl?this.info.avatarUrl:''
+    avatarUrl() {
+      return this.info.avatarUrl ? this.info.avatarUrl : ''
     }
   },
-  created(){
+  created() {
     this.getAcount()
   },
   methods: {
@@ -67,14 +69,16 @@ export default {
     },
     /* 登录页面 */
     loginView() {
-      this.$router.push('/login')
+      if (!this.isLogin) this.$router.push('/login')
     },
     /* 获取登录信息 */
-    async getAcount(){
-      const {data:res} =await getAcount()
-      if(res.code!==200) return 
-      this.account=res.account
-      this.info=res.profile
+    async getAcount() {
+      const { data: res } = await getAcount()
+      if (res.code !== 200) return
+      this.account = res.account
+      this.info = res.profile
+      this.$store.commit('setIsLogin', true)
+      this.$store.commit('setLoginInfo',res)
     }
   }
 }
@@ -107,7 +111,7 @@ export default {
 .search-input {
   margin-left: 10px;
 }
-.login-info{
+.login-info {
   max-width: 4rem;
 }
 @media screen and (max-width: 768px) {

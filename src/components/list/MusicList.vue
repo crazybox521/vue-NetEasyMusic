@@ -9,7 +9,12 @@
     v-if="isDisplay"
     @row-dblclick="playMusic"
   >
-    <el-table-column type="index" width="50"> </el-table-column>
+    <el-table-column type="index" width="50"> 
+      <template v-slot ="scope">
+        <span style="color:red;" v-if="currenMusicId==scope.row.id"><i class="iconfont icon-sound"></i></span>
+        <span v-else >{{scope.$index+1}}</span>
+      </template>
+    </el-table-column>
     <el-table-column width="50">
       <i class="el-icon-download"></i>
     </el-table-column>
@@ -30,7 +35,7 @@ import { mapState } from 'vuex'
 export default {
   props: ['list'],
   computed: {
-    ...mapState(['musicList']),
+    ...mapState(['musicList','currenMusicId']),
     isDisplay() {
       return this.list ? true : false
     }
