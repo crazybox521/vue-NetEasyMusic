@@ -12,7 +12,8 @@ module.exports = {
                 'vue-router': 'VueRouter',
                 axios: 'axios',
                 nprogress: 'NProgress',
-                vuex:'Vuex'
+                vuex:'Vuex',
+                'js-md5':'md5'
             })
 
             config.plugin('html').tap(args => {

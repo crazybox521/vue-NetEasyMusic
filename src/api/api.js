@@ -166,3 +166,27 @@ export const getIntro=(id) => {
         }
     })
 }
+
+/* 手机号密码登录 */
+export const doLoginByPhone =(phone,md5_password) => {
+    return axios.get('/login/cellphone',{
+        params:{
+            phone,md5_password
+        }
+    })
+}
+
+/* 获取登录状态 */
+export const getLoginStatus =() => {
+    return axios.get('/login/status')
+}
+
+/* 获取账号信息 */
+export const getAcount =() => {
+    return axios.get('/user/account')
+}
+
+/* 获取日推歌单 */
+export const getRecommend=() => {
+    return axios.get('/recommend/resource')
+}

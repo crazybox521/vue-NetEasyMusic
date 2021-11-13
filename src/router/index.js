@@ -1,6 +1,7 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Layout from "../views/Layout.vue"
+import Login from "../views/Login.vue"
 import NotFound from "../views/NotFound.vue"
 import HomePage from "../views/home/HomePage.vue"
 import SearchList from "../views/search/SearchList.vue"
@@ -37,6 +38,7 @@ const routes = [
             { path: "albumdetail/:id", component: AlbumDetail, },//歌单详情页
         ],
     },
+    {path:'/login',component:Login},
     { path: '*', component: NotFound }//404
 ]
 

@@ -1,11 +1,7 @@
 <template>
   <!-- 头部工具栏区域组件 -->
   <div class="header-bar">
-    <img
-      @click="toHomePage"
-      class="img-h"
-      src="../../assets/img/logo.png"
-    />
+    <img @click="toHomePage" class="img-h" src="../../assets/img/logo.png" />
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
         <i class="iconfont icon-arrow-left-bold"></i>
@@ -25,20 +21,33 @@
         prefix-icon="el-icon-search"
       ></el-input>
     </div>
-    <div class="login mleft-20">
-      <el-button type="danger" @click="loginView" round>未登录</el-button>
+    <div class="login-info mleft-12" @click="loginView">
+      <el-avatar icon="el-icon-user-solid" :src="avatarUrl"></el-avatar>
     </div>
+    <div class="login-info mleft-10 font-14 text-hidden">{{name}}</div>
   </div>
 </template>
 
 <script>
-import notifyMixin from '../../mixins/notifyMixin'
+import {getAcount} from '../../api/api'
 export default {
-  mixins: [notifyMixin],
   data() {
     return {
-      keywords: ''
+      keywords: '',
+      account:{},
+      info:{}
     }
+  },
+  computed:{
+    name(){
+      return this.info.nickname?this.info.nickname:'未登录'
+    },
+    avatarUrl(){
+      return this.info.avatarUrl?this.info.avatarUrl:''
+    }
+  },
+  created(){
+    this.getAcount()
   },
   methods: {
     /* 去搜索页面 */
@@ -58,7 +67,14 @@ export default {
     },
     /* 登录页面 */
     loginView() {
-      this.notice()
+      this.$router.push('/login')
+    },
+    /* 获取登录信息 */
+    async getAcount(){
+      const {data:res} =await getAcount()
+      if(res.code!==200) return 
+      this.account=res.account
+      this.info=res.profile
     }
   }
 }
@@ -69,6 +85,7 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
+  color: #ffffff;
 }
 .btn-history {
   margin-left: 100px;
@@ -90,20 +107,23 @@ export default {
 .search-input {
   margin-left: 10px;
 }
-@media screen and (max-width:768px) {
-  .btn-history{
+.login-info{
+  max-width: 4rem;
+}
+@media screen and (max-width: 768px) {
+  .btn-history {
     margin-left: 10px;
     /* display: none; */
-    .btn-circle{
-      &:nth-child(2){
+    .btn-circle {
+      &:nth-child(2) {
         display: none;
       }
     }
   }
-  .img-h{
+  .img-h {
     display: none;
   }
-  .search-input{
+  .search-input {
     margin: 0;
   }
 }

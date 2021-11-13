@@ -19,6 +19,9 @@ const state = {
         totalTime:0,
         currenTime:0
     },
+    /* 轮播图的高度 */
+    bannerHeight:200,
+    isLogin:false
 }
 
 const mutations = {
@@ -43,7 +46,12 @@ const mutations = {
     setCurrenTime(state,payload){
         state.currenMusicInfo.currenTime=payload
     },
-
+    setBannerHeight(state,payload){
+        state.bannerHeight=payload
+    },
+    setIsLogin(state,payload){
+        state.isLogin =payload
+    }
 }
 
 const store = new Vuex.Store({

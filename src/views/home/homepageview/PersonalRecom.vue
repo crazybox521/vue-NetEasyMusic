@@ -1,7 +1,7 @@
 <template>
   <div class="personal-recom mtop-60">
     <div class="swiper-wrapper">
-      <el-carousel :interval="4000" type="card" height="200px">
+      <el-carousel :interval="4000" type="card" :height="bannerHeight+'px'">
         <el-carousel-item v-for="item in imgList" :key="item.imageUrl">
           <img class="img img-h" :src="item.imageUrl" @click="open(item.url)"/>
         </el-carousel-item>
@@ -9,7 +9,13 @@
     </div>
     <div class="play-list">
       <h2 class="font-20 font-bold">
-        推荐歌单 <i class="iconfont icon-arrow-right"></i>
+        热门推荐 <i class="iconfont icon-arrow-right"></i>
+      </h2>
+      <SongSheetList :playlist="recSongList"></SongSheetList>
+    </div>
+    <div class="play-list" v-if="isLogin">
+      <h2 class="font-20 font-bold">
+        个性化推荐 <i class="iconfont icon-arrow-right"></i>
       </h2>
       <SongSheetList :playlist="recSongList"></SongSheetList>
     </div>
@@ -17,6 +23,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getBanner, getPersonalized } from '../../../api/api'
 import SongSheetList from '../../../components/list/SongSheetList.vue'
 export default {
@@ -33,6 +40,7 @@ export default {
     this.getImgList()
     this.getRecSongList(10)
   },
+  computed:mapState(['bannerHeight','isLogin']),
   methods: {
     /* 个性推荐页 */
     // 轮播图

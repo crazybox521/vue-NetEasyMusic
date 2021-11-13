@@ -174,6 +174,14 @@ export default {
   }
 }
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .aside {
     display: none;
@@ -182,13 +190,5 @@ export default {
   .main-right {
     left: 0;
   }
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 80px;
-  width: 100%;
 }
 </style>

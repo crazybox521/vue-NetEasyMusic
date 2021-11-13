@@ -20,7 +20,7 @@
 }
 
 /* 自定义头部输入框 */
-.header-bar .el-input__inner {
+.search-input .el-input__inner {
     height: 36px;
     line-height: 36px;
     background-color: #e13e3e;
