@@ -2,6 +2,7 @@ import axios from "axios";
 import NProgress from 'nprogress'
 /* 根路径 */
 // axios.defaults.baseURL = 'http://localhost:8080';
+/* token */
 // axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -38,6 +39,15 @@ export const checkMusic = () => {
  */
 export const getMusicUrl = (id) => {
     return axios.get('/song/url', {
+        params: {
+            id
+        }
+    })
+}
+
+/* 获取音乐歌词 */
+export const getLyric = (id) => {
+    return axios.get('/lyric', {
         params: {
             id
         }
@@ -141,7 +151,7 @@ export const getArtistTop = (id) => {
 }
 
 /* 获取歌手专辑 */
-export const getArtistAlbum = (id, limit=50, offset = 0) => {
+export const getArtistAlbum = (id, limit = 50, offset = 0) => {
     return axios.get('/artist/album', {
         params: {
             id, limit, offset
@@ -150,52 +160,79 @@ export const getArtistAlbum = (id, limit=50, offset = 0) => {
 }
 
 /* 获取专辑内容 */
-export const getAlbumDetail =(id) => {
-    return axios.get('/album',{
-        params:{
+export const getAlbumDetail = (id) => {
+    return axios.get('/album', {
+        params: {
             id
         }
     })
 }
 
 /* 获取歌手描述 */
-export const getIntro=(id) => {
-    return axios.get('/artist/desc',{
-        params:{
+export const getIntro = (id) => {
+    return axios.get('/artist/desc', {
+        params: {
             id
         }
     })
 }
 
 /* 手机号密码登录 */
-export const doLoginByPhone =(phone,md5_password) => {
-    return axios.get('/login/cellphone',{
-        params:{
-            phone,md5_password
+export const doLoginByPhone = (phone, md5_password) => {
+    return axios.get('/login/cellphone', {
+        params: {
+            phone, md5_password
         }
     })
 }
 
 /* 获取登录状态 */
-export const getLoginStatus =() => {
+export const getLoginStatus = () => {
     return axios.get('/login/status')
 }
 
 /* 获取账号信息 */
-export const getAcount =() => {
+export const getAcount = () => {
     return axios.get('/user/account')
 }
 
 /* 获取日推歌单 */
-export const getRecommend=() => {
+export const getRecommend = () => {
     return axios.get('/recommend/resource')
 }
 
 /* 获取喜欢的音乐ID列表 */
-export const getLikeIdList =(uid) => {
-    return axios.get('/likelist',{
-        params:{
+export const getLikeIdList = (uid) => {
+    return axios.get('/likelist', {
+        params: {
             uid
         }
     })
+}
+
+/* 下载 */
+export const downloadMusic = (url, fileName) => {
+
+    axios
+        .get(
+            url, {
+            responseType: "blob"
+        })
+        .then((res) => {
+            let blob = res.data;
+            let href = URL.createObjectURL(blob);
+            console.log(href);
+            let a = document.createElement("a");
+            a.href = href;
+            a.download = fileName
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+        })
+        .catch((err) => {
+            console.log(err);
+            console.log("下载失败,请稍后重试!");
+        });
+
 }

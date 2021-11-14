@@ -1,5 +1,5 @@
 <template>
-<!-- 歌单详情 -->
+  <!-- 歌单详情 -->
   <div class="play-list-detail" v-if="this.info.creator">
     <!-- 歌单图片及信息 -->
     <div class="detail-desc">
@@ -85,7 +85,7 @@
       </div>
     </div>
     <MusicList ref="listRef" :list="list"></MusicList>
-    <div v-if="isShowMoreBtn" class="margin-center w-300 mtop-10">
+    <div v-if="isShowMoreBtn" class="margin-center w-300 more-btn">
       <span>登录</span>
       <span>或</span>
       <span>点击加载完整歌单</span>
@@ -123,6 +123,7 @@ export default {
     }
   },
   created() {
+    document.querySelector('.main-right').scrollTop = 0
     this.getPlayList(this.$route.params.id)
   },
   mounted() {},
@@ -192,6 +193,11 @@ export default {
     }
   }
 }
+.more-btn {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #bbb;
+}
 
 /* 文字展开收起效果 */
 .element {
@@ -226,14 +232,14 @@ input[type='checkbox'] {
   color: #34538b;
   cursor: pointer;
 }
-@media screen and (max-width:768px) {
-  .detail-search{
+@media screen and (max-width: 768px) {
+  .detail-search {
     display: none;
   }
-  .info-btn{
+  .info-btn {
     display: flex;
     flex-wrap: wrap;
-    .el-button{
+    .el-button {
       margin: 5px;
     }
   }

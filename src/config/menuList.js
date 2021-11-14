@@ -33,7 +33,7 @@ export default [{
     {
         path: '/zuijin',
         title: '最近播放',
-        checkLogin:false
+        checkLogin:false   
     },
     {
         path: '/like',

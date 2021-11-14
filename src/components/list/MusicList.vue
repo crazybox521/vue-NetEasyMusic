@@ -15,9 +15,6 @@
         <span v-else >{{scope.$index+1}}</span>
       </template>
     </el-table-column>
-    <el-table-column width="50">
-      <i class="el-icon-download"></i>
-    </el-table-column>
     <el-table-column prop="name" label="音乐标题" show-overflow-tooltip> </el-table-column>
     <el-table-column prop="ar[0].name" show-overflow-tooltip label="歌手" width="180">
     </el-table-column>

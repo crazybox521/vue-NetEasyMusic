@@ -20,7 +20,7 @@ export default {
       /* 搜索分页信息 */
       searchInfo: {
         keywords: '',
-        limit: 20,
+        limit: 30,
         offset: 0
       },
       total: 0,

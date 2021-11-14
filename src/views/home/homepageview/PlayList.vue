@@ -183,7 +183,7 @@ export default {
       console.log(this.pageInfo.currentPage)
       this.pageInfo.currentPage = val
       this.queryInfo.offset = (val - 1) * 50
-      document.querySelector('.main-right').scrollTop=0
+      document.querySelector('.main-right').scrollTop = 0
       this.getPlayList()
     },
     /* 获取精品歌单第一首封面展示 */
@@ -356,25 +356,25 @@ export default {
   }
 }
 @media screen and(max-width:768px) {
-  .tag-btn{
+  .tag-btn {
     padding: 0 10px;
     white-space: nowrap;
   }
-  .layer-wrapper{
-    .layer{
+  .layer-wrapper {
+    .layer {
       width: 90vw;
     }
   }
   .list-tag {
-  .tag-ul {
-    overflow-x: auto;
-    li {
-      height: 26px;
-      line-height: 26px;
-      white-space: nowrap;
-      cursor: pointer;
+    .tag-ul {
+      overflow-x: auto;
+      li {
+        height: 26px;
+        line-height: 26px;
+        white-space: nowrap;
+        cursor: pointer;
+      }
     }
   }
-}
 }
 </style>

@@ -63,7 +63,6 @@ export default {
   },
   data() {
     return {
-      info: {},
       key: '',
       likeList: []
     }
@@ -106,6 +105,7 @@ export default {
       const { data: res } = await getMusicListByIds(ids)
       if (res.code !== 200) return
       this.likeList = res.songs
+      console.log(this.likeList)
     }
   }
 }

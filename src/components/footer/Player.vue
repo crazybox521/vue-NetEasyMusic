@@ -3,8 +3,13 @@
   <div class="player">
     <!-- 歌曲信息 -->
     <div class="song-info">
-      <img v-if="imgInfo.imgUrl" :src="imgInfo.imgUrl" alt="" />
-      <i v-else class="iconfont icon-wangyiyun1"></i>
+      <img
+        class="pointer"
+        v-if="imgInfo.imgUrl"
+        :src="imgInfo.imgUrl"
+        @click="openPlayView"
+      />
+      <i v-else class="iconfont icon-wangyiyun1" @click="openPlayView"></i>
       <ul class="au-info">
         <li class="font-14 w-200 text-hidden">{{ imgInfo.name }}</li>
         <li class="font-12 w-200 text-hidden">{{ imgInfo.author }}</li>
@@ -41,6 +46,9 @@
     </div>
     <div class="btn-other">
       <!-- 音量按钮 -->
+      <div class="dowmload">
+        <i class="el-icon-download volume-icon mright-20" @click="download"></i>
+      </div>
       <div class="volume">
         <div @click="isMute = !isMute">
           <i
@@ -62,7 +70,52 @@
         ></i>
       </div>
     </div>
-
+    <!-- 播放界面 -->
+    <el-drawer
+      :visible.sync="PlayViewDrawer"
+      direction="btt"
+      size="100%"
+      :before-close="handleClose"
+      :show-close="false"
+    >
+      <template #title>
+        <div>
+          <i
+            class="el-icon-arrow-down pointer"
+            @click="PlayViewDrawer = false"
+          ></i>
+        </div>
+      </template>
+      <div class="play-view">
+        <div class="music-info">
+          <div class="music-title">{{imgInfo.name}}</div>
+          <div class="music-author">{{imgInfo.author}}</div>
+          <div class="lyric-view">
+            <div class="img-wrap">
+              <div class="changzhen">
+                <img src="../../assets/img/changzhen.png" alt="" />
+              </div>
+              <div class="changpian">
+                <div class="changpian-wrap">
+                  <img :src="imgInfo.imgUrl" />
+                </div>
+              </div>
+            </div>
+            <div class="lyric-wrap">
+              <p>1111111</p>
+              <p>1111111</p>
+              <p>1111111</p>
+              <p class="lyric-active">2222222</p>
+              <p>3333333</p>
+              <p>3333333</p>
+              <p>3333333</p>
+              <p>3333333</p>
+            </div>
+          </div>
+        </div>
+        <div class="comment-view"></div>
+      </div>
+    </el-drawer>
     <audio
       ref="audioRef"
       :src="musicUrl"
@@ -75,7 +128,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMusicUrl } from '../../api/api'
+import { getMusicUrl, downloadMusic,getLyric } from '../../api/api'
 import notifyMixin from '../../mixins/notifyMixin'
 export default {
   mixins: [notifyMixin],
@@ -92,12 +145,13 @@ export default {
         name: '未知歌名',
         author: '未知歌手名'
       },
-      curren: 0
+      curren: 0, //进度条的百分比
+      PlayViewDrawer: true,
+      lyric:''
     }
   },
   computed: {
     ...mapState([
-      // 映射 this.isPlay 为 store.state.isPlay
       'isPlay',
       'currenMusicId',
       'currenIndex',
@@ -106,14 +160,17 @@ export default {
     ])
   },
   watch: {
+    /* 通过Vuex管理的播放状态,audio会自动播放 */
     isPlay() {
-      if (!this.imgUrl) return
+      /* 由于misicUrl第一次是状态改变后获取，所以第一次改变不要进入监听 */
+      if (!this.musicUrl) return
       if (this.isPlay) {
         this.$refs.audioRef.play()
       } else {
         this.$refs.audioRef.pause()
       }
     },
+    /* 监听静音状态 */
     isMute(val) {
       if (val == true) {
         this.saveVolume = this.volume
@@ -122,6 +179,7 @@ export default {
         this.volume = this.saveVolume
       }
     },
+    /* 监听音量的改变 */
     volume() {
       this.changeVolume()
     },
@@ -134,6 +192,7 @@ export default {
     changePlayModel() {
       this.notice()
     },
+    /* 暂停 */
     pause() {
       if (this.musicUrl.length === 0) return
       if (this.isPlay === false) {
@@ -150,6 +209,7 @@ export default {
     async getMusicUrl() {
       this.getImgInfo()
       this.getToltime()
+      this.getLyric()
       const { data: res } = await getMusicUrl(this.currenMusicId)
       console.log(res)
       if (res.code !== 200) return this.$message.error('播放失败')
@@ -226,6 +286,30 @@ export default {
       console.log(val)
       let time = ((val / 100) * this.currenMusicInfo.totalTime) / 1000
       this.$refs.audioRef.currentTime = time
+    },
+    /* 下载 */
+    download() {
+      if (this.musicUrl == '') return
+      downloadMusic(
+        this.musicUrl,
+        this.imgInfo.name + '-' + this.imgInfo.author
+      )
+    },
+    openPlayView() {
+      this.PlayViewDrawer = true
+      this.getLyric()
+    },
+    handleClose() {
+      console.log('close')
+      this.PlayViewDrawer = false
+      
+    },
+    async getLyric(){
+      const {data:res} =await getLyric(this.currenMusicId)
+      if(res.code!==200) return this.$message.error('获取歌词失败')
+      if(res.lrc)
+      this.lyric =res.lrc.lyric
+      console.log(this.lyric);
     }
   }
 }
@@ -233,6 +317,7 @@ export default {
 
 <style lang="less" scoped>
 @import '../../assets/less/lessConfig.less';
+/* 整体 */
 .player {
   display: flex;
   margin: 0 auto;
@@ -240,6 +325,7 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+/* 播放信息 */
 .song-info {
   display: flex;
   align-items: center;
@@ -253,6 +339,10 @@ export default {
   i {
     color: @headRed;
     font-size: 50px;
+    margin: 0 10px;
+    height: 50px;
+    width: 50px;
+    border-radius: 4px;
   }
   .au-info {
     height: 40px;
@@ -260,6 +350,7 @@ export default {
     line-height: 20px;
   }
 }
+/* 中间的按钮区 */
 .player-bar {
   width: 300px;
   margin: 0 auto;
@@ -289,6 +380,7 @@ export default {
     }
   }
 }
+/* 时间进度条 */
 .time-progress {
   line-height: 1;
   display: flex;
@@ -299,6 +391,7 @@ export default {
   width: 460px;
   margin: 0 10px;
 }
+/* 右侧按钮 */
 .btn-other {
   display: flex;
   width: 300px;
@@ -308,7 +401,6 @@ export default {
 .volume-icon {
   font-size: 30px;
 }
-
 .volume {
   position: relative;
   margin-right: 20px;
@@ -324,6 +416,88 @@ export default {
   }
   &:hover .volume-slider {
     display: block;
+  }
+}
+/* 播放界面抽屉 */
+.play-view {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20%;
+  .music-info {
+    margin: 0 auto;
+    .music-title {
+      text-align: center;
+      font-size: 30px;
+    }
+    .music-author {
+      text-align: center;
+    }
+  }
+}
+/* 歌词及唱片区域 */
+.lyric-view {
+  display: flex;
+  .img-wrap {
+    position: relative;
+    .changzhen {
+      position: absolute;
+      top: -20px;
+      left: 130px;
+      width: 120px;
+      transform-origin: 3px 3px;
+      transform: rotate(30deg);
+      transition: all 0.5s;
+      z-index: 20;
+      img {
+        width: 120px;
+      }
+    }
+    .changpian {
+      margin-top: 40px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background-color: #c4c3c6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: circle 30s infinite;
+      .changpian-wrap {
+        width: 240px;
+        height: 240px;
+        background-color: #1a1c1e;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+.lyric-wrap{
+  width: 600px;
+  height: 400px;
+  margin: 40px 0 0 20px;
+  background-color: #bfc;
+  text-align: center;
+  font-size: 20px;
+  line-height: 2;
+}
+.lyric-active{
+  font-size: 24px;
+  font-weight: bold;
+}
+@keyframes circle {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 @media screen and(max-width:768px) {

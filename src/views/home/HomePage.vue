@@ -53,6 +53,7 @@ export default {
         return
       }
       if (this.$route.path == path) return false
+      document.querySelector('.main-right').scrollTop = 0
       this.$router.push(path)
     },
     /* 激活导航 */

@@ -17,7 +17,7 @@
         <div class="view-mian">
           <router-view></router-view>
         </div>
-        <el-backtop target=".view-mian" :bottom="100"></el-backtop>
+        <el-backtop target=".main-right" :bottom="100"></el-backtop>
       </div>
       <el-drawer
         title="当前播放"
@@ -26,11 +26,11 @@
       >
         <div class="flex-around">
           <div class="font-12 mleft-12">总 {{ length }} 首</div>
-          <div class="font-14">清空列表</div>
+          <div style="color: blue" class="font-14 pointer">清空列表</div>
         </div>
-
         <el-divider></el-divider>
         <el-table
+          :show-header="false"
           :data="musicList"
           style="width: 100%"
           size="medium"
@@ -119,6 +119,10 @@ export default {
       let index = this.musicList.findIndex((item) => item.id == id)
       console.log(index)
       this.$store.commit('setCurrenIndex', index)
+    },
+    clearList() {
+      this.$store.commit('setCurrenMusicId', 0)
+      this.$store.commit('setPlayState', false)
     }
   }
 }
