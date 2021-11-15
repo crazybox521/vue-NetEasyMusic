@@ -30,18 +30,25 @@
         </div>
         <!-- 歌单按钮 -->
         <ul class="info-btn">
-          <el-button type="danger" @click="playAll" round>播放全部</el-button>
-          <el-button round
-            >收藏({{ info.subscribedCount | countFormat }})</el-button
-          >
-          <el-button round>分享({{ info.shareCount | countFormat }})</el-button>
-          <el-button
+          <button class="btn btn-red" @click="playAll">
+            <i class="iconfont icon-bofang"></i> 播放全部
+          </button>
+          <button class="btn btn-white mleft-10">
+            <i class="el-icon-folder-add"></i>
+            收藏({{ info.subscribedCount | countFormat }})
+          </button>
+          <button class="btn btn-white mleft-10">
+            <i class="iconfont icon-fenxiang"></i>
+            分享({{ info.shareCount | countFormat }})
+          </button>
+          <button
+            class="btn btn-red mleft-10"
             v-show="isShowMoreBtn"
-            type="danger"
-            round
             @click="loadCompletePlayList"
-            >加载完整歌单</el-button
           >
+            <i class="el-icon-hot-water"></i>
+            加载完整歌单
+          </button>
         </ul>
         <div class="detail-tag font-14" v-if="info.tags.length !== 0">
           <span>标签 ：</span>
@@ -122,7 +129,7 @@ export default {
       return this.playList.length < this.info.trackCount
     }
   },
-  created() { 
+  created() {
     this.getPlayList(this.$route.params.id)
   },
   mounted() {

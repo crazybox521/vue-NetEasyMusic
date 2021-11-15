@@ -8,6 +8,7 @@
     stripe
     v-if="isDisplay"
     @row-dblclick="playMusic"
+    empty-text="当前没有音乐哦"
   >
     <el-table-column type="index" width="50"> 
       <template v-slot ="scope">

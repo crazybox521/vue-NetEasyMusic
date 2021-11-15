@@ -209,6 +209,11 @@ export const getRecommend = () => {
     return axios.get('/recommend/resource')
 }
 
+/* 日推歌曲 */
+export const getRecommendSong =() => {
+    return axios.get('/recommend/songs')
+}
+
 /* 获取喜欢的音乐ID列表 */
 export const getLikeIdList = (uid) => {
     return axios.get('/likelist', {

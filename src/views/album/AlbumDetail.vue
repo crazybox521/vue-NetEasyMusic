@@ -14,9 +14,17 @@
         </div>
         <!-- 歌单按钮 -->
         <ul class="info-btn">
-          <el-button type="danger" @click="playAll" round>播放全部</el-button>
-          <el-button round>收藏</el-button>
-          <el-button round>分享({{ shareCount | countFormat }})</el-button>
+          <button class="btn btn-red" @click="playAll">
+            <i class="iconfont icon-bofang"></i> 播放全部
+          </button>
+          <button class="btn btn-white mleft-10">
+            <i class="el-icon-folder-add"></i>
+            收藏
+          </button>
+          <button class="btn btn-white mleft-10">
+            <i class="iconfont icon-fenxiang"></i>
+            分享({{ shareCount | countFormat }})
+          </button>
         </ul>
         <div class="author font-14">
           <span>歌手：</span>
@@ -123,15 +131,14 @@ export default {
     }
     .info-btn {
       margin: 5px 0;
-     
     }
   }
 }
 @media screen and (max-width: 768px) {
-  .info-btn{
+  .info-btn {
     display: flex;
     flex-wrap: wrap;
-    .el-button{
+    .el-button {
       margin: 5px;
     }
   }

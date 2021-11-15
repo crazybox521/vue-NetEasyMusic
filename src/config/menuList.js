@@ -4,10 +4,14 @@ export default [{
         path: '/personalrecom',
         title: '发现音乐',
         checkLogin:false
+    },{
+        path: '/recomsongs',
+        title: '每日推荐',
+        checkLogin:true
     },
     {
         path: '/bo',
-        title: '博客',
+        title: '播客',
         checkLogin:false
     },
     {

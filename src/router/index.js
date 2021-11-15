@@ -5,6 +5,7 @@ import Login from "../views/Login.vue"
 import NotFound from "../views/NotFound.vue"
 import HomePage from "../views/home/HomePage.vue"
 import LikeList from "../views/user/LikeList.vue"
+import RecommendSong from "../views/user/RecommendSong.vue"
 import SearchList from "../views/search/SearchList.vue"
 import PlayListDetail from "../views/playlist/PlayListDetail.vue"
 import PersonalRecom from "../views/home/homepageview/PersonalRecom.vue"
@@ -38,6 +39,7 @@ const routes = [
             { path: "artistdetail/:id", component: ArtistDetail, },//歌单详情页
             { path: "albumdetail/:id", component: AlbumDetail, },//歌单详情页
             { path: "like", component: LikeList, },//歌单详情页
+            {path:'recomsongs',component:RecommendSong}
         ],
     },
     {path:'/login',component:Login},

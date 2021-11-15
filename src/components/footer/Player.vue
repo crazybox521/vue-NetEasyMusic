@@ -4,12 +4,10 @@
     <!-- 歌曲信息 -->
     <div class="song-info">
       <img
-        class="pointer"
-        v-if="imgInfo.imgUrl"
+        class="pointer"  
         :src="imgInfo.imgUrl"
         @click="openPlayView"
       />
-      <i v-else class="iconfont icon-wangyiyun1" @click="openPlayView"></i>
       <ul class="au-info">
         <li class="font-14 w-200 text-hidden">{{ imgInfo.name }}</li>
         <li class="font-12 w-200 text-hidden">{{ imgInfo.author }}</li>
@@ -325,6 +323,7 @@ export default {
       )
     },
     openPlayView() {
+      if(this.musicUrl=='') return
       this.PlayViewDrawer = true
       /* 打开后歌词跳到对应行 */
       this.$nextTick(() => {
@@ -342,6 +341,7 @@ export default {
       const { data: res } = await getLyric(this.currenMusicId)
       if (res.code !== 200) return this.$message.error('获取歌词失败')
       if (res.lrc) this.lyric = res.lrc.lyric
+      console.log('lyric',res);
       this.lyricObj =new Lyric(this.lyric)
       if(this.PlayViewDrawer)
       this.$refs.lyricWrapRef.scrollTop=0
@@ -575,10 +575,10 @@ export default {
   .lyric-wrap{
     width: 100%;
     margin: 20px auto;
-    font-size: 12px;
+    font-size: 14px;
   }
 .lyric-active {
-  font-size: 14px;
+  font-size: 16px;
 }
 }
 </style>

@@ -114,3 +114,8 @@
 .el-drawer__open .el-drawer.btt{
     background-color: rgba(248, 246, 247, 1);
 }
+
+/* 去掉表格下边框 */
+.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+    border-bottom:none;
+}

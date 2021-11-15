@@ -5,13 +5,21 @@
       <div class="info">
         <h2 class="font-24 font-bold">{{ artistInfo.name }}</h2>
         <div class="info-btn">
-          <el-button round>收藏</el-button>
-          <el-button round>个人主页</el-button>
+          <button class="btn btn-white mleft-10">
+            <i class="el-icon-folder-add"></i>
+            收藏
+          </button>
+          <button class="btn btn-white mleft-10">
+            <i class="el-icon-user"></i>
+            个人主页
+          </button>
         </div>
         <div>
-          <span>单曲数:{{ artistInfo.albumSize }}</span>
-          <span class="mleft-20">专辑数:{{ artistInfo.albumSize }}</span>
-          <span class="mleft-20">MV数:{{ artistInfo.mvSize }}</span>
+          <span class="font-14">单曲数:{{ artistInfo.albumSize }}</span>
+          <span class="mleft-20 font-14"
+            >专辑数:{{ artistInfo.albumSize }}</span
+          >
+          <span class="mleft-20 font-14">MV数:{{ artistInfo.mvSize }}</span>
         </div>
       </div>
     </div>
@@ -32,7 +40,11 @@
       <el-tab-pane label="歌手详情" name="desc">
         <div class="mtop-60" v-for="text in introduction" :key="text.ti">
           <h2 class="font-bold font-14">{{ text.ti }}</h2>
-          <div class="my-pre font-14" v-for="(t, index) in text.txt" :key="index">
+          <div
+            class="my-pre font-14"
+            v-for="(t, index) in text.txt"
+            :key="index"
+          >
             <p>{{ t }}</p>
           </div>
         </div>
@@ -160,9 +172,9 @@ export default {
 .mtop-60:nth-child(1) {
   margin-top: 10px;
 }
-@media screen and (max-width:768px) {
-  .artist-info .img-h{
+@media screen and (max-width: 768px) {
+  .artist-info .img-h {
     display: none;
   }
-} 
+}
 </style>

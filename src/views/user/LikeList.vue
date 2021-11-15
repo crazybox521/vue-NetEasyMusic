@@ -1,5 +1,5 @@
 <template>
-  <!-- 歌单详情 -->
+  <!-- 喜欢的音乐 -->
   <div class="play-list-detail">
     <!-- 歌单图片及信息 -->
     <div class="detail-desc">
