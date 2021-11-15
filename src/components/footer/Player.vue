@@ -326,15 +326,18 @@ export default {
     },
     openPlayView() {
       this.PlayViewDrawer = true
+      /* 打开后歌词跳到对应行 */
       this.$nextTick(() => {
         if(this.$refs.lyricWrapRef)
         this.lyricHanlder(this.lyricObj.curren)
       })
     },
+    /* 抽屉关闭的回调 */
     handleClose() {
       console.log('close')
       this.PlayViewDrawer = false
     },
+    /* 获取歌词 */
     async getLyric() {
       const { data: res } = await getLyric(this.currenMusicId)
       if (res.code !== 200) return this.$message.error('获取歌词失败')
