@@ -30,36 +30,36 @@ const state = {
 }
 
 const mutations = {
-    setMusicList(state, payload) {
-        state.musicList = payload
+    setMusicList(state, musicList) {
+        state.musicList = musicList
     },
-    setPlayState(state, payload) {
-        state.isPlay = payload
+    setPlayState(state, isPlay) {
+        state.isPlay = isPlay
     },
-    setCurrenMusicId(state, payload) {
-        state.currenMusicId = payload
+    setCurrenMusicId(state, currenMusicId) {
+        state.currenMusicId = currenMusicId
     },
-    setCurrenIndex(state, payload) {
-        state.currenIndex = payload
+    setCurrenIndex(state, currenIndex) {
+        state.currenIndex = currenIndex
     },
-    setDrawerMusicList(state, payload) {
-        state.drawerMusicList = payload
+    setDrawerMusicList(state, drawerMusicList) {
+        state.drawerMusicList = drawerMusicList
     },
-    setTotalTime(state, payload) {
-        state.currenMusicInfo.totalTime = payload
+    setTotalTime(state, totalTime) {
+        state.currenMusicInfo.totalTime = totalTime
     },
-    setCurrenTime(state, payload) {
-        state.currenMusicInfo.currenTime = payload
+    setCurrenTime(state, currenTime) {
+        state.currenMusicInfo.currenTime = currenTime
     },
-    setBannerHeight(state, payload) {
-        state.bannerHeight = payload
+    setBannerHeight(state, bannerHeight) {
+        state.bannerHeight = bannerHeight
     },
-    setIsLogin(state, payload) {
-        state.isLogin = payload
+    setIsLogin(state, isLogin) {
+        state.isLogin = isLogin
     },
-    setLoginInfo(state, payload) {
-        state.account = payload.account
-        state.profile = payload.profile
+    setLoginInfo(state, loginInfo) {
+        state.account = loginInfo.account
+        state.profile = loginInfo.profile
     }
 }
 

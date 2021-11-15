@@ -77,6 +77,7 @@
       size="100%"
       :before-close="handleClose"
       :show-close="false"
+      :modal="false"
     >
       <template #title>
         <div>
@@ -88,28 +89,27 @@
       </template>
       <div class="play-view">
         <div class="music-info">
-          <div class="music-title">{{imgInfo.name}}</div>
-          <div class="music-author">{{imgInfo.author}}</div>
+          <div class="music-title">{{ imgInfo.name }}</div>
+          <div class="music-author">{{ imgInfo.author }}</div>
           <div class="lyric-view">
             <div class="img-wrap">
-              <div class="changzhen">
+              <div class="changzhen" :class="{ 'changzhen-active': isPlay }">
                 <img src="../../assets/img/changzhen.png" alt="" />
               </div>
-              <div class="changpian">
+              <div class="changpian" :class="{ 'changpian-active': isPlay }">
                 <div class="changpian-wrap">
                   <img :src="imgInfo.imgUrl" />
                 </div>
               </div>
             </div>
-            <div class="lyric-wrap">
-              <p>1111111</p>
-              <p>1111111</p>
-              <p>1111111</p>
-              <p class="lyric-active">2222222</p>
-              <p>3333333</p>
-              <p>3333333</p>
-              <p>3333333</p>
-              <p>3333333</p>
+            <div class="lyric-wrap" ref="lyricWrapRef">
+              <p
+                v-for="(line, index) in lyricObj.lines"
+                :class="{ 'lyric-active': index == lyricObj.curren }"
+                :key="index"
+              >
+                {{ line.txt }}
+              </p>
             </div>
           </div>
         </div>
@@ -128,8 +128,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMusicUrl, downloadMusic,getLyric } from '../../api/api'
+import { getMusicUrl, downloadMusic, getLyric } from '../../api/api'
 import notifyMixin from '../../mixins/notifyMixin'
+import Lyric from '../../utils/lyric'
+
 export default {
   mixins: [notifyMixin],
   data() {
@@ -141,13 +143,19 @@ export default {
       type: 'order', //播放顺序
       imgInfo: {
         //img区域信息，图片，歌名，歌手
-        imgUrl: '',
+        imgUrl: 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg',
         name: '未知歌名',
         author: '未知歌手名'
       },
       curren: 0, //进度条的百分比
-      PlayViewDrawer: true,
-      lyric:''
+      PlayViewDrawer: false,
+      lyric: '',
+      lyricObj: {
+        lines:[],
+        total:1,
+        curren:0
+      },
+      
     }
   },
   computed: {
@@ -209,11 +217,26 @@ export default {
     async getMusicUrl() {
       this.getImgInfo()
       this.getToltime()
-      this.getLyric()
+      
       const { data: res } = await getMusicUrl(this.currenMusicId)
       console.log(res)
       if (res.code !== 200) return this.$message.error('播放失败')
+      if (!res.data[0].url) {
+        const h = this.$createElement
+        this.$notify({
+          title: '当前歌曲暂无音源',
+          message: h(
+            'i',
+            { style: 'color: teal' },
+            '因版权方要求，该资源暂时无法播放，我们正在争取歌曲回归'
+          )
+        })
+        return
+      }
+      this.getLyric()
       this.musicUrl = res.data[0].url
+      console.log(res)
+
     },
     /* 获取图片信息 */
     getImgInfo() {
@@ -270,6 +293,12 @@ export default {
       if (!this.$refs.audioRef) return
       /* 通过audio对象的方法获取当前时间 */
       let time = this.$refs.audioRef.currentTime
+      /* 歌词滚动 */
+      if(this.lyricObj.curren!=this.lyricObj.total-1)
+      if(time>this.lyricObj.lines[this.lyricObj.curren+1].time){
+        this.lyricObj.curren++
+        this.lyricHanlder(this.lyricObj.curren)
+      }
       time = Math.floor(time)
       if (time != this.currenMusicInfo.currenTime) {
         this.$store.commit('setCurrenTime', time)
@@ -297,19 +326,25 @@ export default {
     },
     openPlayView() {
       this.PlayViewDrawer = true
-      this.getLyric()
+      this.$nextTick(() => {
+        if(this.$refs.lyricWrapRef)
+        this.lyricHanlder(this.lyricObj.curren)
+      })
     },
     handleClose() {
       console.log('close')
       this.PlayViewDrawer = false
-      
     },
-    async getLyric(){
-      const {data:res} =await getLyric(this.currenMusicId)
-      if(res.code!==200) return this.$message.error('获取歌词失败')
-      if(res.lrc)
-      this.lyric =res.lrc.lyric
-      console.log(this.lyric);
+    async getLyric() {
+      const { data: res } = await getLyric(this.currenMusicId)
+      if (res.code !== 200) return this.$message.error('获取歌词失败')
+      if (res.lrc) this.lyric = res.lrc.lyric
+      this.lyricObj =new Lyric(this.lyric)
+      if(this.PlayViewDrawer)
+      this.$refs.lyricWrapRef.scrollTop=0
+    },
+    lyricHanlder(lineNum) {
+      if (lineNum > 4) this.$refs.lyricWrapRef.scrollTop = (lineNum - 4) * 32
     }
   }
 }
@@ -445,7 +480,6 @@ export default {
       left: 130px;
       width: 120px;
       transform-origin: 3px 3px;
-      transform: rotate(30deg);
       transition: all 0.5s;
       z-index: 20;
       img {
@@ -461,7 +495,6 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: circle 30s infinite;
       .changpian-wrap {
         width: 240px;
         height: 240px;
@@ -479,17 +512,28 @@ export default {
     }
   }
 }
-.lyric-wrap{
+.changzhen-active {
+  transform: rotate(30deg);
+}
+.changpian-active {
+  animation: circle 30s infinite linear;
+}
+/* 歌词滚动区域 */
+.lyric-wrap {
   width: 600px;
   height: 400px;
+  overflow-y: scroll;
   margin: 40px 0 0 20px;
-  background-color: #bfc;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 2;
+  transition: all .8s linear;
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
 }
-.lyric-active{
-  font-size: 24px;
+.lyric-active {
+  font-size: 20px;
   font-weight: bold;
 }
 @keyframes circle {
@@ -521,5 +565,16 @@ export default {
       }
     }
   }
+  .img-wrap{
+    display: none;
+  }
+  .lyric-wrap{
+    width: 100%;
+    margin: 20px auto;
+    font-size: 12px;
+  }
+.lyric-active {
+  font-size: 14px;
+}
 }
 </style>
