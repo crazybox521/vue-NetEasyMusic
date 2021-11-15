@@ -26,7 +26,10 @@
       >
         <div class="flex-around">
           <div class="font-12 mleft-12">总 {{ length }} 首</div>
-          <div style="color: blue" class="font-14 pointer">清空列表</div>
+          <div class="font-12 mleft-12">
+            <span v-show="length!==0">当前播放第 {{currenIndex+1}} 首</span>
+            <span v-show="length===0">没有在播放哦</span>
+            </div>
         </div>
         <el-divider></el-divider>
         <el-table
@@ -36,7 +39,7 @@
           size="medium"
           stripe
           @row-dblclick="playMusic"
-          v-if="musicList.length != 0"
+           empty-text="快去播放音乐吧！"
         >
           <el-table-column type="index" width="50">
             <template v-slot="scope">
@@ -83,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['musicList', 'drawerMusicList', 'currenMusicId', 'isLogin']),
+    ...mapState(['musicList', 'drawerMusicList', 'currenMusicId', 'isLogin','currenIndex']),
     length() {
       return this.musicList.length
     },
