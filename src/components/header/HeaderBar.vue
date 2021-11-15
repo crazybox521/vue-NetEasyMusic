@@ -24,13 +24,15 @@
     <div class="login-info mleft-12" @click="loginView">
       <el-avatar icon="el-icon-user-solid" :src="avatarUrl"></el-avatar>
     </div>
-    <div class="login-info mleft-10 font-14 text-hidden">{{ name }}</div>
+    <div class="login-info mleft-10 font-14 text-hidden" :class="{pointer:isLogin}" @click="doLogout">
+      {{ name }}
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { getAcount } from '../../api/api'
+import { getAcount, logout } from '../../api/api'
 export default {
   data() {
     return {
@@ -42,10 +44,10 @@ export default {
   computed: {
     ...mapState(['isLogin']),
     name() {
-      return this.info.nickname ? this.info.nickname : '未登录'
+      return this.info ? this.info.nickname : '未登录'
     },
     avatarUrl() {
-      return this.info.avatarUrl ? this.info.avatarUrl : ''
+      return this.info ? this.info.avatarUrl : ''
     }
   },
   created() {
@@ -77,8 +79,34 @@ export default {
       if (res.code !== 200) return
       this.account = res.account
       this.info = res.profile
-      this.$store.commit('setIsLogin', true)
-      this.$store.commit('setLoginInfo',res)
+      if (res.account !== null) {
+        this.$store.commit('setIsLogin', true)
+        this.$store.commit('setLoginInfo', res)
+      } else {
+        this.$store.commit('setIsLogin', false)
+        this.$store.commit('setLoginInfo', { account: null, profile: null })
+      }
+    },
+    /* 退出登录 */
+    doLogout() {
+      if (!this.isLogin) return
+      this.$confirm('将要退出登录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+          const { data: res } = await logout()
+          if (res.code !== 200) return
+          this.$message.success('退出成功')
+          this.getAcount()
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
     }
   }
 }

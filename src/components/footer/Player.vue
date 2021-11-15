@@ -47,15 +47,15 @@
     <div class="btn-other">
       <!-- 音量按钮 -->
       <div class="dowmload">
-        <i class="el-icon-download volume-icon mright-20" @click="download"></i>
+        <i class="el-icon-download volume-icon mright-20 pointer" @click="download"></i>
       </div>
       <div class="volume">
         <div @click="isMute = !isMute">
           <i
             v-if="volume == 0"
-            class="iconfont icon-shengyinguanbi volume-icon"
+            class="iconfont icon-shengyinguanbi volume-icon pointer"
           ></i>
-          <i v-else class="iconfont icon-shengyin volume-icon"></i>
+          <i v-else class="iconfont icon-shengyin volume-icon pointer"></i>
         </div>
 
         <div class="volume-slider">
@@ -66,7 +66,7 @@
       <div class="curren-list">
         <i
           @click="showList"
-          class="iconfont icon-liebiaoshunxu volume-icon"
+          class="iconfont icon-liebiaoshunxu volume-icon pointer"
         ></i>
       </div>
     </div>
@@ -347,6 +347,7 @@ export default {
       this.$refs.lyricWrapRef.scrollTop=0
     },
     lyricHanlder(lineNum) {
+      if(!this.PlayViewDrawer) return
       if (lineNum > 4) this.$refs.lyricWrapRef.scrollTop = (lineNum - 4) * 32
     }
   }

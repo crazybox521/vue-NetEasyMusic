@@ -185,6 +185,9 @@ export const doLoginByPhone = (phone, md5_password) => {
         }
     })
 }
+export const logout =() => {
+    return axios.get('/logout')
+}
 
 /* 获取登录状态 */
 export const getLoginStatus = () => {
@@ -193,7 +196,12 @@ export const getLoginStatus = () => {
 
 /* 获取账号信息 */
 export const getAcount = () => {
-    return axios.get('/user/account')
+    let timestamp =Date.now()
+    return axios.get('/user/account',{
+        params:{
+            timestamp
+        }
+    })
 }
 
 /* 获取日推歌单 */

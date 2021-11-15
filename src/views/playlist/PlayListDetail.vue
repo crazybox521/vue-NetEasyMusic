@@ -122,11 +122,12 @@ export default {
       return this.playList.length < this.info.trackCount
     }
   },
-  created() {
-    document.querySelector('.main-right').scrollTop = 0
+  created() { 
     this.getPlayList(this.$route.params.id)
   },
-  mounted() {},
+  mounted() {
+    document.querySelector('.main-right').scrollTop = 0
+  },
   methods: {
     /* 获取歌单信息 */
     async getPlayList(id) {
