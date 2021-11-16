@@ -79,8 +79,9 @@ export const getPlayListDetail = (id) => {
 
 /* 获取音乐详情 */
 export const getMusicListByIds = (ids) => {
-    return axios.get('/song/detail', {
-        params: {
+    console.log(ids);
+    return axios.get('/song/detail',{
+        params:{
             ids
         }
     })
@@ -185,6 +186,7 @@ export const doLoginByPhone = (phone, md5_password) => {
         }
     })
 }
+/* 退出登录 */
 export const logout =() => {
     return axios.get('/logout')
 }

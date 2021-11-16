@@ -6,8 +6,7 @@
       :key="item.id + '' + index"
       @click="toPlayListDetail(item.id)"
     >
-      <el-image
-        lazy
+      <img
         class="img img-radius-4"
         :src="
           item.picUrl

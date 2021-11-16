@@ -13,7 +13,7 @@
     <el-table-column type="index" width="50"> 
       <template v-slot ="scope">
         <span style="color:red;" v-if="currenMusicId==scope.row.id"><i class="iconfont icon-sound"></i></span>
-        <span v-else >{{scope.$index+1}}</span>
+        <span v-else style="color:#c3c3db" >{{scope.$index+1}}</span>
       </template>
     </el-table-column>
     <el-table-column prop="name" label="音乐标题" show-overflow-tooltip> </el-table-column>

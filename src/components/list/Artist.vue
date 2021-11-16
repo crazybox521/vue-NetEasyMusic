@@ -12,8 +12,7 @@
         :key="item.id + '' + index"
         @click="toArtistView(item.id)"
       >
-        <el-image
-          lazy
+        <img
           class="img  img-radius-4"
           :src="item.img1v1Url + '?param=200y200'"
         />

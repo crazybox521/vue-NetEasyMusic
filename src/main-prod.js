@@ -7,6 +7,7 @@ import store from './store/index'
 
 import './assets/css/global.css'
 import './assets/css/my-element.css'
+import './assets/css/btn.css'
 
 Vue.config.productionTip = false
 

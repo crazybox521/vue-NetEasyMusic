@@ -52,7 +52,12 @@
         </ul>
         <div class="detail-tag font-14" v-if="info.tags.length !== 0">
           <span>标签 ：</span>
-          <span v-for="(val, index) in info.tags" :key="index">{{ val }}</span>
+          <span
+            class="mright-10"
+            v-for="(val, index) in info.tags"
+            :key="index"
+            >{{ val }}</span
+          >
         </div>
         <div class="num-info font-14">
           <span>歌曲 ：{{ info.trackCount }}</span>
@@ -126,7 +131,7 @@ export default {
       })
     },
     isShowMoreBtn() {
-      return this.playList.length < this.info.trackCount
+      return (this.playList.length < this.info.trackCount) && (this.playList.length < 800)
     }
   },
   created() {
@@ -155,10 +160,20 @@ export default {
       })
       if (idArr.length === 0) return
       console.log(idArr)
-      const { data: res } = await getMusicListByIds(idArr.join(','))
-      console.log('111')
-      if (res.code !== 200) return
-      this.playList = res.songs
+      /* 请求歌曲过多需要分片，不然会报431错误,这里简单处理只加载部分 */
+      if (idArr.length > 800) {
+        const { data: res } = await getMusicListByIds(
+          idArr.slice(0, 800).join(',')
+        )
+        if (res.code !== 200) return
+        this.playList = res.songs
+        this.$message.error('太多歌曲了，只加载一部分')
+      } else {
+        const { data: res } = await getMusicListByIds(idArr.join(','))
+        console.log('111')
+        if (res.code !== 200) return
+        this.playList = res.songs
+      }
     }
   }
 }
