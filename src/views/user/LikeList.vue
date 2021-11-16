@@ -1,6 +1,6 @@
 <template>
   <!-- 喜欢的音乐 -->
-  <div class="play-list-detail">
+  <div class="play-list-detail mtop-20">
     <!-- 歌单图片及信息 -->
     <div class="detail-desc">
       <!-- 歌单图片 -->

@@ -4,7 +4,10 @@
       <li v-for="v in list" :key="v.data.vid" class="mtop-10">
         <template v-if="v.type === 1">
           <div class="mtop-10 img-wrap">
-            <img class="video-img" :src="v.data.coverUrl+'?param=300y170'" />
+            <img
+              class="video-img pointer"
+              :src="v.data.coverUrl + '?param=300y170'"
+            />
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
               {{ v.data.playTime | countFormat }}
@@ -12,21 +15,29 @@
             <div class="video-time font-12">
               {{ (v.data.durationms / 1000) | timeFormat }}
             </div>
+            <div class="play-btn pointer">
+              <i class="iconfont icon-bofang"></i>
+            </div>
           </div>
-          <div class="title-line text-hidden font-14">{{ v.data.title }}</div>
-          <div class="author-line font-12">
+          <div class="title-line text-hidden font-14 pointer">
+            {{ v.data.title }}
+          </div>
+          <div class="author-line font-12 pointer">
             by {{ v.data.creator.nickname }}
           </div>
         </template>
         <template v-else>
           <div class="mtop-10 img-wrap">
-            <img class="video-img" :src="v.data.coverUrl+'?param=300y170'" />
+            <img class="video-img" :src="v.data.coverUrl + '?param=300y170'" />
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
               {{ v.data.playCount | countFormat }}
             </div>
             <div class="video-time font-12">
               {{ (v.data.duration / 1000) | timeFormat }}
+            </div>
+             <div class="play-btn pointer">
+              <i class="iconfont icon-bofang"></i>
             </div>
           </div>
           <div class="title-line text-hidden font-14">{{ v.data.name }}</div>
@@ -97,5 +108,27 @@ export default {
     right: 10px;
     bottom: 10px;
   }
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fbf7f6;
+    color: #ec4141;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all .8s;
+    i {
+      font-size: 18px;
+    }
+  }
+  &:hover .play-btn {
+      opacity: 1;
+     
+    }
 }
 </style>

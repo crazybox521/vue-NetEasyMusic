@@ -6,14 +6,19 @@
       :key="item.id + '' + index"
       @click="toPlayListDetail(item.id)"
     >
-      <img
-        class="img img-radius-4"
-        :src="
-          item.picUrl
-            ? item.picUrl + '?param=300y300'
-            : item.coverImgUrl + '?param=300y300'
-        "
-      />
+      <div class="img-wrap pointer">
+        <img
+          class="img img-radius-4"
+          :src="
+            item.picUrl
+              ? item.picUrl + '?param=300y300'
+              : item.coverImgUrl + '?param=300y300'
+          "
+        />
+        <div class="play-btn pointer">
+          <i class="iconfont icon-bofang"></i>
+        </div>
+      </div>
       <div class="text-hidden">
         {{ item.name }}
       </div>
@@ -43,5 +48,29 @@ export default {
     width: 19%;
     margin-right: 1%;
   }
+}
+.img-wrap {
+  position: relative;
+  .play-btn {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    background-color: #fbf7f6;
+    color: #ec4141;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all .8s;
+    i {
+      font-size: 18px;
+    }
+  }
+  &:hover .play-btn {
+      opacity: 1;
+     
+    }
 }
 </style>

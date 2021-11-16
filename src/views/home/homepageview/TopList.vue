@@ -10,11 +10,16 @@
         :key="item.id"
       >
         <div class="guanfang">
-          <img
-            class="img-h img-radius-4"
-            :src="item.coverImgUrl"
-            @click="toPlayListDetail(item.id)"
-          />
+          <div class="img-wrap">
+            <img
+              class="img-h img-radius-4 pointer"
+              :src="item.coverImgUrl"
+              @click="toPlayListDetail(item.id)"
+            />
+            <div class="play-btn pointer">
+              <i class="iconfont icon-bofang"></i>
+            </div>
+          </div>
           <ul class="mleft-30">
             <li
               v-for="(music, index) in item.tracks"
@@ -139,7 +144,7 @@ export default {
       &:hover {
         background-color: #f4f4f4;
       }
-      span{
+      span {
         display: inline-block;
       }
       .geming {
@@ -152,21 +157,44 @@ export default {
     }
   }
 }
+.img-wrap {
+  position: relative;
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fbf7f6;
+    color: #ec4141;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s;
+    i {
+      font-size: 18px;
+    }
+  }
+  &:hover .play-btn {
+    opacity: 1;
+  }
+}
 @media screen and(max-width:1100px) {
-  .geming{
+  .geming {
     max-width: 280px;
   }
 }
-@media screen and (max-width:768px){
-  .guanfang{
-    img{
+@media screen and (max-width: 768px) {
+  .guanfang {
+    img {
       width: 60px;
       height: 60px;
-      }
-      .geming{
-        
-        width: 80px;
-      }
+    }
+    .geming {
+      width: 80px;
+    }
   }
 }
 </style>

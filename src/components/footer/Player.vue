@@ -205,10 +205,12 @@ export default {
       })
     },
     setHistory() {
-      this.$store.commit('setHistoryList', {
-        type: 'unshift',
-        data: this.musicList[this.currenIndex]
-      })
+   
+        this.$store.commit('setHistoryList', {
+          type: 'unshift',
+          data: this.musicList[this.currenIndex]
+        })
+      
     },
     changePlayModel() {
       this.notice()
