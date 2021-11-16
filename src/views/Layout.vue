@@ -119,7 +119,7 @@ export default {
       this.$notify({
           title: '提示',
           type: 'warning',
-          message: '部分功能需要登录后才能使用，如每日推荐等',
+          message: '部分功能需要登录后才能使用，如每日推荐等，本网站不会收集用户信息',
           duration: 0
         });
     },
