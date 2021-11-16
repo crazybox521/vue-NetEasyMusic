@@ -25,7 +25,9 @@ const state = {
     /* 账号信息 */
     account: {},
     /* 用户信息 */
-    profile: {}
+    profile: {},
+    /* 是否播放的最近播放 */
+    historyList: []
 
 }
 
@@ -60,7 +62,30 @@ const mutations = {
     setLoginInfo(state, loginInfo) {
         state.account = loginInfo.account
         state.profile = loginInfo.profile
+    },
+    setHistoryList(state, payload) {
+        if (payload.type === 'unshift') {
+            /* 判断历史播放里是否有重复，这里重复直接不走，也可以删除之前的，再unshift把最新的提到最前面 */
+            if (state.historyList.findIndex((item) => item.id == payload.data.id) !== -1)
+                return
+            state.historyList.unshift(payload.data)
+            window.localStorage.setItem(
+                'historylist',
+                JSON.stringify(state.historyList)
+            )
+            return
+        }
+        if (payload.type === 'get') {
+            state.historyList = payload.data
+            return
+        }
+        if (payload.type === 'clear') {
+            state.historyList = []
+            window.localStorage.removeItem('historylist')
+            return
+        }
     }
+
 }
 
 const store = new Vuex.Store({

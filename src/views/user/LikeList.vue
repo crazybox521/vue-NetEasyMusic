@@ -26,7 +26,9 @@
         </div>
         <!-- 歌单按钮 -->
         <ul class="info-btn">
-          <el-button type="danger" @click="playAll" round>播放全部</el-button>
+          <button class="btn btn-red" @click="playAll">
+            <i class="iconfont icon-bofang"></i> 播放全部
+          </button>
         </ul>
         <div class="num-info font-14">
           <span>歌曲 ：{{ total }}</span>

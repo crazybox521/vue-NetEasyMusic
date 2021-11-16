@@ -6,6 +6,7 @@ import NotFound from "../views/NotFound.vue"
 import HomePage from "../views/home/HomePage.vue"
 import LikeList from "../views/user/LikeList.vue"
 import RecommendSong from "../views/user/RecommendSong.vue"
+import HistoryPlay from "../views/historyplay/HistoryPlay.vue"
 import SearchList from "../views/search/SearchList.vue"
 import PlayListDetail from "../views/playlist/PlayListDetail.vue"
 import PersonalRecom from "../views/home/homepageview/PersonalRecom.vue"
@@ -33,16 +34,17 @@ const routes = [
                     { path: '/artistlist', component: ArtistList }//歌手页
                 ],
             },
-           
+
             { path: "search/:key", component: SearchList, },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
             { path: "artistdetail/:id", component: ArtistDetail, },//歌单详情页
             { path: "albumdetail/:id", component: AlbumDetail, },//歌单详情页
             { path: "like", component: LikeList, },//歌单详情页
-            {path:'recomsongs',component:RecommendSong}
+            { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
+            { path: 'historyplay', component: HistoryPlay },//每日推荐歌曲页
         ],
     },
-    {path:'/login',component:Login},
+    { path: '/login', component: Login },
     { path: '*', component: NotFound }//404
 ]
 

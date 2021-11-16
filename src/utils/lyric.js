@@ -32,11 +32,9 @@ export default class Lyric {
                 const time = item.match(regTime)
                 obj.txt = item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
                 obj.time = time ? Lyric.formatLyricTime(time[0].slice(1, time[0].length - 1)) : 0
-                if (obj.txt === '') {
-                    console.log('这一行没有歌词');
-                } else {
+                if (obj.txt !== '') {
                     lines.push(obj)
-                }
+                } 
             })
         } catch (error) {
             this.lines = [{time:1,txt:'解析歌词失败'}]

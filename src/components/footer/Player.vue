@@ -3,11 +3,7 @@
   <div class="player">
     <!-- 歌曲信息 -->
     <div class="song-info">
-      <img
-        class="pointer"  
-        :src="imgInfo.imgUrl"
-        @click="openPlayView"
-      />
+      <img class="pointer" :src="imgInfo.imgUrl" @click="openPlayView" />
       <ul class="au-info">
         <li class="font-14 w-200 text-hidden">{{ imgInfo.name }}</li>
         <li class="font-12 w-200 text-hidden">{{ imgInfo.author }}</li>
@@ -18,7 +14,7 @@
       <!-- 播放器按钮 -->
       <ul class="player-bar">
         <li @click="changePlayModel">
-          <i class="iconfont icon-shunxubofang"></i>
+          <i class="iconfont icon-liebiaoshunxu"></i>
         </li>
         <li @click="lastMusic">
           <i class="iconfont icon-shangyishou"></i>
@@ -45,7 +41,10 @@
     <div class="btn-other">
       <!-- 音量按钮 -->
       <div class="dowmload">
-        <i class="el-icon-download volume-icon mright-20 pointer" @click="download"></i>
+        <i
+          class="el-icon-download volume-icon mright-20 pointer"
+          @click="download"
+        ></i>
       </div>
       <div class="volume">
         <div @click="isMute = !isMute">
@@ -149,11 +148,10 @@ export default {
       PlayViewDrawer: false,
       lyric: '',
       lyricObj: {
-        lines:[],
-        total:1,
-        curren:0
-      },
-      
+        lines: [],
+        total: 1,
+        curren: 0
+      }
     }
   },
   computed: {
@@ -162,7 +160,8 @@ export default {
       'currenMusicId',
       'currenIndex',
       'musicList',
-      'currenMusicInfo'
+      'currenMusicInfo',
+      'historyList'
     ])
   },
   watch: {
@@ -194,7 +193,23 @@ export default {
       this.getMusicUrl()
     }
   },
+  created() {
+    this.getHistory()
+  },
   methods: {
+    getHistory() {
+      if (!window.localStorage.getItem('historylist')) return
+      this.$store.commit('setHistoryList', {
+        type: 'get',
+        data: JSON.parse(window.localStorage.getItem('historylist'))
+      })
+    },
+    setHistory() {
+      this.$store.commit('setHistoryList', {
+        type: 'unshift',
+        data: this.musicList[this.currenIndex]
+      })
+    },
     changePlayModel() {
       this.notice()
     },
@@ -215,7 +230,7 @@ export default {
     async getMusicUrl() {
       this.getImgInfo()
       this.getToltime()
-      
+
       const { data: res } = await getMusicUrl(this.currenMusicId)
       console.log(res)
       if (res.code !== 200) return this.$message.error('播放失败')
@@ -234,13 +249,13 @@ export default {
       this.getLyric()
       this.musicUrl = res.data[0].url
       console.log(res)
-
     },
     /* 获取图片信息 */
     getImgInfo() {
       this.imgInfo.imgUrl = this.musicList[this.currenIndex].al.picUrl
       this.imgInfo.name = this.musicList[this.currenIndex].name
       this.imgInfo.author = this.musicList[this.currenIndex].ar[0].name
+      this.setHistory()
     },
     /* 获取歌曲时长 */
     getToltime() {
@@ -292,11 +307,11 @@ export default {
       /* 通过audio对象的方法获取当前时间 */
       let time = this.$refs.audioRef.currentTime
       /* 歌词滚动 */
-      if(this.lyricObj.curren!=this.lyricObj.total-1)
-      if(time>this.lyricObj.lines[this.lyricObj.curren+1].time){
-        this.lyricObj.curren++
-        this.lyricHanlder(this.lyricObj.curren)
-      }
+      if (this.lyricObj.curren != this.lyricObj.total - 1)
+        if (time > this.lyricObj.lines[this.lyricObj.curren + 1].time) {
+          this.lyricObj.curren++
+          this.lyricHanlder(this.lyricObj.curren)
+        }
       time = Math.floor(time)
       if (time != this.currenMusicInfo.currenTime) {
         this.$store.commit('setCurrenTime', time)
@@ -323,12 +338,11 @@ export default {
       )
     },
     openPlayView() {
-      if(this.musicUrl=='') return
+      if (this.musicUrl == '') return
       this.PlayViewDrawer = true
       /* 打开后歌词跳到对应行 */
       this.$nextTick(() => {
-        if(this.$refs.lyricWrapRef)
-        this.lyricHanlder(this.lyricObj.curren)
+        if (this.$refs.lyricWrapRef) this.lyricHanlder(this.lyricObj.curren)
       })
     },
     /* 抽屉关闭的回调 */
@@ -341,13 +355,12 @@ export default {
       const { data: res } = await getLyric(this.currenMusicId)
       if (res.code !== 200) return this.$message.error('获取歌词失败')
       if (res.lrc) this.lyric = res.lrc.lyric
-      console.log('lyric',res);
-      this.lyricObj =new Lyric(this.lyric)
-      if(this.PlayViewDrawer)
-      this.$refs.lyricWrapRef.scrollTop=0
+      console.log('lyric', res)
+      this.lyricObj = new Lyric(this.lyric)
+      if (this.PlayViewDrawer) this.$refs.lyricWrapRef.scrollTop = 0
     },
     lyricHanlder(lineNum) {
-      if(!this.PlayViewDrawer) return
+      if (!this.PlayViewDrawer) return
       if (lineNum > 4) this.$refs.lyricWrapRef.scrollTop = (lineNum - 4) * 32
     }
   }
@@ -531,7 +544,7 @@ export default {
   text-align: center;
   font-size: 16px;
   line-height: 2;
-  transition: all .8s linear;
+  transition: all 0.8s linear;
   &::-webkit-scrollbar {
     width: 1px;
   }
@@ -569,16 +582,16 @@ export default {
       }
     }
   }
-  .img-wrap{
+  .img-wrap {
     display: none;
   }
-  .lyric-wrap{
+  .lyric-wrap {
     width: 100%;
     margin: 20px auto;
     font-size: 14px;
   }
-.lyric-active {
-  font-size: 16px;
-}
+  .lyric-active {
+    font-size: 16px;
+  }
 }
 </style>
