@@ -8,6 +8,7 @@
             :index="item.path"
             v-for="item in menuList"
             :key="item.path"
+            :disabled="item.checkLogin && !isLogin"
           >
             <span slot="title">{{ item.title }}</span>
           </el-menu-item>
@@ -27,9 +28,11 @@
         <div class="flex-around">
           <div class="font-12 mleft-12">总 {{ length }} 首</div>
           <div class="font-12 mleft-12">
-            <span v-show="length!==0">当前播放第 {{currenIndex+1}} 首</span>
-            <span v-show="length===0">没有在播放哦</span>
-            </div>
+            <span v-show="length !== 0"
+              >当前播放第 {{ currenIndex + 1 }} 首</span
+            >
+            <span v-show="length === 0">没有在播放哦</span>
+          </div>
         </div>
         <el-divider></el-divider>
         <el-table
@@ -39,7 +42,7 @@
           size="medium"
           stripe
           @row-dblclick="playMusic"
-           empty-text="快去播放音乐吧！"
+          empty-text="快去播放音乐吧！"
         >
           <el-table-column type="index" width="50">
             <template v-slot="scope">
@@ -86,21 +89,40 @@ export default {
     }
   },
   computed: {
-    ...mapState(['musicList', 'drawerMusicList', 'currenMusicId', 'isLogin','currenIndex']),
+    ...mapState([
+      'musicList',
+      'drawerMusicList',
+      'currenMusicId',
+      'isLogin',
+      'currenIndex'
+    ]),
     length() {
       return this.musicList.length
     },
     menuList() {
-      return this.isLogin
+      return menuList
+      /* this.isLogin
         ? menuList
-        : menuList.filter((item) => !item.checkLogin)
+        : menuList.filter((item) => !item.checkLogin) */
     }
   },
   created() {
     if (window.localStorage.getItem('activeMenu'))
       this.activeMenu = window.localStorage.getItem('activeMenu')
   },
+  mounted(){
+    this.openTip()
+  },
   methods: {
+    openTip(){
+      if(!this.isLogin)
+      this.$notify({
+          title: '提示',
+          type: 'warning',
+          message: '部分功能需要登录后才能使用，如每日推荐等',
+          duration: 0
+        });
+    },
     /* 导航 */
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
