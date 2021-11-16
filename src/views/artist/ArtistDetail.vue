@@ -1,5 +1,5 @@
 <template>
-  <div class="artist-detail">
+  <div class="artist-detail mtop-20">
     <div class="artist-info">
       <img :src="imgUrl" class="img-h img-radius-4" />
       <div class="info">

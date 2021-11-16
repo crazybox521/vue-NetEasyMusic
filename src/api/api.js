@@ -251,3 +251,31 @@ export const downloadMusic = (url, fileName) => {
         });
 
 }
+
+/* 视频分类 */
+export const getVideoAlltag =() => {
+    return axios.get('/video/group/list')
+}
+
+/* 视频热门分类 */
+export const getVideoHotTag=() => {
+    return axios.get('/video/category/list')
+}
+
+/* 全部视频列表 */
+export const getAllVideo =(offset) => {
+    return axios.get('/video/timeline/all',{
+        params:{
+            offset
+        }
+    })
+}
+
+/* 根据标签获取视频列表 */
+export const getVideoByTag=(id,offset) => {
+    return axios.get('/video/group',{
+        params:{
+            id,offset
+        }
+    })
+}

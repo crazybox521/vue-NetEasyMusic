@@ -71,21 +71,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.router-list {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  position: fixed;
-  left: 200px;
-  padding-left: 30px;
-  top: 60px;
-  z-index: 99;
-  background-color: #ffffff;
-  align-items: center;
-  li {
-    margin-right: 20px;
-  }
-}
 @media screen and (max-width: 768px) {
   .router-list {
     left: 0;

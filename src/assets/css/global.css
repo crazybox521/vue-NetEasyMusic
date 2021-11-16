@@ -12,13 +12,12 @@
     color: #2c3e50;
 }
 
-@media screen and (max-width:750px) {
-    
-}
+@media screen and (max-width:750px) {}
 
-.hidden{
+.hidden {
     display: none;
 }
+
 /* 全局图片填满样式 */
 .img {
     width: 100%;
@@ -56,18 +55,23 @@
 .font-12 {
     font-size: 12px;
 }
+
 .font-14 {
     font-size: 14px;
 }
+
 .font-16 {
     font-size: 16px;
 }
+
 .font-18 {
     font-size: 18px;
 }
+
 .font-20 {
     font-size: 20px;
 }
+
 .font-24 {
     font-size: 24px;
 }
@@ -76,65 +80,84 @@
 .mleft-6 {
     margin-left: 6px;
 }
-.mleft-10{
+
+.mleft-10 {
     margin-left: 10px;
 }
+
 .mleft-12 {
     margin-left: 12px;
 }
+
 .mleft-20 {
     margin-left: 20px;
 }
+
 .mleft-30 {
     margin-left: 30px;
 }
+
 .mleft-40 {
     margin-left: 40px;
 }
+
 .mleft-200 {
     margin-left: 200px;
 }
+
 .mleft-300 {
     margin-left: 300px;
 }
+
 .mright-10 {
     margin-right: 10px;
 }
+
 .mright-20 {
     margin-right: 20px;
 }
+
 .mtop-10 {
     margin-top: 10px;
 }
+
 .mtop-20 {
     margin-top: 20px;
 }
+
 .mtop-60 {
     margin-top: 60px;
 }
 
 /* 全局宽度 */
-.w-60{
+.w-60 {
     width: 60px;
 }
+
 .w-100 {
     width: 100px;
 }
+
 .w-150 {
     width: 150px;
 }
+
 .w-200 {
     width: 200px;
 }
+
 .w-300 {
     width: 300px;
 }
+
 .w-500 {
     width: 500px;
 }
+
 .h-100 {
     height: 100px;
 }
+
 .h-80 {
     height: 80px;
 }
@@ -149,6 +172,7 @@
 .pointer {
     cursor: pointer;
 }
+
 .default-cursor {
     cursor: default;
 }
@@ -175,14 +199,16 @@
     /* 水平宽度 */
     height: 8px;
 }
+
 @media screen and (max-width:768px) {
     ::-webkit-scrollbar {
-       
+
         width: 2px;
-        
+
         height: 1px;
     }
 }
+
 /* 滚动条内滑块 */
 ::-webkit-scrollbar-thumb {
     border-radius: 7px;
@@ -208,4 +234,25 @@
     border-top: 1px solid #e0e0e0;
 }
 
-#nprogress .bar { background-color: #ffffff !important;}
+#nprogress .bar {
+    background-color: #ffffff !important;
+}
+
+/* 部分二级路由页面头部导航 */
+.router-list {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    left: 200px;
+    padding-left: 30px;
+    top: 60px;
+    z-index: 99;
+    background-color: #ffffff;
+    align-items: center;
+
+}
+
+.router-list li {
+    margin-right: 20px;
+}

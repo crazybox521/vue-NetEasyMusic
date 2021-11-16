@@ -1,6 +1,6 @@
 <template>
   <!-- 最近播放 -->
-  <div class="history-play">
+  <div class="history-play mtop-20">
     <div class="info">
       <div>
         <span class="font-24 font-bold">最近播放</span>

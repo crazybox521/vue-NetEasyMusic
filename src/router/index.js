@@ -6,6 +6,7 @@ import NotFound from "../views/NotFound.vue"
 import HomePage from "../views/home/HomePage.vue"
 import LikeList from "../views/user/LikeList.vue"
 import RecommendSong from "../views/user/RecommendSong.vue"
+import Friends from "../views/user/Friends.vue"
 import HistoryPlay from "../views/historyplay/HistoryPlay.vue"
 import SearchList from "../views/search/SearchList.vue"
 import PlayListDetail from "../views/playlist/PlayListDetail.vue"
@@ -15,6 +16,9 @@ import PlayList from '../views/home/homepageview/PlayList.vue'
 import ArtistList from '../views/home/homepageview/ArtistList.vue'
 import ArtistDetail from '../views/artist/ArtistDetail.vue'
 import AlbumDetail from '../views/album/AlbumDetail.vue'
+import VideoView from '../views/videoview/VideoView.vue'
+import Video from '../views/videoview/Video.vue'
+import MusicVideo from '../views/videoview/MusicVideo.vue'
 Vue.use(VueRouter);
 const routes = [
     {
@@ -34,6 +38,15 @@ const routes = [
                     { path: '/artistlist', component: ArtistList }//歌手页
                 ],
             },
+            {
+                path:'videoview',
+                component:VideoView,
+                redirect:'/video',
+                children:[
+                    {path:'/video',component:Video},
+                    {path:'/mv',component:MusicVideo}
+                ]
+            },
 
             { path: "search/:key", component: SearchList, },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
@@ -41,7 +54,8 @@ const routes = [
             { path: "albumdetail/:id", component: AlbumDetail, },//歌单详情页
             { path: "like", component: LikeList, },//歌单详情页
             { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
-            { path: 'historyplay', component: HistoryPlay },//每日推荐歌曲页
+            { path: 'historyplay', component: HistoryPlay },//最近播放页
+            { path: 'friends', component: Friends },//朋友页
         ],
     },
     { path: '/login', component: Login },

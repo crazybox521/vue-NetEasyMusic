@@ -183,9 +183,8 @@ export default {
   overflow-x: hidden;
   scrollbar-width: thin;
   .view-mian {
-    height: 100%;
     width: 90%;
-    margin: 20px auto;
+    margin: 0 auto;
     max-width: 1200px;
   }
 }

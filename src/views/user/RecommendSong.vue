@@ -1,6 +1,6 @@
 <template>
   <!-- 每日推荐 -->
-  <div class="recommend-song">
+  <div class="recommend-song mtop-20">
     <div class="info">
       <div class="img-wrap">
         <div class="day font-bold">{{ today }}</div>
