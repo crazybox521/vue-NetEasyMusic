@@ -65,7 +65,6 @@ export default {
       this.$emit('loadMore', this.list.length)
     }
   },
-  mounted() {}
 }
 </script>
 

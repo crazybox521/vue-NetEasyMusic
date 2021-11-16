@@ -10,7 +10,13 @@
         <!-- 全部标签弹出层 -->
         <div class="layer" v-show="showLayer" ref="layerRef">
           <div class="h-80">
-            <button class="no-btn" :class="{ isActive: currenTagId===0 }" @click="selectAll">全部视频</button>
+            <button
+              class="no-btn"
+              :class="{ isActive: currenTagId === 0 }"
+              @click="selectAll"
+            >
+              全部视频
+            </button>
           </div>
           <div class="div-line"></div>
           <ul class="tag-list">
@@ -95,20 +101,26 @@ export default {
       if (this.isLoading) return
       this.isLoading = true
       if (this.mode == 'first') this.offset = 0
+      /* 全部视频 */
       if (this.currenTagId == 0) {
         const { data: res } = await getAllVideo(this.offset)
         if (res.code !== 200) return
         if (this.mode == 'first') {
           this.videoList = res.datas
+          this.hasMore = res.hasmore
+          if(this.videoList.length===0) 
+          this.$message.error('暂时没有推荐视频，请稍后再试')
         } else {
           this.videoList.push(...res.datas)
         }
         this.hasMore = res.hasmore
       } else {
+        /* 根据标签查 */
         const { data: res } = await getVideoByTag(this.currenTagId, this.offset)
         if (res.code !== 200) return
         if (this.mode == 'first') {
           this.videoList = res.datas
+          this.hasMore = res.hasmore
         } else {
           this.videoList.push(...res.datas)
           this.hasMore = res.hasmore
@@ -140,7 +152,7 @@ export default {
     /* 无限滚动事件触发的回调 */
     load(size) {
       if (this.isLoading) return
-      if (!this.hasMore) return this.$message.error('已经到底了')
+      if (!this.hasMore) return this.$message.info('已经到底了')
       console.log('load', size)
       this.offset = size + 8
       this.mode = 'more'
@@ -172,10 +184,10 @@ export default {
         item.selectTab = false
       })
       this.hotTagList.forEach((item) => {
-          item.selectTab =false
-          if(item.id==id){
-              item.selectTab =true
-          }
+        item.selectTab = false
+        if (item.id == id) {
+          item.selectTab = true
+        }
       })
       this.allTagList[index].selectTab = true
       this.tagBtn = this.allTagList[index].name
