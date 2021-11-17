@@ -27,6 +27,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 https://github.com/Binaryify/NeteaseCloudMusicApi
 
+### 预览地址
+
+http://47.102.159.133:3000/
+
 ### 目前完成功能
 
 + 歌曲：播放、拖动进度、歌词滚动、音量调整、下载、播放列表
