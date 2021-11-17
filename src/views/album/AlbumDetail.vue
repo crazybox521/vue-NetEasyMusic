@@ -4,7 +4,7 @@
     <div class="detail-desc">
       <!-- 专辑图片 -->
       <div class="detail-img-wrapper">
-        <img class="img img-radius-4" :src="imgUrl+'?param=300y300'" alt="" />
+        <img class="img img-radius-4" :src="imgUrl + '?param=300y300'" alt="" />
       </div>
       <!-- 专辑信息 -->
       <div class="detail-desc-info">
@@ -138,7 +138,7 @@ export default {
   .info-btn {
     display: flex;
     flex-wrap: wrap;
-    .el-button {
+    .btn {
       margin: 5px;
     }
   }

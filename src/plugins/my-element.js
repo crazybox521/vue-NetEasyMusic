@@ -1,5 +1,5 @@
 import Vue from "vue";
-import {
+/* import {
     Table,
     TableColumn,
     Slider,
@@ -26,9 +26,9 @@ import {
     Notification,
     Message,
     Icon
-} from "element-ui";
+} from "element-ui"; */
 import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(Table)
+/* Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Slider)
 Vue.use(Drawer)
@@ -54,4 +54,6 @@ Vue.use(Icon)
 Vue.use(InfiniteScroll)
 
 Vue.prototype.$notify = Notification;
-Vue.prototype.$message = Message;
+Vue.prototype.$message = Message; */
+import ElementUI from "element-ui";
+Vue.use(ElementUI)

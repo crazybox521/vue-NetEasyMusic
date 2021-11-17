@@ -29,7 +29,7 @@
             >
               <span class="mleft-12 text-hidden">{{ index + 1 }}</span
               ><span class="mleft-12 geming text-hidden">{{ music.name }}</span
-              ><span class="zuozhe mright-10">{{ music.ar[0].name }}</span>
+              ><span class="zuozhe mright-10 text-hidden">{{ music.ar[0].name }}</span>
             </li>
           </ul>
         </div>
@@ -120,7 +120,6 @@ export default {
 .guanfang {
   display: flex;
   height: 160px;
-
   ul {
     flex-grow: 1;
     li {
@@ -159,6 +158,8 @@ export default {
 }
 .img-wrap {
   position: relative;
+  height: 160px;
+  width: 160px;
   .play-btn {
     position: absolute;
     top: 50%;
@@ -188,11 +189,18 @@ export default {
 }
 @media screen and (max-width: 768px) {
   .guanfang {
+    .img-wrap{
+      width: 60px;
+      height: 60px;
+    }
     img {
       width: 60px;
       height: 60px;
     }
     .geming {
+      width: 80px;
+    }
+    .zuozhe{
       width: 80px;
     }
   }

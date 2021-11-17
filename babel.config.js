@@ -11,6 +11,7 @@ module.exports = {
     ...prodPlugins,
     //配置路由懒加载插件
     "@babel/plugin-syntax-dynamic-import",
+    /* element按需加载 */
     [
       "component",
       {

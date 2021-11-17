@@ -262,7 +262,7 @@ input[type='checkbox'] {
   .info-btn {
     display: flex;
     flex-wrap: wrap;
-    .el-button {
+    .btn {
       margin: 5px;
     }
   }
