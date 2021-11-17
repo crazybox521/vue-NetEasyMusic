@@ -5,7 +5,7 @@ import NProgress from 'nprogress'
 /* token */
 // axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
+axios.defaults.timeout = 3000
 /* 配置拦截器，在config中给header添加Authorization */
 axios.interceptors.request.use((config) => {
     NProgress.start();
@@ -18,11 +18,7 @@ axios.interceptors.response.use((config) => {
     return config
 })
 
-/* 检索歌曲 
- * params:
- * key,limit,offset,type
- *
- */
+/* 检索歌曲 */
 export const search = (seachInfo) => {
     return axios.get('/cloudsearch', {
         params: seachInfo
@@ -33,10 +29,7 @@ export const checkMusic = () => {
 
 }
 
-/* 获取音乐url 
- * params
- * id
- */
+/* 获取音乐url */
 export const getMusicUrl = (id) => {
     return axios.get('/song/url', {
         params: {
@@ -80,8 +73,8 @@ export const getPlayListDetail = (id) => {
 /* 获取音乐详情 */
 export const getMusicListByIds = (ids) => {
     console.log(ids);
-    return axios.get('/song/detail',{
-        params:{
+    return axios.get('/song/detail', {
+        params: {
             ids
         }
     })
@@ -187,7 +180,7 @@ export const doLoginByPhone = (phone, md5_password) => {
     })
 }
 /* 退出登录 */
-export const logout =() => {
+export const logout = () => {
     return axios.get('/logout')
 }
 
@@ -198,9 +191,9 @@ export const getLoginStatus = () => {
 
 /* 获取账号信息 */
 export const getAcount = () => {
-    let timestamp =Date.now()
-    return axios.get('/user/account',{
-        params:{
+    let timestamp = Date.now()
+    return axios.get('/user/account', {
+        params: {
             timestamp
         }
     })
@@ -212,7 +205,7 @@ export const getRecommend = () => {
 }
 
 /* 日推歌曲 */
-export const getRecommendSong =() => {
+export const getRecommendSong = () => {
     return axios.get('/recommend/songs')
 }
 
@@ -253,29 +246,41 @@ export const downloadMusic = (url, fileName) => {
 }
 
 /* 视频分类 */
-export const getVideoAlltag =() => {
+export const getVideoAlltag = () => {
     return axios.get('/video/group/list')
 }
 
 /* 视频热门分类 */
-export const getVideoHotTag=() => {
+export const getVideoHotTag = () => {
     return axios.get('/video/category/list')
 }
 
 /* 全部视频列表 */
-export const getAllVideo =(offset) => {
-    return axios.get('/video/timeline/all',{
-        params:{
-            offset
-        }
-    })
+export const getAllVideo = (offset) => {
+    return axios.get('/video/timeline/all', { params: { offset } })
 }
 
 /* 根据标签获取视频列表 */
-export const getVideoByTag=(id,offset) => {
-    return axios.get('/video/group',{
-        params:{
-            id,offset
-        }
-    })
+export const getVideoByTag = (id, offset) => {
+    return axios.get('/video/group', { params: { id, offset } })
+}
+
+/* 获取视频详情 */
+export const getVideoDetail = (id) => {
+    return axios.get('/video/detail', { params: { id } })
+}
+
+/* 获取相关视频 */
+export const getRelatedVideo = (id) => {
+    return axios.get('/related/allvideo', { params: { id } })
+}
+
+/* 获取视频点赞评论数据 */
+export const getVideoLike =(vid) => {
+    return axios.get('/video/detail/info',{params:{vid}})
+}
+
+/* 获取视频URL */
+export const getVideoUrl =(id) => {
+    return axios.get('/video/url',{params:{id}})
 }

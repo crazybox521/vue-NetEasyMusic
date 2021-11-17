@@ -16,6 +16,7 @@ import PlayList from '../views/home/homepageview/PlayList.vue'
 import ArtistList from '../views/home/homepageview/ArtistList.vue'
 import ArtistDetail from '../views/artist/ArtistDetail.vue'
 import AlbumDetail from '../views/album/AlbumDetail.vue'
+import VideoDetail from '../views/video/VideoDetail.vue'
 import VideoView from '../views/videoview/VideoView.vue'
 import Video from '../views/videoview/Video.vue'
 import MusicVideo from '../views/videoview/MusicVideo.vue'
@@ -39,20 +40,21 @@ const routes = [
                 ],
             },
             {
-                path:'videoview',
-                component:VideoView,
-                redirect:'/video',
-                children:[
-                    {path:'/video',component:Video},
-                    {path:'/mv',component:MusicVideo}
+                path: 'videoview',
+                component: VideoView,
+                redirect: '/video',
+                children: [
+                    { path: '/video', component: Video },
+                    { path: '/mv', component: MusicVideo }
                 ]
             },
 
             { path: "search/:key", component: SearchList, },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
-            { path: "artistdetail/:id", component: ArtistDetail, },//歌单详情页
-            { path: "albumdetail/:id", component: AlbumDetail, },//歌单详情页
-            { path: "like", component: LikeList, },//歌单详情页
+            { path: "artistdetail/:id", component: ArtistDetail, },//歌手详情页
+            { path: "albumdetail/:id", component: AlbumDetail, },//专辑详情页
+            { path: "videodetail/:id", component: VideoDetail, },//专辑详情页
+            { path: "like", component: LikeList, },//喜欢的歌曲
             { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
             { path: 'friends', component: Friends },//朋友页

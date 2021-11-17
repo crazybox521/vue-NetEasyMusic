@@ -7,6 +7,7 @@
             <img
               class="video-img pointer"
               :src="v.data.coverUrl + '?param=300y170'"
+              @click="toDetail(v.data.vid)"
             />
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
@@ -63,6 +64,10 @@ export default {
   methods: {
     load() {
       this.$emit('loadMore', this.list.length)
+    },
+    toDetail(vid){
+      if(typeof id !==undefined)
+      this.$router.push('/videodetail/'+vid)
     }
   },
 }
