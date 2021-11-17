@@ -45,12 +45,12 @@
         </li>
       </ul>
     </div>
-    <videoList @loadMore="load" :list="videoList"></videoList>
+    <VideoList @loadMore="load" :disabled="disabled" :list="videoList"></VideoList>
   </div>
 </template>
 
 <script>
-import videoList from '../../components/list/VideoList.vue'
+import VideoList from '../../components/list/VideoList.vue'
 import {
   getVideoHotTag,
   getVideoAlltag,
@@ -58,7 +58,7 @@ import {
   getVideoByTag
 } from '../../api/api'
 export default {
-  components: { videoList },
+  components: { VideoList },
   data() {
     return {
       showLayer: false,
@@ -71,6 +71,11 @@ export default {
       isLoading: false, // 正在获取歌手列表
       mode: 'first',
       currenTagId: 0
+    }
+  },
+  computed: {
+    disabled() {
+      return this.loading || !this.hasMore
     }
   },
   created() {
@@ -108,8 +113,8 @@ export default {
         if (this.mode == 'first') {
           this.videoList = res.datas
           this.hasMore = res.hasmore
-          if(this.videoList.length===0) 
-          this.$message.error('暂时没有推荐视频，请稍后再试')
+          if (this.videoList.length === 0)
+            this.$message.error('暂时没有推荐视频，请稍后再试')
         } else {
           this.videoList.push(...res.datas)
         }

@@ -4,15 +4,15 @@
     <div class="detail-desc">
       <!-- 专辑图片 -->
       <div class="detail-img-wrapper">
-        <el-image class="img img-radius-4" :src="imgUrl" alt="" />
+        <img class="img img-radius-4" :src="imgUrl+'?param=300y300'" alt="" />
       </div>
-      <!-- 歌单信息 -->
+      <!-- 专辑信息 -->
       <div class="detail-desc-info">
         <div class="inf o-title">
           <Tag text="专辑"></Tag>
           <span class="mleft-12 font-bold font-20">{{ albumInfo.name }}</span>
         </div>
-        <!-- 歌单按钮 -->
+        <!-- 专辑按钮 -->
         <ul class="info-btn">
           <button class="btn btn-red" @click="playAll">
             <i class="iconfont icon-bofang"></i> 播放全部
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <!-- 歌单列表 -->
+    <!-- 专辑列表 -->
     <div class="detail-table">
       <ul class="detail-menu">
         <li>歌曲列表</li>

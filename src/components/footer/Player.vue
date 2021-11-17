@@ -546,7 +546,7 @@ export default {
   text-align: center;
   font-size: 16px;
   line-height: 2;
-  transition: all 0.8s linear;
+  transition: all .8s linear;
   &::-webkit-scrollbar {
     width: 1px;
   }

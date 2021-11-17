@@ -1,6 +1,6 @@
 <template>
   <div class="video-list mtop-10">
-    <ul v-infinite-scroll="load">
+    <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
       <li v-for="v in list" :key="v.data.vid" class="mtop-10">
         <template v-if="v.type === 1">
           <div class="mtop-10 img-wrap">
@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  props: ['list'],
+  props: ['list','disabled'],
   watch: {
     'list.length'(val) {
       if (val === 8) {
