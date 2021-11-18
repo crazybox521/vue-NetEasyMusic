@@ -1,4 +1,3 @@
-
 /* 左侧导航信息 */
 export default [
     { path: '/personalrecom', title: '发现音乐', checkLogin: false },
@@ -7,5 +6,5 @@ export default [
     { path: '/friends', title: '朋友', checkLogin: true },
     { path: '/historyplay', title: '最近播放', checkLogin: false },
     { path: '/like', title: '我喜欢的音乐', checkLogin: true },
-    { path: '/subcrb', title: '我的收藏', checkLogin: true }
+    { path: '/subscribe', title: '我的收藏', checkLogin: true }
 ]

@@ -1,4 +1,5 @@
 <template>
+  <!-- 视频列表组件 -->
   <div class="video-list mtop-10">
     <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
       <li v-for="v in list" :key="v.data.vid" class="mtop-10">
@@ -37,7 +38,7 @@
             <div class="video-time font-12">
               {{ (v.data.duration / 1000) | timeFormat }}
             </div>
-             <div class="play-btn pointer">
+            <div class="play-btn pointer">
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -53,7 +54,7 @@
 
 <script>
 export default {
-  props: ['list','disabled'],
+  props: ['list', 'disabled'],
   watch: {
     'list.length'(val) {
       if (val === 8) {
@@ -65,11 +66,10 @@ export default {
     load() {
       this.$emit('loadMore', this.list.length)
     },
-    toDetail(vid){
-      if(typeof id !==undefined)
-      this.$router.push('/videodetail/'+vid)
+    toDetail(vid) {
+      if (typeof id !== undefined) this.$router.push('/videodetail/' + vid)
     }
-  },
+  }
 }
 </script>
 
@@ -125,14 +125,13 @@ export default {
     text-align: center;
     border-radius: 50%;
     opacity: 0;
-    transition: all .8s;
+    transition: all 0.8s;
     i {
       font-size: 18px;
     }
   }
   &:hover .play-btn {
-      opacity: 1;
-     
-    }
+    opacity: 1;
+  }
 }
 </style>

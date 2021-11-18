@@ -30,10 +30,13 @@ Vue.filter('dateFormat', function (time) {
   day = day < 10 ? '0' + day : day
   return year + '-' + mouth + '-' + day
 })
-
+/* 播放数量的过滤器 */
 Vue.filter('countFormat', function (count) {
   if (count < 10000) return count
   else return Math.floor(count / 10000) + '万'
+})
+Vue.filter('mvTopFormat', function (index) {
+  return index < 10 ? '0' + index : index
 })
 new Vue({
   router,

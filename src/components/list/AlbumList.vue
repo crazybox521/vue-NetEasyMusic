@@ -1,4 +1,5 @@
 <template>
+<!-- 歌手信息页专辑列表 -->
   <div class="album-list mtop-60">
     <div class="list-container">
       <div style="width: 200px">

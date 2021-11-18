@@ -6,6 +6,7 @@ import NotFound from "../views/NotFound.vue"
 import HomePage from "../views/home/HomePage.vue"
 import LikeList from "../views/user/LikeList.vue"
 import RecommendSong from "../views/user/RecommendSong.vue"
+import SubScribeView from "../views/user/subscribe/SubScribeView.vue"
 import Friends from "../views/user/Friends.vue"
 import HistoryPlay from "../views/historyplay/HistoryPlay.vue"
 import SearchList from "../views/search/SearchList.vue"
@@ -47,6 +48,11 @@ const routes = [
                     { path: '/video', component: Video },
                     { path: '/mv', component: MusicVideo }
                 ]
+            },
+            {
+                path: 'subscribe',
+                component: SubScribeView,
+                
             },
 
             { path: "search/:key", component: SearchList, },// 搜索展示页

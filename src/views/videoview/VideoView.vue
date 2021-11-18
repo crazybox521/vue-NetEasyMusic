@@ -35,6 +35,10 @@ export default {
       this.setActive(to.path)
     }
   },
+  created() {
+    /* 刷新后保持当前导航激活 */
+    this.setActive(this.$route.path)
+  },
   methods: {
     /* 路由跳转 */
     goTo(path) {

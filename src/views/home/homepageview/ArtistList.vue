@@ -2,7 +2,7 @@
   <div class="artist-list mtop-60">
     <button @click="openTag" class="hidden">{{showH5Info}}列表</button>
     <div class="tag-wrapper" ref="tagRef">
-      <div class="redio-list">
+      <div class="radio-list">
         <span class="w-60">语种：</span>
         <el-radio-group v-model="queryInfo.area">
           <el-radio :label="ar.id" v-for="ar in artistData.area" :key="ar.id">{{
@@ -10,7 +10,7 @@
           }}</el-radio>
         </el-radio-group>
       </div>
-      <div class="redio-list">
+      <div class="radio-list">
         <span class="w-60">分类：</span>
         <el-radio-group v-model="queryInfo.type">
           <el-radio :label="tp.id" v-for="tp in artistData.type" :key="tp.id">{{
@@ -18,7 +18,7 @@
           }}</el-radio>
         </el-radio-group>
       </div>
-      <div class="redio-list">
+      <div class="radio-list">
         <span class="w-60">筛选：</span>
         <el-radio-group v-model="queryInfo.initial">
           <el-radio :label="i.id" v-for="i in artistData.initial" :key="i.id">{{
@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.redio-list {
+.radio-list {
   display: flex;
   flex-wrap: wrap;
   line-height: 20px;

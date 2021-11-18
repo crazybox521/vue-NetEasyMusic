@@ -5,7 +5,7 @@ import NProgress from 'nprogress'
 /* token */
 // axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-axios.defaults.timeout = 3000
+axios.defaults.timeout = 5000
 /* 配置拦截器，在config中给header添加Authorization */
 axios.interceptors.request.use((config) => {
     NProgress.start();
@@ -22,7 +22,7 @@ axios.interceptors.response.use((config) => {
 /* 检索歌曲 */
 export const search = (seachInfo) => axios.get('/cloudsearch', { params: seachInfo })
 
-export const checkMusic = () => {}
+export const checkMusic = () => { }
 
 /* 获取音乐url */
 export const getMusicUrl = (id) => axios.get('/song/url', { params: { id } })
@@ -42,17 +42,14 @@ export const getPlayListDetail = (id) => axios.get('/playlist/detail', { params:
 /* 获取音乐详情 */
 export const getMusicListByIds = (ids) => axios.get('/song/detail', { params: { ids } })
 
-
 /* 获取排行榜信息 */
 export const getToplist = () => axios.get('/toplist')
 
 /* 获取歌单分类 */
 export const getAllCat = () => axios.get('/playlist/catlist')
 
-
 /* 获取热门歌单分类 */
 export const getHotCat = () => axios.get('/playlist/hot')
-
 
 /* 根据分类获取歌单 */
 export const getPlayListByCat = (obj) => {
@@ -72,10 +69,8 @@ export const getArtistList = (obj) => axios.get('/artist/list', { params: obj })
 /* 根据ID获取歌手详情 */
 export const queryArtistDetail = (id) => axios.get('/artist/detail', { params: { id } })
 
-
 /* 获取歌手热门50首 */
 export const getArtistTop = (id) => axios.get('/artist/top/song', { params: { id } })
-
 
 /* 获取歌手专辑 */
 export const getArtistAlbum = (id, limit = 50, offset = 0) => axios.get('/artist/album', { params: { id, limit, offset } })
@@ -131,6 +126,24 @@ export const getVideoLike = (vid) => axios.get('/video/detail/info', { params: {
 
 /* 获取视频URL */
 export const getVideoUrl = (id) => axios.get('/video/url', { params: { id } })
+
+/* 获取全部MV area limit offset order*/
+export const getAllMv = (obj) => axios.get('/mv/all', { params: obj })
+
+/* 获取最新MV */
+export const getNewMv = (area, limit) => axios.get('/mv/first', { params: { area, limit } })
+
+/* 获取网易出品Mv */
+export const getNetEasyMv = (limit, offset) => axios.get('/mv/exclusive/rcmd', { params: { limit, offset } })
+
+/* 获取推荐MV */
+export const getPersonalizedMv = () => axios.get('/personalized/mv')
+
+/* mv 排行 area, limit,offset */
+export const getTopMv = (obj) => axios.get('/top/mv', { params: obj })
+
+/* 获取MV地址 */
+export const getMvUrl = (id) => axios.get('/mv/url', { params: { id } })
 
 /* 下载 */
 export const downloadMusic = (url, fileName) => {
