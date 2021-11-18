@@ -3,7 +3,10 @@
     <div class="mv-item">
       <div class="new-head">
         <div>
-          <button class="no-btn font-16 font-bold mtop-10" @click="toMv">
+          <button
+            class="no-btn font-16 font-bold mtop-10"
+            @click="toAllMv('new')"
+          >
             最新MV <i class="el-icon-arrow-right"></i>
           </button>
         </div>
@@ -23,7 +26,10 @@
     </div>
     <div class="mv-item mtop-20">
       <div class="hot-head">
-        <button class="no-btn font-16 font-bold mtop-10" @click="toMv">
+        <button
+          class="no-btn font-16 font-bold mtop-10"
+          @click="toAllMv('net')"
+        >
           网易出品 <i class="el-icon-arrow-right"></i>
         </button>
       </div>
@@ -32,7 +38,7 @@
     <div class="mv-item mtop-20">
       <div class="new-head">
         <div>
-          <button class="no-btn font-16 font-bold mtop-10" @click="toMv">
+          <button class="no-btn font-16 font-bold mtop-10" @click="toTopMv">
             MV排行榜 <i class="el-icon-arrow-right"></i>
           </button>
         </div>
@@ -54,13 +60,14 @@
 </template>
 
 <script>
-import { getNewMv, getNetEasyMv, getTopMv } from '../../api/api'
-import MvList from '../../components/list/MvList.vue'
-import MvTopList from '../../components/list/MvTopList.vue'
+import { getNewMv, getNetEasyMv, getTopMv } from '../../../api/api'
+import MvList from '../../../components/list/MvList.vue'
+import MvTopList from '../../../components/list/MvTopList.vue'
 export default {
-  components: { MvList,MvTopList },
+  components: { MvList, MvTopList },
   data() {
     return {
+      // 最新MV的cat
       newCat: [
         { name: '内地', isActive: true },
         { name: '港台', isActive: false },
@@ -68,12 +75,13 @@ export default {
         { name: '日本', isActive: false },
         { name: '韩国', isActive: false }
       ],
+      // 最新MV的搜索信息
       newQueryInfo: {
         area: '内地'
       },
-      newList: [],
-      netEasyList: [],
-      PersonalizedList: [],
+      newList: [], //最新MV列表
+      netEasyList: [], //网易出品MV列表
+      //排行榜的cat
       topCat: [
         { name: '内地', isActive: true },
         { name: '港台', isActive: false },
@@ -81,12 +89,13 @@ export default {
         { name: '日本', isActive: false },
         { name: '韩国', isActive: false }
       ],
+      // 排行榜的检索信息
       topQueryInfo: {
         area: '内地',
         limit: 10,
         offset: 0
       },
-      topList: []
+      topList: [] //排行榜列表
     }
   },
   created() {
@@ -95,24 +104,25 @@ export default {
     this.getTopMv()
   },
   methods: {
+    /* 获取最新MV */
     async getNewMv() {
       const { data: res } = await getNewMv(this.newQueryInfo.area, 8)
       if (res.code1 == 200) return
       this.newList = res.data
     },
+    /* 获取网易出品MV */
     async getNetEasyMv() {
       const { data: res } = await getNetEasyMv(8, 0)
       if (res.code !== 200) return
       this.netEasyList = res.data
     },
+    /* 获取排行榜MV */
     async getTopMv() {
       const { data: res } = await getTopMv(this.topQueryInfo)
       if (res.code !== 200) return
       this.topList = res.data
     },
-    toMv() {
-      this.$router.push('/videoview')
-    },
+    /* 选择最新MV中cat的回调 */
     selectNewCat(index, name) {
       this.newCat.forEach((item) => {
         item.isActive = false
@@ -121,6 +131,7 @@ export default {
       this.newQueryInfo.area = name
       this.getNewMv()
     },
+    /* 选择排行榜的cat的回调 */
     selectTopCat(index, name) {
       this.topCat.forEach((item) => {
         item.isActive = false
@@ -128,6 +139,25 @@ export default {
       this.topCat[index].isActive = true
       this.topQueryInfo.area = name
       this.getTopMv()
+    },
+    toAllMv(type) {
+      console.log(type)
+      if (type === 'new') {
+        this.$router.push({
+          path: '/allmv',
+          query: { type, area: this.newQueryInfo.area }
+        })
+      } else if (type === 'net') {
+        this.$router.push({ path: '/allmv', query: { type } })
+      } else {
+        this.$message.error('出错')
+      }
+    },
+    toTopMv() {
+      this.$router.push({
+        path: '/topmv',
+        query: { area: this.topQueryInfo.area }
+      })
     }
   }
 }

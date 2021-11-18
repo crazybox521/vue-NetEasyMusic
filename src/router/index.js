@@ -20,7 +20,9 @@ import AlbumDetail from '../views/album/AlbumDetail.vue'
 import VideoDetail from '../views/video/VideoDetail.vue'
 import VideoView from '../views/videoview/VideoView.vue'
 import Video from '../views/videoview/Video.vue'
-import MusicVideo from '../views/videoview/MusicVideo.vue'
+import MusicVideo from '../views/videoview/mv/MusicVideo.vue'
+import AllMv from '../views/videoview/mv/AllMv.vue'
+import TopMv from '../views/videoview/mv/TopMv.vue'
 Vue.use(VueRouter);
 const routes = [
     {
@@ -40,19 +42,21 @@ const routes = [
                     { path: '/artistlist', component: ArtistList }//歌手页
                 ],
             },
+            /* 视频列表页 */
             {
                 path: 'videoview',
                 component: VideoView,
                 redirect: '/video',
                 children: [
-                    { path: '/video', component: Video },
-                    { path: '/mv', component: MusicVideo }
+                    { path: '/video', component: Video },//video的首屏
+                    { path: '/mv', component: MusicVideo }//mv的首屏
                 ]
             },
+            /* 收藏页 */
             {
                 path: 'subscribe',
                 component: SubScribeView,
-                
+
             },
 
             { path: "search/:key", component: SearchList, },// 搜索展示页
@@ -64,9 +68,11 @@ const routes = [
             { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
             { path: 'friends', component: Friends },//朋友页
+            { path: 'allmv', component: AllMv },//全部MV页
+            { path: 'topmv', component: TopMv },//MV排行页
         ],
     },
-    { path: '/login', component: Login },
+    { path: '/login', component: Login },//login
     { path: '*', component: NotFound }//404
 ]
 
