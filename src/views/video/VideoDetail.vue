@@ -147,8 +147,10 @@ export default {
   justify-content: space-around;
 }
 .vd-main {
+  min-width: 600px;
 }
 .vd-right {
+  min-width: 400px;
 }
 .video-container {
   .video-wrap {

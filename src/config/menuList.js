@@ -6,5 +6,6 @@ export default [
     { path: '/video', title: '视频', checkLogin: true },
     { path: '/friends', title: '朋友', checkLogin: true },
     { path: '/historyplay', title: '最近播放', checkLogin: false },
-    { path: '/like', title: '我喜欢的音乐', checkLogin: true }
+    { path: '/like', title: '我喜欢的音乐', checkLogin: true },
+    { path: '/subcrb', title: '我的收藏', checkLogin: true }
 ]
