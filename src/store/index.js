@@ -69,6 +69,11 @@ const mutations = {
             if (state.historyList.findIndex((item) => item.id == payload.data.id) !== -1)
                 return
             state.historyList.unshift(payload.data)
+            if(state.historyList.length>50){
+                state.historyList.splice(-1,1)
+                console.log(state.historyList.length);
+            }
+            
             window.localStorage.setItem(
                 'historylist',
                 JSON.stringify(state.historyList)

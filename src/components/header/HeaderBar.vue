@@ -1,7 +1,7 @@
 <template>
   <!-- 头部工具栏区域组件 -->
   <div class="header-bar">
-    <img @click="toHomePage" class="img-h" src="../../assets/img/logo.png" />
+    <img @click="toHomePage" class="img-h pointer" src="../../assets/img/logo.png" />
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
         <i class="iconfont icon-arrow-left-bold"></i>
