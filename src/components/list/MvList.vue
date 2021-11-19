@@ -1,8 +1,8 @@
 <template>
   <!-- MV列表 -->
   <div class="mv-list">
-    <ul>
-      <li v-for="nl in list" :key="nl.id">
+    <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
+      <li v-for="nl,index in list" :key="index">
         <div class="mtop-10 img-wrap">
           <img
             class="video-img"
@@ -19,7 +19,7 @@
         </div>
         <div class="title-line text-hidden font-14 pointer"  @click="toDetail(nl.id)">{{ nl.name }}</div>
         <div class="author-line font-12">
-          <span class="mright-5" v-for="at in nl.artists" :key="at.id">{{
+          <span class="mright-5" v-for="at,index in nl.artists" :key="index">{{
             at.name
           }}</span>
         </div>
@@ -30,8 +30,24 @@
 
 <script>
 export default {
-  props: ['list'],
+  props: {
+    list:Array,
+    disabled:{
+      type:Boolean,
+      default:true
+    }
+  },
+  watch: {
+    'list.length'(val) {
+      if (val === 8) {
+        this.$emit('loadMore', this.list.length)
+      }
+    }
+  },
   methods: {
+    load() {
+      this.$emit('loadMore', this.list.length)
+    },
     toDetail(id) {
       this.$router.push('/mvdetail/' + id)
     }

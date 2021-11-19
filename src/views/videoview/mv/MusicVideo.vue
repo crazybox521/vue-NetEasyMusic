@@ -28,7 +28,7 @@
       <div class="hot-head">
         <button
           class="no-btn font-16 font-bold mtop-10"
-          @click="toAllMv('net')"
+          @click="toAllMv('网易出品')"
         >
           网易出品 <i class="el-icon-arrow-right"></i>
         </button>
@@ -145,9 +145,9 @@ export default {
       if (type === 'new') {
         this.$router.push({
           path: '/allmv',
-          query: { type, area: this.newQueryInfo.area }
+          query: {  area: this.newQueryInfo.area }
         })
-      } else if (type === 'net') {
+      } else if (type === '网易出品') {
         this.$router.push({ path: '/allmv', query: { type } })
       } else {
         this.$message.error('出错')
