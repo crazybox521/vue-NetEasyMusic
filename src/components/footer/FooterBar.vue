@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Player from './Player.vue'
+import Player from '../player/Player.vue'
 export default {
   components: {
     Player
