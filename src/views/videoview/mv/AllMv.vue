@@ -1,6 +1,6 @@
 <template>
   <!-- 全部MV页 -->
-  <div class="all-mv">
+  <div class="all-mv mtop-20">
     <div class="all-title font-20 font-bold">全部MV</div>
     <!-- mv的分类筛选 -->
     <div class="tag-wrapper">
