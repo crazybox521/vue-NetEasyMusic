@@ -42,6 +42,7 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 + 专辑详情页：歌曲列表、搜索
 + 歌手详情页：专辑列表、歌手描述
 + 视频详情页：视频播放（使用原生video及控件播放）、相似推荐
++ MV详情页：MV播放、MV推荐
 + 搜索：歌曲搜索
 + 视频：视频列表、MV列表、全部MV页
 + 部分页面移动端适配
