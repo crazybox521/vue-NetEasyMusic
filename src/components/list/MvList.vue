@@ -1,10 +1,14 @@
 <template>
-<!-- MV列表 -->
+  <!-- MV列表 -->
   <div class="mv-list">
     <ul>
       <li v-for="nl in list" :key="nl.id">
         <div class="mtop-10 img-wrap">
-          <img class="video-img" :src="nl.cover + '?param=300y170'" />
+          <img
+            class="video-img"
+            :src="nl.cover + '?param=300y170'"
+            @click="toDetail(nl.id)"
+          />
           <div class="video-playcount font-12">
             <i class="iconfont icon-24gl-play"></i>
             {{ nl.playCount | countFormat }}
@@ -26,7 +30,12 @@
 
 <script>
 export default {
-    props:['list']
+  props: ['list'],
+  methods: {
+    toDetail(id) {
+      this.$router.push('/mvdetail/' + id)
+    }
+  }
 }
 </script>
 

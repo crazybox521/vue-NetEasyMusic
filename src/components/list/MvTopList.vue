@@ -7,7 +7,7 @@
           {{ (index + 1) | mvTopFormat }}
         </div>
         <div class="mtop-10 img-wrap">
-          <img class="video-img" :src="item.cover + '?param=300y170'" />
+          <img class="video-img" :src="item.cover + '?param=300y170'" @click="toDetail(item.id)"/>
           <div class="video-playcount font-12">
             <i class="iconfont icon-24gl-play"></i>
             {{ item.playCount | countFormat }}
@@ -31,7 +31,12 @@
 
 <script>
 export default {
-  props: ['list']
+  props: ['list'],
+  methods:{
+    toDetail(id) {
+      this.$router.push('/mvdetail/' + id)
+    }
+  }
 }
 </script>
 

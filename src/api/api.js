@@ -136,11 +136,17 @@ export const getNewMv = (area, limit) => axios.get('/mv/first', { params: { area
 /* 获取网易出品Mv */
 export const getNetEasyMv = (limit, offset) => axios.get('/mv/exclusive/rcmd', { params: { limit, offset } })
 
-/* 获取推荐MV */
-export const getPersonalizedMv = () => axios.get('/personalized/mv')
-
 /* mv 排行 area, limit,offset */
 export const getTopMv = (obj) => axios.get('/top/mv', { params: obj })
+
+/* MV详情 */
+export const getMvDetail = (mvid) => axios.get('/mv/detail', { params: {mvid} })
+
+/* mv点赞评论数据 */
+export const getMvInfo = (mvid) => axios.get('/mv/detail/info', { params: { mvid } })
+
+/* 获取推荐MV */
+export const getPersonalizedMv = () => axios.get('/personalized/mv')
 
 /* 获取MV地址 */
 export const getMvUrl = (id) => axios.get('/mv/url', { params: { id } })

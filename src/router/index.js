@@ -18,6 +18,7 @@ import ArtistList from '../views/home/homepageview/ArtistList.vue'
 import ArtistDetail from '../views/artist/ArtistDetail.vue'
 import AlbumDetail from '../views/album/AlbumDetail.vue'
 import VideoDetail from '../views/video/VideoDetail.vue'
+import MvDetail from '../views/video/MvDetail.vue'
 import VideoView from '../views/videoview/VideoView.vue'
 import Video from '../views/videoview/Video.vue'
 import MusicVideo from '../views/videoview/mv/MusicVideo.vue'
@@ -63,7 +64,8 @@ const routes = [
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
             { path: "artistdetail/:id", component: ArtistDetail, },//歌手详情页
             { path: "albumdetail/:id", component: AlbumDetail, },//专辑详情页
-            { path: "videodetail/:id", component: VideoDetail, },//专辑详情页
+            { path: "videodetail/:id", component: VideoDetail, },//视频详情页
+            { path: "mvdetail/:id", component: MvDetail, },//mv详情页
             { path: "like", component: LikeList, },//喜欢的歌曲
             { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
