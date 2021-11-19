@@ -2,7 +2,7 @@
   <!-- 视频列表组件 -->
   <div class="video-list mtop-10">
     <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
-      <li v-for="v in list" :key="v.data.vid" class="mtop-10">
+      <li v-for="(v,index) in list" :key="index" class="mtop-10">
         <template v-if="v.type === 1">
           <div class="mtop-10 img-wrap">
             <img
@@ -17,7 +17,7 @@
             <div class="video-time font-12">
               {{ (v.data.durationms / 1000) | timeFormat }}
             </div>
-            <div class="play-btn pointer">
+            <div class="play-btn pointer"  @click="toMvDetail(v.data.id)">
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -29,8 +29,13 @@
           </div>
         </template>
         <template v-else>
+          <!-- 视频列表中的MV标签下视频 -->
           <div class="mtop-10 img-wrap">
-            <img class="video-img" :src="v.data.coverUrl + '?param=300y170'" />
+            <img
+              class="video-img"
+              :src="v.data.coverUrl + '?param=300y170'"
+              @click="toMvDetail(v.data.id)"
+            />
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
               {{ v.data.playCount | countFormat }}
@@ -38,7 +43,7 @@
             <div class="video-time font-12">
               {{ (v.data.duration / 1000) | timeFormat }}
             </div>
-            <div class="play-btn pointer">
+            <div class="play-btn pointer"  @click="toMvDetail(v.data.id)">
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -68,6 +73,9 @@ export default {
     },
     toDetail(vid) {
       if (typeof id !== undefined) this.$router.push('/videodetail/' + vid)
+    },
+    toMvDetail(mvid) {
+      this.$router.push('/mvdetail/' + mvid)
     }
   }
 }

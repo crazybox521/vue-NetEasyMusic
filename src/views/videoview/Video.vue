@@ -45,7 +45,7 @@
         </li>
       </ul>
     </div>
-    <VideoList @loadMore="load" :disabled="disabled" :list="videoList"></VideoList>
+    <VideoList @loadMore="load" :disabled="disabled" :type="listType" :list="videoList"></VideoList>
   </div>
 </template>
 
@@ -70,7 +70,8 @@ export default {
       hasMore: true, // 是否还有更多歌手未加载
       isLoading: false, // 正在获取歌手列表
       mode: 'first',
-      currenTagId: 0
+      currenTagId: 0,
+      listType:'video'
     }
   },
   computed: {
@@ -135,6 +136,12 @@ export default {
     },
     /* 从热门标签选择了标签 */
     selectHotTag(id, index) {
+      console.log(id);
+      if(id==1000){
+        this.listType ='mv'
+      }else{
+        this.listType ='video'
+      }
       this.hotTagList.forEach((item) => {
         item.selectTab = false
       })
@@ -185,6 +192,11 @@ export default {
     },
     /* 从弹出层访问了标签 */
     selectAllTag(id, index) {
+      if(id==1000){
+        this.listType ='mv'
+      }else{
+        this.listType ='video'
+      }
       this.allTagList.forEach((item) => {
         item.selectTab = false
       })

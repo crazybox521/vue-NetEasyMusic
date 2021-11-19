@@ -17,7 +17,7 @@
             <i class="iconfont icon-bofang"></i>
           </div>
         </div>
-        <div class="title-line text-hidden font-14">{{ nl.name }}</div>
+        <div class="title-line text-hidden font-14 pointer"  @click="toDetail(nl.id)">{{ nl.name }}</div>
         <div class="author-line font-12">
           <span class="mright-5" v-for="at in nl.artists" :key="at.id">{{
             at.name

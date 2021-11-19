@@ -18,8 +18,8 @@
         <div class="info-wrap">
           <div class="creator-info">
             <div class="img-wrap font-14">
-              <img :src="artists[0].img1v1Url" alt="" />
-              <span class="mleft-10">{{ artists[0].name }}</span>
+              <img :src="artist.img1v1Url" alt="" />
+              <span class="mleft-10">{{ artist.name }}</span>
             </div>
           </div>
           <div class="video-info">
@@ -65,7 +65,7 @@
               <img
                 @click="toDetail(item.id)"
                 class="img-h img pointer"
-                :src="item.picUrl"
+                :src="item.picUrl +'?param=200y110'"
                 alt=""
               />
             </div>
@@ -98,8 +98,8 @@ export default {
     }
   },
   computed: {
-    artists() {
-      return this.deTail.artists ? this.deTail.artists : []
+    artist() {
+      return this.deTail.artists ? this.deTail.artists[0] : {}
     }
   },
   watch: {
