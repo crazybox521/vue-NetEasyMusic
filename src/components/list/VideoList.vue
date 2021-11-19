@@ -17,7 +17,7 @@
             <div class="video-time font-12">
               {{ (v.data.durationms / 1000) | timeFormat }}
             </div>
-            <div class="play-btn pointer"  @click="toMvDetail(v.data.id)">
+            <div class="play-btn pointer"  @click="toDetail(v.data.vid)">
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -72,9 +72,10 @@ export default {
       this.$emit('loadMore', this.list.length)
     },
     toDetail(vid) {
-      if (typeof id !== undefined) this.$router.push('/videodetail/' + vid)
+      if (typeof vid !== 'undefined') this.$router.push('/videodetail/' + vid)
     },
     toMvDetail(mvid) {
+      if (typeof mvid !== 'undefined')
       this.$router.push('/mvdetail/' + mvid)
     }
   }

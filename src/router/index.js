@@ -3,7 +3,6 @@ import VueRouter from "vue-router"
 /* 路由懒加载 */
 /* 首屏 */
 const Layout = () => import( /* webpackChunkName: "group-home" */ '../views/Layout.vue')
-
 const HomePage = () => import( /* webpackChunkName: "group-home" */ '../views/home/HomePage.vue')
 const PersonalRecom = () => import( /* webpackChunkName: "group-home" */ '../views/home/homepageview/PersonalRecom.vue')
 /* 登录 和 404*/
@@ -69,7 +68,6 @@ const routes = [
                 component: SubScribeView,
 
             },
-
             { path: "search/:key", component: SearchList, },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
             { path: "artistdetail/:id", component: ArtistDetail, },//歌手详情页
