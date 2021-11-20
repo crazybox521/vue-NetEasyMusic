@@ -3,7 +3,7 @@
     <div class="submv-head">
       <div>
         <span class="font-bold">收藏的视频</span
-        ><span class="font-12" style="color:#cfcfcf">({{ count }})</span>
+        ><span class="font-12" style="color: #cfcfcf">({{ count }})</span>
       </div>
       <div class="detail-search">
         <el-input

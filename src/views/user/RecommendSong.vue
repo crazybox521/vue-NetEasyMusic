@@ -19,13 +19,13 @@
       </button>
     </div>
     <div class="div-line mtop-20"></div>
-    <MusicList ref="listRef" :list="list"></MusicList>
+    <MusicList v-if="showList" ref="listRef" :list="list"></MusicList>
+    <el-skeleton v-else :rows="8" animated />
   </div>
 </template>
 
 <script>
 import MusicList from '../../components/list/MusicList.vue'
-import { mapState } from 'vuex'
 import { getRecommendSong } from '../../api/api'
 export default {
   components: { MusicList },
@@ -36,7 +36,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isLogin'])
+    showList(){
+      return this.list.length!==0?true:false
+    }
   },
   created() {
     this.getToday()
@@ -44,7 +46,6 @@ export default {
   },
   methods: {
     async getList() {
-      if (!this.isLogin) return
       const { data: res } = await getRecommendSong()
       if (res.code !== 200) return
       this.list = res.data.dailySongs

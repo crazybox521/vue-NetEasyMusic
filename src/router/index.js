@@ -29,6 +29,7 @@ const ArtistDetail = () => import( /* webpackChunkName: "group-detail" */ '../vi
 const AlbumDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/album/AlbumDetail.vue')
 const VideoDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/video/VideoDetail.vue')
 const MvDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/video/MvDetail.vue')
+const UserDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/user/UserDetail.vue')
 /* 视频页首屏 */
 const VideoView = () => import( /* webpackChunkName: "group-video" */ '../views/videoview/VideoView.vue')
 const Video = () => import( /* webpackChunkName: "group-video" */ '../views/videoview/Video.vue')
@@ -82,6 +83,7 @@ const routes = [
             { path: "albumdetail/:id", component: AlbumDetail, },//专辑详情页
             { path: "videodetail/:id", component: VideoDetail, },//视频详情页
             { path: "mvdetail/:id", component: MvDetail, },//mv详情页
+            { path: "userdetail/:id", component: UserDetail, },//用户详情页
             { path: "like", component: LikeList, },//喜欢的歌曲
             { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页

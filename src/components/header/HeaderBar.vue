@@ -1,7 +1,11 @@
 <template>
   <!-- 头部工具栏区域组件 -->
   <div class="header-bar">
-    <img @click="toHomePage" class="img-h pointer" src="../../assets/img/logo.png" />
+    <img
+      @click="toHomePage"
+      class="img-h pointer"
+      src="../../assets/img/logo.png"
+    />
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
         <i class="iconfont icon-arrow-left-bold"></i>
@@ -24,7 +28,11 @@
     <div class="login-info mleft-12" @click="loginView">
       <el-avatar icon="el-icon-user-solid" :src="avatarUrl"></el-avatar>
     </div>
-    <div class="login-info mleft-10 font-14 text-hidden" :class="{pointer:isLogin}" @click="doLogout">
+    <div
+      class="login-info mleft-10 font-14 text-hidden"
+      :class="{ pointer: isLogin }"
+      @click="doLogout"
+    >
       {{ name }}
     </div>
   </div>
@@ -71,7 +79,12 @@ export default {
     },
     /* 登录页面 */
     loginView() {
+      console.log(this.$route)
       if (!this.isLogin) this.$router.push('/login')
+      else {
+        if (this.$route.path === '/userdetail/' + this.account.id) return
+        this.$router.push('/userdetail/' + this.account.id)
+      }
     },
     /* 获取登录信息 */
     async getAcount() {
@@ -88,14 +101,15 @@ export default {
         this.openTip()
       }
     },
-    openTip(){
-      if(!this.isLogin)
-      this.$notify({
+    openTip() {
+      if (!this.isLogin)
+        this.$notify({
           title: '提示',
           type: 'warning',
-          message: '部分功能需要登录后才能使用，如每日推荐等，本网站不会收集用户信息，点击头像可以登录',
+          message:
+            '部分功能需要登录后才能使用，如每日推荐等，本网站不会收集用户信息，点击头像可以登录',
           duration: 0
-        });
+        })
     },
     /* 退出登录 */
     doLogout() {
