@@ -21,7 +21,7 @@ const state = {
     },
     /* 轮播图的高度 */
     bannerHeight: 200,
-    isLogin: false,
+    isLogin: window.sessionStorage.getItem('isLogin') == '' ? false : true,
     /* 账号信息 */
     account: {},
     /* 用户信息 */
@@ -58,6 +58,12 @@ const mutations = {
     },
     setIsLogin(state, isLogin) {
         state.isLogin = isLogin
+        if (isLogin) {
+            window.sessionStorage.setItem('isLogin', true)
+        } else {
+            window.sessionStorage.removeItem('isLogin')
+        }
+
     },
     setLoginInfo(state, loginInfo) {
         state.account = loginInfo.account
@@ -69,11 +75,11 @@ const mutations = {
             if (state.historyList.findIndex((item) => item.id == payload.data.id) !== -1)
                 return
             state.historyList.unshift(payload.data)
-            if(state.historyList.length>50){
-                state.historyList.splice(-1,1)
+            if (state.historyList.length > 50) {
+                state.historyList.splice(-1, 1)
                 console.log(state.historyList.length);
             }
-            
+
             window.localStorage.setItem(
                 'historylist',
                 JSON.stringify(state.historyList)
