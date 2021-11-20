@@ -10,7 +10,7 @@
         </div>
         <!-- 视频 -->
         <div class="video-wrap mtop-10">
-          <video controls :src="urlInfo.url">
+          <video autoplay controls :src="urlInfo.url">
             您的浏览器不支持 video 标签。
           </video>
         </div>

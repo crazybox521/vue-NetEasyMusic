@@ -1,5 +1,5 @@
 <template>
-  <div class="music-video mtop-60">
+  <div class="music-video">
     <div class="mv-item">
       <div class="new-head">
         <div>

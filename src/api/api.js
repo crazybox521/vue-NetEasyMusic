@@ -151,6 +151,18 @@ export const getPersonalizedMv = () => axios.get('/personalized/mv')
 /* 获取MV地址 */
 export const getMvUrl = (id) => axios.get('/mv/url', { params: { id } })
 
+/* 收藏的歌手 */
+export const getSubArtists =()=>axios.get('/artist/sublist')
+
+/* 收藏的专栏 */
+export const getSubColumn =(offset,limit)=>axios.get('/topic/sublist',{params:{offset,limit}})
+
+/* 收藏的MV列表 */
+export const getSubMv =()=>axios.get('/mv/sublist')
+
+/* 收藏的专辑列表 */
+export const getSubAlbum =(offset=0,limit=25)=>axios.get('/album/sublist',{params:{offset,limit}})
+
 /* 下载 */
 export const downloadMusic = (url, fileName) => {
     axios

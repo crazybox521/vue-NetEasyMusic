@@ -1,5 +1,5 @@
 <template>
-  <div class="album-detail">
+  <div class="album-detail mtop-20">
     <!-- 专辑图片及信息 -->
     <div class="detail-desc">
       <!-- 专辑图片 -->

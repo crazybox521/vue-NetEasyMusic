@@ -15,8 +15,10 @@ const ArtistList = () => import( /* webpackChunkName: "group-homepage" */ '../vi
 /* 需登录后才能进入的页面 */
 const LikeList = () => import( /* webpackChunkName: "group-user" */ '../views/user/LikeList.vue')
 const RecommendSong = () => import( /* webpackChunkName: "group-user" */ '../views/user/RecommendSong.vue')
-const Friends = () => import( /* webpackChunkName: "group-user" */ '../views/user/Friends.vue')
 const SubScribeView = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubScribeView.vue')
+const SubAlbum = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubAlbum.vue')
+const SubArtists = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubArtists.vue')
+const SubMv = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubMv.vue')
 /* 历史播放 */
 const HistoryPlay = () => import( /* webpackChunkName: "group-hisplay" */ '../views/historyplay/HistoryPlay.vue')
 /* 搜索相关 */
@@ -66,6 +68,12 @@ const routes = [
             {
                 path: 'subscribe',
                 component: SubScribeView,
+                redirect: '/sub-album',
+                children: [
+                    { path: '/sub-album', component: SubAlbum },
+                    { path: '/sub-artists', component: SubArtists },
+                    { path: '/sub-mv', component: SubMv }
+                ]
 
             },
             { path: "search/:key", component: SearchList, },// 搜索展示页
@@ -77,7 +85,6 @@ const routes = [
             { path: "like", component: LikeList, },//喜欢的歌曲
             { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
-            { path: 'friends', component: Friends },//朋友页
             { path: 'allmv', component: AllMv },//全部MV页
             { path: 'topmv', component: TopMv },//MV排行页
         ],

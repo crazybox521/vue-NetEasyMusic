@@ -41,7 +41,7 @@
         <div class="video-btn mtop-20">
           <button class="btn btn-white">
             <i class="iconfont icon-good"></i>
-            赞({{ 111 }})
+            赞({{ countInfo.likedCount }})
           </button>
           <button class="btn btn-white mleft-10">
             <i class="el-icon-folder-add"></i>
@@ -65,7 +65,7 @@
               <img
                 @click="toDetail(item.id)"
                 class="img-h img pointer"
-                :src="item.picUrl +'?param=200y110'"
+                :src="item.picUrl + '?param=200y110'"
                 alt=""
               />
             </div>
@@ -88,13 +88,26 @@
 </template>
 
 <script>
-import { getMvDetail, getMvUrl, getPersonalizedMv } from '../../api/api'
+import {
+  getMvDetail,
+  getMvUrl,
+  getPersonalizedMv,
+  getMvInfo
+} from '../../api/api'
 export default {
   data() {
     return {
-      deTail: {},
-      urlInfo: {},
-      RelatedList: []
+      deTail: {}, //详情
+      subed: false, //是否收藏
+      urlInfo: {}, //地址数据
+      RelatedList: [], //推荐mv
+      countInfo: {
+        //点赞评论分享
+        likedCount: 0,
+        shareCount: 0,
+        commentCount: 0,
+        liked: false
+      }
     }
   },
   computed: {
@@ -107,12 +120,14 @@ export default {
       this.getDetail()
       this.getUrl()
       this.getRelatedVideo()
+      this.getMvInfo()
     }
   },
   created() {
     this.getDetail()
     this.getUrl()
     this.getRelatedVideo()
+    this.getMvInfo()
   },
   methods: {
     /* 获取视频详情 */
@@ -120,6 +135,7 @@ export default {
       const { data: res } = await getMvDetail(this.$route.params.id)
       if (res.code !== 200) return
       this.deTail = res.data
+      this.subed =res.subed
     },
     /* 获取视频URL */
     async getUrl() {
@@ -132,6 +148,11 @@ export default {
       const { data: res } = await getPersonalizedMv()
       if (res.code !== 200) return
       this.RelatedList = res.result
+    },
+    async getMvInfo() {
+      const { data: res } = await getMvInfo(this.$route.params.id)
+      if (res.code !== 200) return
+      this.countInfo = res
     },
     toDetail(id) {
       if (typeof id !== 'undefined') this.$router.push('/mvdetail/' + id)

@@ -1,5 +1,5 @@
 <template>
-  <div class="video mtop-60">
+  <div class="video">
     <!-- 标签区域 -->
     <div class="list-tag mtop-10">
       <!-- 全部标签弹出层容器 -->
