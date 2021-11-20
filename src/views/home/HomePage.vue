@@ -1,5 +1,5 @@
 <template>
-<!-- 发现音乐页容器及导航 -->
+  <!-- 发现音乐页容器及导航 -->
   <div class="home-page">
     <ul class="router-list">
       <li
@@ -41,7 +41,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(to, from, '111')
+      console.log(to, from, 'home')
       this.setActive(to.path)
     }
   },
@@ -59,9 +59,7 @@ export default {
     /* 激活导航 */
     setActive(path) {
       this.routeList.forEach((item) => {
-        if (item.isActive == true) {
-          item.isActive = false
-        }
+        item.isActive = false
         if (item.path == path) {
           item.isActive = true
         }

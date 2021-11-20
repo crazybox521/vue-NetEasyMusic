@@ -18,11 +18,11 @@
           <span class="mleft-12 font-20 font-bold">{{ info.name }}</span>
         </div>
         <div class="author">
-          <div class="author-img">
+          <div class="author-img pointer" @click="toUserDetail(info.creator.userId)">
             <img class="img-h circle" :src="info.creator.avatarUrl" />
           </div>
           <div class="author-info">
-            <span class="mleft-12 font-12">{{ info.creator.nickname }}</span>
+            <span class="mleft-12 font-12 pointer" @click="toUserDetail(info.creator.userId)"  style="color:#0b58b0">{{ info.creator.nickname }}</span>
             <span class="mleft-12 font-12">{{
               info.createTime | dateFormat
             }}</span>
@@ -174,6 +174,9 @@ export default {
         if (res.code !== 200) return
         this.playList = res.songs
       }
+    },
+    toUserDetail(id){
+      this.$router.push('/userdetail/'+id)
     }
   }
 }

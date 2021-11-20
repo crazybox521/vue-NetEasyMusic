@@ -107,15 +107,14 @@ export default {
     }
   },
   created() {
-    if (window.localStorage.getItem('activeMenu'))
-      this.activeMenu = window.localStorage.getItem('activeMenu')
+    if (window.sessionStorage.getItem('activeMenu'))
+      this.activeMenu = window.sessionStorage.getItem('activeMenu')
   },
   methods: {
-    
     /* 导航 */
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
-      window.localStorage.setItem('activeMenu', key)
+      window.sessionStorage.setItem('activeMenu', key)
       this.activeMenu = key
     },
     handMusicListClose() {

@@ -3,7 +3,7 @@
     <div class="swiper-wrapper">
       <el-carousel :interval="4000" type="card" :height="bannerHeight + 'px'">
         <el-carousel-item v-for="item in imgList" :key="item.imageUrl">
-          <img class="img img-h" :src="item.imageUrl" @click="open(item.url)" />
+          <img class="img img-h swiper-img" :src="item.imageUrl" @click="open(item.url)" />
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -85,5 +85,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.swiper-img{
+  border-radius: 8px;
+}
 </style>
