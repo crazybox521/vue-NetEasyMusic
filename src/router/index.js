@@ -1,5 +1,6 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
+import store from '../store/index'
 /* 路由懒加载 */
 /* 首屏 */
 const Layout = () => import( /* webpackChunkName: "group-home" */ '../views/Layout.vue')
@@ -61,8 +62,8 @@ const routes = [
                 component: VideoView,
                 redirect: '/video',
                 children: [
-                    { path: '/video', component: Video },//video的首屏
-                    { path: '/mv', component: MusicVideo }//mv的首屏
+                    { path: '/video', component: Video, meta: { check: true } },//video的首屏
+                    { path: '/mv', component: MusicVideo, meta: { check: true } }//mv的首屏
                 ]
             },
             /* 收藏页 */
@@ -71,9 +72,9 @@ const routes = [
                 component: SubScribeView,
                 redirect: '/sub-album',
                 children: [
-                    { path: '/sub-album', component: SubAlbum },
-                    { path: '/sub-artists', component: SubArtists },
-                    { path: '/sub-mv', component: SubMv }
+                    { path: '/sub-album', component: SubAlbum, meta: { check: true } },
+                    { path: '/sub-artists', component: SubArtists, meta: { check: true } },
+                    { path: '/sub-mv', component: SubMv, meta: { check: true } }
                 ]
 
             },
@@ -84,8 +85,8 @@ const routes = [
             { path: "videodetail/:id", component: VideoDetail, },//视频详情页
             { path: "mvdetail/:id", component: MvDetail, },//mv详情页
             { path: "userdetail/:id", component: UserDetail, },//用户详情页
-            { path: "like", component: LikeList, },//喜欢的歌曲
-            { path: 'recomsongs', component: RecommendSong },//每日推荐歌曲页
+            { path: "like", component: LikeList, meta: { check: true } },//喜欢的歌曲
+            { path: 'recomsongs', component: RecommendSong, meta: { check: true } },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
             { path: 'allmv', component: AllMv },//全部MV页
             { path: 'topmv', component: TopMv },//MV排行页
@@ -102,7 +103,13 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     document.title = '网易云音乐客户端PC版'
-    next()
+    if (to.meta.check === true) {
+        if (store.state.isLogin === true) next()
+        else Vue.prototype.$message.error('需要登录')
+    } else {
+        next()
+    }
+
 })
 
 export default router
