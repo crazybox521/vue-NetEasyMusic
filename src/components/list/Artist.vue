@@ -1,5 +1,5 @@
 <template>
-<!-- 歌手页歌手列表 -->
+<!-- 歌手列表 -->
   <div class="artist">
     <ul
       class="song-sheet-list"

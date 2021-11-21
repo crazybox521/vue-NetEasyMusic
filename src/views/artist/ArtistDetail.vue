@@ -9,7 +9,11 @@
             <i class="el-icon-folder-add"></i>
             收藏
           </button>
-          <button class="btn btn-white mleft-10" v-if="showPriMsg" @click="toUserDetail">
+          <button
+            class="btn btn-white mleft-10"
+            v-if="showPriMsg"
+            @click="toUserDetail"
+          >
             <i class="el-icon-user"></i>
             个人主页
           </button>
@@ -36,7 +40,9 @@
           :list="item.songs"
         ></AlbumList>
       </el-tab-pane>
-      <el-tab-pane label="MV" name="MV">MV</el-tab-pane>
+      <el-tab-pane label="MV" name="MV">
+        <MvList :disabled="true" :list="mvList"></MvList>
+      </el-tab-pane>
       <el-tab-pane label="歌手详情" name="desc">
         <div class="mtop-60" v-for="text in introduction" :key="text.ti">
           <h2 class="font-bold font-14">{{ text.ti }}</h2>
@@ -49,23 +55,29 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="相似歌手" name="same">相似歌手</el-tab-pane>
+      <el-tab-pane label="相似歌手" name="same">
+        <Artist :hasMore="false" :list="sameArtistList"></Artist>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
 import AlbumList from '../../components/list/AlbumList.vue'
+import MvList from '../../components/list/MvList.vue'
 import TopFiftyList from '../../components/list/TopFiftyList.vue'
+import Artist from '../../components/list/Artist.vue'
 import {
   queryArtistDetail,
   getArtistTop,
   getArtistAlbum,
   getAlbumDetail,
-  getIntro
+  getIntro,
+  getArtistMv,
+  getArtistSame
 } from '../../api/api'
 export default {
-  components: { AlbumList, TopFiftyList },
+  components: { AlbumList, TopFiftyList, MvList,Artist },
   data() {
     return {
       activeName: 'album', //激活的tab页
@@ -78,11 +90,13 @@ export default {
         musicSize: 0,
         mvSize: 0
       },
-      showPriMsg:false,
+      showPriMsg: false,
       topList: [], //热门50首
       albumList: [], //专辑信息
       introduction: [], //歌手详细描述,
-      userId:0,
+      userId: 0, //歌手用户ID
+      mvList: [] ,//歌手MV列表
+      sameArtistList:[]
     }
   },
   computed: {
@@ -90,6 +104,9 @@ export default {
       return this.artistInfo.cover
         ? this.artistInfo.cover + '?param=300y300'
         : 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
+    },
+    id(){
+      return this.$route.params.id
     }
   },
   created() {
@@ -100,24 +117,23 @@ export default {
   methods: {
     /* 获取歌手详情 */
     async getInfo() {
-      const { data: res } = await queryArtistDetail(this.$route.params.id)
+      const { data: res } = await queryArtistDetail(this.id)
       if (res.code !== 200) return
-      console.log('歌手信息',res);
-      console.log(res);
+      console.log('歌手信息', res)
+      console.log(res)
       this.artistInfo = res.data.artist
-      this.showPriMsg =res.data.showPriMsg
-      if(this.showPriMsg)
-      this.userId =res.data.user.userId
+      this.showPriMsg = res.data.showPriMsg
+      if (this.showPriMsg) this.userId = res.data.user.userId
     },
     /* 获取热门50首 */
     async getTop() {
-      const { data: res } = await getArtistTop(this.$route.params.id)
+      const { data: res } = await getArtistTop(this.id)
       if (res.code !== 200) return
       this.topList = res.songs
     },
     /* 获取专辑列表 */
     async getAlbum() {
-      const { data: res } = await getArtistAlbum(this.$route.params.id)
+      const { data: res } = await getArtistAlbum(this.id)
       if (res.code !== 200) return
       this.albumList = []
       res.hotAlbums.forEach((item) => {
@@ -132,16 +148,30 @@ export default {
     },
     /* 获取歌手详细描述 */
     async getIntroduction() {
-      const { data: res } = await getIntro(this.$route.params.id)
+      const { data: res } = await getIntro(this.id)
       if (res.code !== 200) return
       res.introduction.forEach((item) => {
         item.txt = item.txt.split('\n')
       })
       this.introduction = res.introduction
     },
-    toUserDetail(){
-      if(this.userId!==0 && this.showPriMsg)
-      this.$router.push('/userdetail/'+this.userId)
+    /* 获取歌手MV */
+    async getMv() {
+      const { data: res } = await getArtistMv(this.id)
+      if (res.code !== 200) return
+      res.mvs.forEach((item) => {
+        item.cover = item.imgurl
+      })
+      this.mvList = res.mvs
+    },
+    async getSame(){
+      const {data:res} =await getArtistSame(this.id)
+      if(res.code!==200) return
+      this.sameArtistList=res.artists
+    },
+    toUserDetail() {
+      if (this.userId !== 0 && this.showPriMsg)
+        this.$router.push('/userdetail/' + this.userId)
     },
     /* tab点击事件回调 */
     handleClick() {
@@ -156,11 +186,15 @@ export default {
         return
       }
       if (this.activeName === 'MV') {
-        console.log('desc')
+        console.log('mv')
+        if (this.mvList.length !== 0) return
+        this.getMv()
         return
       }
       if (this.activeName === 'same') {
         console.log('same')
+        if(this.sameArtistList.length!==0) return
+        this.getSame()
         return
       }
     }
