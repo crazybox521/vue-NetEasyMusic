@@ -1,4 +1,5 @@
 <template>
+<!-- 收藏的MV -->
   <div class="sub-mv">
     <div class="submv-head">
       <div>

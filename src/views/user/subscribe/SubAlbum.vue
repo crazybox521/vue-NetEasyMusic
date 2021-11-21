@@ -1,4 +1,5 @@
 <template>
+<!-- 收藏的专辑 -->
   <div class="sub-album">
     <div class="subalbum-head">
       <div>

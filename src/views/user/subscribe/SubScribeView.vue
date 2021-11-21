@@ -1,4 +1,5 @@
 <template>
+<!-- 收藏页父路由 -->
   <div class="subscribe-view">
     <div class="sub-head">
       <ul class="router-list">

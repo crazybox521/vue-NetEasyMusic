@@ -1,4 +1,5 @@
 <template>
+  <!-- 搜索页 -->
   <!-- 头部区域相关功能组件 -->
   <div class="songs-list">
     <div class="font-bold">找到 {{ total }} 首单曲</div>

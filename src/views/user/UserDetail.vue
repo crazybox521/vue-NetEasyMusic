@@ -1,5 +1,7 @@
 <template>
+<!-- 用户详情页 -->
   <div class="user-detail mtop-20">
+    <!-- 头部 -->
     <div class="user-info">
       <div class="img-wrap">
         <img :src="info.avatarUrl" alt="" />
@@ -41,7 +43,8 @@
         </div>
       </div>
     </div>
-    <div class="mtop-20" v-show="creList.length!==0">
+    <!--列表 -->
+    <div class="mtop-20" v-show="creList.length !== 0">
       <div>
         <span class="font-bold">歌单</span>
         <span class="font-12" style="color: #676767">
@@ -50,7 +53,7 @@
       </div>
       <SongSheetList :playlist="creList"></SongSheetList>
     </div>
-    <div class="mtop-20" v-show="subList.length!==0">
+    <div class="mtop-20" v-show="subList.length !== 0">
       <div>
         <span class="font-bold">收藏</span>
         <span class="font-12" style="color: #676767">
@@ -69,9 +72,9 @@ export default {
   components: { SongSheetList },
   data() {
     return {
-      info: {},
-      list: [],
-      level: 0
+      info: {}, //基本信息
+      list: [], //歌单列表
+      level: 0 //等级
     }
   },
   computed: {
@@ -152,14 +155,14 @@ export default {
 .el-icon-plus {
   color: #ec4141;
 }
-@media screen and (max-width:768px) {
-    /* .img-wrap{
+@media screen and (max-width: 768px) {
+  /* .img-wrap{
         display: none;
     } */
 }
-@media screen and (max-width:386px) {
-    .img-wrap{
-        display: none;
-    }
+@media screen and (max-width: 386px) {
+  .img-wrap {
+    display: none;
+  }
 }
 </style>
