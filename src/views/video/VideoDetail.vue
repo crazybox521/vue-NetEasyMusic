@@ -44,7 +44,8 @@
         <div class="video-btn mtop-20">
           <button class="btn btn-white">
             <i class="iconfont icon-good"></i>
-            赞({{ deTail.praisedCount }})</button>
+            赞({{ deTail.praisedCount }})
+          </button>
           <button class="btn btn-white mleft-10">
             <i class="el-icon-folder-add"></i>
             收藏({{ deTail.subscribeCount }})
@@ -72,7 +73,12 @@
               />
             </div>
             <div class="xg-info mleft-10">
-              <div class="mtop-10 font-14 title pointer"  @click="toDetail(item.vid)">{{ item.title }}</div>
+              <div
+                class="mtop-10 font-14 title pointer"
+                @click="toDetail(item.vid)"
+              >
+                {{ item.title }}
+              </div>
               <div class="font-12 mtop-10 pointer" style="color: #9f9f9f">
                 by {{ item.creator[0].userName }}
               </div>
@@ -94,9 +100,9 @@ export default {
       RelatedList: []
     }
   },
-  computed:{
-    creator(){
-      return this.deTail.creator?this.deTail.creator:{}
+  computed: {
+    creator() {
+      return this.deTail.creator ? this.deTail.creator : {}
     }
   },
   watch: {
@@ -123,6 +129,7 @@ export default {
       const { data: res } = await getVideoUrl(this.$route.params.id)
       if (res.code !== 200) return
       this.urlInfo = res.urls[0]
+      this.$store.commit('setPlayState', false)
     },
     /* 获取相关视频 */
     async getRelatedVideo() {
@@ -133,7 +140,7 @@ export default {
     toDetail(id) {
       if (typeof id !== 'undefined') this.$router.push('/videodetail/' + id)
     },
-    toVideo(){
+    toVideo() {
       this.$router.push('/video')
     }
   }
@@ -155,7 +162,7 @@ export default {
 .video-container {
   .video-wrap {
     width: 600px;
-    video{
+    video {
       width: 600px;
     }
   }
@@ -180,7 +187,7 @@ export default {
           border-radius: 50%;
         }
       }
-      .sub-btn{
+      .sub-btn {
         outline: none;
         border: none;
         background-color: #fcf4f4;

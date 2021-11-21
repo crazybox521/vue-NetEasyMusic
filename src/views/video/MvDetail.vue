@@ -142,6 +142,7 @@ export default {
       const { data: res } = await getMvUrl(this.$route.params.id)
       if (res.code !== 200) return
       this.urlInfo = res.data
+      this.$store.commit('setPlayState',false)
     },
     /* 获取相关视频 */
     async getRelatedVideo() {
