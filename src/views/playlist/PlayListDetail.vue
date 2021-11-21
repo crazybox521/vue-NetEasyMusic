@@ -33,9 +33,13 @@
           <button class="btn btn-red" @click="playAll">
             <i class="iconfont icon-bofang"></i> 播放全部
           </button>
-          <button class="btn btn-white mleft-10">
+          <button v-if="!subscribed" class="btn btn-white mleft-10" @click="subPlaylist(1)">
             <i class="el-icon-folder-add"></i>
             收藏({{ info.subscribedCount | countFormat }})
+          </button>
+          <button v-else class="btn btn-white mleft-10" @click="subPlaylist(2)">
+            <i class="el-icon-folder-checked"></i>
+            已收藏({{ info.subscribedCount | countFormat }})
           </button>
           <button class="btn btn-white mleft-10">
             <i class="iconfont icon-fenxiang"></i>
@@ -109,7 +113,8 @@
 <script>
 import MusicList from '../../components/list/MusicList'
 import Tag from '../../components/simple/Tag.vue'
-import { getPlayListDetail, getMusicListByIds } from '../../api/api'
+import { getPlayListDetail, getMusicListByIds ,setPlaylistSub} from '../../api/api'
+import { mapState } from 'vuex'
 export default {
   components: {
     MusicList,
@@ -118,12 +123,13 @@ export default {
   data() {
     return {
       info: {},
-      isLogin: false,
       key: '',
-      playList: []
+      playList: [],
+      subscribed:false
     }
   },
   computed: {
+    ...mapState(['isLogin']),
     list() {
       let reg = new RegExp(this.key.trim(), 'ig')
       return this.playList.filter((item) => {
@@ -132,7 +138,7 @@ export default {
     },
     isShowMoreBtn() {
       return (this.playList.length < this.info.trackCount) && (this.playList.length < 800)
-    }
+    },
   },
   created() {
     this.getPlayList(this.$route.params.id)
@@ -143,10 +149,12 @@ export default {
   methods: {
     /* 获取歌单信息 */
     async getPlayList(id) {
-      const { data: res } = await getPlayListDetail(id)
+      const { data: res } = await getPlayListDetail(id,Date.now())
       if (res.code !== 200) return
+      console.log(res);
       this.info = res.playlist
       this.playList = res.playlist.tracks
+      this.subscribed =res.playlist.subscribed
     },
     playAll() {
       /* 访问音乐列表组件的方法 */
@@ -174,6 +182,15 @@ export default {
         if (res.code !== 200) return
         this.playList = res.songs
       }
+    },
+    async subPlaylist(type){
+      if(!this.isLogin) return this.$message.error('需要登录')
+      const {data:res} = await setPlaylistSub(this.$route.params.id,type)
+      if(res.code!==200) return
+      this.subscribed=!this.subscribed
+      if(type==1)
+      this.$message.success('收藏成功')
+      else this.$message.success('取消收藏成功')
     },
     toUserDetail(id){
       this.$router.push('/userdetail/'+id)

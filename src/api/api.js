@@ -31,7 +31,7 @@ export const getBanner = () => axios.get('/banner')
 /* 获取推荐歌单 */
 export const getPersonalized = (limit) => axios.get('/personalized', { params: { limit } })
 /* 获取歌单详情 */
-export const getPlayListDetail = (id) => axios.get('/playlist/detail', { params: { id } })
+export const getPlayListDetail = (id,timestamp) => axios.get('/playlist/detail', { params: { id,timestamp } })
 /* 获取音乐详情 */
 export const getMusicListByIds = (ids) => axios.get('/song/detail', { params: { ids } })
 /* 获取排行榜信息 */
@@ -59,6 +59,8 @@ export const getArtistTop = (id) => axios.get('/artist/top/song', { params: { id
 export const getArtistAlbum = (id, limit = 50, offset = 0) => axios.get('/artist/album', { params: { id, limit, offset } })
 /* 获取专辑内容 */
 export const getAlbumDetail = (id) => axios.get('/album', { params: { id } })
+/* 获取专辑动态内容，评论收藏等 */
+export const getAlbumDynamic =(id)=>axios.get('/album/detail/dynamic',{params:{id,timestamp: Date.now()}})
 /* 获取歌手描述 */
 export const getIntro = (id) => axios.get('/artist/desc', { params: { id } })
 /* 手机号密码登录 */
@@ -117,8 +119,12 @@ export const getSubArtists = () => axios.get('/artist/sublist')
 export const getSubColumn = (offset, limit) => axios.get('/topic/sublist', { params: { offset, limit } })
 /* 收藏的MV列表 */
 export const getSubMv = () => axios.get('/mv/sublist')
-/* 收藏的专辑列表 */
+/* 收藏的专辑列表  */
 export const getSubAlbum = (offset = 0, limit = 25) => axios.get('/album/sublist', { params: { offset, limit } })
+/* 收藏/取消收藏歌单 t : 类型,1:收藏,2:取消收藏 */
+export const setPlaylistSub = (id, t) => axios.get('/playlist/subscribe', { params: { id, t } })
+/* 收藏/取消收藏专辑 t : 类型,1:收藏,2:取消收藏 */
+export const setAlbumSub = (id, t) => axios.get('/album/sub', { params: { id, t } })
 /* 下载 */
 export const downloadMusic = (url, fileName) => {
     axios

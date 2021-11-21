@@ -17,9 +17,17 @@
           <button class="btn btn-red" @click="playAll">
             <i class="iconfont icon-bofang"></i> 播放全部
           </button>
-          <button class="btn btn-white mleft-10">
+          <button
+            v-if="!isSub"
+            class="btn btn-white mleft-10"
+            @click="subAlbum(1)"
+          >
             <i class="el-icon-folder-add"></i>
-            收藏
+            收藏({{ subCount | countFormat }})
+          </button>
+          <button v-else class="btn btn-white mleft-10" @click="subAlbum(0)">
+            <i class="el-icon-folder-checked"></i>
+            已收藏({{ subCount | countFormat }})
           </button>
           <button class="btn btn-white mleft-10">
             <i class="iconfont icon-fenxiang"></i>
@@ -52,9 +60,10 @@
 </template>
 
 <script>
-import { getAlbumDetail } from '../../api/api'
+import { getAlbumDetail, setAlbumSub, getAlbumDynamic } from '../../api/api'
 import Tag from '../../components/simple/Tag.vue'
 import MusicList from '../../components/list/MusicList.vue'
+import { mapState } from 'vuex'
 export default {
   components: {
     Tag,
@@ -63,24 +72,24 @@ export default {
   data() {
     return {
       albumInfo: {},
-      list: []
+      list: [],
+      isSub: false,
+      shareCount: 0,
+      commentCount: 0,
+      subCount: 0
     }
   },
   computed: {
+    ...mapState(['isLogin']),
     imgUrl() {
       return this.albumInfo.picUrl
         ? this.albumInfo.picUrl + '?param=300y300'
         : ''
-    },
-    shareCount() {
-      return this.albumInfo.info ? this.albumInfo.info.shareCount : 0
-    },
-    commentCount() {
-      return this.albumInfo.info ? this.albumInfo.info.commentCount : 0
     }
   },
   created() {
     this.getAlbum()
+    this.getAlbumDynamic()
   },
   methods: {
     playAll() {
@@ -90,8 +99,26 @@ export default {
     async getAlbum() {
       const { data: res } = await getAlbumDetail(this.$route.params.id)
       if (res.code !== 200) return
+      console.log(res)
       this.list = res.songs
       this.albumInfo = res.album
+    },
+    /* 收藏、取消收藏 */
+    async subAlbum(type) {
+      if (!this.isLogin) return this.$message.error('需要登录')
+      const { data: res } = await setAlbumSub(this.$route.params.id, type)
+      if (res.code !== 200) return
+      this.isSub = !this.isSub
+      if (type == 1) this.$message.success('收藏成功')
+      else this.$message.success('取消收藏成功')
+    },
+    async getAlbumDynamic() {
+      const { data: res } = await getAlbumDynamic(this.$route.params.id)
+      if (res.code !== 200) return
+      this.isSub = res.isSub
+      this.shareCount = res.shareCount
+      this.commentCount = res.commentCount
+      this.subCount = res.subCount
     }
   }
 }

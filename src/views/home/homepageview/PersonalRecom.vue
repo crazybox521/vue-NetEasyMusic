@@ -89,4 +89,4 @@ export default {
 .swiper-img{
   border-radius: 8px;
 }
-</style>
+</style>、

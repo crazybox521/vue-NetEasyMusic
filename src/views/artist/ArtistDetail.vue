@@ -9,7 +9,7 @@
             <i class="el-icon-folder-add"></i>
             收藏
           </button>
-          <button class="btn btn-white mleft-10">
+          <button class="btn btn-white mleft-10" v-if="showPriMsg" @click="toUserDetail">
             <i class="el-icon-user"></i>
             个人主页
           </button>
@@ -78,9 +78,11 @@ export default {
         musicSize: 0,
         mvSize: 0
       },
+      showPriMsg:false,
       topList: [], //热门50首
       albumList: [], //专辑信息
-      introduction: []
+      introduction: [], //歌手详细描述,
+      userId:0,
     }
   },
   computed: {
@@ -100,7 +102,12 @@ export default {
     async getInfo() {
       const { data: res } = await queryArtistDetail(this.$route.params.id)
       if (res.code !== 200) return
+      console.log('歌手信息',res);
+      console.log(res);
       this.artistInfo = res.data.artist
+      this.showPriMsg =res.data.showPriMsg
+      if(this.showPriMsg)
+      this.userId =res.data.user.userId
     },
     /* 获取热门50首 */
     async getTop() {
@@ -108,6 +115,7 @@ export default {
       if (res.code !== 200) return
       this.topList = res.songs
     },
+    /* 获取专辑列表 */
     async getAlbum() {
       const { data: res } = await getArtistAlbum(this.$route.params.id)
       if (res.code !== 200) return
@@ -116,11 +124,13 @@ export default {
         this.getAlbumDetail(item.id)
       })
     },
+    /* 获取专辑信息 */
     async getAlbumDetail(id) {
       const { data: res } = await getAlbumDetail(id)
       if (res.code !== 200) return
       this.albumList.push(res)
     },
+    /* 获取歌手详细描述 */
     async getIntroduction() {
       const { data: res } = await getIntro(this.$route.params.id)
       if (res.code !== 200) return
@@ -129,6 +139,11 @@ export default {
       })
       this.introduction = res.introduction
     },
+    toUserDetail(){
+      if(this.userId!==0 && this.showPriMsg)
+      this.$router.push('/userdetail/'+this.userId)
+    },
+    /* tab点击事件回调 */
     handleClick() {
       if (this.activeName === 'desc') {
         if (this.introduction.length !== 0) return
