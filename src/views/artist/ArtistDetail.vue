@@ -77,7 +77,7 @@ import {
   getArtistSame
 } from '../../api/api'
 export default {
-  components: { AlbumList, TopFiftyList, MvList,Artist },
+  components: { AlbumList, TopFiftyList, MvList, Artist },
   data() {
     return {
       activeName: 'album', //激活的tab页
@@ -95,8 +95,8 @@ export default {
       albumList: [], //专辑信息
       introduction: [], //歌手详细描述,
       userId: 0, //歌手用户ID
-      mvList: [] ,//歌手MV列表
-      sameArtistList:[]
+      mvList: [], //歌手MV列表
+      sameArtistList: []
     }
   },
   computed: {
@@ -105,8 +105,19 @@ export default {
         ? this.artistInfo.cover + '?param=300y300'
         : 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
     },
-    id(){
+    id() {
       return this.$route.params.id
+    }
+  },
+  watch: {
+    '$route.params.id'() {
+      this.getInfo()
+      /* 在相似歌手页切换歌手，重置前三个tab的数据，且重新获取相似歌手 */
+      this.getSame()
+      this.topList = []
+      this.albumList = []
+      this.introduction = []
+      this.mvList = []
     }
   },
   created() {
@@ -164,10 +175,10 @@ export default {
       })
       this.mvList = res.mvs
     },
-    async getSame(){
-      const {data:res} =await getArtistSame(this.id)
-      if(res.code!==200) return
-      this.sameArtistList=res.artists
+    async getSame() {
+      const { data: res } = await getArtistSame(this.id)
+      if (res.code !== 200) return
+      this.sameArtistList = res.artists
     },
     toUserDetail() {
       if (this.userId !== 0 && this.showPriMsg)
@@ -183,6 +194,9 @@ export default {
       }
       if (this.activeName === 'album') {
         console.log('album')
+        if (this.albumList.length !== 0) return
+        this.getTop()
+        this.getAlbum()
         return
       }
       if (this.activeName === 'MV') {
@@ -193,7 +207,7 @@ export default {
       }
       if (this.activeName === 'same') {
         console.log('same')
-        if(this.sameArtistList.length!==0) return
+        if (this.sameArtistList.length !== 0) return
         this.getSame()
         return
       }

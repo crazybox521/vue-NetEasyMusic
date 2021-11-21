@@ -1,5 +1,5 @@
 <template>
-<!-- 歌手列表 -->
+  <!-- 歌手列表 -->
   <div class="artist">
     <ul
       class="img-list"
@@ -14,7 +14,7 @@
         @click="toArtistView(item.id)"
       >
         <img
-          class="img  img-radius-4 pointer"
+          class="img img-radius-4 pointer"
           :src="item.img1v1Url + '?param=200y200'"
         />
         <div class="text-hidden">
@@ -37,7 +37,7 @@ export default {
   methods: {
     // 跳转到歌手详情页
     toArtistView(id) {
-      this.$router.push({ path: '/artistdetail/' + id })
+      this.$router.push('/artistdetail/' + id)
     },
     load() {
       this.$emit('loadMore', this.list.length)
