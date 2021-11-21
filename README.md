@@ -1,32 +1,22 @@
 # vue-music
 
-## Project setup
+## 下载依赖
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 启动项目
 
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 打包项目
 
 ```
 npm run build
 ```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 后台 GitHub 地址
 
@@ -62,3 +52,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 添加对最近播放歌曲数量的限制 11/19
 - 解决添加导航守卫后，刷新丢失登录状态，在重新获取完登录状态就错误导航的 bug 11/20
 - 添加视频播放时停止歌曲播放
+- 解决歌手详情页相似歌手tab下切换歌手无法更新数据的状况
