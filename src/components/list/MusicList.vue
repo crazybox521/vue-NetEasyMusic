@@ -3,7 +3,7 @@
   <el-table
     :data="list"
     style="width: 100%"
-    size="medium"
+    size="mini"
     class="music-list"
     stripe
     v-if="isDisplay"

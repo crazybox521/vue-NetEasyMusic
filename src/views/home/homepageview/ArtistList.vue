@@ -1,6 +1,6 @@
 <template>
   <div class="artist-list mtop-60">
-    <button @click="openTag" class="hidden">{{showH5Info}}列表</button>
+    <button @click="openTag" class="hidden">{{ showH5Info }}列表</button>
     <div class="tag-wrapper" ref="tagRef">
       <div class="radio-list">
         <span class="w-60">语种：</span>
@@ -21,15 +21,16 @@
       <div class="radio-list">
         <span class="w-60">筛选：</span>
         <el-radio-group v-model="queryInfo.initial">
-          <el-radio :label="i.id" v-for="i in artistData.initial" :key="i.id">{{
-            i.value
-          }}</el-radio>
+          <el-radio
+            :label="it.id"
+            v-for="it in artistData.initial"
+            :key="it.id"
+            >{{ it.value }}</el-radio
+          >
         </el-radio-group>
       </div>
     </div>
-    <div>
-      <Artist @loadMore="load" :list="artistList" :hasMore="hasMore"></Artist>
-    </div>
+    <Artist @loadMore="load" :list="artistList" :hasMore="hasMore"></Artist>
   </div>
 </template>
 
@@ -41,9 +42,9 @@ export default {
   components: {
     Artist
   },
-  computed:{
-    showH5Info(){
-      return this.showTagH5?'关闭':'打开'
+  computed: {
+    showH5Info() {
+      return this.showTagH5 ? '关闭' : '打开'
     }
   },
   data() {
@@ -93,17 +94,19 @@ export default {
       this.isLoading = false
       this.mode = 'first'
     },
-    load(size) {
+    /* loadMore事件的回调 */
+    load(num) {
       /* 这里有点问题，会多次触发，需要节流*/
       if (this.isLoading) return
       if (!this.hasMore) return this.$message.error('已经到底了')
       this.mode = 'more'
-      this.queryInfo.offset = size + 30
+      this.queryInfo.offset = num + 30
     },
+    /* 移动端情况下打开标签列表 */
     openTag() {
       if (!this.showTagH5) this.$refs.tagRef.style.display = 'block'
       else this.$refs.tagRef.style.display = 'none'
-      this.showTagH5 =!this.showTagH5
+      this.showTagH5 = !this.showTagH5
     }
   }
 }
@@ -132,9 +135,9 @@ export default {
   .tag-wrapper {
     display: none;
   }
-  .hidden{
+  .hidden {
     display: block;
-    margin-top:70px;
+    margin-top: 70px;
   }
   .redio-list {
     .el-radio-group {

@@ -2,13 +2,13 @@
 <!-- 歌手列表 -->
   <div class="artist">
     <ul
-      class="song-sheet-list"
+      class="img-list"
       v-infinite-scroll="load"
       nfinite-scroll-disabled="disabled"
       infinite-scroll-delay="300"
     >
       <li
-        class="song-sheet-item"
+        class="img-item"
         v-for="(item, index) in list"
         :key="item.id + '' + index"
         @click="toArtistView(item.id)"
@@ -47,11 +47,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.song-sheet-list {
+.img-list {
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  .song-sheet-item {
+  .img-item {
     margin-bottom: 30px;
     width: 19%;
     margin-right: 1%;
