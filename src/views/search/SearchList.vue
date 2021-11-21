@@ -1,7 +1,7 @@
 <template>
   <!-- 搜索页 -->
   <!-- 头部区域相关功能组件 -->
-  <div class="songs-list">
+  <div class="songs-list mtop-20">
     <div class="font-bold">找到 {{ total }} 首单曲</div>
     <el-skeleton v-if="isLoading" :rows="16" animated />
     <MusicList v-else :list="seachList"></MusicList>

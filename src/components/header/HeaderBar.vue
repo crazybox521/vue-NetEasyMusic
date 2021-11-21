@@ -25,7 +25,7 @@
         prefix-icon="el-icon-search"
       ></el-input>
     </div>
-    <div class="login-info mleft-12" @click="loginView">
+    <div class="login-info mleft-12 pointer" @click="loginView">
       <el-avatar icon="el-icon-user-solid" :src="avatarUrl"></el-avatar>
     </div>
     <div

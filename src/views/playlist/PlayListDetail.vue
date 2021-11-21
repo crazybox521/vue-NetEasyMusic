@@ -8,7 +8,6 @@
         <img
           class="img img-radius-4"
           :src="info.coverImgUrl + '?param=300y300'"
-          alt=""
         />
       </div>
       <!-- 歌单信息 -->
@@ -18,11 +17,19 @@
           <span class="mleft-12 font-20 font-bold">{{ info.name }}</span>
         </div>
         <div class="author">
-          <div class="author-img pointer" @click="toUserDetail(info.creator.userId)">
+          <div
+            class="author-img pointer"
+            @click="toUserDetail(info.creator.userId)"
+          >
             <img class="img-h circle" :src="info.creator.avatarUrl" />
           </div>
           <div class="author-info">
-            <span class="mleft-12 font-12 pointer" @click="toUserDetail(info.creator.userId)"  style="color:#0b58b0">{{ info.creator.nickname }}</span>
+            <span
+              class="mleft-12 font-12 pointer"
+              @click="toUserDetail(info.creator.userId)"
+              style="color: #0b58b0"
+              >{{ info.creator.nickname }}</span
+            >
             <span class="mleft-12 font-12">{{
               info.createTime | dateFormat
             }}</span>
@@ -33,7 +40,11 @@
           <button class="btn btn-red" @click="playAll">
             <i class="iconfont icon-bofang"></i> 播放全部
           </button>
-          <button v-if="!subscribed" class="btn btn-white mleft-10" @click="subPlaylist(1)">
+          <button
+            v-if="!subscribed"
+            class="btn btn-white mleft-10"
+            @click="subPlaylist(1)"
+          >
             <i class="el-icon-folder-add"></i>
             收藏({{ info.subscribedCount | countFormat }})
           </button>
@@ -102,8 +113,6 @@
     </div>
     <MusicList ref="listRef" :list="list"></MusicList>
     <div v-if="isShowMoreBtn" class="margin-center w-300 more-btn">
-      <span>登录</span>
-      <span>或</span>
       <span>点击加载完整歌单</span>
       <span>查看更多单曲</span>
     </div>
@@ -113,7 +122,11 @@
 <script>
 import MusicList from '../../components/list/MusicList'
 import Tag from '../../components/simple/Tag.vue'
-import { getPlayListDetail, getMusicListByIds ,setPlaylistSub} from '../../api/api'
+import {
+  getPlayListDetail,
+  getMusicListByIds,
+  setPlaylistSub
+} from '../../api/api'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -125,7 +138,7 @@ export default {
       info: {},
       key: '',
       playList: [],
-      subscribed:false
+      subscribed: false
     }
   },
   computed: {
@@ -137,8 +150,11 @@ export default {
       })
     },
     isShowMoreBtn() {
-      return (this.playList.length < this.info.trackCount) && (this.playList.length < 800)
-    },
+      return (
+        this.playList.length < this.info.trackCount &&
+        this.playList.length < 800
+      )
+    }
   },
   created() {
     this.getPlayList(this.$route.params.id)
@@ -149,12 +165,12 @@ export default {
   methods: {
     /* 获取歌单信息 */
     async getPlayList(id) {
-      const { data: res } = await getPlayListDetail(id,Date.now())
+      const { data: res } = await getPlayListDetail(id, Date.now())
       if (res.code !== 200) return
-      console.log(res);
+      console.log(res)
       this.info = res.playlist
       this.playList = res.playlist.tracks
-      this.subscribed =res.playlist.subscribed
+      this.subscribed = res.playlist.subscribed
     },
     playAll() {
       /* 访问音乐列表组件的方法 */
@@ -183,17 +199,16 @@ export default {
         this.playList = res.songs
       }
     },
-    async subPlaylist(type){
-      if(!this.isLogin) return this.$message.error('需要登录')
-      const {data:res} = await setPlaylistSub(this.$route.params.id,type)
-      if(res.code!==200) return
-      this.subscribed=!this.subscribed
-      if(type==1)
-      this.$message.success('收藏成功')
+    async subPlaylist(type) {
+      if (!this.isLogin) return this.$message.error('需要登录')
+      const { data: res } = await setPlaylistSub(this.$route.params.id, type)
+      if (res.code !== 200) return
+      this.subscribed = !this.subscribed
+      if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
     },
-    toUserDetail(id){
-      this.$router.push('/userdetail/'+id)
+    toUserDetail(id) {
+      this.$router.push('/userdetail/' + id)
     }
   }
 }
