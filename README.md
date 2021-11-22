@@ -54,3 +54,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 添加视频播放时停止歌曲播放
 - 解决歌手详情页相似歌手tab下切换歌手无法更新数据的状况
 - 添加歌词滚动的js动画
+- 添加路由视图切换的动画

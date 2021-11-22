@@ -1,5 +1,5 @@
 <template>
-<!-- 歌单列表 -->
+  <!-- 歌单列表 -->
   <ul class="song-sheet-list">
     <li
       class="song-sheet-item"
@@ -16,6 +16,10 @@
               : item.coverImgUrl + '?param=300y300'
           "
         />
+        <div class="video-playcount font-12">
+          <i class="iconfont icon-24gl-play"></i>
+          {{ item.playCount | countFormat }}
+        </div>
         <div class="play-btn pointer">
           <i class="iconfont icon-bofang"></i>
         </div>
@@ -52,6 +56,16 @@ export default {
 }
 .img-wrap {
   position: relative;
+   .video-playcount {
+    color: #ffffff;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-shadow: 0 0 2px #000;
+    .iconfont {
+      font-size: 12px;
+    }
+  }
   .play-btn {
     position: absolute;
     right: 15px;
@@ -64,14 +78,13 @@ export default {
     text-align: center;
     border-radius: 50%;
     opacity: 0;
-    transition: all .8s;
+    transition: all 0.8s;
     i {
       font-size: 18px;
     }
   }
   &:hover .play-btn {
-      opacity: 1;
-     
-    }
+    opacity: 1;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<!-- 收藏页父路由 -->
+  <!-- 收藏页父路由 -->
   <div class="subscribe-view">
     <div class="sub-head">
       <ul class="router-list">
@@ -15,7 +15,9 @@
       </ul>
     </div>
     <div class="sub-main mtop-60">
-      <router-view></router-view>
+      <transition name="el-fade-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>

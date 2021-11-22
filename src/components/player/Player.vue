@@ -313,6 +313,7 @@ export default {
           this.lyricHanlder(this.lyricObj.curren)
         }
       time = Math.floor(time)
+      /* 同步进度条 */
       if (time != this.currenMusicInfo.currenTime) {
         this.$store.commit('setCurrenTime', time)
         let percent =

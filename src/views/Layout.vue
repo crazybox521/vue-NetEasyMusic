@@ -16,7 +16,10 @@
       </div>
       <div class="main-right">
         <div class="view-mian">
+          <transition name="el-fade-in">
           <router-view></router-view>
+          </transition>
+          
         </div>
         <el-backtop target=".main-right" :bottom="100"></el-backtop>
       </div>

@@ -3,7 +3,11 @@
     <div class="swiper-wrapper">
       <el-carousel :interval="4000" type="card" :height="bannerHeight + 'px'">
         <el-carousel-item v-for="item in imgList" :key="item.imageUrl">
-          <img class="img img-h swiper-img" :src="item.imageUrl" @click="open(item.url)" />
+          <img
+            class="img img-h swiper-img"
+            :src="item.imageUrl"
+            @click="open(item.url)"
+          />
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -65,17 +69,19 @@ export default {
     async getRecSongList(limit) {
       const { data: res } = await getPersonalized(limit)
       if (res.code !== 200) return
-      res.result.forEach((item) => {
-        let { id, name, picUrl, playCount, trackCount } = item
-        this.recSongList.push({ id, name, picUrl, playCount, trackCount })
-      })
+      console.log(res)
+      this.recSongList = res.result
     },
     /* 获取个性歌单 */
     async getRecommend() {
       if (!this.isLogin) return
       const { data: res } = await getRecommend()
       if (res.code !== 200) return
-      this.recommendList = res.recommend
+      console.log(res)
+      res.recommend.forEach((item) => {
+        let { id, name, picUrl, playcount: playCount, trackCount } = item
+        this.recommendList.push({ id, name, picUrl, playCount, trackCount })
+      })
     },
     open(url) {
       console.log(url)
@@ -86,7 +92,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.swiper-img{
+.swiper-img {
   border-radius: 8px;
 }
 </style>、

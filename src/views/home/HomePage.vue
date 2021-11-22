@@ -13,7 +13,9 @@
       </li>
     </ul>
     <div class="home-page-view" ref="ref">
-      <router-view></router-view>
+      <transition name="el-fade-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
