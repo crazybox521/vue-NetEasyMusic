@@ -17,7 +17,7 @@
     </div>
     <div class="mtop-20">
       <ul class="sub-list">
-        <li class="sub-item" v-for="item in subAlbumList" :key="item.id" @click="toAlbumDetail(item.id)">
+        <li class="sub-item pointer" v-for="item in subAlbumList" :key="item.id" @click="toAlbumDetail(item.id)">
           <img
             class="sub-img mleft-10"
             :src="item.picUrl + '?param=100y100'"

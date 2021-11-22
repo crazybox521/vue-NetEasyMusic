@@ -146,7 +146,6 @@ export default {
       },
       curren: 0, //进度条的百分比
       PlayViewDrawer: false,
-      lyric: '',
       lyricObj: {
         lines: [],
         total: 1,
@@ -166,10 +165,10 @@ export default {
   },
   watch: {
     /* 通过Vuex管理的播放状态,audio会自动播放 */
-    isPlay() {
+    isPlay(val) {
       /* 由于misicUrl第一次是状态改变后获取，所以第一次改变不要进入监听 */
       if (!this.musicUrl) return
-      if (this.isPlay) {
+      if (val) {
         this.$refs.audioRef.play()
       } else {
         this.$refs.audioRef.pause()
@@ -177,7 +176,7 @@ export default {
     },
     /* 监听静音状态 */
     isMute(val) {
-      if (val == true) {
+      if (val) {
         this.saveVolume = this.volume
         this.volume = 0
       } else {
@@ -197,6 +196,7 @@ export default {
     this.getHistory()
   },
   methods: {
+    /* 获取历史播放 */
     getHistory() {
       if (!window.localStorage.getItem('historylist')) return
       this.$store.commit('setHistoryList', {
@@ -205,12 +205,10 @@ export default {
       })
     },
     setHistory() {
-   
-        this.$store.commit('setHistoryList', {
-          type: 'unshift',
-          data: this.musicList[this.currenIndex]
-        })
-      
+      this.$store.commit('setHistoryList', {
+        type: 'unshift',
+        data: this.musicList[this.currenIndex]
+      })
     },
     changePlayModel() {
       this.notice()
@@ -344,7 +342,13 @@ export default {
       this.PlayViewDrawer = true
       /* 打开后歌词跳到对应行 */
       this.$nextTick(() => {
-        if (this.$refs.lyricWrapRef) this.lyricHanlder(this.lyricObj.curren)
+        if (this.$refs.lyricWrapRef) {
+          if (this.lyricObj.curren <= 4) {
+            this.$refs.lyricWrapRef.scrollTop = 0
+          } else {
+            this.$refs.lyricWrapRef.scrollTop = (this.lyricObj.curren - 4) * 32
+          }
+        }
       })
     },
     /* 抽屉关闭的回调 */
@@ -356,14 +360,30 @@ export default {
     async getLyric() {
       const { data: res } = await getLyric(this.currenMusicId)
       if (res.code !== 200) return this.$message.error('获取歌词失败')
-      if (res.lrc) this.lyric = res.lrc.lyric
-      console.log('lyric', res)
-      this.lyricObj = new Lyric(this.lyric)
+      if (res.lrc) this.lyricObj = new Lyric(res.lrc.lyric)
       if (this.PlayViewDrawer) this.$refs.lyricWrapRef.scrollTop = 0
     },
+    /* 歌词行数变化的回调 */
     lyricHanlder(lineNum) {
       if (!this.PlayViewDrawer) return
-      if (lineNum > 4) this.$refs.lyricWrapRef.scrollTop = (lineNum - 4) * 32
+      if (lineNum > 4) this.scrollAnimation(lineNum - 4)
+    },
+    /* 歌词滚动动画 */
+    scrollAnimation(line) {
+      let start
+      const step = (timestamp) => {
+        if (start === undefined) start = timestamp
+        const elapsed = timestamp - start
+        this.$refs.lyricWrapRef.scrollTop = Math.min(
+          0.032 * elapsed + (line - 1) * 32,
+          line * 32
+        )
+        if (elapsed < 1000) {
+          // 在1秒后停止动画
+          window.requestAnimationFrame(step)
+        }
+      }
+      window.requestAnimationFrame(step)
     }
   }
 }
@@ -546,7 +566,7 @@ export default {
   text-align: center;
   font-size: 16px;
   line-height: 2;
-  transition: all .8s linear;
+  transition: all 0.8s linear;
   &::-webkit-scrollbar {
     width: 1px;
   }

@@ -23,7 +23,6 @@ export default class Lyric {
     constructor(str) {
         let arr = str.split('\n')
         let lines = []
-        console.log(arr);
         const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
         try {
             arr.forEach(item => {

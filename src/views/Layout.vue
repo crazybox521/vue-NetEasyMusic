@@ -39,7 +39,7 @@
           :show-header="false"
           :data="musicList"
           style="width: 100%"
-          size="medium"
+          size="mini"
           stripe
           @row-dblclick="playMusic"
           empty-text="快去播放音乐吧！"

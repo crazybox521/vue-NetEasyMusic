@@ -18,7 +18,7 @@
     <div class="mtop-20">
       <ul class="sub-list">
         <li
-          class="sub-item"
+          class="sub-item pointer"
           v-for="item in subAlbumList"
           :key="item.id"
           @click="toArtistDetail(item.id)"

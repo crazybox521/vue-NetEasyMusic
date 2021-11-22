@@ -2,7 +2,7 @@
   <!-- MV列表 -->
   <div class="mv-list">
     <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
-      <li v-for="nl,index in list" :key="index">
+      <li v-for="(nl, index) in list" :key="index">
         <div class="mtop-10 img-wrap">
           <img
             class="video-img"
@@ -13,15 +13,23 @@
             <i class="iconfont icon-24gl-play"></i>
             {{ nl.playCount | countFormat }}
           </div>
-          <div class="play-btn pointer">
+          <div class="play-btn pointer" @click="toDetail(nl.id)">
             <i class="iconfont icon-bofang"></i>
           </div>
         </div>
-        <div class="title-line text-hidden font-14 pointer"  @click="toDetail(nl.id)">{{ nl.name }}</div>
+        <div
+          class="title-line text-hidden font-14 pointer"
+          @click="toDetail(nl.id)"
+        >
+          {{ nl.name }}
+        </div>
         <div class="author-line font-12">
-          <span class="mright-5" v-for="at,index in nl.artists" :key="index">{{
-            at.name
-          }}</span>
+          <span
+            class="mright-5"
+            v-for="(at, index) in nl.artists"
+            :key="index"
+            >{{ at.name }}</span
+          >
         </div>
       </li>
     </ul>
@@ -31,10 +39,10 @@
 <script>
 export default {
   props: {
-    list:Array,
-    disabled:{
-      type:Boolean,
-      default:true
+    list: Array,
+    disabled: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
