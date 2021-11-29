@@ -29,34 +29,53 @@
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="专辑" name="album">
-        <TopFiftyList
-          v-if="topList.length !== 0"
-          :list="topList"
-        ></TopFiftyList>
-        <AlbumList
-          v-for="(item, index) in albumList"
-          :key="index"
-          :albumInfo="item.album"
-          :list="item.songs"
-        ></AlbumList>
+        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+          加载中...
+        </div>
+        <template v-else>
+          <TopFiftyList
+            :list="topList"
+            v-if="topList.length !== 0"
+          ></TopFiftyList>
+          <AlbumList
+            v-for="(item, index) in albumList"
+            :key="index"
+            :albumInfo="item.album"
+            :list="item.songs"
+          ></AlbumList>
+        </template>
       </el-tab-pane>
       <el-tab-pane label="MV" name="MV">
-        <MvList :disabled="true" :list="mvList"></MvList>
+        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+          加载中...
+        </div>
+        <div v-else-if="mvList.length === 0">没有MV</div>
+        <MvList v-else :disabled="true" :list="mvList"></MvList>
       </el-tab-pane>
       <el-tab-pane label="歌手详情" name="desc">
-        <div class="mtop-60" v-for="text in introduction" :key="text.ti">
-          <h2 class="font-bold font-14">{{ text.ti }}</h2>
-          <div
-            class="my-pre font-14"
-            v-for="(t, index) in text.txt"
-            :key="index"
-          >
-            <p>{{ t }}</p>
-          </div>
+        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+          加载中...
         </div>
+        <div v-else-if="introduction.length === 0">没有歌手详情</div>
+        <template v-else>
+          <div class="mtop-60" v-for="text in introduction" :key="text.ti">
+            <h2 class="font-bold font-14">{{ text.ti }}</h2>
+            <div
+              class="my-pre font-14"
+              v-for="(t, index) in text.txt"
+              :key="index"
+            >
+              <p>{{ t }}</p>
+            </div>
+          </div>
+        </template>
       </el-tab-pane>
       <el-tab-pane label="相似歌手" name="same">
-        <Artist :hasMore="false" :list="sameArtistList"></Artist>
+        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+          加载中...
+        </div>
+        <div v-else-if="sameArtistList.length === 0">没有相似歌手</div>
+        <Artist :hasMore="false" v-else :list="sameArtistList"></Artist>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -96,7 +115,8 @@ export default {
       introduction: [], //歌手详细描述,
       userId: 0, //歌手用户ID
       mvList: [], //歌手MV列表
-      sameArtistList: []
+      sameArtistList: [],
+      isLoading: false
     }
   },
   computed: {
@@ -141,6 +161,7 @@ export default {
       const { data: res } = await getArtistTop(this.id)
       if (res.code !== 200) return
       this.topList = res.songs
+      this.isLoading = false
     },
     /* 获取专辑列表 */
     async getAlbum() {
@@ -165,6 +186,7 @@ export default {
         item.txt = item.txt.split('\n')
       })
       this.introduction = res.introduction
+      this.isLoading = false
     },
     /* 获取歌手MV */
     async getMv() {
@@ -174,11 +196,14 @@ export default {
         item.cover = item.imgurl
       })
       this.mvList = res.mvs
+      this.isLoading = false
     },
+    /* 获取相似歌手 */
     async getSame() {
       const { data: res } = await getArtistSame(this.id)
       if (res.code !== 200) return
       this.sameArtistList = res.artists
+      this.isLoading = false
     },
     toUserDetail() {
       if (this.userId !== 0 && this.showPriMsg)
@@ -189,12 +214,14 @@ export default {
       if (this.activeName === 'desc') {
         if (this.introduction.length !== 0) return
         console.log('desc')
+        this.isLoading = true
         this.getIntroduction()
         return
       }
       if (this.activeName === 'album') {
         console.log('album')
         if (this.albumList.length !== 0) return
+        this.isLoading = true
         this.getTop()
         this.getAlbum()
         return
@@ -202,12 +229,14 @@ export default {
       if (this.activeName === 'MV') {
         console.log('mv')
         if (this.mvList.length !== 0) return
+        this.isLoading = true
         this.getMv()
         return
       }
       if (this.activeName === 'same') {
         console.log('same')
         if (this.sameArtistList.length !== 0) return
+        this.isLoading = true
         this.getSame()
         return
       }
