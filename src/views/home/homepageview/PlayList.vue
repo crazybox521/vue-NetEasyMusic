@@ -88,8 +88,8 @@ import {
   getHotCat,
   getPlayListByCat,
   getHighquality
-} from '../../../api/api'
-import SongSheetList from '../../../components/list/SongSheetList.vue'
+} from '@/api/api'
+import SongSheetList from '@/components/list/SongSheetList.vue'
 export default {
   components: {
     SongSheetList

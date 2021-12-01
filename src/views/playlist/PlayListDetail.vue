@@ -96,11 +96,13 @@
       </div>
     </div>
     <!-- 歌单列表 -->
-    <div class="detail-table">
+    <div class="detail-head">
       <ul class="detail-menu">
-        <li>歌曲列表</li>
-        <li>评论({{ info.commentCount }})</li>
-        <li>收藏者</li>
+        <li @click="handMenuClick(1)" class="pointer" :class="{isActive:showtab===1}">歌曲列表</li>
+        <li @click="handMenuClick(2)" class="pointer" :class="{isActive:showtab===2}">
+          评论({{ info.commentCount }})
+        </li>
+        <li @click="handMenuClick(3)" class="pointer" :class="{isActive:showtab===3}">收藏者</li>
       </ul>
       <div class="detail-search">
         <el-input
@@ -111,34 +113,43 @@
         ></el-input>
       </div>
     </div>
-    <MusicList ref="listRef" :list="list"></MusicList>
-    <div v-if="isShowMoreBtn" class="margin-center w-300 more-btn">
-      <span>点击加载完整歌单</span>
-      <span>查看更多单曲</span>
+    <div v-show="showtab === 1">
+      <MusicList ref="listRef" :list="list"></MusicList>
+      <div v-if="isShowMoreBtn" class="margin-center w-300 more-btn">
+        点击 加载完整歌单 查看更多单曲
+      </div>
     </div>
+    <!-- 评论 -->
+    <div v-show="showtab == 2">
+      <Comment></Comment>
+    </div>
+    <div v-show="showtab == 3">收藏者</div>
   </div>
 </template>
 
 <script>
-import MusicList from '../../components/list/MusicList'
-import Tag from '../../components/simple/Tag.vue'
+import MusicList from '@/components/list/MusicList'
+import Tag from '@/components/simple/Tag'
+import Comment from '@/components/comment/Comment'
 import {
   getPlayListDetail,
   getMusicListByIds,
   setPlaylistSub
-} from '../../api/api'
+} from '@/api/api'
 import { mapState } from 'vuex'
 export default {
   components: {
     MusicList,
-    Tag
+    Tag,
+    Comment
   },
   data() {
     return {
       info: {},
       key: '',
       playList: [],
-      subscribed: false
+      subscribed: false,
+      showtab: 1
     }
   },
   computed: {
@@ -209,25 +220,22 @@ export default {
     },
     toUserDetail(id) {
       this.$router.push('/userdetail/' + id)
+    },
+    handMenuClick(type) {
+      if (this.showtab === type) return
+      if (type === 2) {
+        console.log(1)
+      } else if (type === 3) {
+        console.log(2)
+      }
+      this.showtab = type
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.detail-table {
-  display: flex;
-  justify-content: space-between;
-  .detail-menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    li {
-      margin: 10px;
-    }
-  }
-}
-
+/* 歌单信息区域 */
 .detail-desc {
   display: flex;
   .detail-img-wrapper {
@@ -255,6 +263,32 @@ export default {
   margin-top: 10px;
   font-size: 14px;
   color: #bbb;
+}
+/* 列表头部区域 */
+.detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .detail-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    li {
+      margin: 10px;
+      &.isActive{
+        font-size: 18px;
+        font-weight: bold;
+        &::after{
+          display: block;
+          content: '';
+          height: 4px;
+          width: 90%;
+          margin: 0 auto;
+          background-color: #ec4141;
+        }
+      }
+    }
+  }
 }
 
 /* 文字展开收起效果 */

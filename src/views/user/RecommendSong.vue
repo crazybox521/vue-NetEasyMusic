@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import MusicList from '../../components/list/MusicList.vue'
-import { getRecommendSong } from '../../api/api'
+import MusicList from '@/components/list/MusicList.vue'
+import { getRecommendSong } from '@/api/api'
 export default {
   components: { MusicList },
   data() {

@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { search } from '../../api/api.js'
-import MusicList from '../../components/list/MusicList'
+import { search } from '@/api/api.js'
+import MusicList from '@/components/list/MusicList'
 export default {
   components: {
     MusicList

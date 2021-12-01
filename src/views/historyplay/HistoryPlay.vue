@@ -22,7 +22,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import MusicList from '../../components/list/MusicList.vue'
+import MusicList from '@/components/list/MusicList.vue'
 export default {
   components: { MusicList },
   computed: {

@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import { getAlbumDetail, setAlbumSub, getAlbumDynamic } from '../../api/api'
-import Tag from '../../components/simple/Tag.vue'
-import MusicList from '../../components/list/MusicList.vue'
+import { getAlbumDetail, setAlbumSub, getAlbumDynamic } from '@/api/api'
+import Tag from '@/components/simple/Tag.vue'
+import MusicList from '@/components/list/MusicList.vue'
 import { mapState } from 'vuex'
 export default {
   components: {

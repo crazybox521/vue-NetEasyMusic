@@ -28,8 +28,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getBanner, getPersonalized, getRecommend } from '../../../api/api'
-import SongSheetList from '../../../components/list/SongSheetList.vue'
+import { getBanner, getPersonalized, getRecommend } from '@/api/api'
+import SongSheetList from '@/components/list/SongSheetList.vue'
 export default {
   components: {
     SongSheetList

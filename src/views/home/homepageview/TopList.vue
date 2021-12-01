@@ -16,7 +16,7 @@
               :src="item.coverImgUrl"
               @click="toPlayListDetail(item.id)"
             />
-            <div class="play-btn pointer">
+            <div class="play-btn pointer" @click="toPlayListDetail(item.id)">
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -53,8 +53,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getToplist, getPlayListDetail } from '../../../api/api'
-import SongSheetList from '../../../components/list/SongSheetList.vue'
+import { getToplist, getPlayListDetail } from '@/api/api'
+import SongSheetList from '@/components/list/SongSheetList.vue'
 export default {
   components: { SongSheetList },
   data() {

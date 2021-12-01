@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import VideoList from '../../components/list/VideoList.vue'
+import VideoList from '@/components/list/VideoList.vue'
 import {
   getVideoHotTag,
   getVideoAlltag,
   getAllVideo,
   getVideoByTag
-} from '../../api/api'
+} from '@/api/api'
 export default {
   components: { VideoList },
   data() {

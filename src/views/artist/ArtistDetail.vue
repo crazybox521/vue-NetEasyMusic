@@ -82,10 +82,10 @@
 </template>
 
 <script>
-import AlbumList from '../../components/list/AlbumList.vue'
-import MvList from '../../components/list/MvList.vue'
-import TopFiftyList from '../../components/list/TopFiftyList.vue'
-import Artist from '../../components/list/Artist.vue'
+import AlbumList from '@/components/list/AlbumList.vue'
+import MvList from '@/components/list/MvList.vue'
+import TopFiftyList from '@/components/list/TopFiftyList.vue'
+import Artist from '@/components/list/Artist.vue'
 import {
   queryArtistDetail,
   getArtistTop,
@@ -94,7 +94,7 @@ import {
   getIntro,
   getArtistMv,
   getArtistSame
-} from '../../api/api'
+} from '@/api/api'
 export default {
   components: { AlbumList, TopFiftyList, MvList, Artist },
   data() {

@@ -125,9 +125,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMusicUrl, downloadMusic, getLyric } from '../../api/api'
-import notifyMixin from '../../mixins/notifyMixin'
-import Lyric from '../../utils/lyric'
+import { getMusicUrl, downloadMusic, getLyric } from '@/api/api'
+import notifyMixin from '@/mixins/notifyMixin'
+import Lyric from '@/utils/lyric'
 
 export default {
   mixins: [notifyMixin],
@@ -391,7 +391,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '../../assets/less/lessConfig.less';
+@import '@/assets/less/lessConfig.less';
 /* 整体 */
 .player {
   display: flex;

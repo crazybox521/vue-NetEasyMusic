@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import MvList from '../../../components/list/MvList'
-import { getAllMv } from '../../../api/api'
+import MvList from '@/components/list/MvList'
+import { getAllMv } from '@/api/api'
 export default {
   components: {
     MvList

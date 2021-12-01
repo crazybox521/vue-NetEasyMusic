@@ -1,16 +1,12 @@
 import axios from "axios";
 import NProgress from 'nprogress'
 import Vue from 'vue'
-/* 根路径 */
-// axios.defaults.baseURL = 'http://localhost:8080';
-/* token */
-// axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '';
+
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 8000
-/* 配置拦截器，在config中给header添加Authorization */
+
 axios.interceptors.request.use((config) => {
     NProgress.start();
-    /*  config.headers.Authorization = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '' */
     return config
 })
 
@@ -182,6 +178,15 @@ export const setPlaylistSub = (id, t) => axios.get('/playlist/subscribe', { para
 /* 收藏/取消收藏专辑 t : 类型,1:收藏,2:取消收藏 */
 export const setAlbumSub = (id, t) => axios.get('/album/sub', { params: { id, t } })
 
+/* type: 0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频 6: 动态 */
+/* 获取热门评论 */
+export const getPlayListComment = (id, type, limit, offset, before) => axios.get('/comment/hot', { params: { id, type, limit, offset, before } })
+
+/* 获取各资源评论 */
+export const getComment = (id, type, pageNo, pageSize, sortType, cursor) => axios.get('/comment/new', { params: { id, type, pageNo, pageSize, sortType, cursor } })
+
+/* 发送删除评论 */
+export const sendComment =(t,type,id,content,commentId)=>axios.get('/comment',{params:{t,type,id,content,commentId}})
 /* 下载 */
 export const downloadMusic = (url, fileName) => {
     axios

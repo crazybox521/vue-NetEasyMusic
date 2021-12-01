@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import artistData from '../../../listData/artistData'
-import Artist from '../../../components/list/Artist.vue'
-import { getArtistList } from '../../../api/api'
+import artistData from '@/listData/artistData'
+import Artist from '@/components/list/Artist.vue'
+import { getArtistList } from '@/api/api'
 export default {
   components: {
     Artist

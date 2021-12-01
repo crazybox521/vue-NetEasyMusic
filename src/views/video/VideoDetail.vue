@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { getVideoDetail, getVideoUrl, getRelatedVideo } from '../../api/api'
+import { getVideoDetail, getVideoUrl, getRelatedVideo } from '@/api/api'
 export default {
   data() {
     return {

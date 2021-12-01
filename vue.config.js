@@ -1,8 +1,15 @@
+
+const path = require("path");
+const resolve = dir => path.join(__dirname, dir);
+
 module.exports = {
+    baseUrl: "./",
+    runtimeCompiler: true,
     devServer: {
         proxy: 'http://localhost:3000'
     },
     chainWebpack: config => {
+        config.resolve.alias.set("@", resolve("src"));
         config.when(process.env.NODE_ENV === 'production', config => {
             /* 设置打包入口 */
             config.entry('app').clear().add('./src/main-prod.js')
@@ -12,8 +19,8 @@ module.exports = {
                 'vue-router': 'VueRouter',
                 axios: 'axios',
                 nprogress: 'NProgress',
-                vuex:'Vuex',
-                'js-md5':'md5'
+                vuex: 'Vuex',
+                'js-md5': 'md5'
             })
 
             config.plugin('html').tap(args => {

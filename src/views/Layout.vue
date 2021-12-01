@@ -75,11 +75,11 @@
 </template>
 
 <script>
-import notifyMixin from '../mixins/notifyMixin'
+import notifyMixin from '@/mixins/notifyMixin'
 import { mapState } from 'vuex'
-import FooterBar from '../components/footer/FooterBar.vue'
-import HeaderBar from '../components/header/HeaderBar.vue'
-import menuList from '../listData/menuList'
+import FooterBar from '@/components/footer/FooterBar.vue'
+import HeaderBar from '@/components/header/HeaderBar.vue'
+import menuList from '@/listData/menuList'
 export default {
   mixins: [notifyMixin],
   components: {

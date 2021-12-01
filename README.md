@@ -24,7 +24,7 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 
 ### 预览地址
 
-[仿网易云音乐预览地址 ](http://47.102.159.133:3000/)
+[仿网易云音乐预览地址 ](http://47.102.159.133/)
 
 ### 目前完成功能
 
@@ -55,3 +55,5 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 解决歌手详情页相似歌手tab下切换歌手无法更新数据的状况
 - 添加歌词滚动的js动画
 - 添加路由视图切换的动画
+- 添加歌手详情页Tab切换加载数据的动画以及为空时的提示
+- 添加@根目录

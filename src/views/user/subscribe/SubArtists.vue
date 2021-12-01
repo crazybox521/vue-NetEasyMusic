@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getSubArtists } from '../../../api/api'
+import { getSubArtists } from '@/api/api'
 export default {
   data() {
     return {

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import notifyMixin from '../../mixins/notifyMixin'
+import notifyMixin from '@/mixins/notifyMixin'
 export default {
   mixins: [notifyMixin],
   data() {
