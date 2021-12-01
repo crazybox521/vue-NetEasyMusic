@@ -26,7 +26,7 @@
 
 <script>
 import MusicList from '@/components/list/MusicList.vue'
-import { getRecommendSong } from '@/api/api'
+import { getRecommendSong } from '@/api/api_music'
 export default {
   components: { MusicList },
   data() {

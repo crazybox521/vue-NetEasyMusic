@@ -98,13 +98,29 @@
     <!-- 歌单列表 -->
     <div class="detail-head">
       <ul class="detail-menu">
-        <li @click="handMenuClick(1)" class="pointer" :class="{isActive:showtab===1}">歌曲列表</li>
-        <li @click="handMenuClick(2)" class="pointer" :class="{isActive:showtab===2}">
+        <li
+          @click="handMenuClick(1)"
+          class="pointer"
+          :class="{ isActive: showtab === 1 }"
+        >
+          歌曲列表
+        </li>
+        <li
+          @click="handMenuClick(2)"
+          class="pointer"
+          :class="{ isActive: showtab === 2 }"
+        >
           评论({{ info.commentCount }})
         </li>
-        <li @click="handMenuClick(3)" class="pointer" :class="{isActive:showtab===3}">收藏者</li>
+        <li
+          @click="handMenuClick(3)"
+          class="pointer"
+          :class="{ isActive: showtab === 3 }"
+        >
+          收藏者
+        </li>
       </ul>
-      <div class="detail-search">
+      <div class="detail-search" v-show="showtab === 1">
         <el-input
           placeholder="搜索音乐"
           clearable
@@ -121,7 +137,12 @@
     </div>
     <!-- 评论 -->
     <div v-show="showtab == 2">
-      <Comment></Comment>
+      <Comment
+        @pagechange="handlePageChange"
+        :total="newCount"
+        :hotList="hotList"
+        :newList="newList"
+      ></Comment>
     </div>
     <div v-show="showtab == 3">收藏者</div>
   </div>
@@ -131,11 +152,10 @@
 import MusicList from '@/components/list/MusicList'
 import Tag from '@/components/simple/Tag'
 import Comment from '@/components/comment/Comment'
-import {
-  getPlayListDetail,
-  getMusicListByIds,
-  setPlaylistSub
-} from '@/api/api'
+import { getPlayListDetail } from '@/api/api_playlist'
+import { getMusicListByIds } from '@/api/api_music'
+import { setPlaylistSub } from '@/api/api_sub'
+import { getHotComment, getPlayListComment } from '@/api/api_comment'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -149,7 +169,16 @@ export default {
       key: '',
       playList: [],
       subscribed: false,
-      showtab: 1
+      showtab: 1,
+      hotList: [],
+      newList: [],
+      newQuery: {
+        id: this.$route.params.id,
+        offset: 0,
+        limit: 20,
+        before: 0
+      },
+      newCount: 0
     }
   },
   computed: {
@@ -210,6 +239,7 @@ export default {
         this.playList = res.songs
       }
     },
+    /* 收藏/取消收藏 */
     async subPlaylist(type) {
       if (!this.isLogin) return this.$message.error('需要登录')
       const { data: res } = await setPlaylistSub(this.$route.params.id, type)
@@ -218,13 +248,34 @@ export default {
       if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
     },
+    /* 获取热门评论 */
+    async getHotComment() {
+      if (this.hotList.length !== 0) return
+      const { data: res } = await getHotComment(this.$route.params.id, 2, 10)
+      if (res.code !== 200) return
+      console.log(res.hotComments)
+      this.hotList = res.hotComments
+    },
+    /* 获取最新评论 */
+    async getNewComment() {
+      const { data: res } = await getPlayListComment(this.newQuery)
+      if (res.code !== 200) return
+      console.log(res)
+      this.newCount = res.total
+      this.newList = res.comments
+    },
+    handlePageChange(val) {
+      this.newQuery.offset = (val - 1) * 20
+      this.getNewComment()
+    },
     toUserDetail(id) {
       this.$router.push('/userdetail/' + id)
     },
     handMenuClick(type) {
       if (this.showtab === type) return
       if (type === 2) {
-        console.log(1)
+        this.getHotComment()
+        this.getNewComment()
       } else if (type === 3) {
         console.log(2)
       }
@@ -275,16 +326,17 @@ export default {
     align-items: center;
     li {
       margin: 10px;
-      &.isActive{
+      &.isActive {
         font-size: 18px;
         font-weight: bold;
-        &::after{
+        &::after {
           display: block;
           content: '';
           height: 4px;
           width: 90%;
           margin: 0 auto;
           background-color: #ec4141;
+          border-radius: 2px;
         }
       }
     }

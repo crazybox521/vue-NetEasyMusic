@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { search } from '@/api/api.js'
+import { search } from '@/api/api_other'
 import MusicList from '@/components/list/MusicList'
 export default {
   components: {

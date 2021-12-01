@@ -125,7 +125,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMusicUrl, downloadMusic, getLyric } from '@/api/api'
+import { getMusicUrl, getLyric } from '@/api/api_music'
+import {downloadMusic} from '@/plugins/get'
 import notifyMixin from '@/mixins/notifyMixin'
 import Lyric from '@/utils/lyric'
 

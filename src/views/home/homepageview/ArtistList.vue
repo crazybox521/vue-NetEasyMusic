@@ -37,7 +37,7 @@
 <script>
 import artistData from '@/listData/artistData'
 import Artist from '@/components/list/Artist.vue'
-import { getArtistList } from '@/api/api'
+import { getArtistList } from '@/api/api_artist'
 export default {
   components: {
     Artist

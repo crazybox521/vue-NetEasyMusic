@@ -56,7 +56,7 @@ import {
   getVideoAlltag,
   getAllVideo,
   getVideoByTag
-} from '@/api/api'
+} from '@/api/api_video'
 export default {
   components: { VideoList },
   data() {

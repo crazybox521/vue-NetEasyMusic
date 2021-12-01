@@ -77,7 +77,8 @@
 }
 
 .el-pagination.is-background .el-pager li:not(.disabled):hover {
-    color: #ec4141;
+    background-color:#f12929;
+    color: #fff;
 }
 
 /* 单选框 */

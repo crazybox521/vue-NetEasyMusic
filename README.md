@@ -56,4 +56,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 添加歌词滚动的js动画
 - 添加路由视图切换的动画
 - 添加歌手详情页Tab切换加载数据的动画以及为空时的提示
-- 添加@根目录
+- 添加@根目录,并将API按功能模块化，便于管理

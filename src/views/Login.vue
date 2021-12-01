@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { doLoginByPhone } from '@/api/api'
+import { doLogin } from '@/api/api_user'
 import md5 from 'js-md5'
 export default {
   data() {
@@ -68,7 +68,7 @@ export default {
         if (!valid) return this.$message.error('请输入正确的信息')
         this.form.md5_password = md5(this.form.password)
         this.isLoading = true
-        const { data: res } = await doLoginByPhone(
+        const { data: res } = await doLogin(
           this.form.phone,
           this.form.md5_password
         )

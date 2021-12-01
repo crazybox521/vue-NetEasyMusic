@@ -40,7 +40,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getAcount, logout } from '@/api/api'
+import { getAcount, logout } from '@/api/api_user'
 export default {
   data() {
     return {

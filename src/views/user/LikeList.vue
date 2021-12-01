@@ -65,7 +65,7 @@
 <script>
 import MusicList from '@/components/list/MusicList'
 import Tag from '@/components/simple/Tag.vue'
-import { getMusicListByIds, getLikeIdList } from '@/api/api'
+import { getMusicListByIds, getLikeIdList } from '@/api/api_music'
 import { mapState } from 'vuex'
 export default {
   components: {

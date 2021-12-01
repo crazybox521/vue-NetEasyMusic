@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { getSubAlbum } from '@/api/api'
+import { getSubAlbum } from '@/api/api_sub'
 export default {
   data() {
     return {

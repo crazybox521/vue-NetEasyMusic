@@ -90,11 +90,11 @@ import {
   queryArtistDetail,
   getArtistTop,
   getArtistAlbum,
-  getAlbumDetail,
   getIntro,
   getArtistMv,
   getArtistSame
-} from '@/api/api'
+} from '@/api/api_artist'
+import { getAlbumDetail } from '@/api/api_album'
 export default {
   components: { AlbumList, TopFiftyList, MvList, Artist },
   data() {

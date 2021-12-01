@@ -28,7 +28,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getBanner, getPersonalized, getRecommend } from '@/api/api'
+import { getBanner  } from '@/api/api_other'
+import {getPersonalized, getRecommend} from '@/api/api_playlist'
 import SongSheetList from '@/components/list/SongSheetList.vue'
 export default {
   components: {

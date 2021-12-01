@@ -93,7 +93,7 @@ import {
   getMvUrl,
   getPersonalizedMv,
   getMvInfo
-} from '@/api/api'
+} from '@/api/api_video'
 export default {
   data() {
     return {

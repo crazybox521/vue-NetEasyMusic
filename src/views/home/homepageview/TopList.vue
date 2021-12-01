@@ -53,7 +53,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getToplist, getPlayListDetail } from '@/api/api'
+import { getToplist, getPlayListDetail } from '@/api/api_playlist'
 import SongSheetList from '@/components/list/SongSheetList.vue'
 export default {
   components: { SongSheetList },

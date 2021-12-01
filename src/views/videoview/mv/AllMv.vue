@@ -44,7 +44,7 @@
 
 <script>
 import MvList from '@/components/list/MvList'
-import { getAllMv } from '@/api/api'
+import { getAllMv } from '@/api/api_video'
 export default {
   components: {
     MvList

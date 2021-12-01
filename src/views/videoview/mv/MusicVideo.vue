@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { getNewMv, getNetEasyMv, getTopMv } from '@/api/api'
+import { getNewMv, getNetEasyMv, getTopMv } from '@/api/api_video'
 import MvList from '@/components/list/MvList.vue'
 import MvTopList from '@/components/list/MvTopList.vue'
 export default {

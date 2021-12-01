@@ -67,7 +67,7 @@
 
 <script>
 import SongSheetList from '@/components/list/SongSheetList.vue'
-import { getUserDetail, getUserPlayList } from '@/api/api'
+import { getUserDetail, getUserPlayList } from '@/api/api_user'
 export default {
   components: { SongSheetList },
   data() {
