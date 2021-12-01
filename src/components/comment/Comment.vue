@@ -1,17 +1,19 @@
 <template>
   <div class="comment">
     <!-- 评论区 -->
-    <div class="area-wrap">
+    <div class="area-wrap" ref="areaWrapRef">
       <textarea
         class="text-area"
-        v-model="value"
+        v-model="commentInfo.content"
         @keyup.enter="sendComment"
       ></textarea>
       <div class="word-num">{{ restNum }}</div>
     </div>
     <div class="btn-wrap mtop-10">
       <div class="at-btn">
-        <button class="font-18 no-btn" @click="value += '@'">@</button>
+        <button class="font-18 no-btn" @click="commentInfo.content += '@'">
+          @
+        </button>
         <button class="font-18 no-btn" @click="addTopic">#</button>
       </div>
       <div class="send-btn">
@@ -25,6 +27,9 @@
         v-for="item in hotList"
         :key="item.commentId"
         :item="item"
+        identy="hot"
+        @like="handleLike"
+        @reply="handleReply"
       ></ComentItem>
       <div class="more-btn-wrap mtop-20">
         <button class="btn btn-white">更多精彩评论></button>
@@ -37,6 +42,9 @@
         v-for="item in newList"
         :key="item.commentId"
         :item="item"
+        identy="new"
+        @like="handleLike"
+        @reply="handleReply"
       ></ComentItem>
       <div class="margin-center w-500" style="margin-top: 10px">
         <el-pagination
@@ -44,13 +52,13 @@
           :current-page="currentPage"
           :page-size="20"
           layout="prev, pager, next"
-          :total="total"
+          :total="newCount"
           background
         >
         </el-pagination>
       </div>
     </div>
-    <div v-if="total === 0" style="color: #9f9f9f; text-align: center">
+    <div v-if="newCount === 0" style="color: #9f9f9f; text-align: center">
       还没有评论，快来抢沙发~
     </div>
   </div>
@@ -58,67 +66,174 @@
 
 <script>
 import ComentItem from './CommentItem'
+import {
+  getHotComment,
+  getPlayListComment,
+  sendComment,
+  likeComment
+} from '@/api/api_comment'
+import { mapState } from 'vuex'
 export default {
   components: { ComentItem },
   props: {
-    hotList: {
-      type: Array,
-      required: true,
-      default: () => []
+    id: {
+      type: [Number, String],
+      required: true
     },
-    newList: {
-      type: Array,
-      required: true,
-      default: () => []
-    },
-    total: {
+    type: {
       type: Number,
-      required: true,
-      default: 0
-    }
+      required: true
+    },
+    active: Boolean
   },
   data() {
     return {
-      value: '',
-      currentPage: 1
+      currentPage: 1,
+      /* 热评 */
+      hotList: [],
+      /* 新评 */
+      newList: [],
+      /* 新评的检索信息 */
+      newQuery: {
+        id: this.$route.params.id,
+        offset: 0,
+        limit: 20,
+        before: 0
+      },
+      newCount: 0,
+      commentInfo: {
+        /* 1评论 2回复 0删除 */
+        t: 1,
+        type: 2,
+        id: this.$route.params.id,
+        content: '',
+        commentId: 0
+      },
+      replyName: ''
     }
   },
   computed: {
     restNum() {
-      return 140 - this.value.length
+      return 140 - this.commentInfo.content.length
+    },
+    ...mapState(['isLogin'])
+  },
+  watch: {
+    active(val) {
+      if (!val || this.newList.length !== 0) return
+      this.getHotComment()
+      this.getNewComment()
+    },
+    'commentInfo.content'(val) {
+      if (val == '') {
+        this.commentInfo.t = 1
+      }
     }
   },
   methods: {
     addTopic() {
-      this.value += '#输入想说的话题#'
+      this.commentInfo.content += '#输入想说的话题#'
     },
-    sendComment() {
+    /* 发送评论 */
+    async sendComment() {
+      if (!this.isLogin) return this.$message.error('需要登录')
+      if (this.restNum < 0) return this.$message.error('字数过长')
+      if (this.commentInfo.commentId !== 0) {
+        this.commentInfo.content = this.commentInfo.content.replace(
+          '回复' + this.replyName + ':',
+          ''
+        )
+      }
       console.log('send')
+      const { data: res } = await sendComment(this.commentInfo)
+      if (res.code !== 200) return
+      console.log(res)
+      this.commentInfo.content = ''
+      this.commentInfo.t = 1
+      this.commentInfo.commentId = 0
+      this.getNewComment()
     },
     toUserDetail(id) {
       this.$router.push('/userdetail/' + id)
+    },
+    /* 获取热门评论 */
+    async getHotComment() {
+      if (this.hotList.length !== 0) return
+      const { data: res } = await getHotComment(this.$route.params.id, 2, 10)
+      if (res.code !== 200) return
+      console.log(res.hotComments)
+      this.hotList = res.hotComments
+    },
+    /* 获取最新评论 */
+    async getNewComment() {
+      const { data: res } = await getPlayListComment(this.newQuery)
+      if (res.code !== 200) return
+      console.log(res)
+      this.newCount = res.total
+      this.newList = res.comments
+    },
+    /* 点赞的回调 */
+    handleLike(info) {
+      if (!this.isLogin) return this.$message.error('需要登录')
+      console.log(info)
+      let obj = { id: this.id, cid: info.cid, t: 1, type: this.type }
+      if (info.liked) {
+        obj.t = 0
+      }
+      this.like(obj, info.identy)
+    },
+    /* 点赞的请求及处理 */
+    async like(obj, type) {
+      const { data: res } = await likeComment(obj)
+      if (res.code !== 200) return
+      if (type == 'new') {
+        let index = this.newList.findIndex((item) => item.commentId == obj.cid)
+        this.newList[index].liked = !this.newList[index].liked
+        if (obj.t) {
+          this.newList[index].likedCount++
+        } else {
+          this.newList[index].likedCount--
+        }
+      } else if (type == 'hot') {
+        let index = this.hotList.findIndex((item) => item.commentId == obj.cid)
+        this.hotList[index].liked = !this.hotList[index].liked
+        if (obj.t) {
+          this.hotList[index].likedCount++
+        } else {
+          this.hotList[index].likedCount--
+        }
+      }
+    },
+    /* 回复的回调 */
+    handleReply(info) {
+      if (!this.isLogin) return this.$message.error('需要登录')
+      console.log(info)
+      this.replyName = info.name
+      this.commentInfo.content = '回复' + info.name + ':'
+      this.commentInfo.commentId = info.cid
+      this.commentInfo.t = 2
+      this.toTopAnimation(this.$refs.areaWrapRef.offsetTop, 200)
     },
     /* 页码变化的回调 */
     handleCurrentChange(val) {
       console.log(val)
       this.currentPage = val
-      this.$emit('pagechange', val)
-      this.toListTopAnimation()
+      this.newQuery.offset = (val - 1) * 20
+      this.getNewComment()
+      this.toTopAnimation(this.$refs.newListRef.offsetTop - 20, 600)
     },
-    /* 点击页码后去最新评论头部的js动画 */
-    toListTopAnimation() {
+    /* 滚动条由下至上的动画js动画 */
+    toTopAnimation(target, ms = 500) {
       let start
       const main = document.querySelector('.main-right')
-      let max = main.scrollTop
-      let size = main.scrollTop - this.$refs.newListRef.offsetTop
-      let num = this.$refs.newListRef.offsetTop - 10
-      size /= 500
+      let begin = main.scrollTop
+      let size = (begin - target) / ms
       const step = (timestamp) => {
         if (start === undefined) start = timestamp
         const elapsed = timestamp - start
         /* 防止上滑过头 */
-        main.scrollTop = Math.max(max - size * elapsed, num)
-        if (elapsed < 500) {
+        main.scrollTop = Math.max(begin - size * elapsed, target)
+        if (elapsed < ms) {
           // 在.5秒后停止动画
           window.requestAnimationFrame(step)
         }

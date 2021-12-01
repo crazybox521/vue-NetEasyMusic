@@ -137,12 +137,7 @@
     </div>
     <!-- 评论 -->
     <div v-show="showtab == 2">
-      <Comment
-        @pagechange="handlePageChange"
-        :total="newCount"
-        :hotList="hotList"
-        :newList="newList"
-      ></Comment>
+      <Comment :active="showtab == 2" :type="2" :id="$route.params.id"></Comment>
     </div>
     <div v-show="showtab == 3">收藏者</div>
   </div>
@@ -155,7 +150,6 @@ import Comment from '@/components/comment/Comment'
 import { getPlayListDetail } from '@/api/api_playlist'
 import { getMusicListByIds } from '@/api/api_music'
 import { setPlaylistSub } from '@/api/api_sub'
-import { getHotComment, getPlayListComment } from '@/api/api_comment'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -170,15 +164,6 @@ export default {
       playList: [],
       subscribed: false,
       showtab: 1,
-      hotList: [],
-      newList: [],
-      newQuery: {
-        id: this.$route.params.id,
-        offset: 0,
-        limit: 20,
-        before: 0
-      },
-      newCount: 0
     }
   },
   computed: {
@@ -248,37 +233,12 @@ export default {
       if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
     },
-    /* 获取热门评论 */
-    async getHotComment() {
-      if (this.hotList.length !== 0) return
-      const { data: res } = await getHotComment(this.$route.params.id, 2, 10)
-      if (res.code !== 200) return
-      console.log(res.hotComments)
-      this.hotList = res.hotComments
-    },
-    /* 获取最新评论 */
-    async getNewComment() {
-      const { data: res } = await getPlayListComment(this.newQuery)
-      if (res.code !== 200) return
-      console.log(res)
-      this.newCount = res.total
-      this.newList = res.comments
-    },
-    handlePageChange(val) {
-      this.newQuery.offset = (val - 1) * 20
-      this.getNewComment()
-    },
+   
     toUserDetail(id) {
       this.$router.push('/userdetail/' + id)
     },
     handMenuClick(type) {
       if (this.showtab === type) return
-      if (type === 2) {
-        this.getHotComment()
-        this.getNewComment()
-      } else if (type === 3) {
-        console.log(2)
-      }
       this.showtab = type
     }
   }
