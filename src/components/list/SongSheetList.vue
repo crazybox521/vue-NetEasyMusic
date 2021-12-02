@@ -56,7 +56,7 @@ export default {
 }
 .img-wrap {
   position: relative;
-   .video-playcount {
+  .video-playcount {
     color: #ffffff;
     position: absolute;
     right: 10px;
@@ -88,11 +88,20 @@ export default {
   }
 }
 @media screen and(max-width:414px) {
-  .img-wrap{
-    .video-playcount{
-    display: none;
+  .img-wrap {
+    .video-playcount {
+      display: none;
+    }
   }
+  .song-sheet-list {
+    .song-sheet-item {
+      margin-bottom: 30px;
+      width: 32%;
+      margin-right: 2%;
+      &:nth-child(3n){
+        margin-right: 0;
+      }
+    }
   }
-  
 }
 </style>

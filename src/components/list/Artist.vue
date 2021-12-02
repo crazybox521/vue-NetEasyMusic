@@ -60,4 +60,17 @@ export default {
 p {
   text-align: center;
 }
+
+@media screen and(max-width:414px) {
+  .img-list {
+  .img-item {
+    margin-bottom: 30px;
+    width: 32%;
+    margin-right: 2%;
+    &:nth-child(3n){
+      margin-right: 0;
+    }
+  }
+}
+}
 </style>

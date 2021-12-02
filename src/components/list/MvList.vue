@@ -119,4 +119,13 @@ export default {
     opacity: 1;
   }
 }
+@media screen and (max-width: 414px) {
+  .mv-list {
+    ul {
+      li {
+        width: 47%;
+      }
+    }
+  }
+}
 </style>
