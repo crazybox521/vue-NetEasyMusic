@@ -131,7 +131,7 @@
     </div>
     <div v-show="showtab === 1">
       <MusicList ref="listRef" :list="list"></MusicList>
-      <div v-if="isShowMoreBtn" class="margin-center w-300 more-btn">
+      <div v-if="isShowMoreBtn" class="flex_center more-btn">
         点击 加载完整歌单 查看更多单曲
       </div>
     </div>

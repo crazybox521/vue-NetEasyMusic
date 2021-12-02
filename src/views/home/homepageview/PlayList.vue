@@ -68,7 +68,7 @@
     </div>
     <el-skeleton class="mtop-10" v-show="isLoading" :rows="8" animated />
     <SongSheetList v-show="!isLoading" :playlist="playList"></SongSheetList>
-    <div class="margin-center w-500">
+    <div class="flex_center">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page="pageInfo.currentPage"

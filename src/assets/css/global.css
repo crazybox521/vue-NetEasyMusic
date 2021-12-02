@@ -169,12 +169,6 @@
     height: 80px;
 }
 
-/* 全局利用margin水平居中 */
-.margin-center {
-    margin: 0 auto;
-}
-
-
 /* 全局鼠标样式 */
 .pointer {
     cursor: pointer;
@@ -228,6 +222,11 @@
 .flex-around {
     display: flex;
     justify-content: space-around;
+    align-items: center;
+}
+.flex_center{
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 

@@ -46,7 +46,7 @@
         @like="handleLike"
         @reply="handleReply"
       ></ComentItem>
-      <div class="margin-center w-500" style="margin-top: 10px">
+      <div class="flex_center" style="margin-top: 10px">
         <el-pagination
           @current-change="handleCurrentChange"
           :current-page="currentPage"

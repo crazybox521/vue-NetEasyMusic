@@ -16,15 +16,9 @@
       </div>
     </div>
     <div class="mtop-20">
-      <InfoList :list="subList" v-slot="{ item }" @clickitem="toArtistDetail">
-        <img
-          class="sub-img mleft-10"
-          :src="item.picUrl + '?param=100y100'"
-          alt=""
-        />
-        <div class="sub-title mleft-10">{{ item.name }}</div>
-        <div class="sub-author font-12">专辑：{{ item.albumSize }}</div>
-        <div class="sub-num font-12">MV：{{ item.mvSize }}</div>
+      <InfoList :list="subList" @clickitem="toArtistDetail">
+        <template #author="{ item }"> 专辑： {{ item.albumSize }} </template>
+        <template #num="{ item }"> MV：{{ item.mvSize }} </template>
       </InfoList>
     </div>
   </div>
@@ -60,8 +54,8 @@ export default {
       this.list = res.data
       this.count = res.count
     },
-    toArtistDetail(id) {
-      this.$router.push('/artistdetail/' + id)
+    toArtistDetail(row) {
+      this.$router.push('/artistdetail/' + row.id)
     }
   }
 }

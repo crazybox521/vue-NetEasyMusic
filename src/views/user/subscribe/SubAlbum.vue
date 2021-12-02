@@ -17,29 +17,14 @@
     </div>
     <div class="mtop-20">
       <InfoList :list="subAlbumList" @clickitem="toAlbumDetail">
-        <template v-slot="{ item }">
-          <img
-            class="sub-img mleft-10"
-            :src="item.picUrl + '?param=100y100'"
-            alt=""
-          />
-          <div class="sub-title mleft-10">{{ item.name }}</div>
-          <div class="sub-author font-12">
-            <span v-for="(ar, index) in item.artists" :key="index"
-              >{{ ar.name }}
-            </span>
-          </div>
-          <div class="sub-num font-12">{{ item.size }}</div>
+      
+        <template #author="{ item }">
+          <span v-for="(ar, index) in item.artists" :key="index"
+            >{{ ar.name }}
+          </span>
         </template>
+        <template #num="{ item }"> {{ item.size }} 首 </template>
       </InfoList>
-      <ul class="sub-list">
-        <li
-          class="sub-item pointer"
-          v-for="item in subAlbumList"
-          :key="item.id"
-          @click="toAlbumDetail(item.id)"
-        ></li>
-      </ul>
     </div>
   </div>
 </template>
@@ -72,8 +57,8 @@ export default {
       this.list = res.data
       this.count = res.count
     },
-    toAlbumDetail(id) {
-      this.$router.push('/albumdetail/' + id)
+    toAlbumDetail(row) {
+      this.$router.push('/albumdetail/' + row.id)
     }
   }
 }

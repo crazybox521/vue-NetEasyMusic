@@ -1,20 +1,100 @@
 <template>
   <!-- 搜索页 -->
   <!-- 头部区域相关功能组件 -->
-  <div class="songs-list mtop-20">
-    <div class="font-bold">找到 {{ total }} 首单曲</div>
-    <el-skeleton v-if="isLoading" :rows="16" animated />
-    <MusicList v-else :list="seachList"></MusicList>
-    <el-empty v-if="total == 0" :description="desInfo"></el-empty>
+  <div class="search-list mtop-20">
+    <div class="font-bold">找到 {{ total }} {{ desInfo }}</div>
+
+    <ul class="search-menu">
+      <li
+        v-for="(item, index) in text"
+        @click="handMenuClick(index)"
+        class="pointer search-menu-item"
+        :class="{ isActive: vIndex === index }"
+        :key="index"
+      >
+        {{ item }}
+      </li>
+    </ul>
+
+    <el-skeleton v-if="isLoading" :rows="12" animated />
+    <template v-else-if="total !== 0">
+      <MusicList v-if="vIndex === 0" :list="searchList.musicList"></MusicList>
+      <InfoList
+        @clickitem="toAlbumDetail"
+        v-if="vIndex === 1"
+        :list="searchList.albumList"
+      >
+        <template #author="{ item }">
+          <span style="color: #676767">{{ item.artist.name }}</span>
+        </template>
+      </InfoList>
+      <InfoList
+        @clickitem="toArtistDetail"
+        v-if="vIndex === 2"
+        :list="searchList.artistList"
+      >
+      </InfoList>
+      <InfoList
+        @clickitem="toPlayListDetail"
+        v-if="vIndex === 3"
+        :list="searchList.playList"
+      >
+        <template #img="{ item }">
+          <img
+            class="sub-img mleft-10"
+            :src="item.coverImgUrl + '?param=100y100'"
+            alt=""
+          />
+        </template>
+        <template #author="{ item }"> {{ item.trackCount }} 首 </template>
+        <template #num="{ item }">
+          by <span style="color: #676767">{{ item.creator.nickname }}</span>
+        </template>
+      </InfoList>
+      <InfoList
+        @clickitem="toUserDetail"
+        v-if="vIndex === 4"
+        :list="searchList.userList"
+      >
+        <template #img="{ item }">
+          <img
+            class="sub-img mleft-10"
+            :src="item.avatarUrl + '?param=100y100'"
+            alt=""
+          />
+        </template>
+        <template #title="{ item }">
+          {{ item.nickname }}
+        </template>
+      </InfoList>
+      <MvList  v-if="vIndex === 5"  :disabled="true" :list="searchList.mvList" ></MvList>
+    </template>
+
+    <el-empty v-else :description="emptyInfo"></el-empty>
+    <div class="flex_center" v-if="total !== 0">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="30"
+        layout="prev, pager, next"
+        :total="total"
+        background
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import { search } from '@/api/api_other'
 import MusicList from '@/components/list/MusicList'
+import InfoList from '@/components/list/InfoList.vue'
+import MvList from '@/components/list/MvList.vue'
 export default {
   components: {
-    MusicList
+    MusicList,
+    InfoList,
+    MvList,
   },
   data() {
     return {
@@ -22,22 +102,52 @@ export default {
       searchInfo: {
         keywords: '',
         limit: 30,
-        offset: 0
+        offset: 0,
+        type: 1
       },
+      /* 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1014: 视频*/
+      searchType: [1, 10, 100, 1000, 1002, 1004],
+      sizeText: ['首', '张', '位', '个', '位', '个'],
+      text: ['单曲', '专辑', '歌手', '歌单', '用户', 'MV'],
       total: 0,
       /* 检索到的列表 */
-      seachList: [],
-      isLoading: true
+      searchList: {
+        musicList: [],
+        albumListL: [],
+        artistList: [],
+        playList: [],
+        userList: [],
+        mvList: [],
+
+      },
+      isLoading: true,
+      vIndex: 0
     }
   },
   computed: {
+    currentPage() {
+      return this.searchInfo.offset / this.searchInfo.limit + 1
+    },
     desInfo() {
-      return '很抱歉，未能找到与' + this.searchInfo.keywords + '有关的单曲'
+      return this.sizeText[this.vIndex] + this.text[this.vIndex]
+    },
+    emptyInfo() {
+      return (
+        '很抱歉，未能找到与' +
+        this.searchInfo.keywords +
+        '有关的' +
+        this.text[this.vIndex]
+      )
     }
   },
   watch: {
     '$route.params.key'(val) {
       this.searchInfo.keywords = val
+      this.search()
+    },
+    vIndex(val) {
+      this.searchInfo.type = this.searchType[val]
+      this.searchInfo.offset = 0
       this.search()
     }
   },
@@ -49,15 +159,93 @@ export default {
     /* 搜索音乐 */
     async search() {
       if (this.searchInfo.keywords == '') return
+      this.isLoading = true
       const { data: res } = await search(this.searchInfo)
+      console.log(res);
       if (res.code !== 200) return this.$message.error('请求失败')
-      this.seachList = res.result.songs
-      this.total = res.result.songCount
+      if(Object.keys(res.result).length === 0) {
+        this.total=0
+        this.isLoading=false
+        return
+      }
+      switch (this.vIndex) {
+        case 0:
+          this.searchList.musicList = res.result.songs
+          this.total = res.result.songCount
+          break
+        case 1:
+          this.searchList.albumList = res.result.albums
+          this.total = res.result.albumCount
+          break
+        case 2:
+          this.searchList.artistList = res.result.artists
+          this.total = res.result.artistCount
+          break
+        case 3:
+          this.searchList.playList = res.result.playlists
+          this.total = res.result.playlistCount
+          break
+        case 4:
+          this.searchList.userList = res.result.userprofiles
+          this.total = res.result.userprofileCount
+          break
+        case 5:
+          this.searchList.mvList = res.result.mvs
+          this.total = res.result.mvCount
+          break
+        
+      }
       this.isLoading = false
+    },
+    handMenuClick(val) {
+      console.log(val)
+      this.vIndex = val
+    },
+    handleCurrentChange(val) {
+      this.searchInfo.offset = 30 * (val - 1)
+      this.search()
+    },
+    toAlbumDetail(row) {
+      this.$router.push('/albumdetail/' + row.id)
+    },
+    toArtistDetail(row) {
+      this.$router.push('/artistdetail/' + row.id)
+    },
+    toPlayListDetail(row) {
+      this.$router.push('/playlistdetail/' + row.id)
+    },
+    toUserDetail(row) {
+      this.$router.push('/userdetail/' + row.userId)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.search-menu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px 0;
+  &-item {
+    width: 40px;
+    margin-right: 20px;
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+    &.isActive {
+      font-size: 18px;
+      font-weight: bold;
+      &::after {
+        display: block;
+        content: '';
+        height: 4px;
+        width: 90%;
+        margin: 0 auto;
+        background-color: #ec4141;
+        border-radius: 2px;
+      }
+    }
+  }
+}
 </style>
