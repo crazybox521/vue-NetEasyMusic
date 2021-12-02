@@ -17,7 +17,12 @@
     </div>
     <div class="mtop-20">
       <InfoList :list="subAlbumList" @clickitem="toAlbumDetail">
-      
+        <template #img="{ item }">
+          <img class="sub-img mleft-10" :src="item.picUrl + '?param=100y100'" />
+        </template>
+        <template #title="{ item }">
+          {{ item.name }}
+        </template>
         <template #author="{ item }">
           <span v-for="(ar, index) in item.artists" :key="index"
             >{{ ar.name }}

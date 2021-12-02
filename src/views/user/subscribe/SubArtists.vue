@@ -17,6 +17,12 @@
     </div>
     <div class="mtop-20">
       <InfoList :list="subList" @clickitem="toArtistDetail">
+        <template #img="{ item }">
+          <img class="sub-img mleft-10" :src="item.picUrl + '?param=100y100'" />
+        </template>
+        <template #title="{ item }">
+          {{ item.name }}
+        </template>
         <template #author="{ item }"> 专辑： {{ item.albumSize }} </template>
         <template #num="{ item }"> MV：{{ item.mvSize }} </template>
       </InfoList>

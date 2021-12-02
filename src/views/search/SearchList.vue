@@ -18,22 +18,38 @@
 
     <el-skeleton v-if="isLoading" :rows="12" animated />
     <template v-else-if="total !== 0">
+      <!-- 歌曲 -->
       <MusicList v-if="vIndex === 0" :list="searchList.musicList"></MusicList>
+      <!-- 专辑 -->
       <InfoList
         @clickitem="toAlbumDetail"
         v-if="vIndex === 1"
         :list="searchList.albumList"
       >
+        <template #img="{ item }">
+          <img class="sub-img mleft-10" :src="item.picUrl + '?param=100y100'" />
+        </template>
+        <template #title="{ item }">
+          {{ item.name }}
+        </template>
         <template #author="{ item }">
           <span style="color: #676767">{{ item.artist.name }}</span>
         </template>
       </InfoList>
+      <!-- 歌手 -->
       <InfoList
         @clickitem="toArtistDetail"
         v-if="vIndex === 2"
         :list="searchList.artistList"
       >
+        <template #img="{ item }">
+          <img class="sub-img mleft-10" :src="item.picUrl + '?param=100y100'" />
+        </template>
+        <template #title="{ item }">
+          {{ item.name }}
+        </template>
       </InfoList>
+      <!-- 歌单 -->
       <InfoList
         @clickitem="toPlayListDetail"
         v-if="vIndex === 3"
@@ -43,14 +59,17 @@
           <img
             class="sub-img mleft-10"
             :src="item.coverImgUrl + '?param=100y100'"
-            alt=""
           />
+        </template>
+        <template #title="{ item }">
+          {{ item.name }}
         </template>
         <template #author="{ item }"> {{ item.trackCount }} 首 </template>
         <template #num="{ item }">
           by <span style="color: #676767">{{ item.creator.nickname }}</span>
         </template>
       </InfoList>
+      <!-- 用户 -->
       <InfoList
         @clickitem="toUserDetail"
         v-if="vIndex === 4"
@@ -67,7 +86,12 @@
           {{ item.nickname }}
         </template>
       </InfoList>
-      <MvList  v-if="vIndex === 5"  :disabled="true" :list="searchList.mvList" ></MvList>
+      <!-- MV -->
+      <MvList
+        v-if="vIndex === 5"
+        :disabled="true"
+        :list="searchList.mvList"
+      ></MvList>
     </template>
 
     <el-empty v-else :description="emptyInfo"></el-empty>
@@ -94,7 +118,7 @@ export default {
   components: {
     MusicList,
     InfoList,
-    MvList,
+    MvList
   },
   data() {
     return {
@@ -117,8 +141,7 @@ export default {
         artistList: [],
         playList: [],
         userList: [],
-        mvList: [],
-
+        mvList: []
       },
       isLoading: true,
       vIndex: 0
@@ -161,11 +184,11 @@ export default {
       if (this.searchInfo.keywords == '') return
       this.isLoading = true
       const { data: res } = await search(this.searchInfo)
-      console.log(res);
+      console.log(res)
       if (res.code !== 200) return this.$message.error('请求失败')
-      if(Object.keys(res.result).length === 0) {
-        this.total=0
-        this.isLoading=false
+      if (Object.keys(res.result).length === 0) {
+        this.total = 0
+        this.isLoading = false
         return
       }
       switch (this.vIndex) {
@@ -193,7 +216,6 @@ export default {
           this.searchList.mvList = res.result.mvs
           this.total = res.result.mvCount
           break
-        
       }
       this.isLoading = false
     },
