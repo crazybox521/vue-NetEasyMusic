@@ -50,25 +50,52 @@
     <!-- 专辑列表 -->
     <div class="detail-table">
       <ul class="detail-menu">
-        <li>歌曲列表</li>
-        <li>评论({{ commentCount }})</li>
-        <li>专辑详情</li>
+        <li
+          @click="handMenuClick(1)"
+          class="pointer"
+          :class="{ isActive: showtab === 1 }"
+        >
+          歌曲列表
+        </li>
+        <li
+          @click="handMenuClick(2)"
+          class="pointer"
+          :class="{ isActive: showtab === 2 }"
+        >
+          评论({{ commentCount }})
+        </li>
+        <li
+          @click="handMenuClick(3)"
+          class="pointer"
+          :class="{ isActive: showtab === 3 }"
+        >
+          专辑详情
+        </li>
       </ul>
     </div>
-    <MusicList ref="listRef" :list="list"></MusicList>
+    <MusicList v-show="showtab === 1" ref="listRef" :list="list"></MusicList>
+    <Comment
+      v-show="showtab == 2"
+      :active="showtab == 2"
+      :type="3"
+      :id="$route.params.id"
+    ></Comment>
+    <div v-show="showtab == 3">专辑详情</div>
   </div>
 </template>
 
 <script>
 import { getAlbumDetail, getAlbumDynamic } from '@/api/api_album'
-import {setAlbumSub} from '@/api/api_sub'
+import { setAlbumSub } from '@/api/api_sub'
 import Tag from '@/components/simple/Tag.vue'
 import MusicList from '@/components/list/MusicList.vue'
+import Comment from '@/components/comment/Comment.vue'
 import { mapState } from 'vuex'
 export default {
   components: {
     Tag,
-    MusicList
+    MusicList,
+    Comment
   },
   data() {
     return {
@@ -77,7 +104,8 @@ export default {
       isSub: false,
       shareCount: 0,
       commentCount: 0,
-      subCount: 0
+      subCount: 0,
+      showtab: 1
     }
   },
   computed: {
@@ -120,6 +148,9 @@ export default {
       this.shareCount = res.shareCount
       this.commentCount = res.commentCount
       this.subCount = res.subCount
+    },
+    handMenuClick(val) {
+      this.showtab = val
     }
   }
 }
@@ -135,6 +166,19 @@ export default {
     align-items: center;
     li {
       margin: 10px;
+      &.isActive {
+        font-size: 18px;
+        font-weight: bold;
+        &::after {
+          display: block;
+          content: '';
+          height: 4px;
+          width: 90%;
+          margin: 0 auto;
+          background-color: #ec4141;
+          border-radius: 2px;
+        }
+      }
     }
   }
 }

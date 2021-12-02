@@ -110,7 +110,9 @@
             </div>
           </div>
         </div>
-        <div class="comment-view"></div>
+        <div class="comment-view mtop-20">
+           <Comment :active="true" :type="0" :id="this.currenMusicId"></Comment>
+        </div>
       </div>
     </el-drawer>
     <audio
@@ -129,14 +131,15 @@ import { getMusicUrl, getLyric } from '@/api/api_music'
 import {downloadMusic} from '@/plugins/get'
 import notifyMixin from '@/mixins/notifyMixin'
 import Lyric from '@/utils/lyric'
-
+import Comment from '@/components/comment/Comment.vue' 
 export default {
   mixins: [notifyMixin],
+  components:{Comment},
   data() {
     return {
       musicUrl: '', //音乐资源
-      volume: 88, //音量
-      saveVolume: 88, //静音前保存的音量
+      volume: 50, //音量
+      saveVolume: 50, //静音前保存的音量
       isMute: false, //是否是静音
       type: 'order', //播放顺序
       imgInfo: {
@@ -605,6 +608,9 @@ export default {
         display: none;
       }
     }
+  }
+  .play-view{
+    padding:0 10px;
   }
   .img-wrap {
     display: none;

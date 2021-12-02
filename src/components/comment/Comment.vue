@@ -68,7 +68,7 @@
 import ComentItem from './CommentItem'
 import {
   getHotComment,
-  getPlayListComment,
+  getNewComment,
   sendComment,
   likeComment
 } from '@/api/api_comment'
@@ -95,17 +95,18 @@ export default {
       newList: [],
       /* 新评的检索信息 */
       newQuery: {
-        id: this.$route.params.id,
+        id: this.id,
         offset: 0,
         limit: 20,
-        before: 0
+        before: 0,
+        type: this.type
       },
       newCount: 0,
       commentInfo: {
         /* 1评论 2回复 0删除 */
         t: 1,
-        type: 2,
-        id: this.$route.params.id,
+        type: this.type,
+        id: this.id,
         content: '',
         commentId: 0
       },
@@ -119,15 +120,29 @@ export default {
     ...mapState(['isLogin'])
   },
   watch: {
-    active(val) {
-      if (!val || this.newList.length !== 0) return
-      this.getHotComment()
-      this.getNewComment()
+    active: {
+      immediate: true,
+      handler(val) {
+        if (!val || this.newList.length !== 0) return
+        this.getHotComment()
+        this.getNewComment()
+      }
     },
     'commentInfo.content'(val) {
       if (val == '') {
         this.commentInfo.t = 1
       }
+    },
+    id(val) {
+      /* 监听ID，改变后重新获取数据 */
+      console.log('评论的资源ID改变了')
+      if (!val) return
+      this.hotList = []
+      console.log('监听ID', val, this.commentInfo.id)
+      this.commentInfo.id = val
+      this.newQuery.id = val
+      this.getHotComment()
+      this.getNewComment()
     }
   },
   methods: {
@@ -159,14 +174,14 @@ export default {
     /* 获取热门评论 */
     async getHotComment() {
       if (this.hotList.length !== 0) return
-      const { data: res } = await getHotComment(this.$route.params.id, 2, 10)
+      const { data: res } = await getHotComment(this.id, this.type, 5)
       if (res.code !== 200) return
       console.log(res.hotComments)
       this.hotList = res.hotComments
     },
     /* 获取最新评论 */
     async getNewComment() {
-      const { data: res } = await getPlayListComment(this.newQuery)
+      const { data: res } = await getNewComment(this.newQuery)
       if (res.code !== 200) return
       console.log(res)
       this.newCount = res.total
@@ -212,7 +227,18 @@ export default {
       this.commentInfo.content = '回复' + info.name + ':'
       this.commentInfo.commentId = info.cid
       this.commentInfo.t = 2
-      this.toTopAnimation(this.$refs.areaWrapRef.offsetTop, 200)
+      if (this.type === 0)
+        this.toTopAnimation(
+          this.$refs.areaWrapRef.offsetTop - 80,
+          document.querySelector('.el-drawer__body'),
+          600
+        )
+      else
+        this.toTopAnimation(
+          this.$refs.areaWrapRef.offsetTop - 10,
+          document.querySelector('.main-right'),
+          200
+        )
     },
     /* 页码变化的回调 */
     handleCurrentChange(val) {
@@ -220,19 +246,29 @@ export default {
       this.currentPage = val
       this.newQuery.offset = (val - 1) * 20
       this.getNewComment()
-      this.toTopAnimation(this.$refs.newListRef.offsetTop - 20, 600)
+      if (this.type === 0)
+        this.toTopAnimation(
+          this.$refs.newListRef.offsetTop - 80,
+          document.querySelector('.el-drawer__body'),
+          600
+        )
+      else
+        this.toTopAnimation(
+          this.$refs.newListRef.offsetTop - 20,
+          document.querySelector('.main-right'),
+          600
+        )
     },
     /* 滚动条由下至上的动画js动画 */
-    toTopAnimation(target, ms = 500) {
+    toTopAnimation(target, scrollDom, ms = 500) {
       let start
-      const main = document.querySelector('.main-right')
-      let begin = main.scrollTop
+      let begin = scrollDom.scrollTop
       let size = (begin - target) / ms
       const step = (timestamp) => {
         if (start === undefined) start = timestamp
         const elapsed = timestamp - start
         /* 防止上滑过头 */
-        main.scrollTop = Math.max(begin - size * elapsed, target)
+        scrollDom.scrollTop = Math.max(begin - size * elapsed, target)
         if (elapsed < ms) {
           // 在.5秒后停止动画
           window.requestAnimationFrame(step)
