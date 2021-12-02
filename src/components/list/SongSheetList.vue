@@ -87,4 +87,12 @@ export default {
     opacity: 1;
   }
 }
+@media screen and(max-width:414px) {
+  .img-wrap{
+    .video-playcount{
+    display: none;
+  }
+  }
+  
+}
 </style>

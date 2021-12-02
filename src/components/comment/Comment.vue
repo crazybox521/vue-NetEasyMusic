@@ -37,7 +37,7 @@
     </div>
     <!-- 最新评论 -->
     <div ref="newListRef" class="hot-wrap mtop-20" v-if="newList.length !== 0">
-      <div class="font-16 font-bold">最新评论</div>
+      <div class="font-16 font-bold">最新评论({{newCount}})</div>
       <ComentItem
         v-for="item in newList"
         :key="item.commentId"

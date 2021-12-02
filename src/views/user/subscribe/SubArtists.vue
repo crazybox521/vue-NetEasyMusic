@@ -1,10 +1,10 @@
 <template>
-<!-- 收藏的歌手 -->
-  <div class="sub-album">
+  <!-- 收藏的歌手 -->
+  <div class="sub-artists">
     <div class="subartists-head">
       <div>
         <span class="font-bold">收藏的歌手</span
-        ><span class="font-12" style="color:#cfcfcf">({{ count }})</span>
+        ><span class="font-12" style="color: #cfcfcf">({{ count }})</span>
       </div>
       <div class="detail-search">
         <el-input
@@ -16,30 +16,27 @@
       </div>
     </div>
     <div class="mtop-20">
-      <ul class="sub-list">
-        <li
-          class="sub-item pointer"
-          v-for="item in subAlbumList"
-          :key="item.id"
-          @click="toArtistDetail(item.id)"
-        >
-          <img
-            class="sub-img mleft-10"
-            :src="item.picUrl + '?param=100y100'"
-            alt=""
-          />
-          <div class="sub-title mleft-10">{{ item.name }}</div>
-          <div class="sub-author font-12">专辑：{{ item.albumSize }}</div>
-          <div class="sub-num font-12">MV：{{ item.mvSize }}</div>
-        </li>
-      </ul>
+      <InfoList :list="subList" v-slot="{ item }" @clickitem="toArtistDetail">
+        <img
+          class="sub-img mleft-10"
+          :src="item.picUrl + '?param=100y100'"
+          alt=""
+        />
+        <div class="sub-title mleft-10">{{ item.name }}</div>
+        <div class="sub-author font-12">专辑：{{ item.albumSize }}</div>
+        <div class="sub-num font-12">MV：{{ item.mvSize }}</div>
+      </InfoList>
     </div>
   </div>
 </template>
 
 <script>
+import InfoList from '@/components/list/InfoList.vue'
 import { getSubArtists } from '@/api/api_sub'
 export default {
+  components: {
+    InfoList
+  },
   data() {
     return {
       list: [],
@@ -49,15 +46,15 @@ export default {
     }
   },
   computed: {
-    subAlbumList() {
+    subList() {
       return this.list.filter((item) => item.name.match(this.key))
     }
   },
   created() {
-    this.getSubAlbum()
+    this.getSubArt()
   },
   methods: {
-    async getSubAlbum() {
+    async getSubArt() {
       const { data: res } = await getSubArtists()
       if (res.code !== 200) return
       this.list = res.data
@@ -75,36 +72,5 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.sub-item {
-  display: flex;
-  height: 100px;
-  align-items: center;
-  &:nth-child(odd) {
-    background-color: #f9f9f9;
-  }
-  &:nth-child(even) {
-    background-color: #ffffff;
-  }
-  &:hover {
-    background-color: #f0f1f2;
-  }
-  .sub-img {
-    height: 60px;
-    width: 60px;
-    border-radius: 4px;
-  }
-  .sub-title {
-    flex: 1;
-  }
-  .sub-author {
-    width: 180px;
-    color: #c3c3c4;
-  }
-  .sub-num {
-    width: 160px;
-    text-align: center;
-    color: #c3c3c4;
-  }
 }
 </style>

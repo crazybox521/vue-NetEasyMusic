@@ -264,7 +264,7 @@ export default {
 .mtop-60:nth-child(1) {
   margin-top: 10px;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 532px) {
   .artist-info .img-h {
     display: none;
   }

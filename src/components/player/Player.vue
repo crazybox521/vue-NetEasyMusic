@@ -110,7 +110,7 @@
             </div>
           </div>
         </div>
-        <div class="comment-view mtop-20">
+        <div class="comment-view mtop-50">
            <Comment :active="true" :type="0" :id="this.currenMusicId"></Comment>
         </div>
       </div>
