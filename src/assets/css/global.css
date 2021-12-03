@@ -108,7 +108,8 @@
 .mleft-300 {
     margin-left: 300px;
 }
-.mright-5{
+
+.mright-5 {
     margin-right: 5px;
 }
 
@@ -196,25 +197,28 @@
 /* 全局滚动条宽度 */
 ::-webkit-scrollbar {
     /* 对垂直有效 */
-    width: 8px;
+    width: 6px;
     /* 水平宽度 */
-    height: 8px;
+    height: 6px;
 }
 
 @media screen and (max-width:768px) {
     ::-webkit-scrollbar {
-
         width: 2px;
-
         height: 1px;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 1px;
+        box-shadow: inset 0 0 1px #e0e0e0;
+        background-color: #e0e0e0;
     }
 }
 
 /* 滚动条内滑块 */
 ::-webkit-scrollbar-thumb {
-    border-radius: 7px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: #E8E8E8;
+    border-radius: 3px;
+    box-shadow: inset 0 0 3px #e0e0e0;
+    background-color: #e0e0e0;
 }
 
 
@@ -224,7 +228,8 @@
     justify-content: space-around;
     align-items: center;
 }
-.flex_center{
+
+.flex_center {
     display: flex;
     justify-content: center;
     align-items: center;

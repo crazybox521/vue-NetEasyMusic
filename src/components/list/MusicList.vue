@@ -12,7 +12,7 @@
   >
     <el-table-column type="index" width="50">
       <template v-slot="scope">
-        <span style="color: red" v-if="currenMusicId == scope.row.id"
+        <span class="active-color" v-if="currenMusicId == scope.row.id"
           ><i class="iconfont icon-sound"></i
         ></span>
         <span v-else style="color: #c3c3db">{{ scope.$index + 1 }}</span>
@@ -20,7 +20,7 @@
     </el-table-column>
     <el-table-column prop="name" label="音乐标题" show-overflow-tooltip>
       <template v-slot="{ row }">
-        <span>{{ row.name }}</span>
+        <span :class="{'active-color':currenMusicId ==row.id}">{{ row.name }}</span>
         <span style="color:#969697;" v-if="row.alia.length!==0">({{row.alia[0]}})</span>
         <span v-if="row.fee == 1" class="vip-tag">VIP</span>
         <span
@@ -104,5 +104,8 @@ export default {
   height: 14px;
   padding: 0 2px;
   line-height: 1;
+}
+.active-color{
+  color:#ec4141
 }
 </style>
