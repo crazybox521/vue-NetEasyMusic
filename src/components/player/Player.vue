@@ -256,26 +256,19 @@ export default {
     },
     /* 获取图片信息 */
     getImgInfo() {
-      try {
+      if (this.musicList[this.currenIndex].al.picUrl) {
         this.imgInfo.imgUrl = this.musicList[this.currenIndex].al.picUrl
-        this.imgInfo.author = this.musicList[this.currenIndex].ar[0].name
-      } catch (error) {
-        this.imgInfo.imgUrl ='https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
-        this.imgInfo.author = this.musicList[this.currenIndex].artists[0].name
+      } else {
+        this.imgInfo.imgUrl =
+          'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
       }
+      this.imgInfo.author = this.musicList[this.currenIndex].ar[0].name
       this.imgInfo.name = this.musicList[this.currenIndex].name
       this.setHistory()
     },
     /* 获取歌曲时长 */
     getToltime() {
-      if (this.musicList[this.currenIndex].dt)
-        this.$store.commit('setTotalTime', this.musicList[this.currenIndex].dt)
-      else {
-        this.$store.commit(
-          'setTotalTime',
-          this.musicList[this.currenIndex].duration
-        )
-      }
+      this.$store.commit('setTotalTime', this.musicList[this.currenIndex].dt)
     },
     /* 下一首 */
     nextMusic() {

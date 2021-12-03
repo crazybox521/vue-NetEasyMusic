@@ -357,7 +357,9 @@ export default {
     },
     playMusic(music) {
       console.log(music)
-      this.$store.commit('setMusicList', [music])
+
+      const { duration: dt, artists: ar, album: al, id ,name} = music
+      this.$store.commit('setMusicList', [{ dt, ar, al, id ,name}])
       this.$store.commit('setCurrenMusicId', music.id)
       this.$store.commit('setPlayState', true)
       this.$store.commit('setCurrenIndex', 0)
