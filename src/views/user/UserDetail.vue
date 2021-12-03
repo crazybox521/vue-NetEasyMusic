@@ -10,7 +10,7 @@
         <div class="font-24 font-bold">{{ info.nickname }}</div>
         <div class="info-btn">
           <div>
-            <span class="font-14 level-wrap">Lv{{ level }}</span
+            <span class="font-12 level-wrap">Lv{{ level }}</span
             ><span class="mleft-10 font-14 sex-wrap">
               <i v-if="info.gender==1" style="color:#3da1d1"  class="el-icon-male"></i>
               <i v-else-if="info.gender==2" style="color:#ea5a95" class="el-icon-female"></i>
