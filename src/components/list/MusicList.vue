@@ -21,6 +21,7 @@
     <el-table-column prop="name" label="音乐标题" show-overflow-tooltip>
       <template v-slot="{ row }">
         <span>{{ row.name }}</span>
+        <span style="color:#969697;" v-if="row.alia.length!==0">({{row.alia[0]}})</span>
         <span v-if="row.fee == 1" class="vip-tag">VIP</span>
         <span
           v-if="row.mv !== 0"
@@ -38,9 +39,9 @@
       width="180"
     >
     </el-table-column>
-    <el-table-column prop="al.name" label="专辑名" show-overflow-tooltip>
+    <el-table-column prop="al.name" label="专辑名" width="300" show-overflow-tooltip>
     </el-table-column>
-    <el-table-column prop="dt" label="时长" width="180">
+    <el-table-column prop="dt" label="时长" width="120">
       <template v-slot="scope">
         {{ (scope.row.dt / 1000) | timeFormat }}
       </template>
