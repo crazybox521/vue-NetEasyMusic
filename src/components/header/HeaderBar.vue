@@ -358,8 +358,8 @@ export default {
     playMusic(music) {
       console.log(music)
 
-      const { duration: dt, artists: ar, album: al, id ,name} = music
-      this.$store.commit('setMusicList', [{ dt, ar, al, id ,name}])
+      const { duration: dt, artists: ar, album: al, id ,name,alias:alia,mvid:mv,fee} = music
+      this.$store.commit('setMusicList', [{ dt, ar, al, id ,name,alia,mv,fee}])
       this.$store.commit('setCurrenMusicId', music.id)
       this.$store.commit('setPlayState', true)
       this.$store.commit('setCurrenIndex', 0)
