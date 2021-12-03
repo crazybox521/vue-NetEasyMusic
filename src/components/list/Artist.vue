@@ -61,7 +61,7 @@ p {
   text-align: center;
 }
 
-@media screen and(max-width:414px) {
+@media screen and(max-width:415px) {
   .img-list {
   .img-item {
     margin-bottom: 30px;

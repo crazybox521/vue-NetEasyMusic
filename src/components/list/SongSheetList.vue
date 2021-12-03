@@ -50,8 +50,8 @@ export default {
   flex-wrap: wrap;
   .song-sheet-item {
     margin-bottom: 30px;
-    width: 19%;
-    margin-right: 1%;
+    width: 18%;
+    margin-right: 2%;
   }
 }
 .img-wrap {
@@ -87,7 +87,7 @@ export default {
     opacity: 1;
   }
 }
-@media screen and(max-width:414px) {
+@media screen and(max-width:415px) {
   .img-wrap {
     .video-playcount {
       display: none;

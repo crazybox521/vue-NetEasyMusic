@@ -4,6 +4,7 @@
     <div class="area-wrap" ref="areaWrapRef">
       <textarea
         class="text-area"
+        ref="textAreaRef"
         v-model="commentInfo.content"
         @keyup.enter="sendComment"
       ></textarea>
@@ -37,7 +38,7 @@
     </div>
     <!-- 最新评论 -->
     <div ref="newListRef" class="hot-wrap mtop-20" v-if="newList.length !== 0">
-      <div class="font-16 font-bold">最新评论({{newCount}})</div>
+      <div class="font-16 font-bold">最新评论({{ newCount }})</div>
       <ComentItem
         v-for="item in newList"
         :key="item.commentId"
@@ -162,11 +163,17 @@ export default {
       console.log('send')
       const { data: res } = await sendComment(this.commentInfo)
       if (res.code !== 200) return
+      this.$message.success('发送成功')
       console.log(res)
       this.commentInfo.content = ''
       this.commentInfo.t = 1
       this.commentInfo.commentId = 0
-      this.getNewComment()
+      console.log('刷新新列表')
+      /* 当前在第一页的话，过500ms再请求更新最新列表，不然会出错 */
+      if (this.newQuery.offset === 0)
+        window.setTimeout(() => {
+          this.getNewComment()
+        }, 500)
     },
     toUserDetail(id) {
       this.$router.push('/userdetail/' + id)
@@ -239,6 +246,9 @@ export default {
           document.querySelector('.main-right'),
           200
         )
+        this.$nextTick(() => {
+          this.$refs.textAreaRef.focus()
+        })
     },
     /* 页码变化的回调 */
     handleCurrentChange(val) {

@@ -206,7 +206,7 @@ export default {
     }
   }
 }
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 415px) {
   .info-btn {
     display: flex;
     flex-wrap: wrap;
