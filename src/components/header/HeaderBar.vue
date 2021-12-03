@@ -21,11 +21,12 @@
         placeholder="搜索"
         v-model="keywords"
         @change="toSearch"
+        @input="handleInput"
         ref="inputRef"
         clearable
         @focus="getHotSearch"
-        @blur="showInfoTip = false"
         prefix-icon="el-icon-search"
+        @blur="showInfoTip = false"
       ></el-input>
       <transition name="el-fade-in">
         <!-- 热搜及搜索建议 -->
@@ -43,6 +44,7 @@
                   class="btn btn-white his-item"
                   v-for="val in historySearchList"
                   :key="val"
+                  @click="clickHot(val)"
                 >
                   {{ val }}
                 </button>
@@ -82,6 +84,58 @@
                     class="el-icon-arrow-right"
                   ></i>
                 </button>
+                <SuggestList v-if="showAlbum">
+                  <template #title> 专辑 </template>
+                  <template #item>
+                    <div
+                      v-for="al in suggestInfo.albums"
+                      :key="al.id"
+                      class="item pointer text-hidden"
+                      @click="toAlbumDetail(al.id)"
+                    >
+                      {{ al.name }} - {{ al.artist.name }}
+                    </div>
+                  </template>
+                </SuggestList>
+                <SuggestList v-if="showArtist">
+                  <template #title> 歌手 </template>
+                  <template #item>
+                    <div
+                      v-for="ar in suggestInfo.artists"
+                      :key="ar.id"
+                      class="item pointer text-hidden"
+                      @click="toArtistDetail(ar.id)"
+                    >
+                      {{ ar.name }}
+                    </div>
+                  </template>
+                </SuggestList>
+                <SuggestList v-if="showMusic">
+                  <template #title> 单曲 </template>
+                  <template #item>
+                    <div
+                      v-for="s in suggestInfo.songs"
+                      :key="s.id"
+                      class="item pointer text-hidden"
+                      @click="playMusic(s)"
+                    >
+                      {{ s.name }} - {{ s.artists[0].name }}
+                    </div>
+                  </template>
+                </SuggestList>
+                <SuggestList v-if="showPlaylist">
+                  <template #title> 歌单 </template>
+                  <template #item>
+                    <div
+                      v-for="p in suggestInfo.playlists"
+                      :key="p.id"
+                      class="item pointer text-hidden"
+                      @click="toPlayListDetail(p.id)"
+                    >
+                      {{ p.name }}
+                    </div>
+                  </template>
+                </SuggestList>
               </div>
             </div>
           </div>
@@ -104,8 +158,10 @@
 <script>
 import { mapState } from 'vuex'
 import { getAcount, logout } from '@/api/api_user'
-import { getHotSearch } from '@/api/api_other'
+import { getHotSearch, getSuggest } from '@/api/api_other'
+import SuggestList from '@/components/list/SuggestList'
 export default {
+  components: { SuggestList },
   data() {
     return {
       keywords: '',
@@ -113,7 +169,8 @@ export default {
       info: {},
       showInfoTip: false,
       hotList: [],
-      historySearchList: []
+      historySearchList: [],
+      suggestInfo: {}
     }
   },
   computed: {
@@ -123,6 +180,18 @@ export default {
     },
     avatarUrl() {
       return this.info ? this.info.avatarUrl : ''
+    },
+    showMusic() {
+      return Object.hasOwnProperty.call(this.suggestInfo, 'songs')
+    },
+    showAlbum() {
+      return Object.hasOwnProperty.call(this.suggestInfo, 'albums')
+    },
+    showArtist() {
+      return Object.hasOwnProperty.call(this.suggestInfo, 'artists')
+    },
+    showPlaylist() {
+      return Object.hasOwnProperty.call(this.suggestInfo, 'playlists')
     }
   },
   created() {
@@ -139,6 +208,26 @@ export default {
       }
       this.setHistory(this.keywords)
     },
+    /* 获取搜索建议 */
+    async getSuggest(val) {
+      if (val == '') return
+      console.log('object')
+      const { data: res } = await getSuggest({ keywords: val })
+      if (res.code !== 200) return
+      if (Object.keys(res.result).length !== 0) this.suggestInfo = res.result
+      console.log(res)
+    },
+    handleInput(val) {
+      console.log(val)
+      /* input事件防抖 */
+      if (this.timer) {
+        window.clearTimeout(this.timer)
+      }
+      this.timer = window.setTimeout(() => {
+        console.log(val, 'timer')
+        this.getSuggest(val)
+      }, 500)
+    },
     /* 获取热搜及搜索记录 */
     async getHotSearch() {
       this.showInfoTip = true
@@ -147,6 +236,8 @@ export default {
       if (res.code !== 200) return
       this.hotList = res.data
     },
+
+    /* 点击热搜 */
     clickHot(val) {
       if (val !== '') {
         this.keywords = val
@@ -164,13 +255,17 @@ export default {
     /* 更新搜索历史 */
     setHistory(val) {
       if (val) {
+        if (this.historySearchList.findIndex((item) => item == val) !== -1)
+          return
         this.historySearchList.unshift(val)
+        this.historySearchList = this.historySearchList.slice(0, 5)
         window.localStorage.setItem(
           'search',
           JSON.stringify(this.historySearchList)
         )
       }
     },
+    /* 清空历史 */
     clearHis() {
       this.$confirm('确认清空历史记录吗?', '提示', {
         confirmButtonText: '确定',
@@ -244,6 +339,28 @@ export default {
             message: '已取消'
           })
         })
+    },
+    toAlbumDetail(id) {
+      if (typeof id === 'number') {
+        this.$router.push('/albumdetail/' + id)
+      }
+    },
+    toPlayListDetail(id) {
+      if (typeof id === 'number') {
+        this.$router.push('/playlistdetail/' + id)
+      }
+    },
+    toArtistDetail(id) {
+      if (typeof id === 'number') {
+        this.$router.push('/artistdetail/' + id)
+      }
+    },
+    playMusic(music) {
+      console.log(music)
+      this.$store.commit('setMusicList', [music])
+      this.$store.commit('setCurrenMusicId', music.id)
+      this.$store.commit('setPlayState', true)
+      this.$store.commit('setCurrenIndex', 0)
     }
   }
 }
@@ -283,7 +400,7 @@ export default {
     width: 340px;
     min-height: 300px;
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
     border-radius: 8px;
     box-shadow: 0 1px 4px #dddddd;
     background-color: #fff;
@@ -301,7 +418,9 @@ export default {
     height: 50px;
     display: flex;
     align-items: center;
-
+    &:hover {
+      background-color: #f2f2f2;
+    }
     .item-index {
       color: #c2c2c2;
       width: 40px;
@@ -326,6 +445,10 @@ export default {
     font-size: 12px;
     height: 26px;
   }
+}
+.search-btn-wrap {
+  height: 30px;
+  line-height: 30px;
 }
 .login-info {
   max-width: 4rem;

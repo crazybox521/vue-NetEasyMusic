@@ -29,8 +29,8 @@ Vue.use(ElementUI)
     Notification,
     Message,
     Icon
-} from "element-ui"; */
-/* Vue.use(Table)
+} from "element-ui";
+Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Slider)
 Vue.use(Drawer)

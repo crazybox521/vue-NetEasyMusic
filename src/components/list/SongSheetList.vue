@@ -9,7 +9,7 @@
     >
       <div class="img-wrap pointer">
         <img
-          class="img img-radius-4"
+          class="img img-radius-8"
           :src="
             item.picUrl
               ? item.picUrl + '?param=300y300'

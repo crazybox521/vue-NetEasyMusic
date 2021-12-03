@@ -111,7 +111,7 @@
           </div>
         </div>
         <div class="comment-view mtop-50">
-           <Comment :active="true" :type="0" :id="this.currenMusicId"></Comment>
+          <Comment :active="true" :type="0" :id="this.currenMusicId"></Comment>
         </div>
       </div>
     </el-drawer>
@@ -128,13 +128,13 @@
 <script>
 import { mapState } from 'vuex'
 import { getMusicUrl, getLyric } from '@/api/api_music'
-import {downloadMusic} from '@/plugins/get'
+import { downloadMusic } from '@/plugins/get'
 import notifyMixin from '@/mixins/notifyMixin'
 import Lyric from '@/utils/lyric'
-import Comment from '@/components/comment/Comment.vue' 
+import Comment from '@/components/comment/Comment.vue'
 export default {
   mixins: [notifyMixin],
-  components:{Comment},
+  components: { Comment },
   data() {
     return {
       musicUrl: '', //音乐资源
@@ -256,14 +256,26 @@ export default {
     },
     /* 获取图片信息 */
     getImgInfo() {
-      this.imgInfo.imgUrl = this.musicList[this.currenIndex].al.picUrl
+      try {
+        this.imgInfo.imgUrl = this.musicList[this.currenIndex].al.picUrl
+        this.imgInfo.author = this.musicList[this.currenIndex].ar[0].name
+      } catch (error) {
+        this.imgInfo.imgUrl ='https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
+        this.imgInfo.author = this.musicList[this.currenIndex].artists[0].name
+      }
       this.imgInfo.name = this.musicList[this.currenIndex].name
-      this.imgInfo.author = this.musicList[this.currenIndex].ar[0].name
       this.setHistory()
     },
     /* 获取歌曲时长 */
     getToltime() {
-      this.$store.commit('setTotalTime', this.musicList[this.currenIndex].dt)
+      if (this.musicList[this.currenIndex].dt)
+        this.$store.commit('setTotalTime', this.musicList[this.currenIndex].dt)
+      else {
+        this.$store.commit(
+          'setTotalTime',
+          this.musicList[this.currenIndex].duration
+        )
+      }
     },
     /* 下一首 */
     nextMusic() {
@@ -609,8 +621,8 @@ export default {
       }
     }
   }
-  .play-view{
-    padding:0 10px;
+  .play-view {
+    padding: 0 10px;
   }
   .img-wrap {
     display: none;
