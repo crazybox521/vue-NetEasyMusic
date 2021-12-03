@@ -25,8 +25,8 @@ export default {}
 .item {
   box-sizing: border-box;
   padding: 0 30px;
-  line-height: 24px;
-  height: 24px;
+  line-height: 28px;
+  height: 28px;
   font-size: 12px;
   &:hover {
     background-color: #f2f2f2;
