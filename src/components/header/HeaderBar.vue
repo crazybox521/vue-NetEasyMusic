@@ -1,11 +1,9 @@
 <template>
   <!-- 头部工具栏区域组件 -->
   <div class="header-bar">
-    <img
-      @click="toHomePage"
-      class="img-h pointer"
-      src="../../assets/img/logo.png"
-    />
+    <div class="logo-wrap pointer" @click="toHomePage">
+      <i class="iconfont icon-logView"></i>
+    </div>
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
         <i class="iconfont icon-arrow-left-bold"></i>
@@ -25,8 +23,8 @@
         ref="inputRef"
         clearable
         @focus="getHotSearch"
-        prefix-icon="el-icon-search"
         @blur="showInfoTip = false"
+        prefix-icon="el-icon-search"
       ></el-input>
       <transition name="el-fade-in">
         <!-- 热搜及搜索建议 -->
@@ -41,7 +39,7 @@
               </div>
               <div class="his-wrap">
                 <button
-                  class="btn btn-white his-item"
+                  class="btn btn-white his-item font-12"
                   v-for="val in historySearchList"
                   :key="val"
                   @click="clickHot(val)"
@@ -84,69 +82,86 @@
                     class="el-icon-arrow-right"
                   ></i>
                 </button>
-                <SuggestList v-if="showAlbum">
-                  <template #title> 专辑 </template>
-                  <template #item>
-                    <div
-                      v-for="al in suggestInfo.albums"
-                      :key="al.id"
-                      class="item pointer text-hidden"
-                      @click="toAlbumDetail(al.id)"
-                    >
-                      {{ al.name }} - {{ al.artist.name }}
-                    </div>
-                  </template>
-                </SuggestList>
-                <SuggestList v-if="showArtist">
-                  <template #title> 歌手 </template>
-                  <template #item>
-                    <div
-                      v-for="ar in suggestInfo.artists"
-                      :key="ar.id"
-                      class="item pointer text-hidden"
-                      @click="toArtistDetail(ar.id)"
-                    >
-                      {{ ar.name }}
-                    </div>
-                  </template>
-                </SuggestList>
-                <SuggestList v-if="showMusic">
-                  <template #title> 单曲 </template>
-                  <template #item>
-                    <div
-                      v-for="s in suggestInfo.songs"
-                      :key="s.id"
-                      class="item pointer text-hidden"
-                      @click="playMusic(s)"
-                    >
-                      {{ s.name }} - {{ s.artists[0].name }}
-                    </div>
-                  </template>
-                </SuggestList>
-                <SuggestList v-if="showPlaylist">
-                  <template #title> 歌单 </template>
-                  <template #item>
-                    <div
-                      v-for="p in suggestInfo.playlists"
-                      :key="p.id"
-                      class="item pointer text-hidden"
-                      @click="toPlayListDetail(p.id)"
-                    >
-                      {{ p.name }}
-                    </div>
-                  </template>
-                </SuggestList>
               </div>
+              <SuggestList v-if="showMusic">
+                <template #title>
+                  <i class="iconfont icon-yinle font-16"></i
+                  ><span class="mleft-10">单曲</span>
+                </template>
+                <template #item>
+                  <div
+                    v-for="s in suggestInfo.songs"
+                    :key="s.id"
+                    class="item pointer text-hidden"
+                    @click="playMusic(s)"
+                  >
+                    {{ s.name }} - {{ s.artists[0].name }}
+                  </div>
+                </template>
+              </SuggestList>
+              <SuggestList v-if="showAlbum">
+                <template #title>
+                  <i class="iconfont icon-zhuanji font-16"></i
+                  ><span class="mleft-10">专辑</span>
+                </template>
+                <template #item>
+                  <div
+                    v-for="al in suggestInfo.albums"
+                    :key="al.id"
+                    class="item pointer text-hidden"
+                    @click="toAlbumDetail(al.id)"
+                  >
+                    {{ al.name }} - {{ al.artist.name }}
+                  </div>
+                </template>
+              </SuggestList>
+              <SuggestList v-if="showArtist">
+                <template #title
+                  ><i class="el-icon-user font-16"></i
+                  ><span class="mleft-10">歌手</span>
+                </template>
+                <template #item>
+                  <div
+                    v-for="ar in suggestInfo.artists"
+                    :key="ar.id"
+                    class="item pointer text-hidden"
+                    @click="toArtistDetail(ar.id)"
+                  >
+                    {{ ar.name }}
+                  </div>
+                </template>
+              </SuggestList>
+
+              <SuggestList v-if="showPlaylist">
+                <template #title>
+                  <i class="iconfont icon-gedan font-16"></i
+                  ><span class="mleft-10">歌单</span>
+                </template>
+                <template #item>
+                  <div
+                    v-for="p in suggestInfo.playlists"
+                    :key="p.id"
+                    class="item pointer text-hidden"
+                    @click="toPlayListDetail(p.id)"
+                  >
+                    {{ p.name }}
+                  </div>
+                </template>
+              </SuggestList>
             </div>
           </div>
         </div>
       </transition>
     </div>
-    <div class="login-info mleft-12 pointer" @click="loginView">
-      <el-avatar icon="el-icon-user-solid" :src="avatarUrl"></el-avatar>
+    <div class="avatar-wrap mleft-12 pointer" @click="loginView">
+      <el-avatar
+        :size="30"
+        icon="el-icon-user-solid"
+        :src="avatarUrl"
+      ></el-avatar>
     </div>
     <div
-      class="login-info mleft-10 font-14 text-hidden"
+      class="login-info mleft-10 font-12 text-hidden"
       :class="{ pointer: isLogin }"
       @click="doLogout"
     >
@@ -174,6 +189,7 @@ export default {
     }
   },
   computed: {
+    /* 登录相关信息 */
     ...mapState(['isLogin']),
     name() {
       return this.info ? this.info.nickname : '未登录'
@@ -181,6 +197,7 @@ export default {
     avatarUrl() {
       return this.info ? this.info.avatarUrl : ''
     },
+    /* 搜索建议相关状态 */
     showMusic() {
       return Object.hasOwnProperty.call(this.suggestInfo, 'songs')
     },
@@ -309,6 +326,7 @@ export default {
         this.openTip()
       }
     },
+    /* 未登录的提示 */
     openTip() {
       if (!this.isLogin)
         this.$notify({
@@ -355,11 +373,22 @@ export default {
         this.$router.push('/artistdetail/' + id)
       }
     },
+    /* 处理搜索建议中单曲数据格式。并播放 */
     playMusic(music) {
       console.log(music)
-
-      const { duration: dt, artists: ar, album: al, id ,name,alias:alia,mvid:mv,fee} = music
-      this.$store.commit('setMusicList', [{ dt, ar, al, id ,name,alia,mv,fee}])
+      const {
+        duration: dt,
+        artists: ar,
+        album: al,
+        id,
+        name,
+        alias: alia,
+        mvid: mv,
+        fee
+      } = music
+      this.$store.commit('setMusicList', [
+        { dt, ar, al, id, name, alia, mv, fee }
+      ])
       this.$store.commit('setCurrenMusicId', music.id)
       this.$store.commit('setPlayState', true)
       this.$store.commit('setCurrenIndex', 0)
@@ -374,6 +403,13 @@ export default {
   display: flex;
   align-items: center;
   color: #ffffff;
+}
+.logo-wrap {
+  height: 60px;
+  line-height: 60px;
+  .icon-logView {
+    font-size: 48px;
+  }
 }
 .btn-history {
   margin-left: 100px;
@@ -392,16 +428,19 @@ export default {
     cursor: pointer;
   }
 }
+/* 搜索框容器 */
 .search-input {
   margin-left: 10px;
   position: relative;
+  /* 搜索建议等的弹出层 */
   .search-info_tip {
     position: absolute;
     top: 40px;
     left: 0;
     width: 340px;
-    min-height: 300px;
-    max-height: 400px;
+    min-height: 340px;
+    max-height: 420px;
+    transition: all 0.5s;
     overflow-y: auto;
     border-radius: 8px;
     box-shadow: 0 1px 4px #dddddd;
@@ -410,10 +449,12 @@ export default {
     color: #000;
   }
 }
+/* 标题 */
 .hot-title {
   color: #666666;
   margin: 10px auto 10px 10px;
 }
+/* 热搜区域 */
 .hot-search {
   margin-top: 20px;
   .hot-item {
@@ -438,34 +479,35 @@ export default {
     }
   }
 }
+/* 历史记录区域 */
 .his-wrap {
   padding: 0 18px;
   display: flex;
   flex-wrap: wrap;
   .his-item {
     margin: 0 10px 10px 0;
-    font-size: 12px;
     height: 26px;
   }
 }
+/* 搜索建议顶部按钮区域 */
 .search-btn-wrap {
   height: 30px;
   line-height: 30px;
 }
+
 .login-info {
   max-width: 4rem;
 }
 @media screen and (max-width: 768px) {
   .btn-history {
     margin-left: 10px;
-    /* display: none; */
     .btn-circle {
       &:nth-child(2) {
         display: none;
       }
     }
   }
-  .img-h {
+  .logo-wrap {
     display: none;
   }
   .search-input {
