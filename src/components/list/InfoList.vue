@@ -3,10 +3,11 @@
   <ul class="info-list">
     <li
       class="info-item pointer"
-      v-for="item in list"
+      v-for="(item, index) in list"
       :key="item.id"
       @click="$emit('clickitem', item)"
     >
+      <slot name="index" :index="index"></slot>
       <slot name="img" :item="item">
         <img class="sub-img mleft-10" :src="item.picUrl + '?param=100y100'" />
       </slot>
@@ -15,10 +16,15 @@
           {{ item.name }}
         </slot>
       </div>
-      <div class="sub-author font-12">
-        <slot name="author" :item="item"></slot>
+      <div class="sub-item font-12">
+        <slot name="item1" :item="item"></slot>
       </div>
-      <div class="sub-num font-12"><slot name="num" :item="item"></slot></div>
+      <div class="sub-item font-12">
+        <slot name="item2" :item="item"></slot>
+      </div>
+      <div class="sub-item sub-final font-12">
+        <slot name="item3" :item="item"></slot>
+      </div>
     </li>
   </ul>
 </template>
@@ -58,13 +64,17 @@ export default {
   min-width: 100px;
   flex: 1;
 }
-.sub-author {
-  width: 180px;
+.sub-item {
+  width: 150px;
   color: #c3c3c4;
 }
-.sub-num {
-  width: 160px;
-  text-align: left;
-  color: #c3c3c4;
+.sub-final {
+  width: 100px;
+  text-align: center;
+}
+.sub-index {
+  width: 50px;
+  text-align: center;
+  color: #cfcfdf;
 }
 </style>

@@ -32,7 +32,7 @@
         <template #title="{ item }">
           {{ item.name }}
         </template>
-        <template #author="{ item }">
+        <template #item1="{ item }">
           <span style="color: #676767">{{ item.artist.name }}</span>
         </template>
       </InfoList>
@@ -64,8 +64,8 @@
         <template #title="{ item }">
           {{ item.name }}
         </template>
-        <template #author="{ item }"> {{ item.trackCount }} 首 </template>
-        <template #num="{ item }">
+        <template #item1="{ item }"> {{ item.trackCount }} 首 </template>
+        <template #item2="{ item }">
           by <span style="color: #676767">{{ item.creator.nickname }}</span>
         </template>
       </InfoList>

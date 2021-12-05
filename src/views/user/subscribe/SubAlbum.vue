@@ -23,12 +23,12 @@
         <template #title="{ item }">
           {{ item.name }}
         </template>
-        <template #author="{ item }">
+        <template #item1="{ item }">
           <span v-for="(ar, index) in item.artists" :key="index"
             >{{ ar.name }}
           </span>
         </template>
-        <template #num="{ item }"> {{ item.size }} 首 </template>
+        <template #item2="{ item }"> {{ item.size }} 首 </template>
       </InfoList>
     </div>
   </div>

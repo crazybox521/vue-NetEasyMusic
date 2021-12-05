@@ -23,8 +23,8 @@
         <template #title="{ item }">
           {{ item.name }}
         </template>
-        <template #author="{ item }"> 专辑： {{ item.albumSize }} </template>
-        <template #num="{ item }"> MV：{{ item.mvSize }} </template>
+        <template #item1="{ item }"> 专辑： {{ item.albumSize }} </template>
+        <template #item2="{ item }"> MV：{{ item.mvSize }} </template>
       </InfoList>
     </div>
   </div>

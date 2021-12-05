@@ -66,7 +66,7 @@
         </li>
       </ul>
     </div>
-    <el-skeleton class="mtop-10" v-show="isLoading" :rows="8" animated />
+    <el-skeleton class="mtop-10" v-show="isLoading" :rows="6" animated />
     <SongSheetList v-show="!isLoading" :playlist="playList"></SongSheetList>
     <div class="flex_center">
       <el-pagination

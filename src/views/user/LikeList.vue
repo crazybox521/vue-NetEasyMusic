@@ -56,9 +56,7 @@
       </div>
       <MusicList ref="listRef" :list="list"></MusicList>
     </template>
-    <template v-else>
-      <el-skeleton :rows="14" animated />
-    </template>
+    <el-skeleton v-else :rows="6" animated />
   </div>
 </template>
 
