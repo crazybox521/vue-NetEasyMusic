@@ -6,7 +6,7 @@
       <!-- 歌单图片 -->
       <div class="detail-img-wrapper">
         <img
-          class="img img-radius-8 img-outline"
+          class="img img-radius-8 img-border"
           :src="info.coverImgUrl + '?param=300y300'"
         />
       </div>

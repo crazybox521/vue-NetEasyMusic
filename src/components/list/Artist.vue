@@ -14,7 +14,7 @@
         @click="toArtistView(item.id)"
       >
         <img
-          class="img img-radius-8 pointer img-outline"
+          class="img img-radius-8 pointer img-border"
           :src="item.img1v1Url + '?param=200y200'"
         />
         <div class="text-hidden">

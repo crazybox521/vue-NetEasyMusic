@@ -1,7 +1,7 @@
 <template>
   <div class="artist-detail mtop-20">
     <div class="artist-info">
-      <img :src="imgUrl" class="img-h img-radius-8 img-outline" />
+      <img :src="imgUrl" class="img-h img-radius-8 img-border" />
       <div class="info">
         <h2 class="font-24 font-bold">{{ artistInfo.name }}</h2>
         <div class="info-btn">

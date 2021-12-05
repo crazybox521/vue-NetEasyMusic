@@ -50,7 +50,7 @@ export default {
   methods: {
     /* 路由跳转 */
     goTo(path) {
-      if (path == '/dingzhi' || path == '/zuixin') {
+      if (path == '/dingzhi') {
         this.notice()
         return
       }

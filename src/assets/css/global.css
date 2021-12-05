@@ -42,8 +42,9 @@
 .img-radius-8 {
     border-radius: 8px;
 }
-.img-outline{
-    outline: 1px solid #dddddd;
+.img-border{
+    box-sizing: border-box;
+    border: 1px solid #dddddd;
 }
 
 .circle {

@@ -14,3 +14,7 @@ export const getLikeIdList = (uid) => get('/likelist', { uid })
 
 /* 获取音乐详情 */
 export const getMusicListByIds = (ids) => get('/song/detail', { ids })
+
+/* 新歌速递 */
+//全部:0 华语:7 欧美:96 日本:8 韩国:16
+export const getTopMusic =(type)=>get('/top/song',{type})

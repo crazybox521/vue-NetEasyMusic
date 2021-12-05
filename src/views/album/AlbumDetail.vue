@@ -4,7 +4,7 @@
     <div class="detail-desc">
       <!-- 专辑图片 -->
       <div class="detail-img-wrapper">
-        <img class="img img-radius-4 img-outline" :src="imgUrl + '?param=300y300'" alt="" />
+        <img class="img img-radius-8 img-border" :src="imgUrl + '?param=300y300'" alt="" />
       </div>
       <!-- 专辑信息 -->
       <div class="detail-desc-info">

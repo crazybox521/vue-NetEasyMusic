@@ -6,7 +6,7 @@
         <template v-if="v.type === 1">
           <div class="mtop-10 img-wrap">
             <img
-              class="video-img pointer img-outline"
+              class="video-img pointer img-border"
               :src="v.data.coverUrl + '?param=300y170'"
               @click="toDetail(v.data.vid)"
             />

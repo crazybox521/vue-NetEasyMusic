@@ -5,7 +5,7 @@
       <li v-for="(nl, index) in list" :key="index">
         <div class="mtop-10 img-wrap">
           <img
-            class="video-img img-outline"
+            class="video-img img-border"
             :src="nl.cover + '?param=300y170'"
             @click="toDetail(nl.id)"
           />

@@ -24,7 +24,8 @@
               ></i>
             </span>
           </div>
-          <div>
+          <div v-if="isLogin&&profile.userId===userId">自己</div>
+          <div v-else>
             <button class="btn btn-white">
               <i class="el-icon-message"></i> 发私信
             </button>
@@ -79,6 +80,7 @@
 <script>
 import SongSheetList from '@/components/list/SongSheetList.vue'
 import { getUserDetail, getUserPlayList } from '@/api/api_user'
+import { mapState } from 'vuex'
 export default {
   components: { SongSheetList },
   data() {
@@ -100,7 +102,8 @@ export default {
     },
     subList() {
       return this.list.filter((item) => item.userId !== this.userId)
-    }
+    },
+    ...mapState(['profile','isLogin'])
   },
   watch: {
     '$route.params.id'() {

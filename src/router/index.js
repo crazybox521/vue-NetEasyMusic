@@ -13,6 +13,7 @@ const NotFound = () => import( /* webpackChunkName: "group-login" */ '../views/N
 const TopList = () => import( /* webpackChunkName: "group-homepage" */ '../views/home/homepageview/TopList.vue')
 const PlayList = () => import( /* webpackChunkName: "group-homepage" */ '../views/home/homepageview/PlayList.vue')
 const ArtistList = () => import( /* webpackChunkName: "group-homepage" */ '../views/home/homepageview/ArtistList.vue')
+const NewMusic = () => import( /* webpackChunkName: "group-homepage" */ '../views/home/homepageview/NewMusic.vue')
 /* 需登录后才能进入的页面 */
 const LikeList = () => import( /* webpackChunkName: "group-user" */ '../views/user/LikeList.vue')
 const RecommendSong = () => import( /* webpackChunkName: "group-user" */ '../views/user/RecommendSong.vue')
@@ -53,7 +54,9 @@ const routes = [
                     { path: "/personalrecom", component: PersonalRecom, },//个性推荐
                     { path: '/toplist', component: TopList },//排行榜
                     { path: '/playlist', component: PlayList },//歌单列表页
-                    { path: '/artistlist', component: ArtistList }//歌手页
+                    { path: '/artistlist', component: ArtistList },//歌手页
+                    {path:'/zuixin',component:NewMusic}
+
                 ],
             },
             /* 视频列表页 */
@@ -102,7 +105,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    document.title = '网易云音乐客户端PC版'
+    document.title = '网易云音乐客户端WEB版'
     if (to.meta.check === true) {
         if (store.state.isLogin === true) next()
         else Vue.prototype.$message.error('需要登录')
