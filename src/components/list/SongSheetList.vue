@@ -9,7 +9,7 @@
     >
       <div class="img-wrap pointer">
         <img
-          class="img img-radius-8"
+          class="img img-radius-8 img-outline"
           :src="
             item.picUrl
               ? item.picUrl + '?param=300y300'
@@ -56,9 +56,6 @@ export default {
 }
 .img-wrap {
   position: relative;
-  .img{
-    outline: 1px solid #dddddd;
-  }
   .video-playcount {
     color: #ffffff;
     position: absolute;

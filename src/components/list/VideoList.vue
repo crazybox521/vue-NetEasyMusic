@@ -6,7 +6,7 @@
         <template v-if="v.type === 1">
           <div class="mtop-10 img-wrap">
             <img
-              class="video-img pointer"
+              class="video-img pointer img-outline"
               :src="v.data.coverUrl + '?param=300y170'"
               @click="toDetail(v.data.vid)"
             />
@@ -104,7 +104,6 @@ export default {
   position: relative;
   .video-img {
     width: 100%;
-    outline: 1px solid #dddddd;
     border-radius: 4px;
   }
   .video-playcount {

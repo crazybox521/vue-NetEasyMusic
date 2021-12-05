@@ -3,7 +3,7 @@
   <div class="player">
     <!-- 歌曲信息 -->
     <div class="song-info">
-      <img class="pointer" :src="imgInfo.imgUrl" @click="openPlayView" />
+      <img class="pointer img-outline" :src="imgInfo.imgUrl" @click="openPlayView" />
       <div class="au-info">
         <div class="font-14 w-200 text-hidden">{{ imgInfo.name }}</div>
         <div class="font-12 w-200 text-hidden">{{ imgInfo.author }}</div>

@@ -14,7 +14,7 @@
         @click="toArtistView(item.id)"
       >
         <img
-          class="img img-radius-8 pointer"
+          class="img img-radius-8 pointer img-outline"
           :src="item.img1v1Url + '?param=200y200'"
         />
         <div class="text-hidden">
@@ -55,9 +55,6 @@ export default {
     margin-bottom: 30px;
     width: 19%;
     margin-right: 1%;
-    .img {
-      outline: 1px solid #dddddd;
-    }
   }
 }
 p {

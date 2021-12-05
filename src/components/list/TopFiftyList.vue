@@ -3,7 +3,7 @@
   <div class="top-fifty-list">
     <div class="list-container">
       <div style="width: 200px">
-        <img class="img img-radius-4" src="../../assets/img/top50.png" />
+        <img class="img img-radius-8" src="@/assets/img/top50.png" />
       </div>
       <div class="mleft-40 list-content">
         <div>

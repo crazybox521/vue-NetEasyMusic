@@ -5,7 +5,7 @@
       <li v-for="(nl, index) in list" :key="index">
         <div class="mtop-10 img-wrap">
           <img
-            class="video-img"
+            class="video-img img-outline"
             :src="nl.cover + '?param=300y170'"
             @click="toDetail(nl.id)"
           />
@@ -85,7 +85,6 @@ export default {
   position: relative;
   .video-img {
     width: 100%;
-    outline: 1px solid #dddddd;
     border-radius: 4px;
   }
   .video-playcount {

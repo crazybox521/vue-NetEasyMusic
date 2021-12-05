@@ -42,6 +42,9 @@
 .img-radius-8 {
     border-radius: 8px;
 }
+.img-outline{
+    outline: 1px solid #dddddd;
+}
 
 .circle {
     border-radius: 50%;

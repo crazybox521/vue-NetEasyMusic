@@ -8,7 +8,7 @@
         </div>
         <div class="mtop-10 img-wrap">
           <img
-            class="video-img"
+            class="video-img img-outline"
             :src="item.cover + '?param=300y170'"
             @click="toDetail(item.id)"
           />
