@@ -56,6 +56,9 @@ export default {
 }
 .img-wrap {
   position: relative;
+  .img{
+    outline: 1px solid #dddddd;
+  }
   .video-playcount {
     color: #ffffff;
     position: absolute;

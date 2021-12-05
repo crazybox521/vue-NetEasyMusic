@@ -10,7 +10,7 @@
         </div>
         <!-- 视频 -->
         <div class="video-wrap mtop-10">
-          <video controls :src="urlInfo.url">
+          <video controls :src="urlInfo.url" autoplay>
             您的浏览器不支持 video 标签。
           </video>
         </div>
@@ -18,8 +18,8 @@
         <div class="info-wrap">
           <div class="creator-info">
             <div class="img-wrap font-14">
-              <img :src="artist.img1v1Url" alt="" />
-              <span class="mleft-10">{{ artist.name }}</span>
+              <img class="pointer" :src="artist.img1v1Url" @click="toArtistDetail(artist.id)" />
+              <span class="mleft-10 pointer" @click="toArtistDetail(artist.id)">{{ artist.name }}</span>
             </div>
           </div>
           <div class="video-info">
@@ -160,6 +160,10 @@ export default {
     },
     toMv() {
       this.$router.push('/mv')
+    },
+    toArtistDetail(id){
+      if(typeof id ==='number')
+      this.$router.push('/artistdetail/'+id)
     }
   }
 }

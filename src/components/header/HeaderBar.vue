@@ -403,6 +403,7 @@ export default {
   display: flex;
   align-items: center;
   color: #ffffff;
+  position: relative;
 }
 .logo-wrap {
   height: 60px;
@@ -498,6 +499,7 @@ export default {
 .login-info {
   max-width: 4rem;
 }
+
 @media screen and (max-width: 768px) {
   .btn-history {
     margin-left: 10px;

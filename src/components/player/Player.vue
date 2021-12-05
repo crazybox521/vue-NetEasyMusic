@@ -4,10 +4,10 @@
     <!-- 歌曲信息 -->
     <div class="song-info">
       <img class="pointer" :src="imgInfo.imgUrl" @click="openPlayView" />
-      <ul class="au-info">
-        <li class="font-14 w-200 text-hidden">{{ imgInfo.name }}</li>
-        <li class="font-12 w-200 text-hidden">{{ imgInfo.author }}</li>
-      </ul>
+      <div class="au-info">
+        <div class="font-14 w-200 text-hidden">{{ imgInfo.name }}</div>
+        <div class="font-12 w-200 text-hidden">{{ imgInfo.author }}</div>
+      </div>
     </div>
     <!-- 播放器 -->
     <div class="player-wrapper">
@@ -208,6 +208,7 @@ export default {
         data: JSON.parse(window.localStorage.getItem('historylist'))
       })
     },
+    /* 更新历史播放 */
     setHistory() {
       this.$store.commit('setHistoryList', {
         type: 'unshift',
@@ -347,6 +348,7 @@ export default {
         this.imgInfo.name + '-' + this.imgInfo.author
       )
     },
+    /* 打开歌曲播放页 */
     openPlayView() {
       if (this.musicUrl == '') return
       this.PlayViewDrawer = true
