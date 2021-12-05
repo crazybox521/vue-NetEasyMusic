@@ -90,7 +90,11 @@
           <div class="music-author">{{ imgInfo.author }}</div>
           <div class="lyric-view">
             <div class="img-wrap">
-              <div class="changzhen" :class="{ 'changzhen-active': isPlay }">
+              <div
+                class="changzhen pointer"
+                :class="{ 'changzhen-active': isPlay }"
+                @click="pause"
+              >
                 <img src="../../assets/img/changzhen.png" alt="" />
               </div>
               <div class="changpian" :class="{ 'changpian-active': isPlay }">
@@ -111,7 +115,12 @@
           </div>
         </div>
         <div class="comment-view mtop-50">
-          <Comment :active="true" :type="0" :id="this.currenMusicId"></Comment>
+          <Comment
+            :active="true"
+            :type="0"
+            @closePlayView="PlayViewDrawer = false"
+            :id="this.currenMusicId"
+          ></Comment>
         </div>
       </div>
     </el-drawer>
@@ -221,11 +230,6 @@ export default {
     /* 暂停 */
     pause() {
       if (this.musicUrl.length === 0) return
-      if (this.isPlay === false) {
-        this.$refs.audioRef.play()
-      } else {
-        this.$refs.audioRef.pause()
-      }
       this.$store.commit('setPlayState', !this.isPlay)
     },
     openLyricView() {
@@ -235,7 +239,6 @@ export default {
     async getMusicUrl() {
       this.getImgInfo()
       this.getToltime()
-
       const { data: res } = await getMusicUrl(this.currenMusicId)
       console.log(res)
       if (res.code !== 200) return this.$message.error('播放失败')
@@ -377,7 +380,7 @@ export default {
     },
     /* 歌词行数变化的回调 */
     lyricHanlder(lineNum) {
-      if (!this.PlayViewDrawer) return
+      if (!this.PlayViewDrawer || !this.isPlay) return
       if (lineNum > 4) this.scrollAnimation(lineNum - 4)
     },
     /* 歌词滚动动画 */

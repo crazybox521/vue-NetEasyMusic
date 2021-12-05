@@ -93,7 +93,7 @@
                     v-for="s in suggestInfo.songs"
                     :key="s.id"
                     class="item pointer text-hidden"
-                    @click="playMusic(s)"
+                    @click="playMusic(s.id)"
                   >
                     {{ s.name }} - {{ s.artists[0].name }}
                   </div>
@@ -174,6 +174,7 @@
 import { mapState } from 'vuex'
 import { getAcount, logout } from '@/api/api_user'
 import { getHotSearch, getSuggest } from '@/api/api_other'
+import { getMusicListByIds } from '@/api/api_music.js'
 import SuggestList from '@/components/list/SuggestList'
 export default {
   components: { SuggestList },
@@ -374,22 +375,12 @@ export default {
       }
     },
     /* 处理搜索建议中单曲数据格式。并播放 */
-    playMusic(music) {
-      console.log(music)
-      const {
-        duration: dt,
-        artists: ar,
-        album: al,
-        id,
-        name,
-        alias: alia,
-        mvid: mv,
-        fee
-      } = music
-      this.$store.commit('setMusicList', [
-        { dt, ar, al, id, name, alia, mv, fee }
-      ])
-      this.$store.commit('setCurrenMusicId', music.id)
+    async playMusic(id) {
+      if (typeof id !== 'number') return
+      const { data: res } = await getMusicListByIds(id)
+      if (res.code !== 200 || res.songs.length === 0) return
+      this.$store.commit('setMusicList', res.songs)
+      this.$store.commit('setCurrenMusicId', res.songs[0].id)
       this.$store.commit('setPlayState', true)
       this.$store.commit('setCurrenIndex', 0)
     }

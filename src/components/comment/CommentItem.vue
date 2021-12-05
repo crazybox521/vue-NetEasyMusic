@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     toUserDetail(id) {
-      this.$router.push('/userdetail/' + id)
+      this.$emit('clickUser',id)
     },
     like(cid, liked) {
       this.$emit('like', { cid, liked,identy:this.identy })

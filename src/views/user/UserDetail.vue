@@ -1,5 +1,5 @@
 <template>
-<!-- 用户详情页 -->
+  <!-- 用户详情页 -->
   <div class="user-detail mtop-20">
     <!-- 头部 -->
     <div class="user-info">
@@ -12,8 +12,16 @@
           <div>
             <span class="font-12 level-wrap">Lv{{ level }}</span
             ><span class="mleft-10 font-14 sex-wrap">
-              <i v-if="info.gender==1" style="color:#3da1d1"  class="el-icon-male"></i>
-              <i v-else-if="info.gender==2" style="color:#ea5a95" class="el-icon-female"></i>
+              <i
+                v-if="info.gender == 1"
+                style="color: #3da1d1"
+                class="el-icon-male"
+              ></i>
+              <i
+                v-else-if="info.gender == 2"
+                style="color: #ea5a95"
+                class="el-icon-female"
+              ></i>
             </span>
           </div>
           <div>
@@ -92,6 +100,12 @@ export default {
     },
     subList() {
       return this.list.filter((item) => item.userId !== this.userId)
+    }
+  },
+  watch: {
+    '$route.params.id'() {
+      this.getDetail()
+      this.getUserPlayList()
     }
   },
   created() {

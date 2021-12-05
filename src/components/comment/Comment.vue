@@ -31,6 +31,7 @@
         identy="hot"
         @like="handleLike"
         @reply="handleReply"
+        @clickUser="toUserDetail"
       ></ComentItem>
       <div class="more-btn-wrap mtop-20">
         <button class="btn btn-white">更多精彩评论></button>
@@ -46,6 +47,7 @@
         identy="new"
         @like="handleLike"
         @reply="handleReply"
+        @clickUser="toUserDetail"
       ></ComentItem>
       <div class="flex_center" style="margin-top: 10px">
         <el-pagination
@@ -176,6 +178,11 @@ export default {
         }, 500)
     },
     toUserDetail(id) {
+      console.log(this.type);
+      if(typeof id !=='number') return
+      if(this.type===0)
+      this.$emit('closePlayView')
+      if(this.$route.path!=='/userdetail/' + id)
       this.$router.push('/userdetail/' + id)
     },
     /* 获取热门评论 */
