@@ -72,7 +72,7 @@ export default {
           this.form.phone,
           this.form.md5_password
         )
-        if (res.code !== 200) return this.$message.error('登录失败')
+        if (res.code !== 200) return this.$message.error('登录失败,请检查手机号和密码')
         this.$router.push('/personalrecom')
       })
     }

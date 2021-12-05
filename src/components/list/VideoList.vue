@@ -104,6 +104,7 @@ export default {
   position: relative;
   .video-img {
     width: 100%;
+    outline: 1px solid #dddddd;
     border-radius: 4px;
   }
   .video-playcount {

@@ -71,7 +71,6 @@ export default {
     li {
       width: 22%;
       margin-right: 3%;
-      height: 210px;
       .title-line {
         margin: 4px 0;
       }
@@ -86,6 +85,7 @@ export default {
   position: relative;
   .video-img {
     width: 100%;
+    outline: 1px solid #dddddd;
     border-radius: 4px;
   }
   .video-playcount {
@@ -125,8 +125,7 @@ export default {
       li {
         width: 48%;
         margin-right: 4%;
-        height: 130px;
-        &:nth-child(2n){
+        &:nth-child(2n) {
           margin-right: 0;
         }
       }

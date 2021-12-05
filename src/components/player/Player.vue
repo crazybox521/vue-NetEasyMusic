@@ -423,7 +423,7 @@ export default {
     margin: 0 10px;
     height: 50px;
     width: 50px;
-    border-radius: 4px;
+    border-radius: 8px;
   }
   i {
     color: @headRed;
@@ -509,6 +509,7 @@ export default {
 }
 /* 播放界面抽屉 */
 .play-view {
+  
   width: 100%;
   margin: 0 auto;
   padding: 0 20%;
@@ -577,6 +578,7 @@ export default {
   width: 600px;
   height: 400px;
   overflow-y: scroll;
+  scrollbar-width: thin;
   margin: 40px 0 0 20px;
   text-align: center;
   font-size: 16px;

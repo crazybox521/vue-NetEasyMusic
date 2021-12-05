@@ -244,6 +244,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/* 头部搜索类型区域 */
 .search-menu {
   display: flex;
   justify-content: flex-start;
@@ -252,11 +253,10 @@ export default {
   &-item {
     width: 40px;
     margin-right: 20px;
-    font-size: 14px;
     line-height: 1;
     text-align: center;
     &.isActive {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       &::after {
         display: block;

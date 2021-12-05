@@ -120,3 +120,8 @@
 .el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
     border-bottom:none;
 }
+
+/* 抽屉的滚动条 */
+.el-drawer__body {
+    scrollbar-width: thin;
+}
