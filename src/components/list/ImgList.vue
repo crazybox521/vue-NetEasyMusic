@@ -24,7 +24,7 @@
     <div class="loding-wrap" v-show="isLoading">
       <i class="el-icon-loading"></i>加载中
     </div>
-    <div class="loding-wrap" v-if="noMore">没有更多了</div>
+    <div class="loading-wrap" v-if="noMore">没有更多了</div>
   </div>
 </template>
 
@@ -117,8 +117,9 @@ export default {
     color: #ec4141;
     width: 40px;
     height: 40px;
-    line-height: 40px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     opacity: 0;
     transition: all 0.8s;
@@ -130,7 +131,7 @@ export default {
     opacity: 1;
   }
 }
-.loding-wrap {
+.loading-wrap {
   font-size: 18px;
   height: 50px;
   text-align: center;
@@ -140,6 +141,16 @@ export default {
   .img-wrap {
     .video-playcount {
       display: none;
+    }
+    .play-btn {
+      width: 24px;
+      height: 24px;
+      right: 5px;
+      bottom: 8px;
+      opacity: 1;
+      i {
+        font-size: 12px;
+      }
     }
   }
   .img-list-ul {

@@ -80,7 +80,7 @@
       </template>
     </ImgList>
 
-    <div class="flex_center">
+    <div class="flex_center" style="width:100%">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page="pageInfo.currentPage"

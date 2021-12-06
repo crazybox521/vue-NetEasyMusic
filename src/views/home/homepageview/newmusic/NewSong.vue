@@ -5,7 +5,7 @@
         <button
           class="no-btn mright-10 font-16"
           @click="changeType(t.id)"
-          :class="{ area_active:area_active(t.id)  }"
+          :class="{ area_active: area_active(t.id) }"
           v-for="t in typeList"
           :key="t.id"
         >
@@ -14,10 +14,12 @@
       </div>
       <div class="btn-wrap">
         <button class="btn btn-red" @click="playMusicAll">
-          <i class="iconfont icon-bofang"></i> <span class="btn-text">播放全部</span>
+          <i class="iconfont icon-bofang"></i>
+          <span class="btn-text">播放全部</span>
         </button>
-        <button class="btn btn-white mleft-12">
-          <i class="el-icon-folder-add"></i> <span class="btn-text">收藏全部</span>
+        <button class="btn btn-white mleft-10">
+          <i class="el-icon-folder-add"></i>
+          <span class="btn-text">收藏全部</span>
         </button>
       </div>
     </div>
@@ -165,5 +167,13 @@ export default {
 }
 .area_active {
   font-weight: bold;
+}
+@media screen and (max-width: 415px) {
+  .btn-wrap {
+    width: 100px;
+    .btn {
+      margin-left: 2px;
+    }
+  }
 }
 </style>

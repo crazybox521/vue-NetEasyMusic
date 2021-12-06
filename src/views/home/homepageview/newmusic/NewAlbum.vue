@@ -31,11 +31,14 @@
       </div>
     </div>
     <div class="new-song-view">
-      <div class="new-album-list">
+      <el-skeleton v-if="isLoading" :rows="6" animated />
+
+      <div v-else class="new-album-list">
         <div class="time-info">
           <div class="time-info-content">本周新碟</div>
         </div>
         <div class="data-list">
+
           <ImgList @clickImg="toAlbumDetail" :list="weekData" type="album">
             <template v-slot="{ item }">
               <div class="text-hidden">
@@ -81,7 +84,8 @@ export default {
           data: []
         }
       ],
-      hasMore: false
+      hasMore: false,
+      isLoading:true
     }
   },
   computed: {
@@ -105,11 +109,13 @@ export default {
       this.queryInfo.area = areaId
     },
     async getNewAlbum() {
+      this.isLoading=true
       const { data: res } = await getTopAlbum(this.queryInfo)
       if (res.code !== 200) return
       this.weekData = res.weekData
       /*  this.monthData = res.data.monthData
       this.hasMore = res.data.hasMore */
+      this.isLoading=false
     },
     toAlbumDetail(id) {
       if (typeof id === 'number') this.$router.push('/albumdetail/' + id)
@@ -157,65 +163,11 @@ export default {
   }
   .data-list {
     flex: 1;
-    .img-list {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      .img-item {
-        margin-bottom: 30px;
-        width: 18%;
-        margin-right: 2%;
-      }
-    }
-    .img-wrap {
-      position: relative;
-      .play-btn {
-        position: absolute;
-        right: 15px;
-        bottom: 15px;
-        background-color: #fbf7f6;
-        color: #ec4141;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        opacity: 0;
-        transition: all 0.8s;
-        i {
-          font-size: 18px;
-        }
-      }
-      &:hover .play-btn {
-        opacity: 1;
-      }
-    }
-    @media screen and(max-width:415px) {
-      .img-wrap {
-        .playcount {
-          display: none;
-        }
-        .play-btn {
-          width: 24px;
-          height: 24px;
-          opacity: 0.8;
-          i {
-            font-size: 14px;
-          }
-        }
-      }
-      .img-list {
-        .img-item {
-          margin-bottom: 30px;
-          width: 32%;
-          margin-right: 2%;
-          &:nth-child(3n) {
-            margin-right: 0;
-          }
-        }
-      }
-    }
+  }
+}
+@media screen and (max-width: 415px) {
+  .btn-wrap {
+    width: 100px;
   }
 }
 </style>
