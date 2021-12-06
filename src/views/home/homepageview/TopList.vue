@@ -46,7 +46,17 @@
     <!-- 全球榜区域 -->
     <div class="global-list" v-if="guanfangList.length == 4">
       <h2 class="font-bold font-20">全球榜</h2>
-      <SongSheetList :playlist="globalList"></SongSheetList>
+       <ImgList
+        @clickImg="toPlayListDetail"
+        :list="globalList"
+        type="playlist"
+      >
+        <template v-slot="{ item }">
+          <div class="text-hidden">
+            {{ item.name }}
+          </div>
+        </template>
+      </ImgList>
     </div>
   </div>
 </template>
@@ -54,9 +64,9 @@
 <script>
 import { mapState } from 'vuex'
 import { getToplist, getPlayListDetail } from '@/api/api_playlist'
-import SongSheetList from '@/components/list/SongSheetList.vue'
+import ImgList from '@/components/list/ImgList.vue'
 export default {
-  components: { SongSheetList },
+  components: { ImgList },
   data() {
     return {
       guanfangListId: [], //官方榜ID

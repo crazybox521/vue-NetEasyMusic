@@ -67,7 +67,19 @@
       </ul>
     </div>
     <el-skeleton class="mtop-10" v-show="isLoading" :rows="6" animated />
-    <SongSheetList v-show="!isLoading" :playlist="playList"></SongSheetList>
+    <ImgList
+      v-show="!isLoading"
+      @clickImg="toPlayListDetail"
+      :list="playList"
+      type="playlist"
+    >
+      <template v-slot="{ item }">
+        <div class="text-hidden">
+          {{ item.name }}
+        </div>
+      </template>
+    </ImgList>
+
     <div class="flex_center">
       <el-pagination
         @current-change="handleCurrentChange"
@@ -89,10 +101,10 @@ import {
   getPlayListByCat,
   getHighquality
 } from '@/api/api_playlist'
-import SongSheetList from '@/components/list/SongSheetList.vue'
+import ImgList from '@/components/list/ImgList.vue'
 export default {
   components: {
-    SongSheetList
+    ImgList
   },
   data() {
     return {
@@ -236,6 +248,10 @@ export default {
       console.log('主动选择标签关闭')
       this.showLayer = false
       window.removeEventListener('click', this.closeLayer)
+    },
+    toPlayListDetail(id) {
+      if (typeof id === 'number')
+        this.$router.push({ path: '/playlistdetail/' + id })
     }
   }
 }

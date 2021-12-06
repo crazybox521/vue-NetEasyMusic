@@ -51,3 +51,9 @@
     background-color: rgba(0, 0, 0, 0);
     border-radius: 15px;
 }
+
+@media screen  and (max-width:415px) {
+    .btn-text{
+        display: none;
+    }
+}

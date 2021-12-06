@@ -63,7 +63,17 @@
           ({{ creList.length }})</span
         >
       </div>
-      <SongSheetList :playlist="creList"></SongSheetList>
+      <ImgList
+        @clickImg="toPlayListDetail"
+        :list="creList"
+        type="playlist"
+      >
+        <template v-slot="{ item }">
+          <div class="text-hidden">
+            {{ item.name }}
+          </div>
+        </template>
+      </ImgList>
     </div>
     <div class="mtop-20" v-show="subList.length !== 0">
       <div>
@@ -72,17 +82,27 @@
           ({{ subList.length }})</span
         >
       </div>
-      <SongSheetList :playlist="subList"></SongSheetList>
+      <ImgList
+        @clickImg="toPlayListDetail"
+        :list="subList"
+        type="playlist"
+      >
+        <template v-slot="{ item }">
+          <div class="text-hidden">
+            {{ item.name }}
+          </div>
+        </template>
+      </ImgList>
     </div>
   </div>
 </template>
 
 <script>
-import SongSheetList from '@/components/list/SongSheetList.vue'
+import ImgList from '@/components/list/ImgList.vue'
 import { getUserDetail, getUserPlayList } from '@/api/api_user'
 import { mapState } from 'vuex'
 export default {
-  components: { SongSheetList },
+  components: { ImgList },
   data() {
     return {
       info: {}, //基本信息
@@ -128,7 +148,10 @@ export default {
       const { data: res } = await getUserPlayList(this.$route.params.id)
       if (res.code !== 200) return
       this.list = res.playlist
-    }
+    },
+     toPlayListDetail(id) {
+      this.$router.push({ path: '/playlistdetail/' + id })
+    },
   }
 }
 </script>

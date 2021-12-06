@@ -5,7 +5,7 @@
         <button
           class="no-btn mright-10 font-16"
           @click="changeType(t.id)"
-          :class="{ area_active: t.id === type }"
+          :class="{ area_active:area_active(t.id)  }"
           v-for="t in typeList"
           :key="t.id"
         >
@@ -14,10 +14,10 @@
       </div>
       <div class="btn-wrap">
         <button class="btn btn-red" @click="playMusicAll">
-          <i class="iconfont icon-bofang"></i> 播放全部
+          <i class="iconfont icon-bofang"></i> <span class="btn-text">播放全部</span>
         </button>
         <button class="btn btn-white mleft-12">
-          <i class="el-icon-folder-add"></i> 收藏全部
+          <i class="el-icon-folder-add"></i> <span class="btn-text">收藏全部</span>
         </button>
       </div>
     </div>
@@ -82,7 +82,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(['musicList'])
+    ...mapState(['musicList']),
+    area_active() {
+      return function (areaId) {
+        return this.type === areaId
+      }
+    }
   },
   methods: {
     async getMusic() {

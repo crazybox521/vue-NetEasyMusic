@@ -38,7 +38,8 @@
         <!-- 歌单按钮 -->
         <ul class="info-btn">
           <button class="btn btn-red" @click="playAll">
-            <i class="iconfont icon-bofang"></i> 播放全部
+            <i class="iconfont icon-bofang"></i>
+            <span class="btn-text">播放全部</span>
           </button>
           <button
             v-if="!subscribed"
@@ -46,15 +47,21 @@
             @click="subPlaylist(1)"
           >
             <i class="el-icon-folder-add"></i>
-            收藏({{ info.subscribedCount | countFormat }})
+            <span class="btn-text"
+              >收藏({{ info.subscribedCount | countFormat }})</span
+            >
           </button>
           <button v-else class="btn btn-white mleft-10" @click="subPlaylist(2)">
             <i class="el-icon-folder-checked"></i>
-            已收藏({{ info.subscribedCount | countFormat }})
+            <span class="btn-text"
+              >已收藏({{ info.subscribedCount | countFormat }})</span
+            >
           </button>
           <button class="btn btn-white mleft-10">
             <i class="iconfont icon-fenxiang"></i>
-            分享({{ info.shareCount | countFormat }})
+            <span class="btn-text"
+              >分享({{ info.shareCount | countFormat }})</span
+            >
           </button>
           <button
             class="btn btn-red mleft-10"
@@ -62,7 +69,7 @@
             @click="loadCompletePlayList"
           >
             <i class="el-icon-hot-water"></i>
-            加载完整歌单
+            <span class="btn-text">加载完整歌单</span>
           </button>
         </ul>
         <div class="detail-tag font-14" v-if="info.tags.length !== 0">
@@ -132,12 +139,17 @@
     <div v-show="showtab === 1">
       <MusicList ref="listRef" :list="list"></MusicList>
       <div v-if="isShowMoreBtn" class="flex_center more-btn">
-        点击 加载完整歌单 查看更多单曲
+        点击 <i class="el-icon-hot-water"></i>
+        <span class="btn-text">加载完整歌单</span> 查看更多单曲
       </div>
     </div>
     <!-- 评论 -->
     <div v-show="showtab == 2">
-      <Comment :active="showtab == 2" :type="2" :id="$route.params.id"></Comment>
+      <Comment
+        :active="showtab == 2"
+        :type="2"
+        :id="$route.params.id"
+      ></Comment>
     </div>
     <div v-show="showtab == 3">收藏者</div>
   </div>
@@ -163,7 +175,7 @@ export default {
       key: '',
       playList: [],
       subscribed: false,
-      showtab: 1,
+      showtab: 1
     }
   },
   computed: {
@@ -233,7 +245,7 @@ export default {
       if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
     },
-   
+
     toUserDetail(id) {
       this.$router.push('/userdetail/' + id)
     },

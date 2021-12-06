@@ -75,7 +75,19 @@
           加载中...
         </div>
         <div v-else-if="sameArtistList.length === 0">没有相似歌手</div>
-        <Artist :hasMore="false" v-else :list="sameArtistList"></Artist>
+        <ImgList
+          v-else
+          @clickImg="toArtistDetail"
+          :list="sameArtistList"
+          type="artist"
+          :isLoading="isLoading"
+        >
+          <template v-slot="{ item }">
+            <div class="text-hidden">
+              {{ item.name }}
+            </div>
+          </template>
+        </ImgList>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -85,7 +97,7 @@
 import AlbumList from '@/components/list/AlbumList.vue'
 import MvList from '@/components/list/MvList.vue'
 import TopFiftyList from '@/components/list/TopFiftyList.vue'
-import Artist from '@/components/list/Artist.vue'
+import ImgList from '@/components/list/ImgList.vue'
 import {
   queryArtistDetail,
   getArtistTop,
@@ -96,7 +108,7 @@ import {
 } from '@/api/api_artist'
 import { getAlbumDetail } from '@/api/api_album'
 export default {
-  components: { AlbumList, TopFiftyList, MvList, Artist },
+  components: { AlbumList, TopFiftyList, MvList, ImgList },
   data() {
     return {
       activeName: 'album', //激活的tab页
@@ -240,6 +252,9 @@ export default {
         this.getSame()
         return
       }
+    },
+    toArtistDetail(id) {
+      if (typeof id === 'number') this.$router.push('/artistdetail/' + id)
     }
   }
 }

@@ -15,25 +15,41 @@
       <h2 class="font-20 font-bold">
         热门推荐 <i class="iconfont icon-arrow-right"></i>
       </h2>
-      <SongSheetList :playlist="recSongList"></SongSheetList>
+      <ImgList @clickImg="toPlayListDetail" :list="recSongList" type="playlist">
+        <template v-slot="{ item }">
+          <div class="text-hidden">
+            {{ item.name }}
+          </div>
+        </template>
+      </ImgList>
     </div>
     <div class="play-list" v-if="isLogin">
       <h2 class="font-20 font-bold">
         个性化推荐 <i class="iconfont icon-arrow-right"></i>
       </h2>
-      <SongSheetList :playlist="recommendList"></SongSheetList>
+      <ImgList
+        @clickImg="toPlayListDetail"
+        :list="recommendList"
+        type="playlist"
+      >
+        <template v-slot="{ item }">
+          <div class="text-hidden">
+            {{ item.name }}
+          </div>
+        </template>
+      </ImgList>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { getBanner  } from '@/api/api_other'
-import {getPersonalized, getRecommend} from '@/api/api_playlist'
-import SongSheetList from '@/components/list/SongSheetList.vue'
+import { getBanner } from '@/api/api_other'
+import { getPersonalized, getRecommend } from '@/api/api_playlist'
+import ImgList from '@/components/list/ImgList.vue'
 export default {
   components: {
-    SongSheetList
+    ImgList
   },
   data() {
     return {
@@ -87,6 +103,10 @@ export default {
     open(url) {
       console.log(url)
       if (url !== null) window.open(url)
+    },
+    toPlayListDetail(id) {
+      if (typeof id === 'number')
+        this.$router.push({ path: '/playlistdetail/' + id })
     }
   }
 }

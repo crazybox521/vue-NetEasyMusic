@@ -30,17 +30,31 @@
         </el-radio-group>
       </div>
     </div>
-    <Artist @loadMore="load" :list="artistList" :hasMore="hasMore"></Artist>
+    <ImgList
+      @loadMore="load"
+      @clickImg="toArtistDetail"
+      :infinite="true"
+      :list="artistList"
+      :hasMore="hasMore"
+      type="artist"
+      :isLoading="isLoading"
+    >
+      <template v-slot="{ item }">
+        <div class="text-hidden">
+          {{ item.name }}
+        </div>
+      </template>
+    </ImgList>
   </div>
 </template>
 
 <script>
 import artistData from '@/listData/artistData'
-import Artist from '@/components/list/Artist.vue'
+import ImgList from '@/components/list/ImgList.vue'
 import { getArtistList } from '@/api/api_artist'
 export default {
   components: {
-    Artist
+    ImgList
   },
   computed: {
     showH5Info() {
@@ -78,8 +92,6 @@ export default {
   },
   methods: {
     async getArtistList() {
-      /* 节流 */
-      if (this.isLoading) return
       this.isLoading = true
       /* 重置偏移量 */
       if (this.mode == 'first') this.queryInfo.offset = 0
@@ -91,7 +103,13 @@ export default {
         this.artistList.push(...res.artists)
       }
       this.hasMore = res.more
-      this.isLoading = false
+      if (this.mode === 'first') {
+        this.isLoading = false
+      } else {
+        setTimeout(() => {
+          this.isLoading = false
+        }, 2000)
+      }
       this.mode = 'first'
     },
     /* loadMore事件的回调 */
@@ -107,6 +125,9 @@ export default {
       if (!this.showTagH5) this.$refs.tagRef.style.display = 'block'
       else this.$refs.tagRef.style.display = 'none'
       this.showTagH5 = !this.showTagH5
+    },
+    toArtistDetail(id){
+      if(typeof id==='number') this.$router.push('/artistdetail/'+id)
     }
   }
 }

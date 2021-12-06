@@ -4,6 +4,9 @@
     <div class="logo-wrap pointer" @click="toHomePage">
       <i class="iconfont icon-logView"></i>
     </div>
+    <div class="menu-btn">
+      <span></span>
+    </div>
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
         <i class="iconfont icon-arrow-left-bold"></i>
@@ -508,6 +511,27 @@ export default {
   }
 }
 @media screen and (max-width: 415px) {
+  /* 后续优化，移动端menu */
+  /* .menu-btn {
+    span {
+      display: inline-block;
+      width: 22px;
+      height: 2px;
+      background-color: #fff;
+      border-radius: 5px;
+      transition: background-color 0.2s ease-out 0.1s;
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 22px;
+        height: 2px;
+        border-radius: 5px;
+        background-color: #fff;
+        transition: transform 0.1s ease-out, top 0.3s ease 0.2s;
+        transform: rotate(0deg);
+      }
+    }
+  } */
   .search-input {
     .search-info_tip {
       left: -30px;
