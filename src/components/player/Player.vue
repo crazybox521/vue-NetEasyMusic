@@ -142,7 +142,7 @@
 <script>
 import { mapState } from 'vuex'
 import { getMusicUrl, getLyric } from '@/api/api_music'
-import { downloadMusic } from '@/plugins/get'
+import { downloadMusic } from '@/service/get'
 import notifyMixin from '@/mixins/notifyMixin'
 import Lyric from '@/utils/lyric'
 import Comment from '@/components/comment/Comment.vue'
@@ -244,7 +244,7 @@ export default {
     async getMusicUrl() {
       this.getImgInfo()
       this.getToltime()
-      const { data: res } = await getMusicUrl(this.currenMusicId)
+      const res = await getMusicUrl(this.currenMusicId)
       console.log(res)
       if (res.code !== 200) return this.$message.error('播放失败')
       if (!res.data[0].url) {
@@ -380,7 +380,7 @@ export default {
     },
     /* 获取歌词 */
     async getLyric() {
-      const { data: res } = await getLyric(this.currenMusicId)
+      const res = await getLyric(this.currenMusicId)
       if (res.code !== 200) return this.$message.error('获取歌词失败')
       if (res.lrc) this.lyricObj = new Lyric(res.lrc.lyric)
       if (this.PlayViewDrawer) this.$refs.lyricWrapRef.scrollTop = 0

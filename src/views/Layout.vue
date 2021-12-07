@@ -161,7 +161,7 @@ export default {
       return this.playList.filter((item) => item.userId !== this.userId)
     },
     userId() {
-      if (Object.keys(this.profile).length !== 0) return this.profile.userId
+      if (this.profile != null) return this.profile.userId
       else return 0
     }
   },
@@ -211,9 +211,8 @@ export default {
     },
     /* 获取收藏及创建歌单 */
     async getUserPlayList() {
-      console.log(this.userId)
-      if (this.userId === 0) return
-      const { data: res } = await getUserPlayList(this.userId)
+      if (!this.userId) return
+      const res = await getUserPlayList(this.userId)
       console.log(res)
       if (res.code !== 200) return
       this.playList = res.playlist

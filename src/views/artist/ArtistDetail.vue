@@ -160,7 +160,7 @@ export default {
   methods: {
     /* 获取歌手详情 */
     async getInfo() {
-      const { data: res } = await queryArtistDetail(this.id)
+      const res = await queryArtistDetail(this.id)
       if (res.code !== 200) return
       console.log('歌手信息', res)
       console.log(res)
@@ -170,14 +170,14 @@ export default {
     },
     /* 获取热门50首 */
     async getTop() {
-      const { data: res } = await getArtistTop(this.id)
+      const res = await getArtistTop(this.id)
       if (res.code !== 200) return
       this.topList = res.songs
       this.isLoading = false
     },
     /* 获取专辑列表 */
     async getAlbum() {
-      const { data: res } = await getArtistAlbum(this.id)
+      const res = await getArtistAlbum(this.id)
       if (res.code !== 200) return
       this.albumList = []
       res.hotAlbums.forEach((item) => {
@@ -186,13 +186,13 @@ export default {
     },
     /* 获取专辑信息 */
     async getAlbumDetail(id) {
-      const { data: res } = await getAlbumDetail(id)
+      const res = await getAlbumDetail(id)
       if (res.code !== 200) return
       this.albumList.push(res)
     },
     /* 获取歌手详细描述 */
     async getIntroduction() {
-      const { data: res } = await getIntro(this.id)
+      const res = await getIntro(this.id)
       if (res.code !== 200) return
       res.introduction.forEach((item) => {
         item.txt = item.txt.split('\n')
@@ -202,7 +202,7 @@ export default {
     },
     /* 获取歌手MV */
     async getMv() {
-      const { data: res } = await getArtistMv(this.id)
+      const res = await getArtistMv(this.id)
       if (res.code !== 200) return
       res.mvs.forEach((item) => {
         item.cover = item.imgurl
@@ -212,7 +212,7 @@ export default {
     },
     /* 获取相似歌手 */
     async getSame() {
-      const { data: res } = await getArtistSame(this.id)
+      const res = await getArtistSame(this.id)
       if (res.code !== 200) return
       this.sameArtistList = res.artists
       this.isLoading = false

@@ -68,7 +68,7 @@ export default {
       box-sizing: border-box;
       color: #373737;
       background-color: #fff;
-      transition: all .5s;
+      transition: all 0.5s;
       &:hover {
         background-color: #f4f4f4;
       }

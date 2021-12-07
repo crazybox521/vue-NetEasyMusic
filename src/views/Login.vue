@@ -34,7 +34,6 @@
             </button>
           </div>
         </div>
-         
       </div>
     </div>
   </div>
@@ -68,11 +67,12 @@ export default {
         if (!valid) return this.$message.error('请输入正确的信息')
         this.form.md5_password = md5(this.form.password)
         this.isLoading = true
-        const { data: res } = await doLogin(
+        const res = await doLogin(
           this.form.phone,
           this.form.md5_password
         )
-        if (res.code !== 200) return this.$message.error('登录失败,请检查手机号和密码')
+        if (res.code !== 200)
+          return this.$message.error('登录失败,请检查手机号和密码')
         this.$router.push('/personalrecom')
       })
     }

@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async getSubArt() {
-      const { data: res } = await getSubArtists()
+      const res = await getSubArtists()
       if (res.code !== 200) return
       this.list = res.data
       this.count = res.count

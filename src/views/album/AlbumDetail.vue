@@ -4,7 +4,11 @@
     <div class="detail-desc">
       <!-- 专辑图片 -->
       <div class="detail-img-wrapper">
-        <img class="img img-radius-8 img-border" :src="imgUrl + '?param=300y300'" alt="" />
+        <img
+          class="img img-radius-8 img-border"
+          :src="imgUrl + '?param=300y300'"
+          alt=""
+        />
       </div>
       <!-- 专辑信息 -->
       <div class="detail-desc-info">
@@ -15,7 +19,8 @@
         <!-- 专辑按钮 -->
         <ul class="info-btn">
           <button class="btn btn-red" @click="playAll">
-            <i class="iconfont icon-bofang"></i> <span class="btn-text">播放全部</span>
+            <i class="iconfont icon-bofang"></i>
+            <span class="btn-text">播放全部</span>
           </button>
           <button
             v-if="!isSub"
@@ -127,7 +132,7 @@ export default {
     },
     /* 获取专辑信息 */
     async getAlbum() {
-      const { data: res } = await getAlbumDetail(this.$route.params.id)
+      const res = await getAlbumDetail(this.$route.params.id)
       if (res.code !== 200) return
       console.log(res)
       this.list = res.songs
@@ -136,14 +141,14 @@ export default {
     /* 收藏、取消收藏 */
     async subAlbum(type) {
       if (!this.isLogin) return this.$message.error('需要登录')
-      const { data: res } = await setAlbumSub(this.$route.params.id, type)
+      const res = await setAlbumSub(this.$route.params.id, type)
       if (res.code !== 200) return
       this.isSub = !this.isSub
       if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
     },
     async getAlbumDynamic() {
-      const { data: res } = await getAlbumDynamic(this.$route.params.id)
+      const res = await getAlbumDynamic(this.$route.params.id)
       if (res.code !== 200) return
       this.isSub = res.isSub
       this.shareCount = res.shareCount

@@ -1,4 +1,4 @@
-import get from '@/plugins/get'
+import get from '@/service/get'
 
 /* 获取专辑内容 */
 export const getAlbumDetail = (id) => get('/album', { id })

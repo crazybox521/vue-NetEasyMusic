@@ -1,4 +1,4 @@
-import get from '@/plugins/get'
+import get from '@/service/get'
 
 /* 检索歌曲等 */
 export const search = ({ limit, offset, type, keywords }) => get('/cloudsearch', { limit, offset, type, keywords })

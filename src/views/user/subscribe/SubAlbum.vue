@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async getSubAlbum() {
-      const { data: res } = await getSubAlbum()
+      const res = await getSubAlbum()
       if (res.code !== 200) return
       this.list = res.data
       this.count = res.count

@@ -80,7 +80,7 @@
       </template>
     </ImgList>
 
-    <div class="flex_center" style="width:100%">
+    <div class="flex_center" style="width: 100%">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page="pageInfo.currentPage"
@@ -136,7 +136,7 @@ export default {
   methods: {
     /* 获取热门歌单分类 */
     async getHotCats() {
-      const { data: res } = await getHotCat()
+      const res = await getHotCat()
       if (res.code !== 200) return
       /* 使当前标签激活 */
       res.tags.forEach((item) => {
@@ -147,7 +147,7 @@ export default {
     },
     /* 获取所有分类 */
     async getAllCats() {
-      const { data: res } = await getAllCat()
+      const res = await getAllCat()
       if (res.code !== 200) return
       let arr = []
       for (let i = 0; i < 5; i++) {
@@ -183,7 +183,7 @@ export default {
     async getPlayList() {
       this.isLoading = true
       this.getHighInfo(this.queryInfo.cat)
-      const { data: res } = await getPlayListByCat(this.queryInfo)
+      const res = await getPlayListByCat(this.queryInfo)
       if (res.code !== 200) return
       this.playList = res.playlists
       this.pageInfo.total = res.total
@@ -200,7 +200,7 @@ export default {
     },
     /* 获取精品歌单第一首封面展示 */
     async getHighInfo(cat) {
-      const { data: res } = await getHighquality(1, cat)
+      const res = await getHighquality(1, cat)
       if (res.code !== 200) return
       if (res.playlists.length === 0) {
         this.highInfo = {}

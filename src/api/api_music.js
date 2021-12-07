@@ -1,4 +1,4 @@
-import get from '@/plugins/get'
+import get from '@/service/get'
 
 /* 获取音乐url */
 export const getMusicUrl = (id) => get('/song/url', { id })

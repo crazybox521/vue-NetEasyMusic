@@ -29,7 +29,9 @@
             >
               <span class="mleft-12 text-hidden">{{ index + 1 }}</span
               ><span class="mleft-12 geming text-hidden">{{ music.name }}</span
-              ><span class="zuozhe mright-10 text-hidden">{{ music.ar[0].name }}</span>
+              ><span class="zuozhe mright-10 text-hidden">{{
+                music.ar[0].name
+              }}</span>
             </li>
           </ul>
         </div>
@@ -46,11 +48,7 @@
     <!-- 全球榜区域 -->
     <div class="global-list" v-if="guanfangList.length == 4">
       <h2 class="font-bold font-20">全球榜</h2>
-       <ImgList
-        @clickImg="toPlayListDetail"
-        :list="globalList"
-        type="playlist"
-      >
+      <ImgList @clickImg="toPlayListDetail" :list="globalList" type="playlist">
         <template v-slot="{ item }">
           <div class="text-hidden">
             {{ item.name }}
@@ -86,7 +84,7 @@ export default {
     async getTopList() {
       /* 使用缓存的数据 */
       if (this.guanfangList.length !== 0) return
-      const { data: res } = await getToplist()
+      const res = await getToplist()
       if (res.code !== 200) return
       /* 清空官方榜ID数组 */
       this.guanfangListId = []
@@ -102,7 +100,7 @@ export default {
     async getPlayList(id) {
       /* 清空官方榜数据数组 */
       this.guanfangList = []
-      const { data: res } = await getPlayListDetail(id)
+      const res = await getPlayListDetail(id)
       if (res.code !== 200) return
       res.playlist.tracks = res.playlist.tracks.slice(0, 5)
       this.guanfangList.push(res.playlist)
@@ -199,7 +197,7 @@ export default {
 }
 @media screen and (max-width: 768px) {
   .guanfang {
-    .img-wrap{
+    .img-wrap {
       width: 60px;
       height: 60px;
     }
@@ -210,7 +208,7 @@ export default {
     .geming {
       width: 80px;
     }
-    .zuozhe{
+    .zuozhe {
       width: 80px;
     }
   }

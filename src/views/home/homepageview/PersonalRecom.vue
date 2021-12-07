@@ -75,7 +75,7 @@ export default {
     /* 个性推荐页 */
     // 轮播图
     async getImgList() {
-      const { data: res } = await getBanner()
+      const res = await getBanner()
       if (res.code !== 200) return
       res.banners.forEach((item) => {
         let { imageUrl, url, typeTitle } = item
@@ -84,7 +84,7 @@ export default {
     },
     // 获取歌单
     async getRecSongList(limit) {
-      const { data: res } = await getPersonalized(limit)
+      const res = await getPersonalized(limit)
       if (res.code !== 200) return
       console.log(res)
       this.recSongList = res.result
@@ -92,7 +92,8 @@ export default {
     /* 获取个性歌单 */
     async getRecommend() {
       if (!this.isLogin) return
-      const { data: res } = await getRecommend()
+
+      const res = await getRecommend()
       if (res.code !== 200) return
       console.log(res)
       res.recommend.forEach((item) => {

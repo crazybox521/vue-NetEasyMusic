@@ -24,7 +24,7 @@
               ></i>
             </span>
           </div>
-          <div v-if="isLogin&&profile.userId===userId">自己</div>
+          <div v-if="isLogin && profile.userId === userId">自己</div>
           <div v-else>
             <button class="btn btn-white">
               <i class="el-icon-message"></i> 发私信
@@ -63,11 +63,7 @@
           ({{ creList.length }})</span
         >
       </div>
-      <ImgList
-        @clickImg="toPlayListDetail"
-        :list="creList"
-        type="playlist"
-      >
+      <ImgList @clickImg="toPlayListDetail" :list="creList" type="playlist">
         <template v-slot="{ item }">
           <div class="text-hidden">
             {{ item.name }}
@@ -82,11 +78,7 @@
           ({{ subList.length }})</span
         >
       </div>
-      <ImgList
-        @clickImg="toPlayListDetail"
-        :list="subList"
-        type="playlist"
-      >
+      <ImgList @clickImg="toPlayListDetail" :list="subList" type="playlist">
         <template v-slot="{ item }">
           <div class="text-hidden">
             {{ item.name }}
@@ -123,8 +115,8 @@ export default {
     subList() {
       return this.list.filter((item) => item.userId !== this.userId)
     },
-    
-    ...mapState(['profile','isLogin'])
+
+    ...mapState(['profile', 'isLogin'])
   },
   watch: {
     '$route.params.id'() {
@@ -139,20 +131,20 @@ export default {
   methods: {
     /* 获取详情信息 */
     async getDetail() {
-      const { data: res } = await getUserDetail(this.$route.params.id)
+      const res = await getUserDetail(this.$route.params.id)
       if (res.code !== 200) return
       this.info = res.profile
       this.level = res.level
     },
     /* 获取收藏及创建歌单 */
     async getUserPlayList() {
-      const { data: res } = await getUserPlayList(this.$route.params.id)
+      const res = await getUserPlayList(this.$route.params.id)
       if (res.code !== 200) return
       this.list = res.playlist
     },
-     toPlayListDetail(id) {
+    toPlayListDetail(id) {
       this.$router.push({ path: '/playlistdetail/' + id })
-    },
+    }
   }
 }
 </script>

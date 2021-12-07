@@ -120,20 +120,20 @@ export default {
   methods: {
     /* 获取视频详情 */
     async getDetail() {
-      const { data: res } = await getVideoDetail(this.$route.params.id)
+      const res = await getVideoDetail(this.$route.params.id)
       if (res.code !== 200) return
       this.deTail = res.data
     },
     /* 获取视频URL */
     async getUrl() {
-      const { data: res } = await getVideoUrl(this.$route.params.id)
+      const res = await getVideoUrl(this.$route.params.id)
       if (res.code !== 200) return
       this.urlInfo = res.urls[0]
       this.$store.commit('setPlayState', false)
     },
     /* 获取相关视频 */
     async getRelatedVideo() {
-      const { data: res } = await getRelatedVideo(this.$route.params.id)
+      const res = await getRelatedVideo(this.$route.params.id)
       if (res.code !== 200) return
       this.RelatedList = res.data
     },

@@ -183,7 +183,7 @@ export default {
     async search() {
       if (this.searchInfo.keywords == '') return
       this.isLoading = true
-      const { data: res } = await search(this.searchInfo)
+      const res = await search(this.searchInfo)
       console.log(res)
       if (res.code !== 200) return this.$message.error('请求失败')
       if (Object.keys(res.result).length === 0) {

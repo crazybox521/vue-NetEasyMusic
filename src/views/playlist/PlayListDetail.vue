@@ -181,7 +181,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isLogin','profile']),
+    ...mapState(['isLogin', 'profile']),
     list() {
       let reg = new RegExp(this.key.trim(), 'ig')
       return this.playList.filter((item) => {
@@ -194,8 +194,8 @@ export default {
         this.playList.length < 800
       )
     },
-    subDisabled(){
-      return this.info.userId===this.profile.userId
+    subDisabled() {
+      return this.info.userId === this.profile.userId
     }
   },
   watch: {
@@ -212,8 +212,8 @@ export default {
   methods: {
     /* 获取歌单信息 */
     async getPlayList(id) {
-      console.log(typeof id);
-      const { data: res } = await getPlayListDetail(id, Date.now())
+      console.log(typeof id)
+      const res = await getPlayListDetail(id, Date.now())
       if (res.code !== 200) return
       console.log(res)
       this.info = res.playlist
@@ -234,14 +234,14 @@ export default {
       console.log(idArr)
       /* 请求歌曲过多需要分片，不然会报431错误,这里简单处理只加载部分 */
       if (idArr.length > 800) {
-        const { data: res } = await getMusicListByIds(
+        const res = await getMusicListByIds(
           idArr.slice(0, 800).join(',')
         )
         if (res.code !== 200) return
         this.playList = res.songs
         this.$message.error('太多歌曲了，只加载一部分')
       } else {
-        const { data: res } = await getMusicListByIds(idArr.join(','))
+        const res = await getMusicListByIds(idArr.join(','))
         console.log('111')
         if (res.code !== 200) return
         this.playList = res.songs
@@ -250,7 +250,7 @@ export default {
     /* 收藏/取消收藏 */
     async subPlaylist(type) {
       if (!this.isLogin) return this.$message.error('需要登录')
-      const { data: res } = await setPlaylistSub(this.$route.params.id, type)
+      const res = await setPlaylistSub(this.$route.params.id, type)
       if (res.code !== 200) return
       this.subscribed = !this.subscribed
       if (type == 1) this.$message.success('收藏成功')

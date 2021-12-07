@@ -95,7 +95,7 @@ export default {
       this.isLoading = true
       /* 重置偏移量 */
       if (this.mode == 'first') this.queryInfo.offset = 0
-      const { data: res } = await getArtistList(this.queryInfo)
+      const res = await getArtistList(this.queryInfo)
       if (res.code !== 200) return this.$message.error('获取失败')
       if (this.mode == 'first') {
         this.artistList = res.artists
@@ -126,8 +126,8 @@ export default {
       else this.$refs.tagRef.style.display = 'none'
       this.showTagH5 = !this.showTagH5
     },
-    toArtistDetail(id){
-      if(typeof id==='number') this.$router.push('/artistdetail/'+id)
+    toArtistDetail(id) {
+      if (typeof id === 'number') this.$router.push('/artistdetail/' + id)
     }
   }
 }

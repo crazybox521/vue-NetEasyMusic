@@ -1,5 +1,5 @@
 <template>
-<!-- 歌手页热门50首组件 -->
+  <!-- 歌手页热门50首组件 -->
   <div class="top-fifty-list">
     <div class="list-container">
       <div style="width: 200px">

@@ -1,4 +1,4 @@
-import get from '@/plugins/get'
+import get from '@/service/get'
 /* 获取推荐歌单 */
 export const getPersonalized = (limit) => get('/personalized', { limit })
 

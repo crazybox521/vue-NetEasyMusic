@@ -1,4 +1,4 @@
-import get from '@/plugins/get'
+import get from '@/service/get'
 
 /* 手机号密码登录 */
 export const doLogin = (phone, md5_password) => get('/login/cellphone', { phone, md5_password })

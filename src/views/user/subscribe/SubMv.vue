@@ -1,5 +1,5 @@
 <template>
-<!-- 收藏的MV -->
+  <!-- 收藏的MV -->
   <div class="sub-mv">
     <div class="submv-head">
       <div>
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     async getSubMv() {
-      const { data: res } = await getSubMv()
+      const res = await getSubMv()
       if (res.code !== 200) return
       this.list = res.data
       this.count = res.count

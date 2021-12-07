@@ -95,7 +95,7 @@ export default {
     async getMusic() {
       if (typeof this.type !== 'number') return
       this.isLoading = true
-      const { data: res } = await getTopMusic(this.type)
+      const res = await getTopMusic(this.type)
       if (res.code !== 200) return
       let list = []
       res.data.forEach((item) => {

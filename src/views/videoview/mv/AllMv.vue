@@ -94,7 +94,7 @@ export default {
       if (this.isLoading) return
       this.isLoading = true
       console.log(222)
-      const { data: res } = await getAllMv({
+      const res = await getAllMv({
         ...this.queryInfo,
         offset: this.offset
       })

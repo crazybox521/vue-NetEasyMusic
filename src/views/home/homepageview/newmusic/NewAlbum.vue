@@ -114,7 +114,7 @@ export default {
     },
     async getNewAlbum() {
       this.isLoading = true
-      const { data: res } = await getTopAlbum(this.queryInfo)
+      const res = await getTopAlbum(this.queryInfo)
       if (res.code !== 200) return
       if (Object.hasOwnProperty.call(res, 'weekData'))
         this.weekData = res.weekData

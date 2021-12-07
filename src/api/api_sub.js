@@ -1,4 +1,4 @@
-import get from '@/plugins/get'
+import get from '@/service/get'
 /* 收藏的歌手 */
 export const getSubArtists = () => get('/artist/sublist')
 

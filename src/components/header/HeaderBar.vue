@@ -233,7 +233,7 @@ export default {
     async getSuggest(val) {
       if (val == '') return
       console.log('object')
-      const { data: res } = await getSuggest({ keywords: val })
+      const res = await getSuggest({ keywords: val })
       if (res.code !== 200) return
       if (Object.keys(res.result).length !== 0) this.suggestInfo = res.result
       console.log(res)
@@ -253,7 +253,7 @@ export default {
     async getHotSearch() {
       this.showInfoTip = true
       if (this.hotList.length !== 0) return
-      const { data: res } = await getHotSearch()
+      const res = await getHotSearch()
       if (res.code !== 200) return
       this.hotList = res.data
     },
@@ -317,7 +317,7 @@ export default {
     },
     /* 获取登录信息 */
     async getAcount() {
-      const { data: res } = await getAcount()
+      const res = await getAcount()
       if (res.code !== 200) return
       this.account = res.account
       this.info = res.profile
@@ -350,7 +350,7 @@ export default {
         type: 'warning'
       })
         .then(async () => {
-          const { data: res } = await logout()
+          const res = await logout()
           if (res.code !== 200) return
           this.$message.success('退出成功')
           this.getAcount()
@@ -380,7 +380,7 @@ export default {
     /* 处理搜索建议中单曲数据格式。并播放 */
     async playMusic(id) {
       if (typeof id !== 'number') return
-      const { data: res } = await getMusicListByIds(id)
+      const res = await getMusicListByIds(id)
       if (res.code !== 200 || res.songs.length === 0) return
       this.$store.commit('setMusicList', res.songs)
       this.$store.commit('setCurrenMusicId', res.songs[0].id)

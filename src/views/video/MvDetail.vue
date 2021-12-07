@@ -18,8 +18,16 @@
         <div class="info-wrap">
           <div class="creator-info">
             <div class="img-wrap font-14">
-              <img class="pointer" :src="artist.img1v1Url" @click="toArtistDetail(artist.id)" />
-              <span class="mleft-10 pointer" @click="toArtistDetail(artist.id)">{{ artist.name }}</span>
+              <img
+                class="pointer"
+                :src="artist.img1v1Url"
+                @click="toArtistDetail(artist.id)"
+              />
+              <span
+                class="mleft-10 pointer"
+                @click="toArtistDetail(artist.id)"
+                >{{ artist.name }}</span
+              >
             </div>
           </div>
           <div class="video-info">
@@ -132,26 +140,26 @@ export default {
   methods: {
     /* 获取视频详情 */
     async getDetail() {
-      const { data: res } = await getMvDetail(this.$route.params.id)
+      const res = await getMvDetail(this.$route.params.id)
       if (res.code !== 200) return
       this.deTail = res.data
-      this.subed =res.subed
+      this.subed = res.subed
     },
     /* 获取视频URL */
     async getUrl() {
-      const { data: res } = await getMvUrl(this.$route.params.id)
+      const res = await getMvUrl(this.$route.params.id)
       if (res.code !== 200) return
       this.urlInfo = res.data
-      this.$store.commit('setPlayState',false)
+      this.$store.commit('setPlayState', false)
     },
     /* 获取相关视频 */
     async getRelatedVideo() {
-      const { data: res } = await getPersonalizedMv()
+      const res = await getPersonalizedMv()
       if (res.code !== 200) return
       this.RelatedList = res.result
     },
     async getMvInfo() {
-      const { data: res } = await getMvInfo(this.$route.params.id)
+      const res = await getMvInfo(this.$route.params.id)
       if (res.code !== 200) return
       this.countInfo = res
     },
@@ -161,9 +169,8 @@ export default {
     toMv() {
       this.$router.push('/mv')
     },
-    toArtistDetail(id){
-      if(typeof id ==='number')
-      this.$router.push('/artistdetail/'+id)
+    toArtistDetail(id) {
+      if (typeof id === 'number') this.$router.push('/artistdetail/' + id)
     }
   }
 }

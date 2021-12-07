@@ -184,7 +184,7 @@ export default {
         )
       }
       console.log('send')
-      const { data: res } = await sendComment(this.commentInfo)
+      const res = await sendComment(this.commentInfo)
       if (res.code !== 200) return
       this.$message.success('发送成功')
       console.log(res)
@@ -208,14 +208,14 @@ export default {
     /* 获取热门评论 */
     async getHotComment() {
       if (this.hotList.length !== 0) return
-      const { data: res } = await getHotComment(this.id, this.type, 5)
+      const res = await getHotComment(this.id, this.type, 5)
       if (res.code !== 200) return
       console.log(res.hotComments)
       this.hotList = res.hotComments
     },
     /* 获取最新评论 */
     async getNewComment() {
-      const { data: res } = await getNewComment(this.newQuery)
+      const res = await getNewComment(this.newQuery)
       if (res.code !== 200) return
       console.log(res)
       this.newCount = res.total
@@ -233,7 +233,7 @@ export default {
     },
     /* 点赞的请求及处理 */
     async like(obj, type) {
-      const { data: res } = await likeComment(obj)
+      const res = await likeComment(obj)
       if (res.code !== 200) return
       if (type == 'new') {
         let index = this.newList.findIndex((item) => item.commentId == obj.cid)

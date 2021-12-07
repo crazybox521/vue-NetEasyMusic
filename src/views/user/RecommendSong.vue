@@ -36,8 +36,8 @@ export default {
     }
   },
   computed: {
-    showList(){
-      return this.list.length!==0?true:false
+    showList() {
+      return this.list.length !== 0 ? true : false
     }
   },
   created() {
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     async getList() {
-      const { data: res } = await getRecommendSong()
+      const res = await getRecommendSong()
       if (res.code !== 200) return
       this.list = res.data.dailySongs
     },

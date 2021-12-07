@@ -63,6 +63,7 @@ const routes = [
                 path: 'videoview',
                 component: VideoView,
                 redirect: '/video',
+                meta: { check: true },
                 children: [
                     { path: '/video', component: Video, meta: { check: true } },//video的首屏
                     { path: '/mv', component: MusicVideo, meta: { check: true } }//mv的首屏
@@ -73,6 +74,7 @@ const routes = [
                 path: 'subscribe',
                 component: SubScribeView,
                 redirect: '/sub-album',
+                meta: { check: true },
                 children: [
                     { path: '/sub-album', component: SubAlbum, meta: { check: true } },
                     { path: '/sub-artists', component: SubArtists, meta: { check: true } },
@@ -84,13 +86,13 @@ const routes = [
             { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
             { path: "artistdetail/:id", component: ArtistDetail, },//歌手详情页
             { path: "albumdetail/:id", component: AlbumDetail, },//专辑详情页
-            { path: "videodetail/:id", component: VideoDetail, },//视频详情页
-            { path: "mvdetail/:id", component: MvDetail, },//mv详情页
+            { path: "videodetail/:id", component: VideoDetail,meta: { check: true } },//视频详情页
+            { path: "mvdetail/:id", component: MvDetail,meta: { check: true } },//mv详情页
             { path: "userdetail/:id", component: UserDetail, },//用户详情页
             { path: 'recomsongs', component: RecommendSong, meta: { check: true } },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
-            { path: 'allmv', component: AllMv },//全部MV页
-            { path: 'topmv', component: TopMv },//MV排行页
+            { path: 'allmv', component: AllMv ,meta: { check: true }},//全部MV页
+            { path: 'topmv', component: TopMv,meta: { check: true } },//MV排行页
         ],
     },
     { path: '/login', component: Login },//login

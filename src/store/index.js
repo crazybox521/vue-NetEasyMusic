@@ -21,7 +21,7 @@ const state = {
     },
     /* 轮播图的高度 */
     bannerHeight: 200,
-    isLogin: window.sessionStorage.getItem('isLogin') == '' ? false : true,
+    isLogin: window.sessionStorage.getItem('isLogin') !== 'true' ? false : true,
     /* 账号信息 */
     account: {},
     /* 用户信息 */

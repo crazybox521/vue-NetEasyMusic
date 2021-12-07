@@ -106,19 +106,19 @@ export default {
   methods: {
     /* 获取最新MV */
     async getNewMv() {
-      const { data: res } = await getNewMv(this.newQueryInfo.area, 8)
+      const res = await getNewMv(this.newQueryInfo.area, 8)
       if (res.code1 == 200) return
       this.newList = res.data
     },
     /* 获取网易出品MV */
     async getNetEasyMv() {
-      const { data: res } = await getNetEasyMv(8, 0)
+      const res = await getNetEasyMv(8, 0)
       if (res.code !== 200) return
       this.netEasyList = res.data
     },
     /* 获取排行榜MV */
     async getTopMv() {
-      const { data: res } = await getTopMv(this.topQueryInfo)
+      const res = await getTopMv(this.topQueryInfo)
       if (res.code !== 200) return
       this.topList = res.data
     },
@@ -145,7 +145,7 @@ export default {
       if (type === 'new') {
         this.$router.push({
           path: '/allmv',
-          query: {  area: this.newQueryInfo.area }
+          query: { area: this.newQueryInfo.area }
         })
       } else if (type === '网易出品') {
         this.$router.push({ path: '/allmv', query: { type } })

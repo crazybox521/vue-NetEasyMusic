@@ -91,14 +91,14 @@ export default {
   methods: {
     /* 获取热门标签 */
     async getHotTag() {
-      const { data: res } = await getVideoHotTag()
+      const res = await getVideoHotTag()
       if (res.code !== 200) return
       this.hotTagList = res.data
     },
     /* 获取所有标签 */
     async getAllTag() {
       if (this.allTagList.length !== 0) return
-      const { data: res } = await getVideoAlltag()
+      const res = await getVideoAlltag()
       if (res.code !== 200) return
       this.allTagList = res.data
       this.allTagList.forEach((item) => {
@@ -114,7 +114,7 @@ export default {
       if (this.mode == 'first') this.offset = 0
       /* 全部视频 */
       if (this.currenTagId == 0) {
-        const { data: res } = await getAllVideo(this.offset)
+        const res = await getAllVideo(this.offset)
         if (res.code !== 200) return
         if (this.mode == 'first') {
           this.videoList = res.datas
@@ -127,7 +127,7 @@ export default {
         this.hasMore = res.hasmore
       } else {
         /* 根据标签查 */
-        const { data: res } = await getVideoByTag(this.currenTagId, this.offset)
+        const res = await getVideoByTag(this.currenTagId, this.offset)
         if (res.code !== 200) return
         if (this.mode == 'first') {
           this.videoList = res.datas
