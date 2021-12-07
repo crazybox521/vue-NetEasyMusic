@@ -77,28 +77,24 @@ export default {
     async getImgList() {
       const res = await getBanner()
       if (res.code !== 200) return
-      res.banners.forEach((item) => {
-        let { imageUrl, url, typeTitle } = item
-        this.imgList.push({ imageUrl, url, typeTitle })
-      })
+      this.imgList=Object.freeze(res.banners)
     },
     // 获取歌单
     async getRecSongList(limit) {
       const res = await getPersonalized(limit)
       if (res.code !== 200) return
       console.log(res)
-      this.recSongList = res.result
+      this.recSongList = Object.freeze(res.result)
     },
     /* 获取个性歌单 */
     async getRecommend() {
       if (!this.isLogin) return
-
       const res = await getRecommend()
       if (res.code !== 200) return
       console.log(res)
       res.recommend.forEach((item) => {
         let { id, name, picUrl, playcount: playCount, trackCount } = item
-        this.recommendList.push({ id, name, picUrl, playCount, trackCount })
+        this.recommendList.push(Object.freeze({ id, name, picUrl, playCount, trackCount }))
       })
     },
     open(url) {

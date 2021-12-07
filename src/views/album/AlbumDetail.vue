@@ -135,8 +135,8 @@ export default {
       const res = await getAlbumDetail(this.$route.params.id)
       if (res.code !== 200) return
       console.log(res)
-      this.list = res.songs
-      this.albumInfo = res.album
+      this.list = Object.freeze(res.songs)
+      this.albumInfo = Object.freeze(res.album)
     },
     /* 收藏、取消收藏 */
     async subAlbum(type) {

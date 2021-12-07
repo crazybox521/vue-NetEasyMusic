@@ -59,7 +59,7 @@ export default {
     async getSubAlbum() {
       const res = await getSubAlbum()
       if (res.code !== 200) return
-      this.list = res.data
+      this.list = Object.freeze(res.data)
       this.count = res.count
     },
     toAlbumDetail(row) {

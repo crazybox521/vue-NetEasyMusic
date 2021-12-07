@@ -91,7 +91,7 @@ export default {
       res.list.slice(0, 4).forEach((item) => {
         this.guanfangListId.push(item.id)
       })
-      this.globalList = res.list.slice(4)
+      this.globalList = Object.freeze(res.list.slice(4))
       this.guanfangListId.forEach((item) => {
         this.getPlayList(item)
       })
@@ -102,8 +102,8 @@ export default {
       this.guanfangList = []
       const res = await getPlayListDetail(id)
       if (res.code !== 200) return
-      res.playlist.tracks = res.playlist.tracks.slice(0, 5)
-      this.guanfangList.push(res.playlist)
+      res.playlist.tracks = Object.freeze(res.playlist.tracks.slice(0, 5))
+      this.guanfangList.push(Object.freeze(res.playlist))
       console.log(this.guanfangList)
     },
     // 跳转到歌单详情页

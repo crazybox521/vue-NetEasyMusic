@@ -193,27 +193,27 @@ export default {
       }
       switch (this.vIndex) {
         case 0:
-          this.searchList.musicList = res.result.songs
+          this.searchList.musicList = Object.freeze(res.result.songs)
           this.total = res.result.songCount
           break
         case 1:
-          this.searchList.albumList = res.result.albums
+          this.searchList.albumList = Object.freeze(res.result.albums)
           this.total = res.result.albumCount
           break
         case 2:
-          this.searchList.artistList = res.result.artists
+          this.searchList.artistList = Object.freeze(res.result.artists)
           this.total = res.result.artistCount
           break
         case 3:
-          this.searchList.playList = res.result.playlists
+          this.searchList.playList = Object.freeze(res.result.playlists)
           this.total = res.result.playlistCount
           break
         case 4:
-          this.searchList.userList = res.result.userprofiles
+          this.searchList.userList = Object.freeze(res.result.userprofiles)
           this.total = res.result.userprofileCount
           break
         case 5:
-          this.searchList.mvList = res.result.mvs
+          this.searchList.mvList = Object.freeze(res.result.mvs)
           this.total = res.result.mvCount
           break
       }

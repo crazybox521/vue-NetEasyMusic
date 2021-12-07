@@ -1,14 +1,11 @@
 <template>
   <!-- 歌单详情 -->
-  <div class="play-list-detail mtop-20" v-if="this.info.creator">
+  <div class="play-list-detail mtop-20" v-if="creator">
     <!-- 歌单图片及信息 -->
     <div class="detail-desc">
       <!-- 歌单图片 -->
       <div class="detail-img-wrapper">
-        <img
-          class="img img-radius-8 img-border"
-          :src="info.coverImgUrl + '?param=300y300'"
-        />
+        <img class="img img-radius-8 img-border" :src="ImgUrl" />
       </div>
       <!-- 歌单信息 -->
       <div class="detail-desc-info">
@@ -17,18 +14,15 @@
           <span class="mleft-12 font-20 font-bold">{{ info.name }}</span>
         </div>
         <div class="author">
-          <div
-            class="author-img pointer"
-            @click="toUserDetail(info.creator.userId)"
-          >
-            <img class="img-h circle" :src="info.creator.avatarUrl" />
+          <div class="author-img pointer" @click="toUserDetail(creator.userId)">
+            <img class="img-h circle" :src="creator.avatarUrl" />
           </div>
           <div class="author-info">
             <span
               class="mleft-12 font-12 pointer"
-              @click="toUserDetail(info.creator.userId)"
+              @click="toUserDetail(creator.userId)"
               style="color: #0b58b0"
-              >{{ info.creator.nickname }}</span
+              >{{ creator.nickname }}</span
             >
             <span class="mleft-12 font-12">{{
               info.createTime | dateFormat
@@ -73,14 +67,11 @@
             <span class="btn-text">加载完整歌单</span>
           </button>
         </ul>
-        <div class="detail-tag font-14" v-if="info.tags.length !== 0">
+        <div class="detail-tag font-14" v-if="tags.length !== 0">
           <span>标签 ：</span>
-          <span
-            class="mright-10"
-            v-for="(val, index) in info.tags"
-            :key="index"
-            >{{ val }}</span
-          >
+          <span class="mright-10" v-for="(val, index) in tags" :key="index">{{
+            val
+          }}</span>
         </div>
         <div class="num-info font-14">
           <span>歌曲 ：{{ info.trackCount }}</span>
@@ -177,7 +168,9 @@ export default {
       key: '',
       playList: [],
       subscribed: false,
-      showtab: 1
+      showtab: 1,
+      creator: {},
+      tags: []
     }
   },
   computed: {
@@ -195,9 +188,13 @@ export default {
       )
     },
     subDisabled() {
-      if(this.isLogin)
-      return this.info.userId === this.profile.userId
+      if (this.isLogin) return this.info.userId === this.profile.userId
       else return false
+    },
+    ImgUrl() {
+      return this.info.coverImgUrl
+        ? `${this.info.coverImgUrl}?param=300y300`
+        : ''
     }
   },
   watch: {
@@ -206,20 +203,22 @@ export default {
     }
   },
   created() {
-    this.getPlayList(this.$route.params.id)
+    this.getPlayList()
   },
   mounted() {
     document.querySelector('.main-right').scrollTop = 0
   },
   methods: {
     /* 获取歌单信息 */
-    async getPlayList(id) {
-      console.log(typeof id)
-      const res = await getPlayListDetail(id, Date.now())
+    async getPlayList() {
+      const res = await getPlayListDetail(this.$route.params.id, Date.now())
       if (res.code !== 200) return
       console.log(res)
-      this.info = res.playlist
-      this.playList = res.playlist.tracks
+      this.info = Object.freeze(res.playlist)
+      this.tags = Object.freeze(res.playlist.tags)
+      this.creator = Object.freeze(res.playlist.creator)
+      console.log(this.creator)
+      this.playList = Object.freeze(res.playlist.tracks)
       this.subscribed = res.playlist.subscribed
     },
     playAll() {
@@ -236,17 +235,14 @@ export default {
       console.log(idArr)
       /* 请求歌曲过多需要分片，不然会报431错误,这里简单处理只加载部分 */
       if (idArr.length > 800) {
-        const res = await getMusicListByIds(
-          idArr.slice(0, 800).join(',')
-        )
+        const res = await getMusicListByIds(idArr.slice(0, 800).join(','))
         if (res.code !== 200) return
-        this.playList = res.songs
+        this.playList = Object.freeze(res.songs)
         this.$message.error('太多歌曲了，只加载一部分')
       } else {
         const res = await getMusicListByIds(idArr.join(','))
-        console.log('111')
         if (res.code !== 200) return
-        this.playList = res.songs
+        this.playList = Object.freeze(res.songs)
       }
     },
     /* 收藏/取消收藏 */

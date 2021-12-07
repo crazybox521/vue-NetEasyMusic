@@ -48,7 +48,7 @@ export default {
     async getList() {
       const res = await getRecommendSong()
       if (res.code !== 200) return
-      this.list = res.data.dailySongs
+      this.list = Object.freeze(res.data.dailySongs)
     },
     playAll() {
       /* 访问音乐列表组件的方法 */

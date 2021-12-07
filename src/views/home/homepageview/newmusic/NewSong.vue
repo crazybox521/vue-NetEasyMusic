@@ -110,7 +110,7 @@ export default {
           fee: item.fee
         })
       })
-      this.list = list
+      this.list = Object.freeze(list)
       this.isLoading = false
     },
     changeType(id) {

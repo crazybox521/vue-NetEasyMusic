@@ -70,7 +70,7 @@ export default {
     async getSubMv() {
       const res = await getSubMv()
       if (res.code !== 200) return
-      this.list = res.data
+      this.list = Object.freeze(res.data)
       this.count = res.count
     },
     toMvDetail(id) {

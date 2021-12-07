@@ -57,7 +57,7 @@ export default {
     async getSubArt() {
       const res = await getSubArtists()
       if (res.code !== 200) return
-      this.list = res.data
+      this.list = Object.freeze(res.data)
       this.count = res.count
     },
     toArtistDetail(row) {

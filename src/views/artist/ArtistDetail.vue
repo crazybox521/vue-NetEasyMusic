@@ -58,7 +58,7 @@
         </div>
         <div v-else-if="introduction.length === 0">没有歌手详情</div>
         <template v-else>
-          <div class="mtop-60" v-for="text in introduction" :key="text.ti">
+          <div class="mtop-20" v-for="text in introduction" :key="text.ti">
             <h2 class="font-bold font-14">{{ text.ti }}</h2>
             <div
               class="my-pre font-14"
@@ -164,15 +164,15 @@ export default {
       if (res.code !== 200) return
       console.log('歌手信息', res)
       console.log(res)
-      this.artistInfo = res.data.artist
-      this.showPriMsg = res.data.showPriMsg
+      this.artistInfo = Object.freeze(res.data.artist)
+      this.showPriMsg = Object.freeze(res.data.showPriMsg)
       if (this.showPriMsg) this.userId = res.data.user.userId
     },
     /* 获取热门50首 */
     async getTop() {
       const res = await getArtistTop(this.id)
       if (res.code !== 200) return
-      this.topList = res.songs
+      this.topList = Object.freeze(res.songs)
       this.isLoading = false
     },
     /* 获取专辑列表 */
@@ -188,16 +188,23 @@ export default {
     async getAlbumDetail(id) {
       const res = await getAlbumDetail(id)
       if (res.code !== 200) return
-      this.albumList.push(res)
+      this.albumList.push(Object.freeze(res))
     },
     /* 获取歌手详细描述 */
     async getIntroduction() {
       const res = await getIntro(this.id)
       if (res.code !== 200) return
+      console.log(res)
       res.introduction.forEach((item) => {
         item.txt = item.txt.split('\n')
       })
-      this.introduction = res.introduction
+      console.log(res.introduction)
+      if (res.briefDesc)
+        res.introduction.unshift({
+          ti: '个人简介',
+          txt: [res.briefDesc]
+        })
+      this.introduction = Object.freeze(res.introduction)
       this.isLoading = false
     },
     /* 获取歌手MV */
@@ -207,7 +214,7 @@ export default {
       res.mvs.forEach((item) => {
         item.cover = item.imgurl
       })
-      this.mvList = res.mvs
+      this.mvList = Object.freeze(res.mvs)
       this.isLoading = false
     },
     /* 获取相似歌手 */

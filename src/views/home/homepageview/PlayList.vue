@@ -27,26 +27,37 @@
         <div class="layer" v-show="showLayer" ref="layerRef">
           <div class="h-80">全部歌单</div>
           <div class="div-line"></div>
-          <div class="tag-list" v-for="z in allCats" :key="z.name">
+          <div class="tag-list" v-for="(item, index) in allCats" :key="index">
             <div class="tag-title">
-              <i
-                v-if="z.type == 0"
-                class="iconfont icon-diqiuquanqiu font-24"
-              ></i>
-              <i v-if="z.type == 1" class="iconfont icon-fengge font-24"></i>
-              <i v-if="z.type == 4" class="iconfont icon-zhuti font-24"></i>
-              <i v-if="z.type == 3" class="iconfont icon-smiling font-24"></i>
-              <i v-if="z.type == 2" class="iconfont icon-xiazai47 font-24"></i>
-              <span class="mleft-6">{{ z.name }}</span>
+              <template v-if="index === 0">
+                <i class="iconfont icon-diqiuquanqiu font-24"></i
+                ><span class="mleft-6">语种</span>
+              </template>
+              <template v-if="index === 1">
+                <i class="iconfont icon-fengge font-24"></i
+                ><span class="mleft-6">风格</span>
+              </template>
+              <template v-if="index === 2">
+                <i class="iconfont icon-xiazai47 font-24"></i
+                ><span class="mleft-6">场景</span>
+              </template>
+              <template v-if="index === 3">
+                <i class="iconfont icon-smiling font-24"></i
+                ><span class="mleft-6">情感</span>
+              </template>
+              <template v-if="index === 4">
+                <i class="iconfont icon-zhuti font-24"></i>
+                <span class="mleft-6">主题</span>
+              </template>
             </div>
             <ul>
-              <li v-for="i in z.sub" :key="i.name">
+              <li v-for="cat in item" :key="cat.name">
                 <button
-                  @click="changefromAll(i.name)"
+                  @click="changefromAll(cat.name)"
                   class="no-btn"
-                  :class="{ isActive: i.isActive }"
+                  :class="{ isActive: cat.isActive }"
                 >
-                  {{ i.name }}
+                  {{ cat.name }}
                 </button>
               </li>
             </ul>
@@ -149,35 +160,19 @@ export default {
     async getAllCats() {
       const res = await getAllCat()
       if (res.code !== 200) return
-      let arr = []
-      for (let i = 0; i < 5; i++) {
-        arr.push({ type: i, name: res.categories[i], sub: [] })
-      }
+      this.allCats=[]
       res.sub.forEach((item) => {
         item.isActive = false
-        switch (item.category) {
-          case 0:
-            arr[0].sub.push(item)
-            break
-          case 1:
-            arr[1].sub.push(item)
-            break
-          case 2:
-            arr[2].sub.push(item)
-            break
-          case 3:
-            arr[3].sub.push(item)
-            break
-          case 4:
-            arr[4].sub.push(item)
-            break
-        }
         /* 使当前标签激活 */
         if (item.name == this.tagBtn) {
           item.isActive = true
         }
       })
-      this.allCats = arr
+      for (let i = 0; i < 5; i++) {
+        this.allCats.push(
+          Object.freeze(res.sub.filter((item) => item.category === i))
+        )
+      }
     },
     /* 根据分类获取歌单 */
     async getPlayList() {
@@ -185,7 +180,7 @@ export default {
       this.getHighInfo(this.queryInfo.cat)
       const res = await getPlayListByCat(this.queryInfo)
       if (res.code !== 200) return
-      this.playList = res.playlists
+      this.playList = Object.freeze(res.playlists)
       this.pageInfo.total = res.total
       this.isLoading = false
     },
@@ -207,7 +202,7 @@ export default {
         this.hasHighInfo = false
         return
       }
-      this.highInfo = res.playlists[0]
+      this.highInfo = Object.freeze(res.playlists[0])
       this.hasHighInfo = true
     },
     changeCat(name) {

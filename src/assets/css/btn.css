@@ -4,10 +4,12 @@
     height: 30px;
     padding: 4px 14px;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 .btn:disabled {
     color: #999999;
+    cursor: not-allowed;
 }
 
 .btn i {

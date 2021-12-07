@@ -156,7 +156,7 @@ export default {
     async getRelatedVideo() {
       const res = await getPersonalizedMv()
       if (res.code !== 200) return
-      this.RelatedList = res.result
+      this.RelatedList = Object.freeze(res.result)
     },
     async getMvInfo() {
       const res = await getMvInfo(this.$route.params.id)

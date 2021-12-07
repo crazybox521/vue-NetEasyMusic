@@ -133,14 +133,14 @@ export default {
     async getDetail() {
       const res = await getUserDetail(this.$route.params.id)
       if (res.code !== 200) return
-      this.info = res.profile
+      this.info = Object.freeze(res.profile)
       this.level = res.level
     },
     /* 获取收藏及创建歌单 */
     async getUserPlayList() {
       const res = await getUserPlayList(this.$route.params.id)
       if (res.code !== 200) return
-      this.list = res.playlist
+      this.list = Object.freeze(res.playlist)
     },
     toPlayListDetail(id) {
       this.$router.push({ path: '/playlistdetail/' + id })
