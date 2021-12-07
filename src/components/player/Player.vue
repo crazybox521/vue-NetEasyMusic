@@ -124,6 +124,7 @@
             :type="0"
             @closePlayView="PlayViewDrawer = false"
             :id="this.currenMusicId"
+            scrollDom=".player .el-drawer__body"
           ></Comment>
         </div>
       </div>

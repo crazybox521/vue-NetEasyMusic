@@ -8,12 +8,40 @@
         <el-menu router :default-active="activeMenu" @select="handleSelect">
           <el-menu-item
             :index="item.path"
-            v-for="item in menuList"
+            v-for="item in commenList"
             :key="item.path"
-            :disabled="item.checkLogin && !isLogin"
+            :disabled="item.Login && !isLogin"
           >
             <span slot="title">{{ item.title }}</span>
           </el-menu-item>
+          <el-menu-item-group>
+            <template slot="title">我的音乐</template>
+            <el-menu-item
+              :index="item.path"
+              v-for="item in myList"
+              :key="item.path"
+              :disabled="item.Login && !isLogin"
+              ><span slot="title">{{ item.title }}</span>
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group v-if="isLogin">
+            <template slot="title">创建的歌单</template>
+            <el-menu-item
+              :index="subPath(item.id)"
+              v-for="item in creList"
+              :key="item.id"
+              ><div slot="title" class="text-hidden">{{ item.name }}</div>
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group v-if="isLogin">
+            <template slot="title">收藏的歌单</template>
+            <el-menu-item
+              :index="subPath(item.id)"
+              v-for="item in subList"
+              :key="item.id"
+              ><div slot="title" class="text-hidden">{{ item.name }}</div>
+            </el-menu-item>
+          </el-menu-item-group>
         </el-menu>
       </div>
       <div class="main-right">
@@ -84,7 +112,7 @@ import notifyMixin from '@/mixins/notifyMixin'
 import { mapState } from 'vuex'
 import FooterBar from '@/components/footer/FooterBar.vue'
 import HeaderBar from '@/components/header/HeaderBar.vue'
-import menuList from '@/listData/menuList'
+import { getUserPlayList } from '@/api/api_user'
 export default {
   mixins: [notifyMixin],
   components: {
@@ -93,7 +121,15 @@ export default {
   },
   data() {
     return {
-      activeMenu: '/personalrecom'
+      activeMenu: '/personalrecom',
+      menuList: [
+        { path: '/personalrecom', title: '发现音乐', Login: false, type: 0 },
+        { path: '/recomsongs', title: '每日推荐', Login: true, type: 1 },
+        { path: '/video', title: '视频', Login: true, type: 0 },
+        { path: '/historyplay', title: '最近播放', Login: false, type: 1 },
+        { path: '/subscribe', title: '我的收藏', Login: true, type: 1 }
+      ],
+      playList: []
     }
   },
   computed: {
@@ -103,21 +139,42 @@ export default {
       'currenMusicId',
       'isLogin',
       'currenIndex',
-      'isPlay'
+      'isPlay',
+      'profile'
     ]),
     length() {
       return this.musicList.length
     },
-    menuList() {
-      return menuList
-      /* this.isLogin
-        ? menuList
-        : menuList.filter((item) => !item.checkLogin) */
+    commenList() {
+      return this.menuList.filter((item) => item.type == 0)
+    },
+    myList() {
+      return this.menuList.filter((item) => item.type == 1)
+    },
+    creList() {
+      return this.playList.filter((item) => item.userId == this.userId)
+    },
+    subList() {
+      return this.playList.filter((item) => item.userId !== this.userId)
+    },
+    userId() {
+      if (Object.keys(this.profile).length !== 0) return this.profile.userId
+      else return 0
     }
   },
   created() {
     if (window.sessionStorage.getItem('activeMenu'))
       this.activeMenu = window.sessionStorage.getItem('activeMenu')
+  },
+  watch: {
+    userId: {
+      immediate: true,
+      handler(val) {
+        if (val !== 0) {
+          this.getUserPlayList(val)
+        }
+      }
+    }
   },
   methods: {
     /* 导航 */
@@ -148,13 +205,26 @@ export default {
     },
     showCurren(id) {
       return this.currenMusicId === id
+    },
+    /* 获取收藏及创建歌单 */
+    async getUserPlayList() {
+      console.log(this.userId)
+      if (this.userId === 0) return
+      const { data: res } = await getUserPlayList(this.userId)
+      console.log(res)
+      if (res.code !== 200) return
+      this.playList = res.playlist
+    },
+    subPath(id) {
+      if (typeof id === 'number') return `/playlistdetail/${id}`
+      else return '/404'
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-@import '../assets/less/lessConfig.less';
+@import '@/assets/less/lessConfig.less';
 
 .layout {
   position: absolute;
@@ -191,6 +261,7 @@ export default {
   bottom: 0;
   width: 200px;
   height: 100%;
+  overflow-y: scroll;
 }
 
 .main-right {

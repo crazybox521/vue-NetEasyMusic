@@ -5,7 +5,12 @@
     padding: 4px 14px;
     border-radius: 15px;
 }
-.btn i{
+
+.btn:disabled {
+    color: #999999;
+}
+
+.btn i {
     font-size: 14px;
 }
 
@@ -28,6 +33,10 @@
     background-color: #f2f2f2;
 }
 
+.btn:disabled:hover {
+    background-color: #fff;
+}
+
 /* 没有边框的按钮 */
 .no-btn {
     outline: 0;
@@ -36,6 +45,7 @@
     color: #676767;
     cursor: pointer;
 }
+
 .no-btn:hover {
     color: #373737;
 }
@@ -52,8 +62,9 @@
     border-radius: 15px;
 }
 
-@media screen  and (max-width:415px) {
-    .btn-text{
+
+@media screen and (max-width:415px) {
+    .btn-text {
         display: none;
     }
 }

@@ -3,7 +3,7 @@ import VueRouter from "vue-router"
 import store from '../store/index'
 /* 路由懒加载 */
 /* 首屏 */
-const Layout = () => import( /* webpackChunkName: "group-home" */ '../views/Layout.vue')
+const Layout = () => import( /* webpackChunkName: "group-home" */ '../views/layout/Layout.vue')
 const HomePage = () => import( /* webpackChunkName: "group-home" */ '../views/home/HomePage.vue')
 const PersonalRecom = () => import( /* webpackChunkName: "group-home" */ '../views/home/homepageview/PersonalRecom.vue')
 /* 登录 和 404*/
@@ -15,7 +15,6 @@ const PlayList = () => import( /* webpackChunkName: "group-homepage" */ '../view
 const ArtistList = () => import( /* webpackChunkName: "group-homepage" */ '../views/home/homepageview/ArtistList.vue')
 const NewMusic = () => import( /* webpackChunkName: "group-homepage" */ '../views/home/homepageview/NewMusic.vue')
 /* 需登录后才能进入的页面 */
-const LikeList = () => import( /* webpackChunkName: "group-user" */ '../views/user/LikeList.vue')
 const RecommendSong = () => import( /* webpackChunkName: "group-user" */ '../views/user/RecommendSong.vue')
 const SubScribeView = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubScribeView.vue')
 const SubAlbum = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubAlbum.vue')
@@ -55,7 +54,7 @@ const routes = [
                     { path: '/toplist', component: TopList },//排行榜
                     { path: '/playlist', component: PlayList },//歌单列表页
                     { path: '/artistlist', component: ArtistList },//歌手页
-                    {path:'/zuixin',component:NewMusic}
+                    { path: '/zuixin', component: NewMusic }
 
                 ],
             },
@@ -88,7 +87,6 @@ const routes = [
             { path: "videodetail/:id", component: VideoDetail, },//视频详情页
             { path: "mvdetail/:id", component: MvDetail, },//mv详情页
             { path: "userdetail/:id", component: UserDetail, },//用户详情页
-            { path: "like", component: LikeList, meta: { check: true } },//喜欢的歌曲
             { path: 'recomsongs', component: RecommendSong, meta: { check: true } },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
             { path: 'allmv', component: AllMv },//全部MV页

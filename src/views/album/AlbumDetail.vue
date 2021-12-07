@@ -79,6 +79,7 @@
       :active="showtab == 2"
       :type="3"
       :id="$route.params.id"
+      scrollDom=".main-right"
     ></Comment>
     <div v-show="showtab == 3">专辑详情</div>
   </div>

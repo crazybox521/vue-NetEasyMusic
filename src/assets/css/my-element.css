@@ -60,9 +60,9 @@
 
 .el-menu-item.is-active {
     color: #313131;
-    font-size: 17px;
     background-color: #f6f6f7;
     font-weight: bold;
+    font-size: 15px;
 }
 
 .el-menu-item:focus,

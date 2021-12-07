@@ -45,6 +45,7 @@
             v-if="!subscribed"
             class="btn btn-white mleft-10"
             @click="subPlaylist(1)"
+            :disabled="subDisabled"
           >
             <i class="el-icon-folder-add"></i>
             <span class="btn-text"
@@ -149,6 +150,7 @@
         :active="showtab == 2"
         :type="2"
         :id="$route.params.id"
+        scrollDom=".main-right"
       ></Comment>
     </div>
     <div v-show="showtab == 3">收藏者</div>
@@ -179,7 +181,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isLogin']),
+    ...mapState(['isLogin','profile']),
     list() {
       let reg = new RegExp(this.key.trim(), 'ig')
       return this.playList.filter((item) => {
@@ -191,6 +193,14 @@ export default {
         this.playList.length < this.info.trackCount &&
         this.playList.length < 800
       )
+    },
+    subDisabled(){
+      return this.info.userId===this.profile.userId
+    }
+  },
+  watch: {
+    '$route.params.id'(val) {
+      this.getPlayList(val)
     }
   },
   created() {
@@ -202,6 +212,7 @@ export default {
   methods: {
     /* 获取歌单信息 */
     async getPlayList(id) {
+      console.log(typeof id);
       const { data: res } = await getPlayListDetail(id, Date.now())
       if (res.code !== 200) return
       console.log(res)

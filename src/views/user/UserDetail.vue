@@ -123,6 +123,7 @@ export default {
     subList() {
       return this.list.filter((item) => item.userId !== this.userId)
     },
+    
     ...mapState(['profile','isLogin'])
   },
   watch: {

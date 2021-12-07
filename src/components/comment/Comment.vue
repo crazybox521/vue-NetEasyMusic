@@ -83,11 +83,23 @@ export default {
       type: [Number, String],
       required: true
     },
+    /* type: 0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频 6: 动态 */
     type: {
       type: Number,
       required: true
     },
-    active: Boolean
+    active: Boolean,
+    /* 滚动条所在元素 */
+    scrollDom: {
+      type: String,
+      require: true,
+      default: 'body'
+    },
+    /* 滚动的偏移量 */
+    scrollOffset: {
+      type: Number,
+      default: 10
+    }
   },
   data() {
     return {
@@ -144,11 +156,20 @@ export default {
       console.log('监听ID', val, this.commentInfo.id)
       this.commentInfo.id = val
       this.newQuery.id = val
+      this.clearCommentInfo()
       this.getHotComment()
       this.getNewComment()
     }
   },
   methods: {
+    /* 重置待发送评论信息 */
+    clearCommentInfo() {
+      this.replyName = ''
+      this.commentInfo.content = ''
+      console.log('重置评论')
+      this.commentInfo.commentId = 0
+      this.commentInfo.t = 1
+    },
     addTopic() {
       this.commentInfo.content += '#输入想说的话题#'
     },
@@ -178,12 +199,11 @@ export default {
         }, 500)
     },
     toUserDetail(id) {
-      console.log(this.type);
-      if(typeof id !=='number') return
-      if(this.type===0)
-      this.$emit('closePlayView')
-      if(this.$route.path!=='/userdetail/' + id)
-      this.$router.push('/userdetail/' + id)
+      console.log(this.type)
+      if (typeof id !== 'number') return
+      if (this.type === 0) this.$emit('closePlayView')
+      if (this.$route.path !== '/userdetail/' + id)
+        this.$router.push('/userdetail/' + id)
     },
     /* 获取热门评论 */
     async getHotComment() {
@@ -241,21 +261,16 @@ export default {
       this.commentInfo.content = '回复' + info.name + ':'
       this.commentInfo.commentId = info.cid
       this.commentInfo.t = 2
-      if (this.type === 0)
-        this.toTopAnimation(
-          this.$refs.areaWrapRef.offsetTop - 80,
-          document.querySelector('.el-drawer__body'),
-          600
-        )
-      else
-        this.toTopAnimation(
-          this.$refs.areaWrapRef.offsetTop - 10,
-          document.querySelector('.main-right'),
-          200
-        )
-        this.$nextTick(() => {
-          this.$refs.textAreaRef.focus()
-        })
+
+      this.toTopAnimation(
+        this.$refs.areaWrapRef.offsetTop - this.scrollOffset,
+        document.querySelector(this.scrollDom),
+        600
+      )
+
+      this.$nextTick(() => {
+        this.$refs.textAreaRef.focus()
+      })
     },
     /* 页码变化的回调 */
     handleCurrentChange(val) {
@@ -263,18 +278,11 @@ export default {
       this.currentPage = val
       this.newQuery.offset = (val - 1) * 20
       this.getNewComment()
-      if (this.type === 0)
-        this.toTopAnimation(
-          this.$refs.newListRef.offsetTop - 80,
-          document.querySelector('.el-drawer__body'),
-          600
-        )
-      else
-        this.toTopAnimation(
-          this.$refs.newListRef.offsetTop - 20,
-          document.querySelector('.main-right'),
-          600
-        )
+      this.toTopAnimation(
+        this.$refs.newListRef.offsetTop - this.scrollOffset,
+        document.querySelector(this.scrollDom),
+        600
+      )
     },
     /* 滚动条由下至上的动画js动画 */
     toTopAnimation(target, scrollDom, ms = 500) {
