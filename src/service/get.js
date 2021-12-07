@@ -1,6 +1,6 @@
 import axios from "axios";
 import NProgress from 'nprogress'
-import { Message } from 'element-ui'
+import Vue from 'vue'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 8000
 
@@ -43,12 +43,12 @@ export const downloadMusic = (url, fileName) => {
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            Message.success(`${fileName}下载成功`)
+            Vue.prototype.$message.success(`${fileName}下载成功`)
         })
         .catch((err) => {
             console.log(err);
             console.log("下载失败,请稍后重试!");
-            Message.$message.error('下载失败,请稍后重试!')
+            Vue.prototype.$message.$message.error('下载失败,请稍后重试!')
         });
 
 }

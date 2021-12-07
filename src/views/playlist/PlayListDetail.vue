@@ -195,7 +195,9 @@ export default {
       )
     },
     subDisabled() {
+      if(this.isLogin)
       return this.info.userId === this.profile.userId
+      else return false
     }
   },
   watch: {
