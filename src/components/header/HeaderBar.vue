@@ -322,11 +322,11 @@ export default {
       this.account = res.account
       this.info = res.profile
       if (res.account !== null) {
-        this.$store.commit('setIsLogin', true)
         this.$store.commit('setLoginInfo', res)
+        this.$store.commit('setIsLogin', true)
       } else {
-        this.$store.commit('setIsLogin', false)
         this.$store.commit('setLoginInfo', { account: null, profile: null })
+        this.$store.commit('setIsLogin', false)
         this.openTip()
       }
     },

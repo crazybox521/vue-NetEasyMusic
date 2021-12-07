@@ -4,6 +4,7 @@
     <div class="header"><HeaderBar></HeaderBar></div>
     <!-- 内容区域 -->
     <div class="main">
+      <!-- 左侧导航栏 -->
       <div class="aside">
         <el-menu router :default-active="activeMenu" @select="handleSelect">
           <el-menu-item
@@ -44,6 +45,7 @@
           </el-menu-item-group>
         </el-menu>
       </div>
+      <!-- 右侧内容区域 -->
       <div class="main-right">
         <div class="view-mian">
           <transition name="el-fade-in">
@@ -52,6 +54,7 @@
         </div>
         <el-backtop target=".main-right" :bottom="100"></el-backtop>
       </div>
+      <!-- 当前播放列表抽屉 -->
       <el-drawer
         title="当前播放"
         :visible.sync="drawerMusicList"
