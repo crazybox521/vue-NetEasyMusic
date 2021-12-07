@@ -34,7 +34,7 @@ export const downloadMusic = (url, fileName) => {
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-
+            Vue.prototype.$message.success(`${fileName}下载成功`)
         })
         .catch((err) => {
             console.log(err);

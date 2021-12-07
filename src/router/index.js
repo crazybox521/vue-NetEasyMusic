@@ -3,7 +3,7 @@ import VueRouter from "vue-router"
 import store from '../store/index'
 /* 路由懒加载 */
 /* 首屏 */
-const Layout = () => import( /* webpackChunkName: "group-home" */ '../views/layout/Layout.vue')
+const Layout = () => import( /* webpackChunkName: "group-home" */ '../views/Layout.vue')
 const HomePage = () => import( /* webpackChunkName: "group-home" */ '../views/home/HomePage.vue')
 const PersonalRecom = () => import( /* webpackChunkName: "group-home" */ '../views/home/homepageview/PersonalRecom.vue')
 /* 登录 和 404*/
