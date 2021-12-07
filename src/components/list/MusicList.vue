@@ -13,16 +13,21 @@
   >
     <el-table-column type="index" width="50">
       <template v-slot="scope">
-        <span class="active-color" v-if="currenMusicId == scope.row.id"
-          ><i class="iconfont icon-sound"></i
+        <span class="active-color" v-if="showCurren(scope.row.id)"
+          ><i v-if="isPlay" class="iconfont icon-shengyin_shiti"></i
+          ><i v-else class="iconfont icon-sound"></i
         ></span>
         <span v-else style="color: #c3c3db">{{ scope.$index + 1 }}</span>
       </template>
     </el-table-column>
     <el-table-column prop="name" label="音乐标题" show-overflow-tooltip>
       <template v-slot="{ row }">
-        <span :class="{'active-color':currenMusicId ==row.id}">{{ row.name }}</span>
-        <span style="color:#969697;" v-if="row.alia.length!==0">({{row.alia[0]}})</span>
+        <span :class="{ 'active-color': showCurren(row.id) }">{{
+          row.name
+        }}</span>
+        <span style="color: #969697" v-if="row.alia.length !== 0"
+          >({{ row.alia[0] }})</span
+        >
         <span v-if="row.fee == 1" class="vip-tag">VIP</span>
         <span
           v-if="row.mv !== 0"
@@ -40,11 +45,16 @@
       width="180"
     >
     </el-table-column>
-    <el-table-column prop="al.name" label="专辑名" width="300" show-overflow-tooltip>
+    <el-table-column
+      prop="al.name"
+      label="专辑名"
+      width="300"
+      show-overflow-tooltip
+    >
     </el-table-column>
     <el-table-column prop="dt" label="时长" width="120">
-      <template v-slot="scope">
-        {{ (scope.row.dt / 1000) | timeFormat }}
+      <template v-slot="{ row }">
+        {{ (row.dt / 1000) | timeFormat }}
       </template>
     </el-table-column>
   </el-table>
@@ -55,7 +65,7 @@ import { mapState } from 'vuex'
 export default {
   props: ['list'],
   computed: {
-    ...mapState(['musicList', 'currenMusicId']),
+    ...mapState(['musicList', 'currenMusicId', 'isPlay']),
     isDisplay() {
       return this.list ? true : false
     }
@@ -89,6 +99,9 @@ export default {
     },
     toMvDeTail(id) {
       if (typeof id === 'number') this.$router.push('/mvdetail/' + id)
+    },
+    showCurren(id) {
+      return this.currenMusicId === id
     }
   }
 }
@@ -106,7 +119,7 @@ export default {
   padding: 0 2px;
   line-height: 1;
 }
-.active-color{
-  color:#ec4141
+.active-color {
+  color: #ec4141;
 }
 </style>

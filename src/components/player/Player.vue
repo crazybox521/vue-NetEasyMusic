@@ -3,7 +3,11 @@
   <div class="player">
     <!-- 歌曲信息 -->
     <div class="song-info">
-      <img class="pointer img-border" :src="imgInfo.imgUrl" @click="openPlayView" />
+      <img
+        class="pointer img-border"
+        :src="imgInfo.imgUrl"
+        @click="openPlayView"
+      />
       <div class="au-info">
         <div class="font-14 w-200 text-hidden">{{ imgInfo.name }}</div>
         <div class="font-12 w-200 text-hidden">{{ imgInfo.author }}</div>
@@ -252,6 +256,8 @@ export default {
             '因版权方要求，该资源暂时无法播放，我们正在争取歌曲回归'
           )
         })
+        this.musicUrl = ''
+        this.$store.commit('setPlayState', false)
         return
       }
       this.getLyric()
@@ -509,7 +515,6 @@ export default {
 }
 /* 播放界面抽屉 */
 .play-view {
-  
   width: 100%;
   margin: 0 auto;
   padding: 0 20%;

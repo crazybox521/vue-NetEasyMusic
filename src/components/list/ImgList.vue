@@ -1,5 +1,5 @@
 <template>
-  <!-- 所有以以图片及描述信息为主要内容的列表通用组件 -->
+  <!-- 所有以图片及描述信息为主要内容的列表通用组件 -->
   <div class="img-list">
     <ul
       class="img-list-ul"
@@ -21,7 +21,7 @@
         <slot :item="item"></slot>
       </li>
     </ul>
-    <div class="loding-wrap" v-show="isLoading">
+    <div class="loading-wrap" v-show="isLoading">
       <i class="el-icon-loading"></i>加载中
     </div>
     <div class="loading-wrap" v-if="noMore">没有更多了</div>
@@ -87,6 +87,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/* ul li */
 .img-list-ul {
   margin-top: 10px;
   display: flex;
@@ -97,6 +98,7 @@ export default {
     margin-right: 2%;
   }
 }
+/* 图片区域 */
 .img-wrap {
   position: relative;
   .video-playcount {
@@ -132,7 +134,7 @@ export default {
   }
 }
 .loading-wrap {
-  font-size: 18px;
+  font-size: 16px;
   height: 50px;
   text-align: center;
 }

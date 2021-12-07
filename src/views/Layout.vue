@@ -1,6 +1,8 @@
 <template>
   <div class="layout">
+    <!-- 头部 -->
     <div class="header"><HeaderBar></HeaderBar></div>
+    <!-- 内容区域 -->
     <div class="main">
       <div class="aside">
         <el-menu router :default-active="activeMenu" @select="handleSelect">
@@ -17,9 +19,8 @@
       <div class="main-right">
         <div class="view-mian">
           <transition name="el-fade-in">
-          <router-view></router-view>
+            <router-view></router-view>
           </transition>
-          
         </div>
         <el-backtop target=".main-right" :bottom="100"></el-backtop>
       </div>
@@ -46,12 +47,15 @@
           stripe
           @row-dblclick="playMusic"
           empty-text="快去播放音乐吧！"
+          tooltip-effect="light"
         >
           <el-table-column type="index" width="50">
             <template v-slot="scope">
-              <span style="color: red" v-if="currenMusicId == scope.row.id"
-                ><i class="iconfont icon-sound"></i
+              <span style="color: red" v-if="showCurren(scope.row.id)"
+                ><i v-if="isPlay" class="iconfont icon-shengyin_shiti"></i
+                ><i v-else class="iconfont icon-sound"></i
               ></span>
+
               <span v-else>{{ scope.$index + 1 }}</span>
             </template>
           </el-table-column>
@@ -60,13 +64,14 @@
           <el-table-column prop="ar[0].name" show-overflow-tooltip label="歌手">
           </el-table-column>
           <el-table-column prop="dt" label="时长">
-            <template v-slot="scope">
-              {{ (scope.row.dt / 1000) | timeFormat }}
+            <template v-slot="{ row }">
+              {{ (row.dt / 1000) | timeFormat }}
             </template>
           </el-table-column>
         </el-table>
       </el-drawer>
     </div>
+    <!-- 底部播放器容器 -->
     <div class="footer">
       <div class="div-line"></div>
       <FooterBar></FooterBar>
@@ -97,7 +102,8 @@ export default {
       'drawerMusicList',
       'currenMusicId',
       'isLogin',
-      'currenIndex'
+      'currenIndex',
+      'isPlay'
     ]),
     length() {
       return this.musicList.length
@@ -139,6 +145,9 @@ export default {
     clearList() {
       this.$store.commit('setCurrenMusicId', 0)
       this.$store.commit('setPlayState', false)
+    },
+    showCurren(id) {
+      return this.currenMusicId === id
     }
   }
 }

@@ -30,7 +30,7 @@
         </button>
       </div>
     </div>
-    <div class="new-song-view">
+    <div class="new-song-view" v-show="showWeek">
       <el-skeleton v-if="isLoading" :rows="6" animated />
 
       <div v-else class="new-album-list">
@@ -38,7 +38,6 @@
           <div class="time-info-content">本周新碟</div>
         </div>
         <div class="data-list">
-
           <ImgList @clickImg="toAlbumDetail" :list="weekData" type="album">
             <template v-slot="{ item }">
               <div class="text-hidden">
@@ -85,7 +84,7 @@ export default {
         }
       ],
       hasMore: false,
-      isLoading:true
+      isLoading: true
     }
   },
   computed: {
@@ -98,24 +97,32 @@ export default {
       return function (areaId) {
         return this.queryInfo.area === areaId
       }
+    },
+    showWeek() {
+      return this.weekData.length !== 0
     }
   },
   methods: {
     changeType(type) {
       console.log('changetype')
       this.queryInfo.type = type
+      this.getNewAlbum()
     },
     changeArea(areaId) {
       this.queryInfo.area = areaId
+      this.getNewAlbum()
     },
     async getNewAlbum() {
-      this.isLoading=true
+      this.isLoading = true
       const { data: res } = await getTopAlbum(this.queryInfo)
       if (res.code !== 200) return
-      this.weekData = res.weekData
+      if (Object.hasOwnProperty.call(res, 'weekData'))
+        this.weekData = res.weekData
+      else this.weekData = []
+      console.log(res)
       /*  this.monthData = res.data.monthData
       this.hasMore = res.data.hasMore */
-      this.isLoading=false
+      this.isLoading = false
     },
     toAlbumDetail(id) {
       if (typeof id === 'number') this.$router.push('/albumdetail/' + id)

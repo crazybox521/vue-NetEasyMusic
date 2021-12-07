@@ -3,8 +3,8 @@ export default {
         notice() {
             const h = this.$createElement
             this.$notify({
-                title: '开发中',
-                message: h('i', { style: 'color: teal' }, '加紧完善中')
+                title: '其实',
+                message: h('i', { style: 'color: teal' }, '其实我只是个摆设')
             })
         }
     },
