@@ -31,10 +31,23 @@ import { doLogin } from '@/api/api_user'
 import md5 from 'js-md5'
 export default {
   data() {
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('手机号不能为空'))
+      }
+      setTimeout(() => {
+        let reg = /^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$/
+        if (!reg.test(this.form.phone)) {
+          callback(new Error('手机号错误'))
+        } else {
+          callback()
+        }
+      }, 1000)
+    }
     return {
       form: { phone: '', password: '', md5_password: '' },
       rules: {
-        phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
+        phone: [{ validator: checkPhone, trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
     }

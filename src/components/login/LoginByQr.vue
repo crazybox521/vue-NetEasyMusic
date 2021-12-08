@@ -44,7 +44,7 @@ export default {
       this.qrType = res.code
       this.message = res.message
       if (res.code === 801 || res.code === 802) {
-        window.setTimeout(() => {
+        this.timer = window.setTimeout(() => {
           this.checkQr()
         }, 5000)
       } else if (res.code === 803) {
@@ -54,6 +54,9 @@ export default {
   },
   created() {
     this.getKey()
+  },
+  beforeDestroy() {
+    window.clearTimeout(this.timer)
   }
 }
 </script>

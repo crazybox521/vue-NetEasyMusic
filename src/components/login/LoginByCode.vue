@@ -37,10 +37,23 @@
 import { doLogin, getCode } from '@/api/api_user'
 export default {
   data() {
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('手机号不能为空'))
+      }
+      setTimeout(() => {
+        let reg = /^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$/
+        if (!reg.test(this.form.phone)) {
+          callback(new Error('手机号错误'))
+        } else {
+          callback()
+        }
+      }, 1000)
+    }
     return {
       form: { phone: '', captcha: '' },
       rules: {
-        phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
+        phone: [{ validator: checkPhone, trigger: 'blur' }],
         captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
       time: 0
@@ -58,6 +71,8 @@ export default {
     },
     async getCode() {
       if (this.form.phone === '') return this.$message.error('请输入手机号')
+      let reg = /^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$/
+      if (!reg.test(this.form.phone)) return this.$message.error('手机号有误')
       this.time = 60
       this.timer = window.setInterval(() => {
         this.time--
