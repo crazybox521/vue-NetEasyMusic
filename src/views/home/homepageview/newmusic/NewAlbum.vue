@@ -68,6 +68,7 @@ export default {
 <style lang="less" scoped>
 .new-album-list {
   display: flex;
+  width: 100%;
   .time-info {
     width: 50px;
     text-align: center;
@@ -76,8 +77,13 @@ export default {
       width: 30px;
     }
   }
-  .data-list {
-    flex: 1;
+}
+@media screen and (max-width: 415px) {
+  .new-album-list {
+    display: block;
+  }
+  .time-info {
+    display: none;
   }
 }
 </style>

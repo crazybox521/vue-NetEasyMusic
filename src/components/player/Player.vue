@@ -333,8 +333,7 @@ export default {
         time > this.lyricObj.lines[this.lyricObj.curren + 1].time
       ) {
         this.lyricObj.curren++
-        if(this.$refs.lyricWrapRef)
-        this.lyricHanlder(this.lyricObj.curren)
+        if (this.$refs.lyricWrapRef) this.lyricHanlder(this.lyricObj.curren)
       }
       time = Math.floor(time)
       /* 同步进度条 */
@@ -640,10 +639,9 @@ export default {
   .lyric-wrap {
     width: 100%;
     margin: 20px auto;
-    font-size: 14px;
   }
   .lyric-active {
-    font-size: 16px;
+    font-size: 17px;
   }
 }
 </style>

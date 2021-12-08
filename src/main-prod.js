@@ -28,9 +28,10 @@ new Vue({
     var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
     var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
     if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-      this.$store.commit('setBannerHeight', 100)
+      this.$store.commit('setIsPhone', true)
     } else {
       //Pc端进入不需要其他操作
+      this.$store.commit('setIsPhone', false)
     }
   }
 }).$mount('#app')
