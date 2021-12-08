@@ -2,31 +2,20 @@
   <div class="login">
     <div class="login-container">
       <div class="login-wrapper">
-        <span class="title">登录</span>
-        <el-form
-          :model="form"
-          :rules="rules"
-          ref="loginRef"
-          label-position="top"
-          hide-required-asterisk
-        >
-          <el-form-item label="手机号" prop="phone">
-            <el-input
-              v-model="form.phone"
-              placeholder="请输入手机号"
-              prefix-icon="el-icon-mobile"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input
-              type="password"
-              v-model="form.password"
-              placeholder="请输入密码"
-              prefix-icon="el-icon-key"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-        <div class="form-btn-container">
+        <span class="title">{{ currenType }}登录</span>
+        <div class="type-btn-wrap type-btn-wrap_active">
+          <button
+            v-for="(item, index) in type"
+            :key="index"
+            class="no-btn"
+            @click="changeType(index)"
+            :class="{ btn_active: index === loginType }"
+          >
+            {{ item }}
+          </button>
+        </div>
+        <component :is="currenComponent" ref="loginRef"></component>
+        <div class="form-btn-container" v-show="loginType !== 1">
           <div class="form-btn-wrap">
             <div class="btn-bg"></div>
             <button class="form-btn" @click="doLogin">
@@ -40,41 +29,40 @@
 </template>
 
 <script>
-import { doLogin } from '@/api/api_user'
-import md5 from 'js-md5'
+import LoginByPhone from '@/components/login/LoginByPhone'
+import LoginByQr from '@/components/login/LoginByQr'
+import LoginByCode from '@/components/login/LoginByCode'
 export default {
+  components: { LoginByPhone, LoginByQr, LoginByCode },
   data() {
     return {
-      form: { phone: '', password: '', md5_password: '' },
-      rules: {
-        phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-      },
-      isLoading: false
+      isLoading: false,
+      loginType: 0, //1:手机号 2:,
+      loginComponent: ['LoginByPhone', 'LoginByQr', 'LoginByCode'],
+      type: ['手机号', '二维码', '验证码']
     }
   },
   computed: {
     btnText() {
       return this.isLoading ? '登录中' : '登录'
+    },
+    currenComponent() {
+      return this.loginComponent[this.loginType]
+    },
+    currenType() {
+      return this.type[this.loginType]
     }
   },
-  created() {
-    console.log(md5('mduhu1'))
-  },
+
   methods: {
+    /* 手机号密码登录 */
     doLogin() {
-      this.$refs.loginRef.validate(async (valid) => {
-        if (!valid) return this.$message.error('请输入正确的信息')
-        this.form.md5_password = md5(this.form.password)
-        this.isLoading = true
-        const res = await doLogin(
-          this.form.phone,
-          this.form.md5_password
-        )
-        if (res.code !== 200)
-          return this.$message.error('登录失败,请检查手机号和密码')
-        this.$router.push('/personalrecom')
-      })
+      if (this.loginType === 0 || this.loginType===2) {
+        this.$refs.loginRef.doLogin()
+      }
+    },
+    changeType(type) {
+      this.loginType = type
     }
   }
 }
@@ -103,11 +91,28 @@ export default {
   padding: 65px 55px 54px 55px;
   .title {
     display: block;
-    font-size: 39px;
-    color: #333333;
+    font-size: 30px;
+    color: #423d3d;
     line-height: 1.2;
     text-align: center;
     padding-bottom: 49px;
+  }
+  .type-btn-wrap {
+    display: flex;
+    justify-content: center;
+    .no-btn {
+      font-size: 16px;
+    }
+    .btn_active {
+      font-weight: bold;
+      &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #000;
+      }
+    }
   }
 }
 .form-btn-container {

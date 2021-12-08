@@ -31,9 +31,10 @@ new Vue({
     //如果匹配上面的浏览器就跳转打开移动端页面
     if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
       //如果是移动端就跳转打开移动端页面
-      this.$store.commit('setBannerHeight', 100)
+      this.$store.commit('setIsPhone', true)
     } else {
       //Pc端进入不需要其他操作
+      this.$store.commit('setIsPhone', false)
     }
   }
 }).$mount('#app')

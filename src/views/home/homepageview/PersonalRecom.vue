@@ -70,14 +70,19 @@ export default {
       }
     }
   },
-  computed: mapState(['bannerHeight', 'isLogin']),
+  computed: {
+    ...mapState(['bannerHeight', 'isLogin', 'isPhone']),
+    bannerHeight() {
+      return this.isPhone ? 80 : 200
+    }
+  },
   methods: {
     /* 个性推荐页 */
     // 轮播图
     async getImgList() {
       const res = await getBanner()
       if (res.code !== 200) return
-      this.imgList=Object.freeze(res.banners)
+      this.imgList = Object.freeze(res.banners)
     },
     // 获取歌单
     async getRecSongList(limit) {
@@ -94,7 +99,9 @@ export default {
       console.log(res)
       res.recommend.forEach((item) => {
         let { id, name, picUrl, playcount: playCount, trackCount } = item
-        this.recommendList.push(Object.freeze({ id, name, picUrl, playCount, trackCount }))
+        this.recommendList.push(
+          Object.freeze({ id, name, picUrl, playCount, trackCount })
+        )
       })
     },
     open(url) {

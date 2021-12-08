@@ -1,10 +1,21 @@
 import get from '@/service/get'
 
 /* 手机号密码登录 */
-export const doLogin = (phone, md5_password) => get('/login/cellphone', { phone, md5_password })
+export const doLogin = ({ phone, md5_password, captcha }) => get('/login/cellphone', { phone, md5_password, captcha })
 
 /* 退出登录 */
 export const logout = () => get('/logout')
+
+/* 二维码登录 */
+// 获取二维码key
+export const getQrKey = () => get('/login/qr/key', { timestamp: Date.now() })
+// 生成二维码Base 64
+export const createQr = (key, qrimg = true) => get('/login/qr/create', { key, qrimg, timestamp: Date.now() })
+// 轮询二维码状态 800 为二维码过期,801 为等待扫码,802 为待确认,803 为授权登录成功(803 状态码下会返回 cookies)
+export const checkQr = (key) => get('/login/qr/check', { key, timestamp: Date.now() })
+
+/* 发送验证码 */
+export const getCode = (phone) => get('/captcha/sent', { phone })
 
 /* 获取登录状态 */
 export const getLoginStatus = () => get('/login/status')

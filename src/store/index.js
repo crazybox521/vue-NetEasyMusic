@@ -20,14 +20,14 @@ const state = {
         currenTime: 0
     },
     /* 轮播图的高度 */
-    bannerHeight: 200,
     isLogin: window.sessionStorage.getItem('isLogin') !== 'true' ? false : true,
     /* 账号信息 */
     account: {},
     /* 用户信息 */
     profile: {},
     /* 是否播放的最近播放 */
-    historyList: []
+    historyList: [],
+    isPhone:false,
 
 }
 
@@ -53,8 +53,8 @@ const mutations = {
     setCurrenTime(state, currenTime) {
         state.currenMusicInfo.currenTime = currenTime
     },
-    setBannerHeight(state, bannerHeight) {
-        state.bannerHeight = bannerHeight
+    setIsPhone(state, isPhone) {
+        state.isPhone = isPhone
     },
     setIsLogin(state, isLogin) {
         state.isLogin = isLogin

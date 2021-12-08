@@ -110,7 +110,7 @@
             <div class="lyric-wrap" ref="lyricWrapRef">
               <p
                 v-for="(line, index) in lyricObj.lines"
-                :class="{ 'lyric_active': index === lyricObj.curren }"
+                :class="{ lyric_active: index === lyricObj.curren }"
                 :key="index"
               >
                 {{ line.txt }}
@@ -125,6 +125,7 @@
             @closePlayView="PlayViewDrawer = false"
             :id="this.currenMusicId"
             scrollDom=".player .el-drawer__body"
+            :scrollOffset="80"
           ></Comment>
         </div>
       </div>
@@ -327,11 +328,14 @@ export default {
       /* 通过audio对象的方法获取当前时间 */
       let time = this.$refs.audioRef.currentTime
       /* 歌词滚动 */
-      if (this.lyricObj.curren != this.lyricObj.total - 1)
-        if (time > this.lyricObj.lines[this.lyricObj.curren + 1].time) {
-          this.lyricObj.curren++
-          this.lyricHanlder(this.lyricObj.curren)
-        }
+      if (
+        this.lyricObj.curren != this.lyricObj.total - 1 &&
+        time > this.lyricObj.lines[this.lyricObj.curren + 1].time
+      ) {
+        this.lyricObj.curren++
+        if(this.$refs.lyricWrapRef)
+        this.lyricHanlder(this.lyricObj.curren)
+      }
       time = Math.floor(time)
       /* 同步进度条 */
       if (time != this.currenMusicInfo.currenTime) {
