@@ -40,7 +40,13 @@
 
 <script>
 export default {
-  props: ['list'],
+  props: {
+    list: {
+      type: Array,
+      required: true,
+      default: () => []
+    }
+  },
   methods: {
     toDetail(id) {
       this.$router.push('/mvdetail/' + id)

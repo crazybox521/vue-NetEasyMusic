@@ -34,7 +34,7 @@ export const getNewMv = (area, limit) => get('/mv/first', { area, limit })
 export const getNetEasyMv = (limit, offset) => get('/mv/exclusive/rcmd', { limit, offset })
 
 /* mv 排行 area, limit,offset */
-export const getTopMv = ({ area, limit, offset }) => get('/top/mv', { area, limit, offset })
+export const getTopMv = ({ area, limit, offset=0 }) => get('/top/mv', { area, limit, offset })
 
 /* MV详情 */
 export const getMvDetail = (mvid) => get('/mv/detail', { mvid })

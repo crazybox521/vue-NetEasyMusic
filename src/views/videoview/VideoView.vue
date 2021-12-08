@@ -1,4 +1,5 @@
 <template>
+<!-- 视频页首屏 -->
   <div class="video-view">
     <div class="video-head">
       <ul class="router-list">

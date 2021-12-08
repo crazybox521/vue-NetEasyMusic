@@ -66,3 +66,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 解决歌曲页面评论区点击用户跳转用户路由，但是播放界面不关闭的 bug，以及用户页面不随 id 变化的 bug,删除播放组件重复逻辑
 - 移动端 outline 没有圆角，更换为 border
 - 将专辑列表、歌单列表、歌手列表整合为一个组件
+- 将仅渲染的数据冻结，优化性能

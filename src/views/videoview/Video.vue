@@ -1,4 +1,5 @@
 <template>
+<!-- 视频页 -->
   <div class="video">
     <!-- 标签区域 -->
     <div class="list-tag mtop-10">

@@ -1,4 +1,5 @@
 <template>
+<!-- MV页 -->
   <div class="music-video">
     <div class="mv-item">
       <div class="new-head">

@@ -1,6 +1,6 @@
 <template>
   <!-- 全部MV页 -->
-  <div class="all-mv mtop-20">
+  <div class="mtop-20 all-mv">
     <div class="all-title font-20 font-bold">全部MV</div>
     <!-- mv的分类筛选 -->
     <div class="tag-wrapper">
@@ -106,11 +106,18 @@ export default {
     },
     /* 获取路由参数中的地区 */
     getQuery() {
-      if (this.$route.query.area) {
-        this.queryInfo.area = this.$route.query.area
+      let query = this.$route.query
+      if (
+        query.area &&
+        this.catList.area.findIndex((item) => item === query.area) !== -1
+      ) {
+        this.queryInfo.area = query.area
       }
-      if (this.$route.query.type) {
-        this.queryInfo.type = this.$route.query.type
+      if (
+        query.type &&
+        this.catList.type.findIndex((item) => item === query.type) !== -1
+      ) {
+        this.queryInfo.type = query.type
       }
     },
     /* MvList组件触发loadMore事件的回调 */
