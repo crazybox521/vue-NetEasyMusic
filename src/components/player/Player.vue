@@ -110,7 +110,7 @@
             <div class="lyric-wrap" ref="lyricWrapRef">
               <p
                 v-for="(line, index) in lyricObj.lines"
-                :class="{ 'lyric-active': index == lyricObj.curren }"
+                :class="{ 'lyric_active': index === lyricObj.curren }"
                 :key="index"
               >
                 {{ line.txt }}
@@ -594,7 +594,7 @@ export default {
     width: 1px;
   }
 }
-.lyric-active {
+.lyric_active {
   font-size: 20px;
   font-weight: bold;
 }
