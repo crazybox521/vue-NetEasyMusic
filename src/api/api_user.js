@@ -28,3 +28,6 @@ export const getUserDetail = (uid) => get('/user/detail', { uid })
 
 /* 获取用户歌单 */
 export const getUserPlayList = (uid, offset, limit) => get('/user/playlist', { uid, offset, limit })
+
+/* 关注用户 */
+export const follow =({id,t})=>get('/follow',{id,t})

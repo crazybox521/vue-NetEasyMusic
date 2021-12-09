@@ -29,7 +29,6 @@ const PlayListDetail = () => import( /* webpackChunkName: "group-detail" */ '../
 const ArtistDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/artist/ArtistDetail.vue')
 const AlbumDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/album/AlbumDetail.vue')
 const VideoDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/video/VideoDetail.vue')
-const MvDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/video/MvDetail.vue')
 const UserDetail = () => import( /* webpackChunkName: "group-detail" */ '../views/user/UserDetail.vue')
 /* 视频页首屏 */
 const VideoView = () => import( /* webpackChunkName: "group-video" */ '../views/videoview/VideoView.vue')
@@ -82,17 +81,16 @@ const routes = [
                 ]
 
             },
-            { path: "search/:key", component: SearchList, },// 搜索展示页
-            { path: "playlistdetail/:id", component: PlayListDetail, },//歌单详情页
-            { path: "artistdetail/:id", component: ArtistDetail, },//歌手详情页
-            { path: "albumdetail/:id", component: AlbumDetail, },//专辑详情页
-            { path: "videodetail/:id", component: VideoDetail,meta: { check: true } },//视频详情页
-            { path: "mvdetail/:id", component: MvDetail,meta: { check: true } },//mv详情页
-            { path: "userdetail/:id", component: UserDetail, },//用户详情页
+            { path: "search/:key", component: SearchList, props: true },// 搜索展示页
+            { path: "playlistdetail/:id", component: PlayListDetail, props: true },//歌单详情页
+            { path: "artistdetail/:id", component: ArtistDetail, props: true },//歌手详情页
+            { path: "albumdetail/:id", component: AlbumDetail, props: true },//专辑详情页
+            { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: true }, props: true },//视频和MV详情页 type v:video mv:mv
+            { path: "userdetail/:id", component: UserDetail, props: true },//用户详情页
             { path: 'recomsongs', component: RecommendSong, meta: { check: true } },//每日推荐歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
-            { path: 'allmv', component: AllMv ,meta: { check: true }},//全部MV页
-            { path: 'topmv', component: TopMv,meta: { check: true } },//MV排行页
+            { path: 'allmv', component: AllMv, meta: { check: true } },//全部MV页
+            { path: 'topmv', component: TopMv, meta: { check: true } },//MV排行页
         ],
     },
     { path: '/login', component: Login },//login

@@ -98,7 +98,7 @@ export default {
       this.getIndex(id)
     },
     toMvDeTail(id) {
-      if (typeof id === 'number') this.$router.push('/mvdetail/' + id)
+      if (typeof id === 'number') this.$router.push('/mvdetail/mv/' + id)
     },
     showCurren(id) {
       return this.currenMusicId === id

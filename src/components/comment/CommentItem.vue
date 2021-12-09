@@ -67,6 +67,7 @@ export default {
       type: Object,
       required: true
     },
+    /* 热评 hot 最近 new */
     identy:String
   },
   methods: {

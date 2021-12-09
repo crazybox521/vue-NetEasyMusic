@@ -4,11 +4,10 @@
     <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
       <li v-for="(v, index) in list" :key="index" class="mtop-10">
         <template v-if="v.type === 1">
-          <div class="mtop-10 img-wrap">
+          <div class="mtop-10 img-wrap" @click="toVideoDetail(v.data.vid)">
             <img
               class="video-img pointer img-border"
               :src="v.data.coverUrl + '?param=300y170'"
-              @click="toDetail(v.data.vid)"
             />
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
@@ -17,7 +16,7 @@
             <div class="video-time font-12">
               {{ (v.data.durationms / 1000) | timeFormat }}
             </div>
-            <div class="play-btn pointer" @click="toDetail(v.data.vid)">
+            <div class="play-btn pointer" >
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -30,11 +29,11 @@
         </template>
         <template v-else>
           <!-- 视频列表中的MV标签下视频 -->
-          <div class="mtop-10 img-wrap">
+          <div class="mtop-10 img-wrap"  @click="toMvDetail(v.data.id)">
             <img
               class="video-img"
               :src="v.data.coverUrl + '?param=300y170'"
-              @click="toMvDetail(v.data.id)"
+             
             />
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
@@ -43,7 +42,7 @@
             <div class="video-time font-12">
               {{ (v.data.duration / 1000) | timeFormat }}
             </div>
-            <div class="play-btn pointer" @click="toMvDetail(v.data.id)">
+            <div class="play-btn pointer">
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -59,7 +58,17 @@
 
 <script>
 export default {
-  props: ['list', 'disabled'],
+  props: {
+    list: {
+      type: Array,
+      required: true
+    },
+    disabled: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
+  },
   watch: {
     'list.length'(val) {
       if (val === 8) {
@@ -71,11 +80,11 @@ export default {
     load() {
       this.$emit('loadMore', this.list.length)
     },
-    toDetail(vid) {
-      if (typeof vid !== 'undefined') this.$router.push('/videodetail/' + vid)
+    toVideoDetail(id) {
+      if (typeof id !== 'undefined') this.$router.push('/videodetail/v/' + id)
     },
-    toMvDetail(mvid) {
-      if (typeof mvid !== 'undefined') this.$router.push('/mvdetail/' + mvid)
+    toMvDetail(id) {
+      if (typeof id !== 'undefined') this.$router.push('/videodetail/mv/' + id)
     }
   }
 }

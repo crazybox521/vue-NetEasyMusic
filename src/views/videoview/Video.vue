@@ -73,8 +73,8 @@ export default {
       tagBtn: '全部视频',
       offset: 0,
       videoList: [],
-      hasMore: true, // 是否还有更多歌手未加载
-      isLoading: false, // 正在获取歌手列表
+      hasMore: true, // 是否还有更多视频未加载
+      isLoading: false, // 正在获取视频列表
       mode: 'first',
       currenTagId: 0,
       listType: 'video'

@@ -6,24 +6,23 @@
         <div class="top-index font-24 mleft-10">
           {{ (index + 1) | mvTopFormat }}
         </div>
-        <div class="mtop-10 img-wrap">
+        <div class="mtop-10 img-wrap" @click="toMvDetail(item.id)">
           <img
             class="video-img img-border"
             :src="item.cover + '?param=300y170'"
-            @click="toDetail(item.id)"
           />
           <div class="video-playcount font-12">
             <i class="iconfont icon-24gl-play"></i>
             {{ item.playCount | countFormat }}
           </div>
-          <div class="play-btn pointer" @click="toDetail(item.id)">
+          <div class="play-btn pointer">
             <i class="iconfont icon-bofang"></i>
           </div>
         </div>
         <div class="top-info mleft-10">
           <div
             class="title-line text-hidden pointer font-14"
-            @click="toDetail(item.id)"
+            @click="toMvDetail(item.id)"
           >
             {{ item.name }}
           </div>
@@ -48,8 +47,8 @@ export default {
     }
   },
   methods: {
-    toDetail(id) {
-      this.$router.push('/mvdetail/' + id)
+    toMvDetail(id) {
+      this.$router.push('/videodetail/mv/' + id)
     }
   }
 }

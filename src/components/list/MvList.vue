@@ -3,23 +3,22 @@
   <div class="mv-list">
     <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
       <li v-for="(nl, index) in list" :key="index">
-        <div class="mtop-10 img-wrap">
+        <div class="mtop-10 img-wrap" @click="toMvDetail(nl.id)">
           <img
             class="video-img img-border"
             :src="nl.cover + '?param=300y170'"
-            @click="toDetail(nl.id)"
           />
           <div class="video-playcount font-12">
             <i class="iconfont icon-24gl-play"></i>
             {{ nl.playCount | countFormat }}
           </div>
-          <div class="play-btn pointer" @click="toDetail(nl.id)">
+          <div class="play-btn pointer">
             <i class="iconfont icon-bofang"></i>
           </div>
         </div>
         <div
           class="title-line text-hidden font-14 pointer"
-          @click="toDetail(nl.id)"
+          @click="toMvDetail(nl.id)"
         >
           {{ nl.name }}
         </div>
@@ -56,8 +55,8 @@ export default {
     load() {
       this.$emit('loadMore', this.list.length)
     },
-    toDetail(id) {
-      this.$router.push('/mvdetail/' + id)
+    toMvDetail(id) {
+      this.$router.push('/videodetail/mv/' + id)
     }
   }
 }

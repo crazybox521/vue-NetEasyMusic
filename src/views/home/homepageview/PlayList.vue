@@ -160,7 +160,7 @@ export default {
     async getAllCats() {
       const res = await getAllCat()
       if (res.code !== 200) return
-      this.allCats=[]
+      this.allCats = []
       res.sub.forEach((item) => {
         item.isActive = false
         /* 使当前标签激活 */

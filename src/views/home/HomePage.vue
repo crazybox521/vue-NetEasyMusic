@@ -21,14 +21,11 @@
 </template>
 
 <script>
-import notifyMixin from '@/mixins/notifyMixin'
 export default {
-  mixins: [notifyMixin],
   data() {
     return {
       routeList: [
         { path: '/personalrecom', title: '个性推荐', isActive: true },
-        { path: '/dingzhi', title: '专属定制', isActive: false },
         { path: '/playlist', title: '歌单', isActive: false },
         { path: '/toplist', title: '排行榜', isActive: false },
         { path: '/artistlist', title: '歌手', isActive: false },
@@ -37,9 +34,7 @@ export default {
     }
   },
   created() {
-    let path = this.$route.path
-    console.log(path)
-    this.setActive(path)
+    this.setActive(this.$route.path)
   },
   watch: {
     $route(to, from) {
@@ -50,13 +45,9 @@ export default {
   methods: {
     /* 路由跳转 */
     goTo(path) {
-      if (path == '/dingzhi') {
-        this.notice()
-        return
-      }
-      if (this.$route.path == path) return false
-      document.querySelector('.main-right').scrollTop = 0
+      if (this.$route.path === path) return false
       this.$router.push(path)
+      document.querySelector('.main-right').scrollTop = 0
     },
     /* 激活导航 */
     setActive(path) {

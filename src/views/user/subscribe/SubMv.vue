@@ -74,7 +74,7 @@ export default {
       this.count = res.count
     },
     toMvDetail(id) {
-      if (typeof id !== 'undefined') this.$router.push('mvdetail/' + id)
+      if (typeof id !== 'undefined') this.$router.push('mvdetail/mv/' + id)
     }
   }
 }
