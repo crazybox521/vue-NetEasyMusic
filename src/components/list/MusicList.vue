@@ -42,7 +42,7 @@
       prop="ar[0].name"
       show-overflow-tooltip
       label="歌手"
-      width="180"
+      width="100"
     >
     </el-table-column>
     <el-table-column
@@ -50,9 +50,10 @@
       label="专辑名"
       width="300"
       show-overflow-tooltip
+      v-if="!isPhone"
     >
     </el-table-column>
-    <el-table-column prop="dt" label="时长" width="120">
+    <el-table-column prop="dt" label="时长" width="120" v-if="!isPhone">
       <template v-slot="{ row }">
         {{ (row.dt / 1000) | timeFormat }}
       </template>
@@ -65,7 +66,7 @@ import { mapState } from 'vuex'
 export default {
   props: ['list'],
   computed: {
-    ...mapState(['musicList', 'currenMusicId', 'isPlay']),
+    ...mapState(['musicList', 'currenMusicId', 'isPlay', 'isPhone']),
     isDisplay() {
       return this.list ? true : false
     }

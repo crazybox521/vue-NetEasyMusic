@@ -117,8 +117,8 @@ export default {
     bottom: 15px;
     background-color: #fbf7f6;
     color: #ec4141;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,7 +126,7 @@ export default {
     opacity: 0;
     transition: all 0.8s;
     i {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
   &:hover .play-btn {

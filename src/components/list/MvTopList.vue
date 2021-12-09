@@ -147,4 +147,22 @@ export default {
     }
   }
 }
+@media screen and (max-width: 548px) {
+  .mv-top-list {
+    ul {
+      li {
+        display: block;
+        height: auto;
+      }
+    }
+  }
+  .img-wrap {
+    .video-img {
+      width: 100%;
+      margin: 0 auto;
+      height: auto;
+     /*  height: 80px; */
+    }
+  }
+}
 </style>

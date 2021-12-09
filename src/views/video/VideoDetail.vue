@@ -24,11 +24,11 @@
             <div class="font-14" v-if="type === 'v'">
               <button
                 class="sub-btn pointer"
-                :class="{ isfollow: isFollow }"
+                :class="{ isfollow: followed }"
                 @click="follow"
               >
-                <span v-show="isFollow">√ 已关注</span>
-                <span v-show="!isFollow">+ 关注</span>
+                <span v-show="followed">√ 已关注</span>
+                <span v-show="!followed">+ 关注</span>
               </button>
             </div>
           </div>
@@ -58,23 +58,25 @@
               class="iconfont icon-good"
               :class="{ icon_liked: countInfo.liked }"
             ></i>
-            {{ likedInfo }}({{ countInfo.likedCount }})
+            <span class="btn-text">{{ likedInfo }}</span>
+            ({{ countInfo.likedCount }})
           </button>
 
           <button class="btn btn-white mleft-10" @click="subVideo">
             <span v-show="!subed">
               <i class="el-icon-folder-add"></i>
-              收藏
+              <span class="btn-text">收藏</span>
             </span>
             <span v-show="subed">
               <i class="el-icon-folder-checked"></i>
-              已收藏
+              <span class="btn-text">已收藏</span>
             </span>
             ({{ deTail.subscribeCount || deTail.subCount }})
           </button>
           <button class="btn btn-white mleft-10">
             <i class="iconfont icon-fenxiang"></i>
-            分享({{ deTail.shareCount }})
+             <span class="btn-text">分享</span>
+            ({{ deTail.shareCount }})
           </button>
         </div>
       </div>
@@ -139,10 +141,12 @@ export default {
   components: { Comment },
   props: {
     id: {
+      type: String,
       required: true
     },
     type: {
       /* mv/v */
+      type: String,
       required: true
     }
   },
@@ -169,9 +173,6 @@ export default {
     },
     likedInfo() {
       return this.countInfo.liked ? '已赞' : '赞'
-    },
-    isFollow() {
-      return this.creator.followed ? true : false
     },
     resoureType() {
       return this.type === 'v' ? 5 : 1

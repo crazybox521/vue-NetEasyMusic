@@ -4,8 +4,8 @@
     <div class="logo-wrap pointer" @click="toHomePage">
       <i class="iconfont icon-logView"></i>
     </div>
-    <div class="menu-btn">
-      <span></span>
+    <div class="menu-btn pointer" @click="openMenu">
+      <span  :class="{ span_active: showMenuInPhone }"></span>
     </div>
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
@@ -189,12 +189,13 @@ export default {
       showInfoTip: false,
       hotList: [],
       historySearchList: [],
-      suggestInfo: {}
+      suggestInfo: {},
+      showMenuInPhone: false
     }
   },
   computed: {
     /* 登录相关信息 */
-    ...mapState(['isLogin']),
+    ...mapState(['isLogin','isPhone']),
     name() {
       return this.info ? this.info.nickname : '未登录'
     },
@@ -386,6 +387,12 @@ export default {
       this.$store.commit('setCurrenMusicId', res.songs[0].id)
       this.$store.commit('setPlayState', true)
       this.$store.commit('setCurrenIndex', 0)
+    },
+    openMenu() {
+      if (!this.showMenuInPhone)
+        document.querySelector('.aside').style.left = 0 + 'px'
+      else document.querySelector('.aside').style.left = -200 + 'px'
+      this.showMenuInPhone = !this.showMenuInPhone
     }
   }
 }
@@ -405,6 +412,9 @@ export default {
   .icon-logView {
     font-size: 48px;
   }
+}
+.menu-btn {
+  display: none;
 }
 .btn-history {
   margin-left: 100px;
@@ -495,6 +505,52 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
+  .menu-btn {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  span {
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    top: 2px;
+    left: 4px;
+    background-color: #fff;
+    transition:none;
+    
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 2px;
+      background-color: #fff;
+    }
+    &::before {
+      top: 8px;
+      left: 0;
+    }
+    &::after {
+      left: 0;
+      top: 16px;
+    }
+  }
+  .span_active {
+    transition: transform 0.5s;
+    transform: rotate(-45deg);
+    top: 10px;
+    &::before {
+      opacity: 0;
+    }
+    &::after {
+      transform: rotate(-90deg);
+      top: 0px;
+    }
+  }
+}
   .btn-history {
     margin-left: 10px;
     .btn-circle {
@@ -511,27 +567,7 @@ export default {
   }
 }
 @media screen and (max-width: 415px) {
-  /* 后续优化，移动端menu */
-  /* .menu-btn {
-    span {
-      display: inline-block;
-      width: 22px;
-      height: 2px;
-      background-color: #fff;
-      border-radius: 5px;
-      transition: background-color 0.2s ease-out 0.1s;
-      &::before {
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 2px;
-        border-radius: 5px;
-        background-color: #fff;
-        transition: transform 0.1s ease-out, top 0.3s ease 0.2s;
-        transform: rotate(0deg);
-      }
-    }
-  } */
+  
   .search-input {
     .search-info_tip {
       left: -30px;

@@ -294,7 +294,9 @@ export default {
 
 @media screen and (max-width: 768px) {
   .aside {
-    display: none;
+    left: -200px;
+    z-index:999;
+    transition: all .8s;
   }
 
   .main-right {

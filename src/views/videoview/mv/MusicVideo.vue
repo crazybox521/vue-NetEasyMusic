@@ -5,7 +5,7 @@
       <div class="new-head">
         <div>
           <button
-            class="no-btn font-16 font-bold mtop-10"
+            class="no-btn font-16 font-bold mtop-10 "
             @click="toAllMv('new')"
           >
             最新MV <i class="el-icon-arrow-right"></i>
@@ -185,5 +185,15 @@ export default {
       }
     }
   }
+}
+@media screen and(max-width:768px) {
+ .cat-list{
+   overflow-x: scroll;
+ }
+}
+@media screen and (max-width:415px) {
+ .new-head{
+   display: block;
+ }
 }
 </style>

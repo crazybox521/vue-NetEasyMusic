@@ -16,7 +16,7 @@
             <div class="video-time font-12">
               {{ (v.data.durationms / 1000) | timeFormat }}
             </div>
-            <div class="play-btn pointer" >
+            <div class="play-btn pointer">
               <i class="iconfont icon-bofang"></i>
             </div>
           </div>
@@ -29,12 +29,8 @@
         </template>
         <template v-else>
           <!-- 视频列表中的MV标签下视频 -->
-          <div class="mtop-10 img-wrap"  @click="toMvDetail(v.data.id)">
-            <img
-              class="video-img"
-              :src="v.data.coverUrl + '?param=300y170'"
-             
-            />
+          <div class="mtop-10 img-wrap" @click="toMvDetail(v.data.id)">
+            <img class="video-img" :src="v.data.coverUrl + '?param=300y170'" />
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
               {{ v.data.playCount | countFormat }}
@@ -104,6 +100,19 @@ export default {
       .author-line {
         margin: 2px 0;
         color: #cfcfcf;
+      }
+    }
+  }
+}
+@media screen and (max-width: 415px) {
+  .video-list {
+    ul {
+      li {
+        width: 48%;
+        margin-right: 4%;
+        &:nth-child(2n) {
+          margin-right: 0;
+        }
       }
     }
   }
