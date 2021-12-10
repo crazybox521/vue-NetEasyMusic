@@ -209,10 +209,10 @@ export default {
     currenMusicId() {
       console.log('播放的歌曲改变了')
       this.getMusicUrl()
-      if(this.PlayViewDrawer){
-        document.querySelector('.player .el-drawer__body').scrollTop=0
+      if (this.PlayViewDrawer) {
+        document.querySelector('.player .el-drawer__body').scrollTop = 0
       }
-    },
+    }
   },
   created() {
     this.getHistory()
@@ -370,7 +370,7 @@ export default {
       this.PlayViewDrawer = true
       /* 打开后歌词跳到对应行 */
       this.$nextTick(() => {
-         document.querySelector('.player .el-drawer__body').scrollTop=0
+        document.querySelector('.player .el-drawer__body').scrollTop = 0
         if (this.$refs.lyricWrapRef) {
           if (this.lyricObj.curren <= 4) {
             this.$refs.lyricWrapRef.scrollTop = 0
@@ -473,7 +473,9 @@ export default {
       width: 32px;
       border-radius: 50%;
       background-color: #f4f4f4;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       .iconfont {
         font-size: 14px;
       }

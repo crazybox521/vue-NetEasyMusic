@@ -88,12 +88,12 @@
     ></Comment>
     <div v-show="showtab == 3">
       <div class="font-bold">专辑介绍</div>
-      <div class="my-pre" v-if="description.lengtj!==0">
+      <div class="my-pre" v-if="description.lengtj !== 0">
         <p v-for="(item, index) in description" :key="index">
           {{ item }}
         </p>
       </div>
-      <div v-else>没有专辑详情</div>
+      <div v-else style="text-align: center">没有专辑详情</div>
     </div>
   </div>
 </template>

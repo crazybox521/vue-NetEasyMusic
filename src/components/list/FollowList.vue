@@ -52,6 +52,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.follow-list{
+    background-color: #fff;
+}
 .follow-list-ul {
   display: flex;
   flex-wrap: wrap;
