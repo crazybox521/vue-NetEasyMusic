@@ -75,7 +75,6 @@ export default {
   computed: {
     ...mapState(['musicList'])
   },
-
   created() {
     this.getTopList()
   },

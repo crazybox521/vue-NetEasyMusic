@@ -25,3 +25,6 @@ export const getHighquality = (limit, cat, before) => get('/top/playlist/highqua
 
 /* 获取日推歌单 */
 export const getRecommend = () => get('/recommend/resource')
+
+/* 获取歌单收藏者 */
+export const getSuberList = ({ id, limit = 30, offset }) => get('/playlist/subscribers', { id, limit, offset })

@@ -21,6 +21,13 @@ export default class Lyric {
         return Number(sec + '.' + ms)
     }
     constructor(str) {
+        if (typeof str === 'undefined') {
+            this.lines = [{ time: 1, txt: '解析歌词失败' }]
+            this.total = 1
+            this.curren = 0
+            this.errorLyric = true
+            return this
+        }
         let arr = str.split('\n')
         let lines = []
         const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
@@ -33,10 +40,10 @@ export default class Lyric {
                 obj.time = time ? Lyric.formatLyricTime(time[0].slice(1, time[0].length - 1)) : 0
                 if (obj.txt !== '') {
                     lines.push(obj)
-                } 
+                }
             })
         } catch (error) {
-            this.lines = [{time:1,txt:'解析歌词失败'}]
+            this.lines = [{ time: 1, txt: '解析歌词失败' }]
             this.total = 1
             this.curren = 0
             this.errorLyric = true

@@ -44,6 +44,7 @@ export default {
     this.getToday()
     this.getList()
   },
+ 
   methods: {
     async getList() {
       const res = await getRecommendSong()

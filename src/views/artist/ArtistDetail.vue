@@ -157,6 +157,7 @@ export default {
     this.getTop()
     this.getAlbum()
   },
+
   methods: {
     /* 获取歌手详情 */
     async getInfo() {

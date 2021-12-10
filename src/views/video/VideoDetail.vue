@@ -209,6 +209,7 @@ export default {
     this.getRelatedVideo()
     this.getVideoLikeInfo()
   },
+ 
   methods: {
     /* 获取视频详情 */
     async getDetail() {

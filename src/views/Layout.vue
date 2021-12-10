@@ -46,7 +46,7 @@
         </el-menu>
       </div>
       <!-- 右侧内容区域 -->
-      <div class="main-right">
+      <div class="main-right" ref="scrollWrapRef">
         <div class="view-mian">
           <transition name="el-fade-in">
             <router-view></router-view>
@@ -177,6 +177,9 @@ export default {
           this.getUserPlayList(val)
         }
       }
+    },
+    '$route.path'(){
+      this.$refs.scrollWrapRef.scrollTop=0
     }
   },
   methods: {

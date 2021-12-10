@@ -354,6 +354,7 @@ export default {
           const res = await logout()
           if (res.code !== 200) return
           this.$message.success('退出成功')
+          this.$router.push('/personalrecom')
           this.getAcount()
         })
         .catch(() => {

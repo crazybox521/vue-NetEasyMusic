@@ -128,6 +128,7 @@ export default {
     this.getDetail()
     this.getUserPlayList()
   },
+  
   methods: {
     /* 获取详情信息 */
     async getDetail() {

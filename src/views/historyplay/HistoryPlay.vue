@@ -31,6 +31,7 @@ export default {
       return this.historyList.length
     }
   },
+ 
   methods: {
     playAll() {
       /* 访问音乐列表组件的方法 */

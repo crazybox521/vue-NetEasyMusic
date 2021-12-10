@@ -144,23 +144,44 @@
         scrollDom=".main-right"
       ></Comment>
     </div>
-    <div v-show="showtab == 3">收藏者</div>
+    <div v-show="showtab == 3">
+      <FollowList :type="1" :list="suberList" @clickImg="toUserDetail"></FollowList>
+      <div class="flex_center" style="width: 100%">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page="pageInfo.currentPage"
+          :page-size="30"
+          layout="prev, pager, next"
+          :total="pageInfo.total"
+          background
+        >
+        </el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import MusicList from '@/components/list/MusicList'
+import FollowList from '@/components/list/FollowList'
 import Tag from '@/components/simple/Tag'
 import Comment from '@/components/comment/Comment'
-import { getPlayListDetail } from '@/api/api_playlist'
+import { getPlayListDetail, getSuberList } from '@/api/api_playlist'
 import { getMusicListByIds } from '@/api/api_music'
 import { setPlaylistSub } from '@/api/api_sub'
 import { mapState } from 'vuex'
 export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   components: {
     MusicList,
     Tag,
-    Comment
+    Comment,
+    FollowList
   },
   data() {
     return {
@@ -170,7 +191,12 @@ export default {
       subscribed: false,
       showtab: 1,
       creator: {},
-      tags: []
+      tags: [],
+      suberList: [],
+      pageInfo: {
+        currentPage: 1,
+        total: 0
+      }
     }
   },
   computed: {
@@ -198,20 +224,17 @@ export default {
     }
   },
   watch: {
-    '$route.params.id'(val) {
-      this.getPlayList(val)
+    id() {
+      this.getPlayList()
     }
   },
   created() {
     this.getPlayList()
   },
-  mounted() {
-    document.querySelector('.main-right').scrollTop = 0
-  },
   methods: {
     /* 获取歌单信息 */
     async getPlayList() {
-      const res = await getPlayListDetail(this.$route.params.id, Date.now())
+      const res = await getPlayListDetail(this.id, Date.now())
       if (res.code !== 200) return
       console.log(res)
       this.info = Object.freeze(res.playlist)
@@ -220,6 +243,20 @@ export default {
       console.log(this.creator)
       this.playList = Object.freeze(res.playlist.tracks)
       this.subscribed = res.playlist.subscribed
+    },
+    /* 获取歌单收藏者 */
+    async getSuberList() {
+      const res = await getSuberList({
+        id: this.id,
+        offset: (this.pageInfo.currentPage - 1) * 30
+      })
+      if (res.code !== 200) return
+      this.suberList = res.subscribers
+      this.pageInfo.total = res.total
+    },
+    handleCurrentChange(val) {
+      this.pageInfo.currentPage = val
+      this.getSuberList()
     },
     playAll() {
       /* 访问音乐列表组件的方法 */
@@ -248,19 +285,23 @@ export default {
     /* 收藏/取消收藏 */
     async subPlaylist(type) {
       if (!this.isLogin) return this.$message.error('需要登录')
-      const res = await setPlaylistSub(this.$route.params.id, type)
+      const res = await setPlaylistSub(this.id, type)
       if (res.code !== 200) return
       this.subscribed = !this.subscribed
       if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
     },
 
-    toUserDetail(id) {
-      this.$router.push('/userdetail/' + id)
+    toUserDetail(item) {
+      if(typeof item ==='object')
+      this.$router.push('/userdetail/' + item.userId)
+      else
+      this.$router.push('/userdetail/' + item)
     },
     handMenuClick(type) {
       if (this.showtab === type) return
       this.showtab = type
+      if (this.showtab === 3) this.getSuberList()
     }
   }
 }

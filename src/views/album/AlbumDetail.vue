@@ -86,7 +86,15 @@
       :id="$route.params.id"
       scrollDom=".main-right"
     ></Comment>
-    <div v-show="showtab == 3">专辑详情</div>
+    <div v-show="showtab == 3">
+      <div class="font-bold">专辑介绍</div>
+      <div class="my-pre" v-if="description.lengtj!==0">
+        <p v-for="(item, index) in description" :key="index">
+          {{ item }}
+        </p>
+      </div>
+      <div v-else>没有专辑详情</div>
+    </div>
   </div>
 </template>
 
@@ -120,12 +128,18 @@ export default {
       return this.albumInfo.picUrl
         ? this.albumInfo.picUrl + '?param=300y300'
         : ''
+    },
+    description() {
+      return this.albumInfo.description
+        ? this.albumInfo.description.split('\n')
+        : []
     }
   },
   created() {
     this.getAlbum()
     this.getAlbumDynamic()
   },
+
   methods: {
     playAll() {
       this.$refs.listRef.playMusicAll()
@@ -210,6 +224,14 @@ export default {
     .info-btn {
       margin: 5px 0;
     }
+  }
+}
+.my-pre {
+  text-indent: 2em;
+  line-height: 2;
+  width: 100%;
+  p {
+    color: #676767;
   }
 }
 @media screen and (max-width: 415px) {
