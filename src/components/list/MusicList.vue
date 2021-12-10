@@ -42,8 +42,17 @@
       prop="ar[0].name"
       show-overflow-tooltip
       label="歌手"
-      width="100"
+      :width="artistColLength"
     >
+      <template v-slot="{ row }">
+        <span
+          class="pointer artist-list"
+          @click="toArtistDetail(a.id)"
+          v-for="a in row.ar"
+          :key="a.name"
+          >{{ a.name }}</span
+        >
+      </template>
     </el-table-column>
     <el-table-column
       prop="al.name"
@@ -52,6 +61,11 @@
       show-overflow-tooltip
       v-if="!isPhone"
     >
+      <template v-slot="{ row }">
+        <span class="pointer" @click="toAlbumDetail(row.al.id)">{{
+          row.al.name
+        }}</span>
+      </template>
     </el-table-column>
     <el-table-column prop="dt" label="时长" width="120" v-if="!isPhone">
       <template v-slot="{ row }">
@@ -69,6 +83,9 @@ export default {
     ...mapState(['musicList', 'currenMusicId', 'isPlay', 'isPhone']),
     isDisplay() {
       return this.list ? true : false
+    },
+    artistColLength(){
+      return this.isPhone?80:180
     }
   },
   methods: {
@@ -101,8 +118,16 @@ export default {
     toMvDeTail(id) {
       if (typeof id === 'number') this.$router.push('/videodetail/mv/' + id)
     },
+    toArtistDetail(id) {
+      if (typeof id === 'number') this.$router.push('/artistdetail/' + id)
+    },
     showCurren(id) {
       return this.currenMusicId === id
+    },
+    toAlbumDetail(id) {
+      if (this.$route.path === '/albumdetail/' + id) return
+
+      if (typeof id === 'number') this.$router.push('/albumdetail/' + id)
     }
   }
 }
@@ -122,5 +147,15 @@ export default {
 }
 .active-color {
   color: #ec4141;
+}
+.artist-list {
+  &::after {
+    display: inline;
+    margin: 2px;
+    content: '/';
+  }
+  &:last-child::after {
+    content: '';
+  }
 }
 </style>

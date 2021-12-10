@@ -365,46 +365,57 @@ export default {
 /* 歌单信息区域 */
 .detail-desc {
   display: flex;
+
   .detail-img-wrapper {
     width: 180px;
     height: 180px;
   }
+
   .detail-desc-info {
     line-height: 24px;
     margin-left: 20px;
+
     .author {
       margin: 5px 0;
       height: 24px;
       display: flex;
+
       .author-img {
         height: 24px;
       }
     }
+
     .info-btn {
       margin: 5px 0;
     }
   }
 }
+
 .more-btn {
   margin-top: 10px;
   font-size: 14px;
   color: #bbb;
 }
+
 /* 列表头部区域 */
 .detail-head {
   display: flex;
   background-color: #fff;
   justify-content: space-between;
   align-items: center;
+
   .detail-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     li {
       margin: 10px;
+
       &.isActive {
         font-size: 18px;
         font-weight: bold;
+
         &::after {
           display: block;
           content: '';
@@ -452,13 +463,16 @@ input[type='checkbox'] {
   color: #34538b;
   cursor: pointer;
 }
+
 .comment {
   background-color: #fff;
 }
+
 @media screen and (max-width: 768px) {
   .detail-desc {
     display: block;
     position: relative;
+
     .detail-img-wrapper {
       position: absolute;
       width: 100%;
@@ -467,40 +481,48 @@ input[type='checkbox'] {
       opacity: 0.5;
       border-radius: 8px;
       overflow: hidden;
+
       img {
         transform: translateY(-20%);
         border: none;
       }
     }
+
     .detail-desc-info {
       padding-top: 10px;
     }
   }
+
   /* .detail-search {
-    display: none;
-  } */
+      display: none;
+    } */
   .info-btn {
     display: flex;
     flex-wrap: wrap;
+
     .btn {
       margin: 5px;
     }
   }
 }
+
 @media screen and (max-width: 415px) {
   .detail-desc {
     display: block;
     position: relative;
+
     .detail-img-wrapper {
       img {
         transform: none;
       }
     }
+
     .detail-desc-info {
       min-height: 60vw;
       position: relative;
     }
   }
+
   .detail-search {
     display: none;
   }

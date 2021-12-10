@@ -41,11 +41,15 @@
         </ul>
         <div class="author font-14">
           <span>歌手：</span>
-          <span v-for="a in albumInfo.artists" :key="a.id"
-            >{{ a.name }} /
+          <span
+            class="pointer author-name"
+            v-for="a in albumInfo.artists"
+            :key="a.id"
+            @click="toArtistDetail(a.id)"
+            >{{ a.name }}
           </span>
         </div>
-        <div class="author">
+        <div class="">
           <span class="font-14">
             时间：{{ albumInfo.publishTime | dateFormat }}</span
           >
@@ -53,7 +57,7 @@
       </div>
     </div>
     <!-- 专辑列表 -->
-    <div class="detail-table">
+    <div class="detail-head">
       <ul class="detail-menu">
         <li
           @click="handMenuClick(1)"
@@ -106,6 +110,12 @@ import MusicList from '@/components/list/MusicList.vue'
 import Comment from '@/components/comment/Comment.vue'
 import { mapState } from 'vuex'
 export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   components: {
     Tag,
     MusicList,
@@ -146,7 +156,7 @@ export default {
     },
     /* 获取专辑信息 */
     async getAlbum() {
-      const res = await getAlbumDetail(this.$route.params.id)
+      const res = await getAlbumDetail(this.id)
       if (res.code !== 200) return
       console.log(res)
       this.list = Object.freeze(res.songs)
@@ -155,14 +165,15 @@ export default {
     /* 收藏、取消收藏 */
     async subAlbum(type) {
       if (!this.isLogin) return this.$message.error('需要登录')
-      const res = await setAlbumSub(this.$route.params.id, type)
+      const res = await setAlbumSub(this.id, type)
       if (res.code !== 200) return
       this.isSub = !this.isSub
       if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
     },
+    /* 获取点赞评论信息 */
     async getAlbumDynamic() {
-      const res = await getAlbumDynamic(this.$route.params.id)
+      const res = await getAlbumDynamic(this.id)
       if (res.code !== 200) return
       this.isSub = res.isSub
       this.shareCount = res.shareCount
@@ -171,24 +182,79 @@ export default {
     },
     handMenuClick(val) {
       this.showtab = val
+    },
+    toArtistDetail(id) {
+      if (typeof id === 'number') this.$router.push('/artistdetail/' + id)
     }
   }
 }
 </script>
-
 <style lang="less" scoped>
-.detail-table {
+/* 歌单信息区域 */
+.detail-desc {
   display: flex;
+
+  .detail-img-wrapper {
+    width: 180px;
+    height: 180px;
+  }
+
+  .detail-desc-info {
+    line-height: 24px;
+    margin-left: 20px;
+
+    .author {
+      margin: 5px 0;
+      display: flex;
+      flex-wrap: wrap;
+      .author-img {
+        height: 24px;
+      }
+      .author-name {
+        color: #3771dd;
+        &::after {
+          display: inline;
+          color: #000;
+          margin: 4px;
+          content: '/';
+        }
+        &:last-child::after {
+          content: '';
+        }
+      }
+    }
+
+    .info-btn {
+      margin: 5px 0;
+    }
+  }
+}
+
+.more-btn {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* 列表头部区域 */
+.detail-head {
+  display: flex;
+  background-color: #fff;
   justify-content: space-between;
+  align-items: center;
+
   .detail-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     li {
       margin: 10px;
+
       &.isActive {
         font-size: 18px;
         font-weight: bold;
+
         &::after {
           display: block;
           content: '';
@@ -203,28 +269,42 @@ export default {
   }
 }
 
-.detail-desc {
-  display: flex;
-  .detail-img-wrapper {
-    width: 180px;
-    height: 180px;
-  }
-  .detail-desc-info {
-    width: 1000px;
-    line-height: 24px;
-    margin-left: 20px;
-    .author {
-      margin: 5px 0;
-      height: 24px;
-      display: flex;
-      .author-img {
-        height: 24px;
-      }
-    }
-    .info-btn {
-      margin: 5px 0;
-    }
-  }
+/* 文字展开收起效果 */
+.element {
+  max-height: 20px;
+  overflow: hidden;
+  transition: max-height 1s;
+}
+
+:checked ~ .element {
+  max-height: 666px;
+}
+
+input[type='checkbox'] {
+  position: absolute;
+  clip: rect(0 0 0 0);
+}
+
+:checked ~ .check-in {
+  display: none;
+}
+
+:checked ~ .check-out {
+  display: inline-block;
+}
+
+.check-out {
+  display: none;
+}
+
+.check-in,
+.check-out {
+  color: #34538b;
+  cursor: pointer;
+}
+
+.comment {
+  background-color: #fff;
 }
 .my-pre {
   text-indent: 2em;
@@ -234,13 +314,63 @@ export default {
     color: #676767;
   }
 }
-@media screen and (max-width: 415px) {
+@media screen and (max-width: 768px) {
+  .detail-desc {
+    display: block;
+    position: relative;
+
+    .detail-img-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.5;
+      border-radius: 8px;
+      overflow: hidden;
+
+      img {
+        transform: translateY(-20%);
+        border: none;
+      }
+    }
+
+    .detail-desc-info {
+      padding-top: 10px;
+    }
+  }
+
+  /* .detail-search {
+      display: none;
+    } */
   .info-btn {
     display: flex;
     flex-wrap: wrap;
+
     .btn {
       margin: 5px;
     }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .detail-desc {
+    display: block;
+    position: relative;
+
+    .detail-img-wrapper {
+      img {
+        transform: none;
+      }
+    }
+
+    .detail-desc-info {
+      min-height: 60vw;
+      position: relative;
+    }
+  }
+
+  .detail-search {
+    display: none;
   }
 }
 </style>
