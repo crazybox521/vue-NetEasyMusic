@@ -94,6 +94,12 @@ import ImgList from '@/components/list/ImgList.vue'
 import { getUserDetail, getUserPlayList } from '@/api/api_user'
 import { mapState } from 'vuex'
 export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   components: { ImgList },
   data() {
     return {
@@ -119,7 +125,7 @@ export default {
     ...mapState(['profile', 'isLogin'])
   },
   watch: {
-    '$route.params.id'() {
+    id() {
       this.getDetail()
       this.getUserPlayList()
     }
@@ -128,18 +134,18 @@ export default {
     this.getDetail()
     this.getUserPlayList()
   },
-  
+
   methods: {
     /* 获取详情信息 */
     async getDetail() {
-      const res = await getUserDetail(this.$route.params.id)
+      const res = await getUserDetail(this.id)
       if (res.code !== 200) return
       this.info = Object.freeze(res.profile)
       this.level = res.level
     },
     /* 获取收藏及创建歌单 */
     async getUserPlayList() {
-      const res = await getUserPlayList(this.$route.params.id)
+      const res = await getUserPlayList(this.id)
       if (res.code !== 200) return
       this.list = Object.freeze(res.playlist)
     },

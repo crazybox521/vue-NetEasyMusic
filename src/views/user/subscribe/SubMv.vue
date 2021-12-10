@@ -93,6 +93,16 @@ export default {
     li {
       width: 22%;
       margin-right: 3%;
+      @media screen and (max-width:415px) {
+        &{
+          width: 48%;
+          margin-right: 4%;
+        }
+        &:nth-child(2n)
+        {
+          margin-right: 0;
+        }
+      }
       .title-line {
         margin: 4px 0;
       }

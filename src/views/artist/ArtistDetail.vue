@@ -108,6 +108,12 @@ import {
 } from '@/api/api_artist'
 import { getAlbumDetail } from '@/api/api_album'
 export default {
+  props:{
+    id:{
+      type:String,
+      required:true
+    }
+  },
   components: { AlbumList, TopFiftyList, MvList, ImgList },
   data() {
     return {
@@ -137,9 +143,7 @@ export default {
         ? this.artistInfo.cover + '?param=300y300'
         : 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
     },
-    id() {
-      return this.$route.params.id
-    }
+   
   },
   watch: {
     '$route.params.id'() {
