@@ -78,14 +78,20 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  props: ['list'],
+  props: {
+    list: {
+      type: Array,
+      required: true,
+      default: () => {}
+    }
+  },
   computed: {
     ...mapState(['musicList', 'currenMusicId', 'isPlay', 'isPhone']),
     isDisplay() {
       return this.list ? true : false
     },
-    artistColLength(){
-      return this.isPhone?80:180
+    artistColLength() {
+      return this.isPhone ? 80 : 180
     }
   },
   methods: {
@@ -109,6 +115,7 @@ export default {
       console.log('调用了')
       if (this.list.length == 0) return
       let id = this.list[0].id
+      console.log(this.list)
       console.log('列表没变', this.list == this.musicList)
       this.$store.commit('setMusicList', this.list)
       this.$store.commit('setCurrenMusicId', id)

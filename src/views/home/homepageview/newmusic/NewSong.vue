@@ -98,6 +98,7 @@ export default {
       const res = await getTopMusic(this.type)
       if (res.code !== 200) return
       let list = []
+      console.log(res);
       res.data.forEach((item) => {
         list.push({
           id: item.id,
