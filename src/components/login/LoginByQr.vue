@@ -1,11 +1,13 @@
 <template>
   <div class="login-by-qr mtop-20">
+    <div class="msg-wrap">打开网易云音乐手机端扫码登录</div>
     <div class="img-wrap">
       <img class="img img-h" :src="imgData" />
       <div class="btn-refresh pointer" @click="getKey" v-show="qrType === 800">
         <i class="el-icon-refresh-left"></i>
       </div>
     </div>
+
     <div class="msg-wrap">状态：{{ message }}</div>
   </div>
 </template>
