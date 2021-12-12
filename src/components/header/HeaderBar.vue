@@ -1,11 +1,11 @@
 <template>
-  <!-- 头部工具栏区域组件 -->
+  <!-- 头部工具栏区域组件，主要管理路由回退前进，检索，登录信息 -->
   <div class="header-bar">
     <div class="logo-wrap pointer" @click="toHomePage">
       <i class="iconfont icon-logView"></i>
     </div>
     <div class="menu-btn pointer" @click="openMenu">
-      <span  :class="{ span_active: showMenuInPhone }"></span>
+      <span :class="{ span_active: showMenuInPhone }"></span>
     </div>
     <div class="btn-history">
       <button @click="goTo(-1)" class="btn-circle">
@@ -177,7 +177,7 @@
 import { mapState } from 'vuex'
 import { getAcount, logout } from '@/api/api_user'
 import { getHotSearch, getSuggest } from '@/api/api_other'
-import { getMusicListByIds } from '@/api/api_music.js'
+import { getMusicListByIds, getLikeIdList } from '@/api/api_music.js'
 import SuggestList from '@/components/list/SuggestList'
 export default {
   components: { SuggestList },
@@ -195,7 +195,7 @@ export default {
   },
   computed: {
     /* 登录相关信息 */
-    ...mapState(['isLogin','isPhone']),
+    ...mapState(['isLogin', 'isPhone']),
     name() {
       return this.info ? this.info.nickname : '未登录'
     },
@@ -325,10 +325,23 @@ export default {
       if (res.account !== null) {
         this.$store.commit('setLoginInfo', res)
         this.$store.commit('setIsLogin', true)
+        this.getLikeIdList()
       } else {
         this.$store.commit('setLoginInfo', { account: null, profile: null })
         this.$store.commit('setIsLogin', false)
         this.openTip()
+      }
+    },
+    /* 获取喜欢的音乐列表,在这里获取是因为方便，本组件是登录信息来源，获取登录信息成功后就可以调用，*/
+    async getLikeIdList() {
+      const res = await getLikeIdList(this.info.userId)
+      if (res.code !== 200) return
+      console.log(res)
+      if (res.ids instanceof Array) {
+        this.$store.commit('setLikeIdList', {
+          type: 'get',
+          data: res.ids
+        })
       }
     },
     /* 未登录的提示 */
@@ -405,7 +418,6 @@ export default {
   display: flex;
   align-items: center;
   color: #ffffff;
-  position: relative;
 }
 .logo-wrap {
   height: 60px;
@@ -507,51 +519,51 @@ export default {
 
 @media screen and (max-width: 768px) {
   .menu-btn {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  position: relative;
-  span {
-    position: absolute;
     display: inline-block;
-    width: 20px;
-    height: 2px;
-    top: 2px;
-    left: 4px;
-    background-color: #fff;
-    transition:none;
-    
-    &::before,
-    &::after {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    span {
       position: absolute;
-      content: '';
       display: inline-block;
       width: 20px;
       height: 2px;
+      top: 2px;
+      left: 4px;
       background-color: #fff;
+      transition: none;
+
+      &::before,
+      &::after {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 2px;
+        background-color: #fff;
+      }
+      &::before {
+        top: 8px;
+        left: 0;
+      }
+      &::after {
+        left: 0;
+        top: 16px;
+      }
     }
-    &::before {
-      top: 8px;
-      left: 0;
-    }
-    &::after {
-      left: 0;
-      top: 16px;
+    .span_active {
+      transition: transform 0.5s;
+      transform: rotate(-45deg);
+      top: 10px;
+      &::before {
+        opacity: 0;
+      }
+      &::after {
+        transform: rotate(-90deg);
+        top: 0px;
+      }
     }
   }
-  .span_active {
-    transition: transform 0.5s;
-    transform: rotate(-45deg);
-    top: 10px;
-    &::before {
-      opacity: 0;
-    }
-    &::after {
-      transform: rotate(-90deg);
-      top: 0px;
-    }
-  }
-}
   .btn-history {
     margin-left: 10px;
     .btn-circle {
@@ -568,10 +580,9 @@ export default {
   }
 }
 @media screen and (max-width: 415px) {
-  
   .search-input {
     .search-info_tip {
-      left: -30px;
+      left: -60px;
     }
   }
 }

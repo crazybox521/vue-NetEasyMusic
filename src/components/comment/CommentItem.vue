@@ -68,14 +68,14 @@ export default {
       required: true
     },
     /* 热评 hot 最近 new */
-    identy:String
+    identy: String
   },
   methods: {
     toUserDetail(id) {
-      this.$emit('clickUser',id)
+      this.$emit('clickUser', id)
     },
     like(cid, liked) {
-      this.$emit('like', { cid, liked,identy:this.identy })
+      this.$emit('like', { cid, liked, identy: this.identy })
     },
     reply(cid, name) {
       this.$emit('reply', { cid, name })
@@ -100,9 +100,15 @@ export default {
       display: flex;
       justify-content: space-between;
     }
+    .comment-content {
+      word-break: break-all;
+      word-wrap: break-word;
+    }
     .reply-content {
       background-color: #f4f4f4;
       border-radius: 6px;
+      word-break: break-all;
+      word-wrap: break-word;
     }
   }
 }

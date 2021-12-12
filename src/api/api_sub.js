@@ -12,7 +12,7 @@ export const getSubMv = () => get('/mv/sublist')
 export const getSubAlbum = (offset = 0, limit = 25) => get('/album/sublist', { offset, limit })
 
 /* 收藏/取消收藏歌单 t : 类型,1:收藏,2:取消收藏 */
-export const setPlaylistSub = (id, t) => get('/playlist/subscribe', { id, t })
+export const setPlaylistSub = (id, t) => get('/playlist/subscribe', { id, t,timestamp:Date.now() })
 
 /* 收藏/取消收藏专辑 t : 类型,1:收藏,2:取消收藏 */
-export const setAlbumSub = (id, t) => get('/album/sub', { id, t })
+export const setAlbumSub = (id, t) => get('/album/sub', { id, t ,timestamp:Date.now()})

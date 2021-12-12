@@ -66,12 +66,12 @@ export const getVideoLike = (type, id) => {
         return { code: 404 }
     }
 }
-
+/* 收藏视频/MV */
 export const subVideo = ({ type, t, id }) => {
     if (type === 'v') {
-        return get('/video/sub', { t, id })
+        return get('/video/sub', { t, id, timestamp: Date.now() })
     } else if (type === 'mv') {
-        return get('/mv/sub', { mvid: id, t })
+        return get('/mv/sub', { mvid: id, t, timestamp: Date.now() })
     } else {
         return { code: 404 }
     }

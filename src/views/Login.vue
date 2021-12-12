@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      loginType: 0, //1:手机号 2:,
+      loginType: 1, //1:手机号 2:,
       loginComponent: ['LoginByPhone', 'LoginByQr', 'LoginByCode'],
       type: ['手机号', '二维码', '验证码']
     }

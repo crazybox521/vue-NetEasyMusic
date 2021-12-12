@@ -29,8 +29,11 @@
             <button class="btn btn-white">
               <i class="el-icon-message"></i> 发私信
             </button>
-            <button class="btn btn-white mleft-10">
-              <i class="el-icon-plus"></i> 关注
+            <button class="btn btn-white mleft-10" @click="follow">
+              <template v-if="!followed">
+                <i class="el-icon-plus"></i> 关注
+              </template>
+              <template v-else> <i class="el-icon-check"></i> 已关注 </template>
             </button>
           </div>
         </div>
@@ -91,7 +94,7 @@
 
 <script>
 import ImgList from '@/components/list/ImgList.vue'
-import { getUserDetail, getUserPlayList } from '@/api/api_user'
+import { getUserDetail, getUserPlayList,follow } from '@/api/api_user'
 import { mapState } from 'vuex'
 export default {
   props: {
@@ -105,7 +108,8 @@ export default {
     return {
       info: {}, //基本信息
       list: [], //歌单列表
-      level: 0 //等级
+      level: 0, //等级
+      followed: false
     }
   },
   computed: {
@@ -140,14 +144,28 @@ export default {
     async getDetail() {
       const res = await getUserDetail(this.id)
       if (res.code !== 200) return
+      console.log(res)
       this.info = Object.freeze(res.profile)
       this.level = res.level
+      this.followed = res.profile.followed
     },
     /* 获取收藏及创建歌单 */
     async getUserPlayList() {
       const res = await getUserPlayList(this.id)
       if (res.code !== 200) return
       this.list = Object.freeze(res.playlist)
+    },
+     /* 关注 */
+    async follow() {
+      if (!this.isLogin) return this.$message.error('需要登录')
+      let followObj = {
+        id: this.info.userId,
+        t: this.followed ? 0 : 1
+      }
+      const res = await follow(followObj)
+      if (res.code !== 200) return this.$message.error('操作失败')
+      this.$message.success(this.followed ? '取关成功' : '关注成功')
+      this.followed = !this.followed
     },
     toPlayListDetail(id) {
       this.$router.push({ path: '/playlistdetail/' + id })

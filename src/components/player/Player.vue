@@ -2,34 +2,43 @@
   <!--音乐播放器封装 -->
   <div class="player">
     <!-- 歌曲信息 -->
-    <div class="song-info">
+    <div class="player-left">
       <img
         class="pointer img-border"
         :src="imgInfo.imgUrl"
         @click="openPlayView"
       />
-      <div class="au-info">
-        <div class="font-14 w-200 text-hidden">{{ imgInfo.name }}</div>
-        <div class="font-12 w-200 text-hidden">{{ imgInfo.author }}</div>
+      <div class="music-info">
+        <div class="font-14 w-150 text-hidden">{{ imgInfo.name }}</div>
+        <div class="font-12 w-100 text-hidden">{{ imgInfo.author }}</div>
       </div>
     </div>
     <!-- 播放器 -->
     <div class="player-wrapper">
       <!-- 播放器按钮 -->
-      <ul class="player-bar">
-        <li @click="changePlayModel">
+      <div class="player-bar">
+        <div class="player-bar-btn" @click="changePlayModel">
           <i class="iconfont icon-liebiaoshunxu"></i>
-        </li>
-        <li @click="lastMusic">
+        </div>
+        <div class="player-bar-btn" @click="lastMusic">
           <i class="iconfont icon-shangyishou"></i>
-        </li>
-        <li @click="pause">
+        </div>
+        <div class="player-bar-btn" @click="pause">
           <i v-show="isPlay" class="iconfont icon-zanting"></i>
           <i v-show="!isPlay" class="iconfont icon-bofang"></i>
-        </li>
-        <li @click="nextMusic"><i class="iconfont icon-xiayishou"></i></li>
-        <li @click="openLyricView">词</li>
-      </ul>
+        </div>
+        <div class="player-bar-btn" @click="nextMusic">
+          <i class="iconfont icon-xiayishou"></i>
+        </div>
+        <div class="player-bar-btn" @click="likeMusic">
+          <i v-show="!isLiked" class="iconfont icon-aixin"></i>
+          <i
+            v-show="isLiked"
+            style="color: #ec4141"
+            class="iconfont icon-aixin1"
+          ></i>
+        </div>
+      </div>
       <!-- 进度条 -->
       <div class="time-progress">
         <span>{{ currenMusicInfo.currenTime | timeFormat }}</span>
@@ -142,7 +151,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMusicUrl, getLyric } from '@/api/api_music'
+import { getMusicUrl, getLyric, likeMusic } from '@/api/api_music'
 import { downloadMusic } from '@/service/get'
 import notifyMixin from '@/mixins/notifyMixin'
 import Lyric from '@/utils/lyric'
@@ -179,8 +188,29 @@ export default {
       'currenIndex',
       'musicList',
       'currenMusicInfo',
-      'historyList'
-    ])
+      'historyList',
+      'likeIdList',
+      'isLogin'
+    ]),
+    isLiked: {
+      get() {
+        return this.likeIdList.indexOf(this.currenMusicId) !== -1
+      },
+      set(val) {
+        console.log(this.isLiked)
+        if (this.isLiked) {
+          this.$store.commit('setLikeIdList', {
+            type: 'remove',
+            data: val
+          })
+        } else {
+          this.$store.commit('setLikeIdList', {
+            type: 'unshift',
+            data: val
+          })
+        }
+      }
+    }
   },
   watch: {
     /* 通过Vuex管理的播放状态,audio会自动播放 */
@@ -240,9 +270,6 @@ export default {
     pause() {
       if (this.musicUrl.length === 0) return
       this.$store.commit('setPlayState', !this.isPlay)
-    },
-    openLyricView() {
-      this.notice()
     },
     /* 获取音乐地址 */
     async getMusicUrl() {
@@ -317,6 +344,16 @@ export default {
         }
       }
     },
+    /* 喜欢音乐 */
+    async likeMusic() {
+      if (!this.isLogin) return this.$message.error('需要登录')
+      if (this.currenMusicId === 0 || typeof this.currenMusicId === 'undefined')
+        return
+      const res = await likeMusic(this.currenMusicId, !this.isLiked)
+      if (res.code !== 200) return
+      this.$message.success(`${this.isLiked ? '取消喜欢' : '喜欢'}成功`)
+      this.isLiked = this.currenMusicId
+    },
     /* 改变音量 */
     changeVolume() {
       this.$refs.audioRef.volume = this.volume / 100
@@ -361,7 +398,7 @@ export default {
       if (this.musicUrl == '') return
       downloadMusic(
         this.musicUrl,
-        this.imgInfo.name + '-' + this.imgInfo.author
+        `${this.imgInfo.name}-${this.imgInfo.author}`
       )
     },
     /* 打开歌曲播放页 */
@@ -423,13 +460,13 @@ export default {
 /* 整体 */
 .player {
   display: flex;
-  margin: 0 auto;
+  width: 100%;
   height: 100%;
   justify-content: space-between;
   align-items: center;
 }
-/* 播放信息 */
-.song-info {
+/* 播放器左边的信息区 */
+.player-left {
   display: flex;
   align-items: center;
   width: 300px;
@@ -439,18 +476,14 @@ export default {
     width: 50px;
     border-radius: 8px;
   }
-  i {
-    color: @headRed;
-    font-size: 50px;
-    margin: 0 10px;
-    height: 50px;
-    width: 50px;
-    border-radius: 4px;
-  }
-  .au-info {
-    height: 40px;
+  &-info {
     margin: 10px;
     line-height: 20px;
+    .info-title {
+      div {
+        display: inline-block;
+      }
+    }
   }
 }
 /* 中间的按钮区 */
@@ -458,15 +491,10 @@ export default {
   width: 300px;
   margin: 0 auto;
   display: flex;
-  line-height: 1;
+  align-items: center;
   margin-top: 6px;
   justify-content: space-around;
-  .iconfont {
-    font-size: 18px;
-  }
-  li {
-    font-size: 14px;
-    line-height: 32px;
+  &-btn {
     cursor: pointer;
     &:nth-child(3) {
       height: 32px;
@@ -476,9 +504,6 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      .iconfont {
-        font-size: 14px;
-      }
     }
     &:nth-child(3):hover {
       background-color: #e5e5e5;
@@ -617,7 +642,7 @@ export default {
 }
 @media screen and(max-width:768px) {
   .song-info {
-    width: 100px;
+    width: auto;
   }
   .btn-other {
     display: none;
@@ -626,12 +651,10 @@ export default {
     display: none;
   }
   .player-bar {
-    width: 100px;
-    li {
+    margin-top: 0;
+    width: 150px;
+    &-btn {
       &:nth-child(1) {
-        display: none;
-      }
-      &:nth-child(5) {
         display: none;
       }
     }

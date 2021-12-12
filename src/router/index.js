@@ -93,7 +93,7 @@ const routes = [
             { path: 'topmv', component: TopMv, meta: { check: true } },//MV排行页
         ],
     },
-    { path: '/login', component: Login },//login
+    { path: '/login', component: Login,meta: { check: false } },//login
     { path: '*', component: NotFound }//404
 ]
 
@@ -103,10 +103,14 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    document.title = '网易云音乐客户端WEB版'
+    document.title = '仿网易云音乐客户端WEB版'
     if (to.meta.check === true) {
         if (store.state.isLogin === true) next()
-        else Vue.prototype.$message.error('需要登录')
+        else {
+            Vue.prototype.$message.error('需要登录')
+            next('/login')
+        }
+        
     } else {
         next()
     }

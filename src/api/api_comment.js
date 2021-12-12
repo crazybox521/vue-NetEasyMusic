@@ -7,10 +7,10 @@ export const getHotComment = (id, type, limit, offset, before) => get('/comment/
 export const getAlbumComment = ({ id, limit, offset, before }) => get('/comment/album', { id, limit, offset, before, timestamp: Date.now() })
 
 /* 发送删除评论 */
-export const sendComment = ({ t, type, id, content, commentId }) => get('/comment', { t, type, id, content, commentId })
+export const sendComment = ({ t, type, id, content, commentId }) => get('/comment', { t, type, id, content, commentId,timestamp:Date.now() })
 
 /* 给评论点赞 */
-export const likeComment = ({ id, cid, t, type }) => get('/comment/like', { id, cid, t, type })
+export const likeComment = ({ id, cid, t, type }) => get('/comment/like', { id, cid, t, type,timestamp:Date.now() })
 
 /* 获取最新评论 */
 export const getNewComment = ({ id, limit, offset, before, type }) => {

@@ -27,7 +27,10 @@ const state = {
     profile: {},
     /* 是否播放的最近播放 */
     historyList: [],
-    isPhone:false,
+    /* 是否为移动设备 */
+    isPhone: false,
+    /* 喜欢的音乐列表 */
+    likeIdList: []
 
 }
 
@@ -86,14 +89,24 @@ const mutations = {
             )
             return
         }
-        if (payload.type === 'get') {
+        else if (payload.type === 'get') {
             state.historyList = payload.data
             return
         }
-        if (payload.type === 'clear') {
+        else if (payload.type === 'clear') {
             state.historyList = []
             window.localStorage.removeItem('historylist')
             return
+        }
+    }, setLikeIdList(state, payload) {
+        if (payload.type === 'get') {
+            state.likeIdList = payload.data
+        } else if (payload.type === 'unshift') {
+            state.likeIdList.unshift(payload.data)
+        } else if (payload.type === 'remove') {
+            state.likeIdList.splice(
+                state.likeIdList.indexOf(payload.data), 1
+            )
         }
     }
 

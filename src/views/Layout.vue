@@ -29,9 +29,12 @@
             <template slot="title">创建的歌单</template>
             <el-menu-item
               :index="subPath(item.id)"
-              v-for="item in creList"
+              v-for="(item, index) in creList"
               :key="item.id"
-              ><div slot="title" class="text-hidden">{{ item.name }}</div>
+              ><div slot="title" class="text-hidden">
+                <i v-if="index === 0" class="iconfont icon-aixin"></i>
+                <i v-else class="iconfont icon-gedan"></i>{{ item.name }}
+              </div>
             </el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group v-if="isLogin">
@@ -40,7 +43,9 @@
               :index="subPath(item.id)"
               v-for="item in subList"
               :key="item.id"
-              ><div slot="title" class="text-hidden">{{ item.name }}</div>
+              ><div slot="title" class="text-hidden">
+                <i class="iconfont icon-gedan"></i>{{ item.name }}
+              </div>
             </el-menu-item>
           </el-menu-item-group>
         </el-menu>
@@ -104,7 +109,6 @@
     </div>
     <!-- 底部播放器容器 -->
     <div class="footer">
-      <div class="div-line"></div>
       <FooterBar></FooterBar>
     </div>
   </div>
@@ -178,8 +182,8 @@ export default {
         }
       }
     },
-    '$route.path'(){
-      this.$refs.scrollWrapRef.scrollTop=0
+    '$route.path'() {
+      this.$refs.scrollWrapRef.scrollTop = 0
     }
   },
   methods: {
@@ -239,7 +243,6 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
-  min-width: 300px;
 }
 
 .header {
@@ -298,12 +301,18 @@ export default {
 @media screen and (max-width: 768px) {
   .aside {
     left: -200px;
-    z-index:999;
-    transition: all .8s;
+    z-index: 999;
+    transition: all 0.8s;
   }
 
   .main-right {
     left: 0;
+  }
+  .footer {
+    height: 51px;
+  }
+  .main {
+    bottom: 51px;
   }
 }
 </style>

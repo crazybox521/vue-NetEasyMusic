@@ -14,6 +14,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .footer-bar{
-  height: 99%;
+ box-sizing: border-box;
+ border-top: 1px solid #cccccc;
 }
 </style>

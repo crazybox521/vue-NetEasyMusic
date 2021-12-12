@@ -27,8 +27,10 @@
                 :class="{ isfollow: followed }"
                 @click="follow"
               >
-                <span v-show="followed">√ 已关注</span>
-                <span v-show="!followed">+ 关注</span>
+               <template v-if="!followed">
+                <i class="el-icon-plus"></i> 关注
+              </template>
+              <template v-else> <i class="el-icon-check"></i> 已关注 </template>
               </button>
             </div>
           </div>
@@ -75,7 +77,7 @@
           </button>
           <button class="btn btn-white mleft-10">
             <i class="iconfont icon-fenxiang"></i>
-             <span class="btn-text">分享</span>
+            <span class="btn-text">分享</span>
             ({{ deTail.shareCount }})
           </button>
         </div>
@@ -209,7 +211,7 @@ export default {
     this.getRelatedVideo()
     this.getVideoLikeInfo()
   },
- 
+
   methods: {
     /* 获取视频详情 */
     async getDetail() {
@@ -262,7 +264,7 @@ export default {
       }
       const res = await follow(followObj)
       if (res.code !== 200) return this.$message.error('操作失败')
-      this.$message.success(this.creator.followed ? '取关成功' : '关注成功')
+      this.$message.success(this.followed ? '取关成功' : '关注成功')
       this.followed = !this.followed
     },
     /* 视频详情页 */
