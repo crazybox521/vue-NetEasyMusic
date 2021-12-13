@@ -3,7 +3,7 @@ import get from '@/service/get'
 export const getArtistList = ({ limit, offset, type, area, initial }) => get('/artist/list', { limit, offset, type, area, initial })
 
 /* 获取歌手详情 */
-export const queryArtistDetail = (id) => get('/artist/detail', { id })
+export const getArtistDetail = (id) => get('/artist/detail', { id })
 
 /* 获取歌手热门50首 */
 export const getArtistTop = (id) => get('/artist/top/song', { id })

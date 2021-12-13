@@ -50,6 +50,7 @@ export default {
           this.checkQr()
         }, 5000)
       } else if (res.code === 803) {
+        this.$message.success('登录成功')
         this.$router.push('/personalrecom')
       }
     }

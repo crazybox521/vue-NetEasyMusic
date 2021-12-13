@@ -434,15 +434,17 @@ export default {
   display: flex;
   /* 圆按钮 */
   .btn-circle {
-    display: inline-block;
+    display: flex;
     height: 26px;
     width: 26px;
     outline: 0;
     border: 0;
     background-color: #e13e3e;
     color: #ffffff;
-    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
+    margin-right: 10px;
     cursor: pointer;
   }
 }

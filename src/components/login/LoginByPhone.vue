@@ -60,6 +60,7 @@ export default {
         const res = await doLogin(this.form)
         if (res.code !== 200)
           return this.$message.error('登录失败,请检查手机号和密码')
+        this.$message.success('登录成功')
         this.$router.push('/personalrecom')
       })
     }

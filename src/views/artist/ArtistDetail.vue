@@ -99,7 +99,7 @@ import MvList from '@/components/list/MvList.vue'
 import TopFiftyList from '@/components/list/TopFiftyList.vue'
 import ImgList from '@/components/list/ImgList.vue'
 import {
-  queryArtistDetail,
+  getArtistDetail,
   getArtistTop,
   getArtistAlbum,
   getIntro,
@@ -165,7 +165,7 @@ export default {
   methods: {
     /* 获取歌手详情 */
     async getInfo() {
-      const res = await queryArtistDetail(this.id)
+      const res = await getArtistDetail(this.id)
       if (res.code !== 200) return
       console.log('歌手信息', res)
       console.log(res)

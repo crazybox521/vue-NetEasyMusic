@@ -115,13 +115,11 @@
 </template>
 
 <script>
-import notifyMixin from '@/mixins/notifyMixin'
 import { mapState } from 'vuex'
 import FooterBar from '@/components/footer/FooterBar.vue'
 import HeaderBar from '@/components/header/HeaderBar.vue'
 import { getUserPlayList } from '@/api/api_user'
 export default {
-  mixins: [notifyMixin],
   components: {
     FooterBar,
     HeaderBar
@@ -302,7 +300,7 @@ export default {
   .aside {
     left: -200px;
     z-index: 999;
-    transition: all 0.8s;
+    transition: all 0.4s;
   }
 
   .main-right {

@@ -20,7 +20,7 @@
     </div>
     <div class="div-line mtop-20"></div>
     <MusicList v-if="showList" ref="listRef" :list="list"></MusicList>
-    <el-skeleton v-else :rows="8" animated />
+    <el-skeleton class="mtop-10" v-else :rows="8" animated />
   </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
     this.getToday()
     this.getList()
   },
- 
+
   methods: {
     async getList() {
       const res = await getRecommendSong()
