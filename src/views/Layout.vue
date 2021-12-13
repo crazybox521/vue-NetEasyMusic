@@ -241,6 +241,8 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
+  /*   -webkit-filter: grayscale(100%); // Chrome, Safari, Opera 
+  filter: grayscale(100%); */
 }
 
 .header {
