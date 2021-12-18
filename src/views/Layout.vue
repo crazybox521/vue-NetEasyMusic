@@ -296,6 +296,7 @@ export default {
   left: 0;
   height: 80px;
   width: 100%;
+
 }
 
 @media screen and (max-width: 768px) {

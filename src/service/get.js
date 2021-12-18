@@ -3,6 +3,7 @@ import NProgress from 'nprogress'
 import Vue from 'vue'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 8000
+axios.defaults.baseURL = 'http://localhost:8080/'
 
 axios.interceptors.request.use((config) => {
     NProgress.start();
@@ -47,7 +48,6 @@ export const downloadMusic = (url, fileName) => {
         })
         .catch((err) => {
             console.log(err);
-            console.log("下载失败,请稍后重试!");
             Vue.prototype.$message.$message.error('下载失败,请稍后重试!')
         });
 

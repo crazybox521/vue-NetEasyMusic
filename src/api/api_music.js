@@ -10,7 +10,7 @@ export const getLyric = (id) => get('/lyric', { id })
 export const getRecommendSong = () => get('/recommend/songs')
 
 /* 获取喜欢的音乐ID列表 */
-export const getLikeIdList = (uid) => get('/likelist', { uid })
+export const getLikeIdList = (uid) => get('/likelist', { uid , timestamp: Date.now() })
 
 /* 获取音乐详情 */
 export const getMusicListByIds = (ids) => get('/song/detail', { ids })

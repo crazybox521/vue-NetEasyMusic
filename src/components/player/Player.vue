@@ -1,83 +1,85 @@
 <template>
   <!--音乐播放器封装 -->
   <div class="player">
-    <!-- 歌曲信息 -->
-    <div class="player-left">
-      <img
-        class="pointer img-border"
-        :src="imgInfo.imgUrl"
-        @click="openPlayView"
-      />
-      <div class="music-info">
-        <div class="font-14 w-150 text-hidden">{{ imgInfo.name }}</div>
-        <div class="font-12 w-100 text-hidden">{{ imgInfo.author }}</div>
+    <div class="player-container">
+      <!-- 歌曲信息 -->
+      <div class="player-left">
+        <img
+          class="pointer img-border"
+          :src="imgInfo.imgUrl"
+          @click="openPlayView"
+        />
+        <div class="music-info">
+          <div class="font-14 w-150 text-hidden">{{ imgInfo.name }}</div>
+          <div class="font-12 w-100 text-hidden">{{ imgInfo.author }}</div>
+        </div>
       </div>
-    </div>
-    <!-- 播放器 -->
-    <div class="player-wrapper">
-      <!-- 播放器按钮 -->
-      <div class="player-bar">
-        <div class="player-bar-btn" @click="changePlayModel">
-          <i class="iconfont icon-liebiaoshunxu"></i>
+      <!-- 播放器 -->
+      <div class="player-wrapper">
+        <!-- 播放器按钮 -->
+        <div class="player-bar">
+          <div class="player-bar-btn" @click="changePlayModel">
+            <i class="iconfont icon-liebiaoshunxu"></i>
+          </div>
+          <div class="player-bar-btn" @click="lastMusic">
+            <i class="iconfont icon-shangyishou"></i>
+          </div>
+          <div class="player-bar-btn" @click="pause">
+            <i v-show="isPlay" class="iconfont icon-zanting"></i>
+            <i v-show="!isPlay" class="iconfont icon-bofang"></i>
+          </div>
+          <div class="player-bar-btn" @click="nextMusic">
+            <i class="iconfont icon-xiayishou"></i>
+          </div>
+          <div class="player-bar-btn" @click="likeMusic">
+            <i v-show="!isLiked" class="iconfont icon-aixin"></i>
+            <i
+              v-show="isLiked"
+              style="color: #ec4141"
+              class="iconfont icon-aixin1"
+            ></i>
+          </div>
         </div>
-        <div class="player-bar-btn" @click="lastMusic">
-          <i class="iconfont icon-shangyishou"></i>
+        <!-- 进度条 -->
+        <div class="time-progress">
+          <span>{{ currenMusicInfo.currenTime | timeFormat }}</span>
+          <el-slider
+            v-model="curren"
+            class="timeSlider"
+            :show-tooltip="false"
+            @change="changeCurrenTime"
+          ></el-slider>
+          <span>{{ (currenMusicInfo.totalTime / 1000) | timeFormat }}</span>
         </div>
-        <div class="player-bar-btn" @click="pause">
-          <i v-show="isPlay" class="iconfont icon-zanting"></i>
-          <i v-show="!isPlay" class="iconfont icon-bofang"></i>
-        </div>
-        <div class="player-bar-btn" @click="nextMusic">
-          <i class="iconfont icon-xiayishou"></i>
-        </div>
-        <div class="player-bar-btn" @click="likeMusic">
-          <i v-show="!isLiked" class="iconfont icon-aixin"></i>
+      </div>
+      <div class="btn-other">
+        <!-- 音量按钮 -->
+        <div class="dowmload">
           <i
-            v-show="isLiked"
-            style="color: #ec4141"
-            class="iconfont icon-aixin1"
+            class="el-icon-download volume-icon mright-20 pointer"
+            @click="download"
           ></i>
         </div>
-      </div>
-      <!-- 进度条 -->
-      <div class="time-progress">
-        <span>{{ currenMusicInfo.currenTime | timeFormat }}</span>
-        <el-slider
-          v-model="curren"
-          class="timeSlider"
-          :show-tooltip="false"
-          @change="changeCurrenTime"
-        ></el-slider>
-        <span>{{ (currenMusicInfo.totalTime / 1000) | timeFormat }}</span>
-      </div>
-    </div>
-    <div class="btn-other">
-      <!-- 音量按钮 -->
-      <div class="dowmload">
-        <i
-          class="el-icon-download volume-icon mright-20 pointer"
-          @click="download"
-        ></i>
-      </div>
-      <div class="volume">
-        <div @click="isMute = !isMute">
-          <i
-            v-if="volume == 0"
-            class="iconfont icon-shengyinguanbi volume-icon pointer"
-          ></i>
-          <i v-else class="iconfont icon-shengyin volume-icon pointer"></i>
-        </div>
+        <div class="volume">
+          <div @click="isMute = !isMute">
+            <i
+              v-if="volume == 0"
+              class="iconfont icon-shengyinguanbi volume-icon pointer"
+            ></i>
+            <i v-else class="iconfont icon-shengyin volume-icon pointer"></i>
+          </div>
 
-        <div class="volume-slider">
-          <el-slider v-model="volume" vertical height="200px"> </el-slider>
+          <div class="volume-slider">
+            <el-slider v-model="volume" vertical height="200px"> </el-slider>
+          </div>
         </div>
-      </div>
-      <!-- 当前播放列表 -->
-      <div class="curren-list">
-        <i
-          @click="showList"
-          class="iconfont icon-liebiaoshunxu volume-icon pointer"
-        ></i>
+        <!-- 当前播放列表 -->
+        <div class="curren-list">
+          <i
+            @click="showList"
+            class="iconfont icon-liebiaoshunxu volume-icon pointer"
+          ></i>
+        </div>
       </div>
     </div>
     <!-- 播放界面 -->
@@ -459,16 +461,26 @@ export default {
 @import '@/assets/less/lessConfig.less';
 /* 整体 */
 .player {
+  height: 100%;
+  
+}
+.player-container {
+  box-sizing: border-box;
+  border-top: 1px solid #eeeeee;
   display: flex;
   width: 100%;
   height: 100%;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  background-color: #ffffff;
+  z-index: 2024;
 }
 /* 播放器左边的信息区 */
 .player-left {
   display: flex;
   align-items: center;
+  position: relative;
   width: 300px;
   img {
     margin: 0 10px;
@@ -562,6 +574,9 @@ export default {
     .music-author {
       text-align: center;
     }
+  }
+  .comment-view{
+    margin-bottom: 80px;
   }
 }
 /* 歌词及唱片区域 */

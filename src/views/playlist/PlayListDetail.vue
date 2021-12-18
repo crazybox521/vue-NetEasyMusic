@@ -283,7 +283,7 @@ export default {
     /* 获取歌单信息 */
     async getPlayList() {
       this.isLoading = true
-      const res = await getPlayListDetail(this.id, Date.now())
+      const res = await getPlayListDetail(this.id)
       if (res.code !== 200) return
       console.log(res)
       this.info = Object.freeze(res.playlist)

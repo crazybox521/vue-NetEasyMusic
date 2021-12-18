@@ -82,5 +82,5 @@ export const subVideo = ({ type, t, id }) => {
 /* 给资源点赞 */
 //type:资源类型,对应以下类型 1: mv 4: 电台 5: 视频 6: 动态
 //t 操作,1 为点赞,其他未取消点赞
-export const likeVideo = ({ type, t = 1, id }) => get('/resource/like', { type, t, id })
+export const likeVideo = ({ type, t = 1, id }) => get('/resource/like', { type, t, id,timestamp:Date.now()})
 

@@ -3,7 +3,7 @@ import get from '@/service/get'
 export const getPersonalized = (limit) => get('/personalized', { limit })
 
 /* 获取歌单详情 */
-export const getPlayListDetail = (id, timestamp) => get('/playlist/detail', { id, timestamp })
+export const getPlayListDetail = (id) => get('/playlist/detail', { id, timestamp:Date.now() })
 
 /* 获取排行榜信息 */
 export const getToplist = () => get('/toplist')
