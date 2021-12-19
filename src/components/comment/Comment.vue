@@ -295,7 +295,7 @@ export default {
         /* 防止上滑过头 */
         scrollDom.scrollTop = Math.max(begin - size * elapsed, target)
         if (elapsed < ms) {
-          // 在.5秒后停止动画
+          // 在ms毫秒后停止动画
           window.requestAnimationFrame(step)
         }
       }

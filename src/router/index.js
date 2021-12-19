@@ -16,6 +16,7 @@ const ArtistList = () => import( /* webpackChunkName: "group-homepage" */ '../vi
 const NewMusic = () => import( /* webpackChunkName: "group-homepage" */ '../views/home/homepageview/NewMusic.vue')
 /* 需登录后才能进入的页面 */
 const RecommendSong = () => import( /* webpackChunkName: "group-user" */ '../views/user/RecommendSong.vue')
+const PersonalFm = () => import( /* webpackChunkName: "group-user" */ '../views/user/PersonalFm.vue')
 const SubScribeView = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubScribeView.vue')
 const SubAlbum = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubAlbum.vue')
 const SubArtists = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubArtists.vue')
@@ -88,6 +89,7 @@ const routes = [
             { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: true }, props: true },//视频和MV详情页 type v:video mv:mv
             { path: "userdetail/:id", component: UserDetail, props: true },//用户详情页
             { path: 'recomsongs', component: RecommendSong, meta: { check: true } },//每日推荐歌曲页
+            { path: 'personalfm', component: PersonalFm, meta: { check: true } },//私人FM歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
             { path: 'allmv', component: AllMv, meta: { check: true } },//全部MV页
             { path: 'topmv', component: TopMv, meta: { check: true } },//MV排行页

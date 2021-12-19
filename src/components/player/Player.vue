@@ -118,15 +118,10 @@
                 </div>
               </div>
             </div>
-            <div class="lyric-wrap" ref="lyricWrapRef">
-              <p
-                v-for="(line, index) in lyricObj.lines"
-                :class="{ lyric_active: index === lyricObj.curren }"
-                :key="index"
-              >
-                {{ line.txt }}
-              </p>
-            </div>
+            <LyricWrap
+              :currenTime="currenMusicInfo.currenTime"
+              :musicId="currenMusicId"
+            ></LyricWrap>
           </div>
         </div>
         <div class="comment-view mtop-50">
@@ -153,14 +148,14 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMusicUrl, getLyric, likeMusic } from '@/api/api_music'
+import { getMusicUrl, likeMusic } from '@/api/api_music'
 import { downloadMusic } from '@/service/get'
 import notifyMixin from '@/mixins/notifyMixin'
-import Lyric from '@/utils/lyric'
 import Comment from '@/components/comment/Comment.vue'
+import LyricWrap from './LyricWrap.vue'
 export default {
   mixins: [notifyMixin],
-  components: { Comment },
+  components: { Comment, LyricWrap },
   data() {
     return {
       musicUrl: '', //音乐资源
@@ -175,12 +170,7 @@ export default {
         author: '未知歌手名'
       },
       curren: 0, //进度条的百分比
-      PlayViewDrawer: false,
-      lyricObj: {
-        lines: [],
-        total: 1,
-        curren: 0
-      }
+      PlayViewDrawer: false
     }
   },
   computed: {
@@ -294,7 +284,6 @@ export default {
         this.$store.commit('setPlayState', false)
         return
       }
-      this.getLyric()
       this.musicUrl = res.data[0].url
       console.log(res)
     },
@@ -369,14 +358,7 @@ export default {
       if (!this.$refs.audioRef) return
       /* 通过audio对象的方法获取当前时间 */
       let time = this.$refs.audioRef.currentTime
-      /* 歌词滚动 */
-      if (
-        this.lyricObj.curren != this.lyricObj.total - 1 &&
-        time > this.lyricObj.lines[this.lyricObj.curren + 1].time
-      ) {
-        this.lyricObj.curren++
-        if (this.$refs.lyricWrapRef) this.lyricHanlder(this.lyricObj.curren)
-      }
+
       time = Math.floor(time)
       /* 同步进度条 */
       if (time != this.currenMusicInfo.currenTime) {
@@ -410,48 +392,12 @@ export default {
       /* 打开后歌词跳到对应行 */
       this.$nextTick(() => {
         document.querySelector('.player .el-drawer__body').scrollTop = 0
-        if (this.$refs.lyricWrapRef) {
-          if (this.lyricObj.curren <= 4) {
-            this.$refs.lyricWrapRef.scrollTop = 0
-          } else {
-            this.$refs.lyricWrapRef.scrollTop = (this.lyricObj.curren - 4) * 32
-          }
-        }
       })
     },
     /* 抽屉关闭的回调 */
     handleClose() {
       console.log('close')
       this.PlayViewDrawer = false
-    },
-    /* 获取歌词 */
-    async getLyric() {
-      const res = await getLyric(this.currenMusicId)
-      if (res.code !== 200) return this.$message.error('获取歌词失败')
-      if (res.lrc) this.lyricObj = new Lyric(res.lrc.lyric)
-      if (this.PlayViewDrawer) this.$refs.lyricWrapRef.scrollTop = 0
-    },
-    /* 歌词行数变化的回调 */
-    lyricHanlder(lineNum) {
-      if (!this.PlayViewDrawer || !this.isPlay) return
-      if (lineNum > 4) this.scrollAnimation(lineNum - 4)
-    },
-    /* 歌词滚动动画 */
-    scrollAnimation(line) {
-      let start
-      const step = (timestamp) => {
-        if (start === undefined) start = timestamp
-        const elapsed = timestamp - start
-        this.$refs.lyricWrapRef.scrollTop = Math.min(
-          0.032 * elapsed + (line - 1) * 32,
-          line * 32
-        )
-        if (elapsed < 1000) {
-          // 在1秒后停止动画
-          window.requestAnimationFrame(step)
-        }
-      }
-      window.requestAnimationFrame(step)
     }
   }
 }
@@ -462,7 +408,6 @@ export default {
 /* 整体 */
 .player {
   height: 100%;
-  
 }
 .player-container {
   box-sizing: border-box;
@@ -575,7 +520,7 @@ export default {
       text-align: center;
     }
   }
-  .comment-view{
+  .comment-view {
     margin-bottom: 80px;
   }
 }
@@ -628,25 +573,6 @@ export default {
 .changpian-active {
   animation: circle 30s infinite linear;
 }
-/* 歌词滚动区域 */
-.lyric-wrap {
-  width: 600px;
-  height: 400px;
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  margin: 40px 0 0 20px;
-  text-align: center;
-  font-size: 16px;
-  line-height: 2;
-  transition: all 0.8s linear;
-  &::-webkit-scrollbar {
-    width: 1px;
-  }
-}
-.lyric_active {
-  font-size: 20px;
-  font-weight: bold;
-}
 @keyframes circle {
   from {
     transform: rotate(0);
@@ -656,9 +582,6 @@ export default {
   }
 }
 @media screen and(max-width:768px) {
-  .song-info {
-    width: auto;
-  }
   .btn-other {
     display: none;
   }
@@ -679,13 +602,6 @@ export default {
   }
   .img-wrap {
     display: none;
-  }
-  .lyric-wrap {
-    width: 100%;
-    margin: 20px auto;
-  }
-  .lyric-active {
-    font-size: 17px;
   }
 }
 </style>

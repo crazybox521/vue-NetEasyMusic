@@ -131,6 +131,7 @@ export default {
         { path: '/personalrecom', title: '发现音乐', Login: false, type: 0 },
         { path: '/recomsongs', title: '每日推荐', Login: true, type: 1 },
         { path: '/video', title: '视频', Login: true, type: 0 },
+        { path: '/personalfm', title: '私人FM', Login: true, type: 0 },
         { path: '/historyplay', title: '最近播放', Login: false, type: 1 },
         { path: '/subscribe', title: '我的收藏', Login: true, type: 1 }
       ],
