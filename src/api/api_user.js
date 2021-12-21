@@ -1,4 +1,5 @@
 import get from '@/service/get'
+/* login */
 
 /* 手机号密码登录 */
 export const doLogin = ({ phone, md5_password, captcha }) => get('/login/cellphone', { phone, md5_password, captcha,timestamp:Date.now() })

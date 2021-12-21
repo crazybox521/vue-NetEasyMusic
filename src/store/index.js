@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from 'vuex'
 import { getPersonalFm, fmTrash } from '@/api/api_music'
+import { getAcount, logout } from '@/api/api_user'
+import { getLikeIdList } from '@/api/api_music.js'
 
 Vue.use(Vuex)
 
@@ -82,6 +84,60 @@ const actions = {
         commit('setCurrenIndex', index)
         commit('setPlayType', 'music')
         commit('setPlayState', true)
+    },
+    async getAcount({ commit, dispatch }) {
+        /* 获取登录信息 */
+        const res = await getAcount()
+        if (res.code !== 200) return
+        if (res.account !== null) {
+            commit('setLoginInfo', res)
+            commit('setIsLogin', true)
+            dispatch('getLikeList')
+        } else {
+            commit('setLoginInfo', { account: null, profile: null })
+            commit('setIsLogin', false)
+            Vue.prototype.$notify({
+                title: '提示',
+                type: 'warning',
+                message:
+                    '部分功能需要登录后才能使用，如每日推荐等，本网站不会收集用户信息，点击头像可以登录,建议使用二维码或验证码登录',
+                duration: 0
+            })
+        }
+    },
+    logout({ commit, state }) {
+        /* 退出登录 */
+        if (!state.isLogin) return Vue.prototype.$message.warning('似乎并没有登录')
+        Vue.prototype.$confirm('将要退出登录, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        })
+            .then(async () => {
+                const res = await logout()
+                if (res.code !== 200) return
+                Vue.prototype.$message.success('退出成功')
+                Vue.prototype.$router.push('/personalrecom')
+                commit('setLoginInfo', { account: null, profile: null })
+                commit('setIsLogin', false)
+            })
+            .catch(() => {
+                Vue.prototype.$message({
+                    type: 'info',
+                    message: '已取消'
+                })
+            })
+
+    },
+    async getLikeList({ commit, state }) {
+        const res = await getLikeIdList(state.profile.userId)
+        if (res.code !== 200) return
+        if (res.ids instanceof Array) {
+            commit('setLikeIdList', {
+                type: 'get',
+                data: res.ids
+            })
+        }
     }
 }
 

@@ -5,9 +5,9 @@
       <div class="info">
         <h2 class="font-24 font-bold">{{ artistInfo.name }}</h2>
         <div class="info-btn">
-          <button class="btn btn-white mleft-10">
-            <i class="el-icon-folder-add"></i>
-            收藏
+          <button class="btn btn-white mleft-10" @click="subArtist">
+            <span v-if="!isSub"><i class="el-icon-folder-add"></i> 收藏</span>
+            <span v-else><i class="el-icon-folder-checked"></i> 已收藏</span>
           </button>
           <button
             class="btn btn-white mleft-10"
@@ -104,14 +104,17 @@ import {
   getArtistAlbum,
   getIntro,
   getArtistMv,
-  getArtistSame
+  getArtistSame,
+  getSubArtists,
+  subArtist
 } from '@/api/api_artist'
 import { getAlbumDetail } from '@/api/api_album'
+import { mapState } from 'vuex'
 export default {
-  props:{
-    id:{
-      type:String,
-      required:true
+  props: {
+    id: {
+      type: String,
+      required: true
     }
   },
   components: { AlbumList, TopFiftyList, MvList, ImgList },
@@ -134,7 +137,8 @@ export default {
       userId: 0, //歌手用户ID
       mvList: [], //歌手MV列表
       sameArtistList: [],
-      isLoading: false
+      isLoading: false,
+      subList: []
     }
   },
   computed: {
@@ -143,10 +147,13 @@ export default {
         ? this.artistInfo.cover + '?param=300y300'
         : 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
     },
-   
+    isSub() {
+      return this.subList.findIndex((item) => item.id == this.id) !== -1
+    },
+    ...mapState(['isLogin'])
   },
   watch: {
-    '$route.params.id'() {
+    id() {
       this.getInfo()
       /* 在相似歌手页切换歌手，重置前三个tab的数据，且重新获取相似歌手 */
       this.getSame()
@@ -172,6 +179,8 @@ export default {
       this.artistInfo = Object.freeze(res.data.artist)
       this.showPriMsg = Object.freeze(res.data.showPriMsg)
       if (this.showPriMsg) this.userId = res.data.user.userId
+      /* 获取收藏的歌手列表 */
+      this.getSubArtists()
     },
     /* 获取热门50首 */
     async getTop() {
@@ -228,6 +237,39 @@ export default {
       if (res.code !== 200) return
       this.sameArtistList = res.artists
       this.isLoading = false
+    },
+    /* 获取收藏列表 */
+    async getSubArtists() {
+      if (!this.isLogin) return
+      const res = await getSubArtists()
+      if (res.code !== 200) return
+      this.subList = Object.freeze(res.data)
+    },
+    async subArtist() {
+      if (!this.isLogin) return this.$message.warning('需要登录')
+      let cancel = false
+      if (this.isSub)
+        await this.$confirm('确认取消收藏吗？', '确认信息', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '放弃'
+        })
+          .then(() => {
+            cancel = false
+          })
+          .catch((action) => {
+            cancel = true
+            this.$message({
+              type: 'info',
+              message: action === 'cancel' ? '取消' : '出错'
+            })
+          })
+      if (cancel) return
+      let t = this.isSub ? 0 : 1
+      const res = await subArtist(this.id, t)
+      if (res.code !== 200) return this.$message.error('操作失败')
+      this.$message.success(`${t === 1 ? '收藏' : '取消收藏'}成功`)
+      this.getSubArtists()
     },
     toUserDetail() {
       if (this.userId !== 0 && this.showPriMsg)

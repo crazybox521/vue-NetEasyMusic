@@ -103,8 +103,7 @@
 </template>
 
 <script>
-import { getAlbumDetail, getAlbumDynamic } from '@/api/api_album'
-import { setAlbumSub } from '@/api/api_sub'
+import { getAlbumDetail, getAlbumDynamic, setAlbumSub } from '@/api/api_album'
 import Tag from '@/components/simple/Tag.vue'
 import MusicList from '@/components/list/MusicList.vue'
 import Comment from '@/components/comment/Comment.vue'
@@ -164,7 +163,25 @@ export default {
     },
     /* 收藏、取消收藏 */
     async subAlbum(type) {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
+      let cancel = false
+      if (this.isSub)
+        await this.$confirm('确认取消收藏吗？', '确认信息', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '放弃'
+        })
+          .then(() => {
+            cancel = false
+          })
+          .catch((action) => {
+            cancel = true
+            this.$message({
+              type: 'info',
+              message: action === 'cancel' ? '取消' : '出错'
+            })
+          })
+      if (cancel) return
       const res = await setAlbumSub(this.id, type)
       if (res.code !== 200) return
       this.isSub = !this.isSub

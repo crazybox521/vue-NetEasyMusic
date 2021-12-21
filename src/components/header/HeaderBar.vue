@@ -175,17 +175,14 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getAcount, logout } from '@/api/api_user'
 import { getHotSearch, getSuggest } from '@/api/api_other'
-import { getMusicListByIds, getLikeIdList } from '@/api/api_music.js'
+import { getMusicListByIds } from '@/api/api_music.js'
 import SuggestList from '@/components/list/SuggestList'
 export default {
   components: { SuggestList },
   data() {
     return {
       keywords: '',
-      account: {},
-      info: {},
       showInfoTip: false,
       hotList: [],
       historySearchList: [],
@@ -195,12 +192,12 @@ export default {
   },
   computed: {
     /* 登录相关信息 */
-    ...mapState(['isLogin', 'isPhone']),
+    ...mapState(['isLogin', 'isPhone','account','profile']),
     name() {
-      return this.info ? this.info.nickname : '未登录'
+      return this.profile ? this.profile.nickname : '未登录'
     },
     avatarUrl() {
-      return this.info ? this.info.avatarUrl : ''
+      return this.profile ? this.profile.avatarUrl : ''
     },
     /* 搜索建议相关状态 */
     showMusic() {
@@ -217,7 +214,6 @@ export default {
     }
   },
   created() {
-    this.getAcount()
     this.getHistory()
   },
   methods: {
@@ -258,7 +254,9 @@ export default {
       if (res.code !== 200) return
       this.hotList = res.data
     },
-
+    doLogout() {
+      this.$store.dispatch('logout')
+    },
     /* 点击热搜 */
     clickHot(val) {
       if (val !== '') {
@@ -315,67 +313,6 @@ export default {
         if (this.$route.path === '/userdetail/' + this.account.id) return
         this.$router.push('/userdetail/' + this.account.id)
       }
-    },
-    /* 获取登录信息 */
-    async getAcount() {
-      const res = await getAcount()
-      if (res.code !== 200) return
-      this.account = res.account
-      this.info = res.profile
-      if (res.account !== null) {
-        this.$store.commit('setLoginInfo', res)
-        this.$store.commit('setIsLogin', true)
-        this.getLikeIdList()
-      } else {
-        this.$store.commit('setLoginInfo', { account: null, profile: null })
-        this.$store.commit('setIsLogin', false)
-        this.openTip()
-      }
-    },
-    /* 获取喜欢的音乐列表,在这里获取是因为方便，本组件是登录信息来源，获取登录信息成功后就可以调用，*/
-    async getLikeIdList() {
-      const res = await getLikeIdList(this.info.userId)
-      if (res.code !== 200) return
-      console.log(res)
-      if (res.ids instanceof Array) {
-        this.$store.commit('setLikeIdList', {
-          type: 'get',
-          data: res.ids
-        })
-      }
-    },
-    /* 未登录的提示 */
-    openTip() {
-      if (!this.isLogin)
-        this.$notify({
-          title: '提示',
-          type: 'warning',
-          message:
-            '部分功能需要登录后才能使用，如每日推荐等，本网站不会收集用户信息，点击头像可以登录,建议使用二维码或验证码登录',
-          duration: 0
-        })
-    },
-    /* 退出登录 */
-    doLogout() {
-      if (!this.isLogin) return
-      this.$confirm('将要退出登录, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(async () => {
-          const res = await logout()
-          if (res.code !== 200) return
-          this.$message.success('退出成功')
-          this.$router.push('/personalrecom')
-          this.getAcount()
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消'
-          })
-        })
     },
     toAlbumDetail(id) {
       if (typeof id === 'number') {

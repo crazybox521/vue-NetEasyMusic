@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { getSubMv } from '@/api/api_sub'
+import { getSubMv } from '@/api/api_video'
 export default {
   data() {
     return {

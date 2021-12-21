@@ -36,7 +36,7 @@
 
 <script>
 import InfoList from '@/components/list/InfoList.vue'
-import { getSubAlbum } from '@/api/api_sub'
+import { getSubAlbum } from '@/api/api_album'
 export default {
   components: { InfoList },
   data() {

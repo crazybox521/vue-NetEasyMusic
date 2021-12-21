@@ -23,8 +23,11 @@ export const getHighqualityTags = () => get('/playlist/highquality/tags')
 /* 获取精品歌单 */
 export const getHighquality = (limit, cat, before) => get('/top/playlist/highquality', { limit, cat, before })
 
-/* 获取日推歌单 */
+/* login 获取个性推荐歌单 */
 export const getRecommend = () => get('/recommend/resource')
 
 /* 获取歌单收藏者 */
 export const getSuberList = ({ id, limit = 30, offset }) => get('/playlist/subscribers', { id, limit, offset })
+
+/* login 收藏/取消收藏歌单 t : 类型,1:收藏,2:取消收藏 */
+export const setPlaylistSub = (id, t) => get('/playlist/subscribe', { id, t,timestamp:Date.now() })

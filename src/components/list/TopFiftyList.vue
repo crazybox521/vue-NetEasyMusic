@@ -11,9 +11,7 @@
           <button class="no-btn mleft-20 font-20" @click="playMusicAll">
             <i class="el-icon-video-play"></i>
           </button>
-          <button class="no-btn mleft-20 font-20">
-            <i class="el-icon-folder-add"></i>
-          </button>
+         
         </div>
         <el-table
           :data="disList"

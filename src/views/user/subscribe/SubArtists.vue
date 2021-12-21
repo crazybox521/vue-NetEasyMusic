@@ -32,7 +32,7 @@
 
 <script>
 import InfoList from '@/components/list/InfoList.vue'
-import { getSubArtists } from '@/api/api_sub'
+import { getSubArtists } from '@/api/api_artist'
 export default {
   components: {
     InfoList

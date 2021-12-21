@@ -244,7 +244,7 @@ export default {
     },
     /* 点赞或取消 */
     async likeVideo() {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
       let likeObj = {
         type: this.resoureType,
         t: this.countInfo.liked ? 0 : 1,
@@ -257,7 +257,7 @@ export default {
     },
     /* 关注 */
     async follow() {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
       let followObj = {
         id: this.creator.userId,
         t: this.followed ? 0 : 1
@@ -302,7 +302,7 @@ export default {
     },
     /* 收藏MV */
     async subVideo() {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
       let subObj = {
         type: this.type,
         id: this.id,

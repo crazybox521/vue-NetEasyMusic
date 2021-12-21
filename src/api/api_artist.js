@@ -19,3 +19,9 @@ export const getArtistSame = (id) => get('/simi/artist', { id })
 
 /* 获取歌手描述 */
 export const getIntro = (id) => get('/artist/desc', { id })
+
+/* login 收藏的歌手 */
+export const getSubArtists = () => get('/artist/sublist', { timestamp: Date.now() })
+
+/* login 收藏歌手 t=1 收藏 */
+export const subArtist = (id, t) => get('/artist/sub', { id, t, timestamp: Date.now() })

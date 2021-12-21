@@ -1,6 +1,13 @@
 <template>
   <div class="login-by-qr mtop-20">
-    <div class="msg-wrap">打开网易云音乐手机端扫码登录</div>
+    <div class="msg-wrap">
+      打开<a
+        style="text-decoration: none; color: blue"
+        href="https://music.163.com/#/download"
+        target="_blank"
+        >网易云音乐手机端</a
+      >扫码登录
+    </div>
     <div class="img-wrap">
       <img class="img img-h" :src="imgData" />
       <div class="btn-refresh pointer" @click="getKey" v-show="qrType === 800">

@@ -208,9 +208,12 @@ import MusicList from '@/components/list/MusicList'
 import FollowList from '@/components/list/FollowList'
 import Tag from '@/components/simple/Tag'
 import Comment from '@/components/comment/Comment'
-import { getPlayListDetail, getSuberList } from '@/api/api_playlist'
+import {
+  getPlayListDetail,
+  getSuberList,
+  setPlaylistSub
+} from '@/api/api_playlist'
 import { getMusicListByIds } from '@/api/api_music'
-import { setPlaylistSub } from '@/api/api_sub'
 import { mapState } from 'vuex'
 export default {
   props: {
@@ -337,7 +340,25 @@ export default {
     },
     /* 收藏/取消收藏 */
     async subPlaylist(type) {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
+      let cancel = false
+      if (this.subscribed)
+        await this.$confirm('确认取消收藏吗？', '确认信息', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '放弃'
+        })
+          .then(() => {
+            cancel = false
+          })
+          .catch((action) => {
+            cancel = true
+            this.$message({
+              type: 'info',
+              message: action === 'cancel' ? '取消' : '出错'
+            })
+          })
+      if (cancel) return
       const res = await setPlaylistSub(this.id, type)
       if (res.code !== 200) return
       this.subscribed = !this.subscribed

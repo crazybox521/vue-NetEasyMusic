@@ -53,11 +53,14 @@ export default {
       return this.type[this.loginType]
     }
   },
-
+  beforeDestroy() {
+    /* 离开登录组件时，获取登录信息 */
+    this.$store.dispatch('getAcount')
+  },
   methods: {
     /* 手机号密码登录 */
     doLogin() {
-      if (this.loginType === 0 || this.loginType===2) {
+      if (this.loginType === 0 || this.loginType === 2) {
         this.$refs.loginRef.doLogin()
       }
     },

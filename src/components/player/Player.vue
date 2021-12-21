@@ -350,7 +350,7 @@ export default {
     },
     /* 喜欢音乐 */
     async likeMusic() {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
       if (this.currenMusicId === 0 || typeof this.currenMusicId === 'undefined')
         return
       const res = await likeMusic(this.currenMusicId, !this.isLiked)
@@ -433,9 +433,7 @@ export default {
   height: 100%;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   background-color: #ffffff;
-  z-index: 2024;
 }
 /* 播放器左边的信息区 */
 .player-left {

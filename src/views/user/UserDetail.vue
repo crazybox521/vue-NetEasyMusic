@@ -157,7 +157,7 @@ export default {
     },
      /* 关注 */
     async follow() {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
       let followObj = {
         id: this.info.userId,
         t: this.followed ? 0 : 1

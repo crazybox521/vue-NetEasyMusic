@@ -66,7 +66,7 @@ export const getVideoLike = (type, id) => {
         return { code: 404 }
     }
 }
-/* 收藏视频/MV */
+/* login 收藏视频/MV */
 export const subVideo = ({ type, t, id }) => {
     if (type === 'v') {
         return get('/video/sub', { t, id, timestamp: Date.now() })
@@ -79,8 +79,10 @@ export const subVideo = ({ type, t, id }) => {
 }
 
 
-/* 给资源点赞 */
+/* lpgin 给资源点赞 */
 //type:资源类型,对应以下类型 1: mv 4: 电台 5: 视频 6: 动态
 //t 操作,1 为点赞,其他未取消点赞
 export const likeVideo = ({ type, t = 1, id }) => get('/resource/like', { type, t, id,timestamp:Date.now()})
 
+/* login 收藏的MV列表 */
+export const getSubMv = () => get('/mv/sublist',{timestamp:Date.now()})

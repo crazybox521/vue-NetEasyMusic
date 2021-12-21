@@ -160,7 +160,7 @@ export default {
     },
     /* 喜欢音乐 */
     async likeMusic() {
-      if (!this.isLogin) return this.$message.error('需要登录')
+      if (!this.isLogin) return this.$message.warning('需要登录')
       if (this.currenMusicId === 0 || typeof this.currenMusicId === 'undefined')
         return
       const res = await likeMusic(this.currenMusicId, !this.isLiked)
