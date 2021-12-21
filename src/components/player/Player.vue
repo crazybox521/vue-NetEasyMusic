@@ -18,38 +18,47 @@
       <div class="player-wrapper">
         <!-- 播放器按钮 -->
         <div class="player-bar">
-          <div class="player-bar-btn" @click="changePlayModel">
+          <button class="player-bar-btn" @click="changePlayModel">
             <i class="iconfont icon-liebiaoshunxu"></i>
-          </div>
-          <div class="player-bar-btn" @click="lastMusic">
+          </button>
+          <button
+            class="player-bar-btn"
+            @click="lastMusic"
+            :class="{ 'player-bar-btn_disabled': playType === 'personalFm' }"
+          >
             <i class="iconfont icon-shangyishou"></i>
-          </div>
-          <div class="player-bar-btn" @click="pause">
+          </button>
+          <button class="player-bar-btn" @click="pause">
             <i v-show="isPlay" class="iconfont icon-zanting"></i>
             <i v-show="!isPlay" class="iconfont icon-bofang"></i>
-          </div>
-          <div class="player-bar-btn" @click="nextMusic">
+          </button>
+          <button class="player-bar-btn" @click="nextMusic">
             <i class="iconfont icon-xiayishou"></i>
-          </div>
-          <div class="player-bar-btn" @click="likeMusic">
+          </button>
+          <button class="player-bar-btn" @click="likeMusic">
             <i v-show="!isLiked" class="iconfont icon-aixin"></i>
             <i
               v-show="isLiked"
               style="color: #ec4141"
               class="iconfont icon-aixin1"
             ></i>
-          </div>
+          </button>
         </div>
         <!-- 进度条 -->
         <div class="time-progress">
-          <span>{{ currenMusicInfo.currenTime | timeFormat }}</span>
+          <span class="font-12">{{
+            currenMusicInfo.currenTime | timeFormat
+          }}</span>
           <el-slider
             v-model="curren"
             class="timeSlider"
             :show-tooltip="false"
             @change="changeCurrenTime"
+            :disabled="musicUrl == ''"
           ></el-slider>
-          <span>{{ (currenMusicInfo.totalTime / 1000) | timeFormat }}</span>
+          <span class="font-12">{{
+            (currenMusicInfo.totalTime / 1000) | timeFormat
+          }}</span>
         </div>
       </div>
       <div class="btn-other">
@@ -74,7 +83,7 @@
           </div>
         </div>
         <!-- 当前播放列表 -->
-        <div class="curren-list">
+        <div class="curren-list" v-show="playType !== 'personalFm'">
           <i
             @click="showList"
             class="iconfont icon-liebiaoshunxu volume-icon pointer"
@@ -162,7 +171,6 @@ export default {
       volume: 50, //音量
       saveVolume: 50, //静音前保存的音量
       isMute: false, //是否是静音
-      type: 'order', //播放顺序
       imgInfo: {
         //img区域信息，图片，歌名，歌手
         imgUrl: 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg',
@@ -182,7 +190,8 @@ export default {
       'currenMusicInfo',
       'historyList',
       'likeIdList',
-      'isLogin'
+      'isLogin',
+      'playType'
     ]),
     isLiked: {
       get() {
@@ -208,7 +217,7 @@ export default {
     /* 通过Vuex管理的播放状态,audio会自动播放 */
     isPlay(val) {
       /* 由于misicUrl第一次是状态改变后获取，所以第一次改变不要进入监听 */
-      if (!this.musicUrl) return
+      if (this.musicUrl === '') return
       if (val) {
         this.$refs.audioRef.play()
       } else {
@@ -306,7 +315,7 @@ export default {
     /* 下一首 */
     nextMusic() {
       console.log('下一首')
-      if (this.type == 'order') {
+      if (this.playType === 'music') {
         if (this.currenIndex != this.musicList.length - 1) {
           this.$store.commit('setCurrenIndex', this.currenIndex + 1)
           this.$store.commit(
@@ -317,12 +326,14 @@ export default {
           this.$store.commit('setPlayState', false)
           this.$message.error('已经是最后一首了！')
         }
+      } else if (this.playType === 'personalFm') {
+        this.$store.dispatch('personalFm', { type: 'next' })
       }
     },
     /* 上一首 */
     lastMusic() {
       console.log('上一首')
-      if (this.type == 'order') {
+      if (this.playType == 'music') {
         if (this.currenIndex != 0) {
           this.$store.commit('setCurrenIndex', this.currenIndex - 1)
           this.$store.commit(
@@ -333,6 +344,8 @@ export default {
           this.$store.commit('setPlayState', false)
           this.$message.error('已经是第一首了')
         }
+      } else if (this.type == 'personalFm') {
+        return false
       }
     },
     /* 喜欢音乐 */
@@ -388,11 +401,14 @@ export default {
     /* 打开歌曲播放页 */
     openPlayView() {
       if (this.musicUrl == '') return
-      this.PlayViewDrawer = true
-      /* 打开后歌词跳到对应行 */
-      this.$nextTick(() => {
-        document.querySelector('.player .el-drawer__body').scrollTop = 0
-      })
+      if (this.playType === 'music') {
+        this.PlayViewDrawer = true
+        this.$nextTick(() => {
+          document.querySelector('.player .el-drawer__body').scrollTop = 0
+        })
+      } else if (this.playType === 'personalFm') {
+        if (this.$route.path !== '/personalfm') this.$router.push('/personalfm')
+      }
     },
     /* 抽屉关闭的回调 */
     handleClose() {
@@ -452,7 +468,13 @@ export default {
   margin-top: 6px;
   justify-content: space-around;
   &-btn {
+    outline: none;
+    border: none;
+    background-color: #fff;
     cursor: pointer;
+    .iconfont {
+      font-size: 18px;
+    }
     &:nth-child(3) {
       height: 32px;
       width: 32px;
@@ -461,9 +483,22 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      .iconfont {
+        font-size: 16px;
+      }
+    }
+    &:hover {
+      color: red;
     }
     &:nth-child(3):hover {
       background-color: #e5e5e5;
+    }
+  }
+  &-btn_disabled {
+    cursor: not-allowed;
+    color: #e5e5e5;
+    &:hover {
+      color: #e5e5e5;
     }
   }
 }

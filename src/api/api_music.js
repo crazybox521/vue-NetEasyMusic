@@ -10,7 +10,7 @@ export const getLyric = (id) => get('/lyric', { id })
 export const getRecommendSong = () => get('/recommend/songs')
 
 /* 获取喜欢的音乐ID列表 */
-export const getLikeIdList = (uid) => get('/likelist', { uid , timestamp: Date.now() })
+export const getLikeIdList = (uid) => get('/likelist', { uid, timestamp: Date.now() })
 
 /* 获取音乐详情 */
 export const getMusicListByIds = (ids) => get('/song/detail', { ids })
@@ -21,3 +21,9 @@ export const likeMusic = (id, like = true) => get('/like?', { id, like, timestam
 /* 新歌速递 */
 //全部:0 华语:7 欧美:96 日本:8 韩国:16
 export const getTopMusic = (type) => get('/top/song', { type })
+
+/* 私人FM */
+export const getPersonalFm = () => get('/personal_fm',{timestamp: Date.now()})
+
+/* 私人FM垃圾桶 */
+export const fmTrash =(id)=>get('/fm_trash',{id})

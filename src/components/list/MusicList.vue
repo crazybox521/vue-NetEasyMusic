@@ -114,29 +114,20 @@ export default {
     //  播放音乐
     playMusic(row) {
       console.log('列表没变', this.list == this.musicList)
-      this.$store.commit('setMusicList', this.list)
-      this.$store.commit('setCurrenMusicId', row.id)
-      this.$store.commit('setPlayState', true)
-      this.getIndex(row.id)
-    },
-    // 获取并改变当前播放下标
-    getIndex(id) {
-      if (this.musicList.length === 0) return
-      let index = this.musicList.findIndex((item) => item.id == id)
-      console.log(index)
-      this.$store.commit('setCurrenIndex', index)
+      this.$store.dispatch('playMusic', {
+        list: this.list,
+        id: row.id
+      })
     },
     /* 播放当前列表 */
     playMusicAll() {
-      console.log('调用了')
       if (this.list.length == 0) return
       let id = this.list[0].id
-      console.log(this.list)
       console.log('列表没变', this.list == this.musicList)
-      this.$store.commit('setMusicList', this.list)
-      this.$store.commit('setCurrenMusicId', id)
-      this.$store.commit('setPlayState', true)
-      this.getIndex(id)
+      this.$store.dispatch('playMusic', {
+        list: this.list,
+        id
+      })
     },
     toMvDeTail(id) {
       if (typeof id === 'number') this.$router.push('/videodetail/mv/' + id)

@@ -197,16 +197,10 @@ export default {
     },
     /* 播放音乐 */
     playMusic(row) {
-      this.$store.commit('setCurrenMusicId', row.id)
-      this.$store.commit('setPlayState', true)
-      this.getIndex(row.id)
-    },
-    // 获取并改变当前播放下标
-    getIndex(id) {
-      if (this.musicList.length === 0) return
-      let index = this.musicList.findIndex((item) => item.id == id)
-      console.log(index)
-      this.$store.commit('setCurrenIndex', index)
+      this.$store.dispatch('playMusic', {
+        list: this.musicList,
+        id: row.id
+      })
     },
     clearList() {
       this.$store.commit('setCurrenMusicId', 0)
@@ -297,7 +291,6 @@ export default {
   left: 0;
   height: 80px;
   width: 100%;
-
 }
 
 @media screen and (max-width: 768px) {

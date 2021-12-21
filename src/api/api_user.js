@@ -24,7 +24,7 @@ export const getLoginStatus = () => get('/login/status')
 export const getAcount = () => get('/user/account', { timestamp: Date.now() })
 
 /* 获取用户详情 */
-export const getUserDetail = (uid) => get('/user/detail', { uid })
+export const getUserDetail = (uid) => get('/user/detail', { uid,timestamp: Date.now() })
 
 /* 获取用户歌单 */
 export const getUserPlayList = (uid, offset, limit) => get('/user/playlist', { uid, offset, limit })
