@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout" :class="{ layout_gray: isGray }">
     <!-- 头部 -->
     <div class="header"><HeaderBar></HeaderBar></div>
     <!-- 内容区域 -->
@@ -118,7 +118,6 @@
 import { mapState } from 'vuex'
 import FooterBar from '@/components/footer/FooterBar.vue'
 import HeaderBar from '@/components/header/HeaderBar.vue'
-import { getUserPlayList } from '@/api/api_user'
 export default {
   components: {
     FooterBar,
@@ -135,7 +134,6 @@ export default {
         { path: '/historyplay', title: '最近播放', Login: false, type: 1 },
         { path: '/subscribe', title: '我的收藏', Login: true, type: 1 }
       ],
-      playList: []
     }
   },
   computed: {
@@ -146,26 +144,36 @@ export default {
       'isLogin',
       'currenIndex',
       'isPlay',
-      'profile'
+      'profile',
+      'myPlayList'
     ]),
     length() {
       return this.musicList.length
     },
+    /* 公有菜单 */
     commenList() {
       return this.menuList.filter((item) => item.type == 0)
     },
+    /* 我的菜单 */
     myList() {
       return this.menuList.filter((item) => item.type == 1)
     },
+    /* 创建的歌单 */
     creList() {
-      return this.playList.filter((item) => item.userId == this.userId)
+      return this.myPlayList.filter((item) => item.userId == this.userId)
     },
+    /* 收藏的歌单 */
     subList() {
-      return this.playList.filter((item) => item.userId !== this.userId)
+      return this.myPlayList.filter((item) => item.userId !== this.userId)
     },
     userId() {
-      if (this.profile != null) return this.profile.userId
-      else return 0
+      return this.isLogin ? this.profile.userId : 0
+    },
+    /* 灰色滤镜 */
+    isGray() {
+      const time_today = new Date()
+      if (time_today.getMonth() == 11 && time_today.getDate() == 13) return true
+      else return false
     }
   },
   created() {
@@ -173,14 +181,6 @@ export default {
       this.activeMenu = window.sessionStorage.getItem('activeMenu')
   },
   watch: {
-    userId: {
-      immediate: true,
-      handler(val) {
-        if (val !== 0) {
-          this.getUserPlayList(val)
-        }
-      }
-    },
     '$route.path'() {
       this.$refs.scrollWrapRef.scrollTop = 0
     }
@@ -209,14 +209,6 @@ export default {
     showCurren(id) {
       return this.currenMusicId === id
     },
-    /* 获取收藏及创建歌单 */
-    async getUserPlayList() {
-      if (!this.userId) return
-      const res = await getUserPlayList(this.userId)
-      console.log(res)
-      if (res.code !== 200) return
-      this.playList = res.playlist
-    },
     subPath(id) {
       if (typeof id === 'number') return `/playlistdetail/${id}`
       else return '/404'
@@ -236,10 +228,11 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
-  /*   -webkit-filter: grayscale(100%); // Chrome, Safari, Opera 
-  filter: grayscale(100%); */
 }
-
+.layout_gray {
+  -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+  filter: grayscale(100%);
+}
 .header {
   position: absolute;
   background-color: @headRed;

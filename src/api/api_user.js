@@ -2,10 +2,10 @@ import get from '@/service/get'
 /* login */
 
 /* 手机号密码登录 */
-export const doLogin = ({ phone, md5_password, captcha }) => get('/login/cellphone', { phone, md5_password, captcha,timestamp:Date.now() })
+export const doLogin = ({ phone, md5_password, captcha }) => get('/login/cellphone', { phone, md5_password, captcha, timestamp: Date.now() })
 
 /* 退出登录 */
-export const logout = () => get('/logout',{timestamp:Date.now()})
+export const logout = () => get('/logout', { timestamp: Date.now() })
 
 /* 二维码登录 */
 // 获取二维码key
@@ -16,7 +16,7 @@ export const createQr = (key, qrimg = true) => get('/login/qr/create', { key, qr
 export const checkQr = (key) => get('/login/qr/check', { key, timestamp: Date.now() })
 
 /* 发送验证码 */
-export const getCode = (phone) => get('/captcha/sent', { phone,timestamp:Date.now() })
+export const getCode = (phone) => get('/captcha/sent', { phone, timestamp: Date.now() })
 
 /* 获取登录状态 */
 export const getLoginStatus = () => get('/login/status')
@@ -25,10 +25,10 @@ export const getLoginStatus = () => get('/login/status')
 export const getAcount = () => get('/user/account', { timestamp: Date.now() })
 
 /* 获取用户详情 */
-export const getUserDetail = (uid) => get('/user/detail', { uid,timestamp: Date.now() })
+export const getUserDetail = (uid) => get('/user/detail', { uid, timestamp: Date.now() })
 
 /* 获取用户歌单 */
-export const getUserPlayList = (uid, offset, limit) => get('/user/playlist', { uid, offset, limit })
+export const getUserPlayList = (uid, offset, limit=30) => get('/user/playlist', { uid, offset, limit, timestamp: Date.now() })
 
 /* 关注用户 */
-export const follow =({id,t})=>get('/follow',{id,t,timestamp:Date.now()})
+export const follow = ({ id, t }) => get('/follow', { id, t, timestamp: Date.now() })

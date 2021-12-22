@@ -58,29 +58,10 @@
     </div>
     <!-- 专辑列表 -->
     <div class="detail-head">
-      <ul class="detail-menu">
-        <li
-          @click="handMenuClick(1)"
-          class="pointer"
-          :class="{ isActive: showtab === 1 }"
-        >
-          歌曲列表
-        </li>
-        <li
-          @click="handMenuClick(2)"
-          class="pointer"
-          :class="{ isActive: showtab === 2 }"
-        >
-          评论({{ commentCount }})
-        </li>
-        <li
-          @click="handMenuClick(3)"
-          class="pointer"
-          :class="{ isActive: showtab === 3 }"
-        >
-          专辑详情
-        </li>
-      </ul>
+      <TabMenu
+        :menuList="['歌曲列表', '评论', '专辑详情']"
+        @menuClick="handMenuClick"
+      ></TabMenu>
     </div>
     <MusicList v-show="showtab === 1" ref="listRef" :list="list"></MusicList>
     <Comment
@@ -107,6 +88,7 @@ import { getAlbumDetail, getAlbumDynamic, setAlbumSub } from '@/api/api_album'
 import Tag from '@/components/simple/Tag.vue'
 import MusicList from '@/components/list/MusicList.vue'
 import Comment from '@/components/comment/Comment.vue'
+import TabMenu from '@/components/menu/TabMenu'
 import { mapState } from 'vuex'
 export default {
   props: {
@@ -118,7 +100,8 @@ export default {
   components: {
     Tag,
     MusicList,
-    Comment
+    Comment,
+    TabMenu
   },
   data() {
     return {
@@ -198,7 +181,7 @@ export default {
       this.subCount = res.subCount
     },
     handMenuClick(val) {
-      this.showtab = val
+      this.showtab = val + 1
     },
     toArtistDetail(id) {
       if (typeof id === 'number') this.$router.push('/artistdetail/' + id)
@@ -259,31 +242,6 @@ export default {
   background-color: #fff;
   justify-content: space-between;
   align-items: center;
-
-  .detail-menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    li {
-      margin: 10px;
-
-      &.isActive {
-        font-size: 18px;
-        font-weight: bold;
-
-        &::after {
-          display: block;
-          content: '';
-          height: 4px;
-          width: 90%;
-          margin: 0 auto;
-          background-color: #ec4141;
-          border-radius: 2px;
-        }
-      }
-    }
-  }
 }
 
 /* 文字展开收起效果 */

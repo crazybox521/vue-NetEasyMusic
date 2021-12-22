@@ -11,8 +11,8 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div class="play-list">
-      <h2 class="font-20 font-bold">
+    <div class="play-list" v-if="!isLogin">
+      <h2 class="font-20 font-bold pointer" @click="$router.push('playlist')">
         热门推荐 <i class="iconfont icon-arrow-right"></i>
       </h2>
       <ImgList @clickImg="toPlayListDetail" :list="recSongList" type="playlist">
@@ -23,9 +23,9 @@
         </template>
       </ImgList>
     </div>
-    <div class="play-list" v-if="isLogin">
-      <h2 class="font-20 font-bold">
-        个性化推荐 <i class="iconfont icon-arrow-right"></i>
+    <div class="play-list" v-else>
+      <h2 class="font-20 font-bold pointer" @click="$router.push('playlist')">
+        推荐歌单 <i class="iconfont icon-arrow-right"></i>
       </h2>
       <ImgList
         @clickImg="toPlayListDetail"
@@ -84,24 +84,23 @@ export default {
       if (res.code !== 200) return
       this.imgList = Object.freeze(res.banners)
     },
-    // 获取歌单
+    // 获取热门推荐歌单 未登录时
     async getRecSongList(limit) {
+      if (this.isLogin) return
       const res = await getPersonalized(limit)
       if (res.code !== 200) return
       console.log(res)
       this.recSongList = Object.freeze(res.result)
     },
-    /* 获取个性歌单 */
+    /* 获取推荐歌单 登陆后 */
     async getRecommend() {
       if (!this.isLogin) return
       const res = await getRecommend()
       if (res.code !== 200) return
       console.log(res)
       res.recommend.forEach((item) => {
-        let { id, name, picUrl, playcount: playCount, trackCount } = item
-        this.recommendList.push(
-          Object.freeze({ id, name, picUrl, playCount, trackCount })
-        )
+        item.playCount = item.playcount
+        this.recommendList.push(Object.freeze(item))
       })
     },
     open(url) {

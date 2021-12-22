@@ -58,14 +58,14 @@
         </div>
       </div>
     </div>
+    <div class="menu-wrap mtop-20">
+      <TabMenu
+        :menuList="['创建的歌单', '收藏的歌单']"
+        @menuClick="handleMenuClick"
+      ></TabMenu>
+    </div>
     <!--列表 -->
-    <div class="mtop-20" v-show="creList.length !== 0">
-      <div>
-        <span class="font-bold">歌单</span>
-        <span class="font-12" style="color: #676767">
-          ({{ creList.length }})</span
-        >
-      </div>
+    <div class="mtop-20" v-show="showTab === 1">
       <ImgList @clickImg="toPlayListDetail" :list="creList" type="playlist">
         <template v-slot="{ item }">
           <div class="text-hidden">
@@ -74,13 +74,7 @@
         </template>
       </ImgList>
     </div>
-    <div class="mtop-20" v-show="subList.length !== 0">
-      <div>
-        <span class="font-bold">收藏</span>
-        <span class="font-12" style="color: #676767">
-          ({{ subList.length }})</span
-        >
-      </div>
+    <div class="mtop-20" v-show="showTab === 2">
       <ImgList @clickImg="toPlayListDetail" :list="subList" type="playlist">
         <template v-slot="{ item }">
           <div class="text-hidden">
@@ -94,7 +88,8 @@
 
 <script>
 import ImgList from '@/components/list/ImgList.vue'
-import { getUserDetail, getUserPlayList,follow } from '@/api/api_user'
+import TabMenu from '@/components/menu/TabMenu'
+import { getUserDetail, getUserPlayList, follow } from '@/api/api_user'
 import { mapState } from 'vuex'
 export default {
   props: {
@@ -103,13 +98,15 @@ export default {
       required: true
     }
   },
-  components: { ImgList },
+  components: { ImgList, TabMenu },
   data() {
     return {
       info: {}, //基本信息
       list: [], //歌单列表
       level: 0, //等级
-      followed: false
+      followed: false,
+      offset: 0,
+      showTab: 1
     }
   },
   computed: {
@@ -125,7 +122,6 @@ export default {
     subList() {
       return this.list.filter((item) => item.userId !== this.userId)
     },
-
     ...mapState(['profile', 'isLogin'])
   },
   watch: {
@@ -151,11 +147,18 @@ export default {
     },
     /* 获取收藏及创建歌单 */
     async getUserPlayList() {
-      const res = await getUserPlayList(this.id)
+      const res = await getUserPlayList(this.id, this.offset)
       if (res.code !== 200) return
-      this.list = Object.freeze(res.playlist)
+      if (this.list.length === 0) this.list = res.playlist
+      else {
+        this.list.push(...Object.freeze(res.playlist))
+      }
+      if (res.more) {
+        this.offset += 30
+        this.getUserPlayList()
+      }
     },
-     /* 关注 */
+    /* 关注 */
     async follow() {
       if (!this.isLogin) return this.$message.warning('需要登录')
       let followObj = {
@@ -169,6 +172,9 @@ export default {
     },
     toPlayListDetail(id) {
       this.$router.push({ path: '/playlistdetail/' + id })
+    },
+    handleMenuClick(index) {
+      this.showTab = index + 1
     }
   }
 }

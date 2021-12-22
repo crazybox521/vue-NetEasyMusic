@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { getPersonalFm, fmTrash } from '@/api/api_music'
 import { getAcount, logout } from '@/api/api_user'
 import { getLikeIdList } from '@/api/api_music.js'
+import { getUserPlayList } from '@/api/api_user'
 
 Vue.use(Vuex)
 
@@ -35,8 +36,8 @@ const state = {
     /* 喜欢的音乐列表 */
     likeIdList: [],
     /* 播放类型 */
-    playType: 'music'//music,personalFm
-
+    playType: 'music',//music,personalFm
+    myPlayList: []
 }
 const actions = {
     /* 私人FM */
@@ -92,9 +93,10 @@ const actions = {
         if (res.account !== null) {
             commit('setLoginInfo', res)
             commit('setIsLogin', true)
+            dispatch('getMyPlayList')
             dispatch('getLikeList')
         } else {
-            commit('setLoginInfo', { account: null, profile: null })
+            commit('setLoginInfo', { account: {}, profile: {} })
             commit('setIsLogin', false)
             Vue.prototype.$notify({
                 title: '提示',
@@ -117,9 +119,9 @@ const actions = {
                 const res = await logout()
                 if (res.code !== 200) return
                 Vue.prototype.$message.success('退出成功')
-                Vue.prototype.$router.push('/personalrecom')
                 commit('setLoginInfo', { account: null, profile: null })
                 commit('setIsLogin', false)
+                Vue.prototype.$router.push('/personalrecom')
             })
             .catch(() => {
                 Vue.prototype.$message({
@@ -129,6 +131,7 @@ const actions = {
             })
 
     },
+    /* 获取喜欢的音乐列表 */
     async getLikeList({ commit, state }) {
         const res = await getLikeIdList(state.profile.userId)
         if (res.code !== 200) return
@@ -138,6 +141,13 @@ const actions = {
                 data: res.ids
             })
         }
+    },
+    /* 获取个人歌单 */
+    async getMyPlayList({ commit, state }) {
+        if (!state.isLogin) return
+        const res = await getUserPlayList(state.profile.userId)
+        if (res.code !== 200) return
+        commit('setMyPlayList', res.playlist)
     }
 }
 
@@ -232,6 +242,9 @@ const mutations = {
         if (playType === 'music' || playType === 'personalFm') {
             state.playType = playType
         }
+    },
+    setMyPlayList(state, list) {
+        state.myPlayList = list
     }
 
 }

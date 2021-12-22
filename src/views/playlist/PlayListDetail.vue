@@ -125,29 +125,10 @@
           </div>
           <!-- 歌单列表 -->
           <div class="detail-head">
-            <ul class="detail-menu">
-              <li
-                @click="handMenuClick(1)"
-                class="pointer"
-                :class="{ isActive: showtab === 1 }"
-              >
-                歌曲列表
-              </li>
-              <li
-                @click="handMenuClick(2)"
-                class="pointer"
-                :class="{ isActive: showtab === 2 }"
-              >
-                评论({{ info.commentCount }})
-              </li>
-              <li
-                @click="handMenuClick(3)"
-                class="pointer"
-                :class="{ isActive: showtab === 3 }"
-              >
-                收藏者
-              </li>
-            </ul>
+            <TabMenu
+              :menuList="['歌曲列表', `评论(${info.commentCount})`, '收藏者']"
+              @menuClick="handMenuClick"
+            ></TabMenu>
             <div class="detail-search" v-show="showtab === 1">
               <el-input
                 placeholder="搜索音乐"
@@ -208,6 +189,7 @@ import MusicList from '@/components/list/MusicList'
 import FollowList from '@/components/list/FollowList'
 import Tag from '@/components/simple/Tag'
 import Comment from '@/components/comment/Comment'
+import TabMenu from '@/components/menu/TabMenu'
 import {
   getPlayListDetail,
   getSuberList,
@@ -226,7 +208,8 @@ export default {
     MusicList,
     Tag,
     Comment,
-    FollowList
+    FollowList,
+    TabMenu
   },
   data() {
     return {
@@ -364,6 +347,7 @@ export default {
       this.subscribed = !this.subscribed
       if (type == 1) this.$message.success('收藏成功')
       else this.$message.success('取消收藏成功')
+      this.$store.dispatch('getMyPlayList')
     },
     toUserDetail(item) {
       if (typeof item === 'object')
@@ -371,6 +355,7 @@ export default {
     },
     /* menu按钮点击回调 */
     handMenuClick(type) {
+      type = type + 1
       if (this.showtab === type) return
       this.showtab = type
       if (this.showtab === 3) {
@@ -424,31 +409,6 @@ export default {
   background-color: #fff;
   justify-content: space-between;
   align-items: center;
-
-  .detail-menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    li {
-      margin: 10px;
-
-      &.isActive {
-        font-size: 18px;
-        font-weight: bold;
-
-        &::after {
-          display: block;
-          content: '';
-          height: 4px;
-          width: 90%;
-          margin: 0 auto;
-          background-color: #ec4141;
-          border-radius: 2px;
-        }
-      }
-    }
-  }
 }
 
 /* 文字展开收起效果 */

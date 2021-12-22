@@ -192,12 +192,12 @@ export default {
   },
   computed: {
     /* 登录相关信息 */
-    ...mapState(['isLogin', 'isPhone','account','profile']),
+    ...mapState(['isLogin', 'isPhone', 'account', 'profile']),
     name() {
-      return this.profile ? this.profile.nickname : '未登录'
+      return this.isLogin ? this.profile.nickname : '未登录'
     },
     avatarUrl() {
-      return this.profile ? this.profile.avatarUrl : ''
+      return this.isLogin ? this.profile.avatarUrl : ''
     },
     /* 搜索建议相关状态 */
     showMusic() {
