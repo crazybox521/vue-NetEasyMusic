@@ -72,3 +72,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 修复评论内容长数字不换行的 bug
 - 解决歌曲进度往前拉，歌词激活行不变的 bug；改变了歌词滚动判断的当前时间来源（之前是 audio 实时播放时间，现在是前者经过处理的提交到 vuex 的当前时间，可能会稍有延迟或提前）；抽离歌词组件（私人 FM 需要复用）
 - chrome对媒体标签有限制，必须用户有交互才能自动播放
+- 添加编辑创建的歌单信息，使用VueCropper插件实现裁剪图片
