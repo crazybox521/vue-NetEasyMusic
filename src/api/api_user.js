@@ -28,7 +28,11 @@ export const getAcount = () => get('/user/account', { timestamp: Date.now() })
 export const getUserDetail = (uid) => get('/user/detail', { uid, timestamp: Date.now() })
 
 /* 获取用户歌单 */
-export const getUserPlayList = (uid, offset, limit=30) => get('/user/playlist', { uid, offset, limit, timestamp: Date.now() })
+export const getUserPlayList = (uid, offset, limit = 30) => get('/user/playlist', { uid, offset, limit, timestamp: Date.now() })
 
 /* 关注用户 */
 export const follow = ({ id, t }) => get('/follow', { id, t, timestamp: Date.now() })
+
+/* 更新用户信息 */
+export const updateUserInfo = ({ gender, signature, city, nickname, birthday, province }) => get('/user/update', { gender, signature, city, nickname, birthday, province })
+

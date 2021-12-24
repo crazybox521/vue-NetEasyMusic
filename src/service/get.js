@@ -52,13 +52,22 @@ export const downloadMusic = (url, fileName) => {
         });
 
 }
-export const uploadPlayListImg = ({ id, imgSize, data, imgX = 0, imgY = 0 }) => {
-    return axios({
+export const uploadPlayListImg = ({ id, imgSize, data, imgX = 0, imgY = 0 }) =>
+    axios({
         method: 'post',
         url: `/playlist/cover/update?id=${id}&imgSize=${imgSize}&imgX=${imgX}&imgY=${imgY}&timestamp=${Date.now()}`,
         headers: {
             'Content-Type': 'multipart/form-data',
         },
         data,
-    }).then((res) =>res.data)
-}
+    }).then((res) => res.data)
+
+/* 更新用户头像 */
+export const uploadAvatar = ({ imgSize, data, imgX = 0, imgY = 0 }) => axios({
+    method: 'post',
+    url: `/avatar/upload?&imgSize=${imgSize}&imgX=${imgX}&imgY=${imgY}&timestamp=${Date.now()}`,
+    headers: {
+        'Content-Type': 'multipart/form-data',
+    },
+    data,
+}).then((res) => res.data)
