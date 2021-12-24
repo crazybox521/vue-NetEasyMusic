@@ -17,6 +17,8 @@ const NewMusic = () => import( /* webpackChunkName: "group-homepage" */ '../view
 /* 需登录后才能进入的页面 */
 const RecommendSong = () => import( /* webpackChunkName: "group-user" */ '../views/user/RecommendSong.vue')
 const PersonalFm = () => import( /* webpackChunkName: "group-user" */ '../views/user/PersonalFm.vue')
+const UserEdit = () => import( /* webpackChunkName: "group-user" */ '../views/user/UserEdit.vue')
+const PlayListEdit = () => import( /* webpackChunkName: "group-user" */ '../views/playlist/PlayListEdit.vue')
 const SubScribeView = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubScribeView.vue')
 const SubAlbum = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubAlbum.vue')
 const SubArtists = () => import( /* webpackChunkName: "group-user" */ '../views/user/subscribe/SubArtists.vue')
@@ -84,10 +86,12 @@ const routes = [
             },
             { path: "search/:key", component: SearchList, props: true },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, props: true },//歌单详情页
+            { path: "playlistedit/:id", component: PlayListEdit, props: true, meta: { check: true } },//歌单编辑页
             { path: "artistdetail/:id", component: ArtistDetail, props: true },//歌手详情页
             { path: "albumdetail/:id", component: AlbumDetail, props: true },//专辑详情页
             { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: true }, props: true },//视频和MV详情页 type v:video mv:mv
             { path: "userdetail/:id", component: UserDetail, props: true },//用户详情页
+            { path: "useredit", component: UserEdit, meta: { check: true } },//用户编辑页
             { path: 'recomsongs', component: RecommendSong, meta: { check: true } },//每日推荐歌曲页
             { path: 'personalfm', component: PersonalFm, meta: { check: true } },//私人FM歌曲页
             { path: 'historyplay', component: HistoryPlay },//最近播放页
@@ -95,7 +99,7 @@ const routes = [
             { path: 'topmv', component: TopMv, meta: { check: true } },//MV排行页
         ],
     },
-    { path: '/login', component: Login,meta: { check: false } },//login
+    { path: '/login', component: Login, meta: { check: false } },//login
     { path: '*', component: NotFound }//404
 ]
 
@@ -112,7 +116,7 @@ router.beforeEach((to, from, next) => {
             Vue.prototype.$message.error('需要登录')
             next('/login')
         }
-        
+
     } else {
         next()
     }

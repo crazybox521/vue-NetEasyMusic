@@ -10,6 +10,7 @@ import '@/utils/filters'
 import './assets/css/global.css'
 import './assets/css/my-element.css'
 import './assets/css/btn.css'
+Vue.use(window['vue-cropper'].default)
 
 Vue.config.productionTip = false
 

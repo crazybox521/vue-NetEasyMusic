@@ -24,7 +24,11 @@
               ></i>
             </span>
           </div>
-          <div v-if="isLogin && profile.userId === userId">自己</div>
+          <div v-if="isLogin && profile.userId === userId">
+            <button class="btn btn-white" @click="toUserEdit">
+              <i class="el-icon-edit"></i>编辑个人信息
+            </button>
+          </div>
           <div v-else>
             <button class="btn btn-white">
               <i class="el-icon-message"></i> 发私信
@@ -172,6 +176,9 @@ export default {
     },
     toPlayListDetail(id) {
       this.$router.push({ path: '/playlistdetail/' + id })
+    },
+    toUserEdit() {
+      this.$router.push('/useredit')
     },
     handleMenuClick(index) {
       this.showTab = index + 1

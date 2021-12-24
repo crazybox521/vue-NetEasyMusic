@@ -6,6 +6,7 @@ module.exports = {
     devServer: {
         proxy: 'http://localhost:3000'
     },
+
     chainWebpack: config => {
         config.resolve.alias.set("@", resolve("src"));
         config.when(process.env.NODE_ENV === 'production', config => {
@@ -35,5 +36,7 @@ module.exports = {
                 return args
             })
         })
-    }
+    },
+
+    productionSourceMap: false
 }

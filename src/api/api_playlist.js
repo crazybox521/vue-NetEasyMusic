@@ -3,7 +3,7 @@ import get from '@/service/get'
 export const getPersonalized = (limit) => get('/personalized', { limit })
 
 /* 获取歌单详情 */
-export const getPlayListDetail = (id) => get('/playlist/detail', { id, timestamp:Date.now() })
+export const getPlayListDetail = (id) => get('/playlist/detail', { id, timestamp: Date.now() })
 
 /* 获取排行榜信息 */
 export const getToplist = () => get('/toplist')
@@ -30,4 +30,7 @@ export const getRecommend = () => get('/recommend/resource')
 export const getSuberList = ({ id, limit = 30, offset }) => get('/playlist/subscribers', { id, limit, offset })
 
 /* login 收藏/取消收藏歌单 t : 类型,1:收藏,2:取消收藏 */
-export const setPlaylistSub = (id, t) => get('/playlist/subscribe', { id, t,timestamp:Date.now() })
+export const setPlaylistSub = (id, t) => get('/playlist/subscribe', { id, t, timestamp: Date.now() })
+
+/* login 更新歌单信息 */
+export const updateMyPlayList = ({ id, name, desc, tags }) => get('/playlist/update', { id, name, desc, tags })

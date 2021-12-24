@@ -34,6 +34,13 @@
               <div class="info-title">
                 <Tag text="歌单"></Tag>
                 <span class="mleft-12 font-20 font-bold">{{ info.name }}</span>
+                <span
+                  @click="toPlayListEdit"
+                  v-if="showEditIcon"
+                  class="mleft-10 font-18 pointer"
+                  style="color: #a3a3a3"
+                  ><i class="el-icon-edit"></i
+                ></span>
               </div>
               <div class="author">
                 <div class="author-img pointer" @click="toUserDetail(creator)">
@@ -251,6 +258,13 @@ export default {
       return this.info.coverImgUrl
         ? `${this.info.coverImgUrl}?param=300y300`
         : ''
+    },
+    showEditIcon() {
+      return (
+        this.isLogin &&
+        this.profile.userId === this.creator.userId &&
+        this.info.specialType === 0
+      )
     }
   },
   watch: {
@@ -362,6 +376,9 @@ export default {
         this.isSubloading = true
         this.getSuberList()
       }
+    },
+    toPlayListEdit() {
+      this.$router.push('/playlistedit/' + this.id)
     }
   }
 }

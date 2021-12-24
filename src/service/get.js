@@ -52,3 +52,13 @@ export const downloadMusic = (url, fileName) => {
         });
 
 }
+export const uploadPlayListImg = ({ id, imgSize, data, imgX = 0, imgY = 0 }) => {
+    return axios({
+        method: 'post',
+        url: `/playlist/cover/update?id=${id}&imgSize=${imgSize}&imgX=${imgX}&imgY=${imgY}&timestamp=${Date.now()}`,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        data,
+    }).then((res) =>res.data)
+}
