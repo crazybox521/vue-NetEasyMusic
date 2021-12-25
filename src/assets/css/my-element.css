@@ -136,3 +136,13 @@
 
     }
 }
+/* 个人信息编辑页单选 */
+.el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    color: #FFF;
+    background-color: #ec4141;
+    border-color: #ec4141;
+    box-shadow: -1px 0 0 0 #ec4141;
+}
+.el-radio-button__inner:hover {
+    color: #ec4141;
+}

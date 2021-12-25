@@ -109,6 +109,7 @@ export default {
     /* 歌词行数变化的回调 */
     lyricHanlder(lineNum) {
       if (lineNum > 4) this.scrollAnimation(lineNum - 4)
+      else this.$refs.lyricWrapRef.scrollTop = 0
     },
     /* 歌词滚动动画 */
     scrollAnimation(line) {
@@ -117,11 +118,11 @@ export default {
         if (start === undefined) start = timestamp
         const elapsed = timestamp - start
         this.$refs.lyricWrapRef.scrollTop = Math.min(
-          0.04 * elapsed + (line - 1) * 40,
+          0.16 * elapsed + (line - 1) * 40,
           line * 40
         )
-        if (elapsed < 1000) {
-          // 在1秒后停止动画
+        if (elapsed < 250) {
+          // 在.25秒后停止动画
           window.requestAnimationFrame(step)
         }
       }
@@ -160,6 +161,7 @@ export default {
 }
 .lyric_active {
   font-weight: bold;
+  font-size: 15px;
   color: #000;
 }
 @media screen and(max-width:768px) {

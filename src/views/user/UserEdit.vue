@@ -1,6 +1,6 @@
 <template>
   <div class="user-edit mtop-20">
-    <div class="font-20 font-bold">编辑歌单信息</div>
+    <div class="font-20 font-bold">编辑个人信息</div>
     <div class="edit-wrap mtop-20">
       <el-form class="edit-form" :model="form" label-width="80px" size="mini">
         <el-form-item label="昵称：">
@@ -54,13 +54,21 @@ export default {
         signature: '',
         gender: 0,
         birthday: {}
-      },
+      }
     }
   },
   computed: {
     ...mapState(['profile']),
     imgUrl() {
       return this.profile.avatarUrl ? this.profile.avatarUrl : ''
+    }
+  },
+  watch: {
+    'form.signature'(val, oldval) {
+      if (val.length > 100) {
+        this.form.signature = oldval
+        return this.$message.warning('介绍过长')
+      }
     }
   },
   created() {
@@ -100,7 +108,7 @@ export default {
         nickname: this.form.nickname,
         signature: this.form.signature,
         gender: this.form.gender,
-        birthday: this.form.birthday.getTime() 
+        birthday: this.form.birthday.getTime()
       }
       const res = await updateUserInfo(obj)
       if (res.code !== 200) return this.$message.error('更新失败')

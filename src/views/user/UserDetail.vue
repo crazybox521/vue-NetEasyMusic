@@ -130,6 +130,7 @@ export default {
   },
   watch: {
     id() {
+      this.list=[]
       this.getDetail()
       this.getUserPlayList()
     }
