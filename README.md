@@ -74,3 +74,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - chrome对媒体标签有限制，必须用户有交互才能自动播放
 - 添加编辑创建的歌单信息，使用VueCropper插件实现裁剪图片
 - 添加个人信息包括头像的裁剪更改，未加入地区，将图片裁剪及处理为blob对象封装成一个组件（歌单封面和个人头像）
+- 取消使用Nprogress

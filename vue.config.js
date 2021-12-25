@@ -17,7 +17,7 @@ module.exports = {
                 vue: 'Vue',
                 'vue-router': 'VueRouter',
                 axios: 'axios',
-                nprogress: 'NProgress',
+               /*  nprogress: 'NProgress', */
                 vuex: 'Vuex',
                 'js-md5': 'md5'
             })

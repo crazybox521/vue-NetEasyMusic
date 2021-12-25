@@ -1,17 +1,17 @@
 import axios from "axios";
-import NProgress from 'nprogress'
+/* import NProgress from 'nprogress' */
 import Vue from 'vue'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 10000
 /* axios.defaults.baseURL = 'http://localhost:8080/' */
 
 axios.interceptors.request.use((config) => {
-    NProgress.start();
+    /* NProgress.start(); */
     return config
 })
 
 axios.interceptors.response.use((config) => {
-    NProgress.done();
+    /* NProgress.done(); */
     return config
 })
 

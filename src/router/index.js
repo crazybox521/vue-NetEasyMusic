@@ -52,11 +52,11 @@ const routes = [
                 component: HomePage,
                 redirect: "/personalrecom",
                 children: [
-                    { path: "/personalrecom", component: PersonalRecom, },//个性推荐
-                    { path: '/toplist', component: TopList },//排行榜
-                    { path: '/playlist', component: PlayList },//歌单列表页
-                    { path: '/artistlist', component: ArtistList },//歌手页
-                    { path: '/zuixin', component: NewMusic }
+                    { path: "/personalrecom", component: PersonalRecom, meta: { title: '个性推荐' } },//个性推荐
+                    { path: '/toplist', component: TopList, meta: { title: '排行榜' } },//排行榜
+                    { path: '/playlist', component: PlayList, meta: { title: '歌单列表' } },//歌单列表页
+                    { path: '/artistlist', component: ArtistList, meta: { title: '歌手列表' } },//歌手页
+                    { path: '/zuixin', component: NewMusic, meta: { title: '最新音乐' } }
 
                 ],
             },
@@ -67,8 +67,8 @@ const routes = [
                 redirect: '/video',
                 meta: { check: true },
                 children: [
-                    { path: '/video', component: Video, meta: { check: true } },//video的首屏
-                    { path: '/mv', component: MusicVideo, meta: { check: true } }//mv的首屏
+                    { path: '/video', component: Video, meta: { check: true, title: '视频' } },//video的首屏
+                    { path: '/mv', component: MusicVideo, meta: { check: true, title: 'MV' } }//mv的首屏
                 ]
             },
             /* 收藏页 */
@@ -78,29 +78,29 @@ const routes = [
                 redirect: '/sub-album',
                 meta: { check: true },
                 children: [
-                    { path: '/sub-album', component: SubAlbum, meta: { check: true } },
-                    { path: '/sub-artists', component: SubArtists, meta: { check: true } },
-                    { path: '/sub-mv', component: SubMv, meta: { check: true } }
+                    { path: '/sub-album', component: SubAlbum, meta: { check: true, title: '收藏的专辑' } },
+                    { path: '/sub-artists', component: SubArtists, meta: { check: true, title: '收藏的歌手' } },
+                    { path: '/sub-mv', component: SubMv, meta: { check: true, title: '收藏的MV' } }
                 ]
 
             },
-            { path: "search/:key", component: SearchList, props: true },// 搜索展示页
-            { path: "playlistdetail/:id", component: PlayListDetail, props: true },//歌单详情页
-            { path: "playlistedit/:id", component: PlayListEdit, props: true, meta: { check: true } },//歌单编辑页
-            { path: "artistdetail/:id", component: ArtistDetail, props: true },//歌手详情页
-            { path: "albumdetail/:id", component: AlbumDetail, props: true },//专辑详情页
-            { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: true }, props: true },//视频和MV详情页 type v:video mv:mv
-            { path: "userdetail/:id", component: UserDetail, props: true },//用户详情页
-            { path: "useredit", component: UserEdit, meta: { check: true } },//用户编辑页
-            { path: 'recomsongs', component: RecommendSong, meta: { check: true } },//每日推荐歌曲页
-            { path: 'personalfm', component: PersonalFm, meta: { check: true } },//私人FM歌曲页
-            { path: 'historyplay', component: HistoryPlay },//最近播放页
-            { path: 'allmv', component: AllMv, meta: { check: true } },//全部MV页
-            { path: 'topmv', component: TopMv, meta: { check: true } },//MV排行页
+            { path: "search/:key", component: SearchList, props: true, meta: { title: '搜索结果' } },// 搜索展示页
+            { path: "playlistdetail/:id", component: PlayListDetail, props: true, meta: { title: '歌单' } },//歌单详情页
+            { path: "playlistedit/:id", component: PlayListEdit, props: true, meta: { check: true, title: '编辑歌单' } },//歌单编辑页
+            { path: "artistdetail/:id", component: ArtistDetail, props: true, meta: { title: '歌手' } },//歌手详情页
+            { path: "albumdetail/:id", component: AlbumDetail, props: true, meta: { title: '专辑' } },//专辑详情页
+            { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: true, title: '视频' }, props: true },//视频和MV详情页 type v:video mv:mv
+            { path: "userdetail/:id", component: UserDetail, props: true, meta: { title: '用户' } },//用户详情页
+            { path: "useredit", component: UserEdit, meta: { check: true, title: '编辑个人信息' } },//用户编辑页
+            { path: 'recomsongs', component: RecommendSong, meta: { check: true, title: '每日推荐' } },//每日推荐歌曲页
+            { path: 'personalfm', component: PersonalFm, meta: { check: true, title: '私人FM' } },//私人FM歌曲页
+            { path: 'historyplay', component: HistoryPlay, meta: { title: '最近播放' } },//最近播放页
+            { path: 'allmv', component: AllMv, meta: { check: true, title: '全部MV' } },//全部MV页
+            { path: 'topmv', component: TopMv, meta: { check: true, title: 'MV排行榜' } },//MV排行页
         ],
     },
-    { path: '/login', component: Login, meta: { check: false } },//login
-    { path: '*', component: NotFound }//404
+    { path: '/login', component: Login, meta: { check: false, title: '登录' } },//login
+    { path: '*', component: NotFound, meta: { title: 'NotFound' } }//404
 ]
 
 const router = new VueRouter({
@@ -109,7 +109,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    document.title = '仿网易云音乐客户端WEB版'
     if (to.meta.check === true) {
         if (store.state.isLogin === true) next()
         else {
@@ -120,7 +119,13 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-
+})
+router.afterEach((to) => {
+    if (to?.meta?.title) {
+        document.title = to.meta.title
+    } else {
+        document.title = 'NetEasyMusic'
+    }
 })
 
 export default router
