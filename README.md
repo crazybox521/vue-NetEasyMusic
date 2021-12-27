@@ -75,3 +75,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 添加编辑创建的歌单信息，使用VueCropper插件实现裁剪图片
 - 添加个人信息包括头像的裁剪更改，未加入地区，将图片裁剪及处理为blob对象封装成一个组件（歌单封面和个人头像）
 - 取消使用Nprogress
+- 歌手页取消使用ELTABS，改用项目中的TabMenu；修改封装的axios请求的get方法，改变处理错误的方式，使其能被async/await接收

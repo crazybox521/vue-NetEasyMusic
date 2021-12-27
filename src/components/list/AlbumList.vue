@@ -11,7 +11,7 @@
       </div>
       <div class="mleft-40 list-content">
         <div>
-          <span class="font-bold">{{ albumInfo.name }}</span>
+          <span class="font-bold"  @click="toAlbumDetail">{{ albumInfo.name }}</span>
           <button class="no-btn mleft-20 font-20" @click="playMusicAll">
             <i class="el-icon-video-play"></i>
           </button>

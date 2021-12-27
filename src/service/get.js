@@ -1,30 +1,21 @@
 import axios from "axios";
-/* import NProgress from 'nprogress' */
 import Vue from 'vue'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 10000
 /* axios.defaults.baseURL = 'http://localhost:8080/' */
 
-axios.interceptors.request.use((config) => {
-    /* NProgress.start(); */
+/* axios.interceptors.request.use((config) => {
     return config
 })
 
 axios.interceptors.response.use((config) => {
-    /* NProgress.done(); */
     return config
-})
-
+}) */
+/* 项目大部分为get请求，封装一个统一的处理错误、传递参数和url的get方法 */
 export default (url, params) => {
-    return new Promise((resolve, reject) => {
-        axios.get(url, { params }).then((res) => {
-            resolve(res.data)
-        }).catch((err) => {
-            reject(err)
-        });
-
-    })
-
+    return axios.get(url, { params })
+        .then(res => res.data)
+        .catch(err => err)
 }
 
 /* 下载 */
@@ -60,7 +51,7 @@ export const uploadPlayListImg = ({ id, imgSize, data, imgX = 0, imgY = 0 }) =>
             'Content-Type': 'multipart/form-data',
         },
         data,
-    }).then((res) => res.data)
+    }).then((res) => res.data).catch(err => err)
 
 /* 更新用户头像 */
 export const uploadAvatar = ({ imgSize, data, imgX = 0, imgY = 0 }) => axios({
@@ -70,4 +61,4 @@ export const uploadAvatar = ({ imgSize, data, imgX = 0, imgY = 0 }) => axios({
         'Content-Type': 'multipart/form-data',
     },
     data,
-}).then((res) => res.data)
+}).then((res) => res.data).catch(err => err)

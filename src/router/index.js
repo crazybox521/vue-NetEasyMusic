@@ -87,10 +87,10 @@ const routes = [
             { path: "search/:key", component: SearchList, props: true, meta: { title: '搜索结果' } },// 搜索展示页
             { path: "playlistdetail/:id", component: PlayListDetail, props: true, meta: { title: '歌单' } },//歌单详情页
             { path: "playlistedit/:id", component: PlayListEdit, props: true, meta: { check: true, title: '编辑歌单' } },//歌单编辑页
-            { path: "artistdetail/:id", component: ArtistDetail, props: true, meta: { title: '歌手' } },//歌手详情页
+            { path: "artistdetail/:id", component: ArtistDetail, props: true, meta: { title: '歌手主页' } },//歌手详情页
             { path: "albumdetail/:id", component: AlbumDetail, props: true, meta: { title: '专辑' } },//专辑详情页
             { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: true, title: '视频' }, props: true },//视频和MV详情页 type v:video mv:mv
-            { path: "userdetail/:id", component: UserDetail, props: true, meta: { title: '用户' } },//用户详情页
+            { path: "userdetail/:id", component: UserDetail, props: true, meta: { title: '用户主页' } },//用户详情页
             { path: "useredit", component: UserEdit, meta: { check: true, title: '编辑个人信息' } },//用户编辑页
             { path: 'recomsongs', component: RecommendSong, meta: { check: true, title: '每日推荐' } },//每日推荐歌曲页
             { path: 'personalfm', component: PersonalFm, meta: { check: true, title: '私人FM' } },//私人FM歌曲页

@@ -1,9 +1,11 @@
 <template>
   <div class="artist-detail mtop-20">
     <div class="artist-info">
-      <img :src="imgUrl" class="img-h img-radius-8 img-border" />
+      <div class="img-wrap">
+        <img :src="imgUrl" class="img-h img-radius-8 img-border" />
+      </div>
       <div class="info">
-        <h2 class="font-24 font-bold">{{ artistInfo.name }}</h2>
+        <div class="font-24 font-bold">{{ artistInfo.name }}</div>
         <div class="info-btn">
           <button class="btn btn-white mleft-10" @click="subArtist">
             <span v-if="!isSub"><i class="el-icon-folder-add"></i> 收藏</span>
@@ -27,69 +29,75 @@
         </div>
       </div>
     </div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="专辑" name="album">
-        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
-          加载中...
-        </div>
-        <template v-else>
-          <TopFiftyList
-            :list="topList"
-            v-if="topList.length !== 0"
-          ></TopFiftyList>
-          <AlbumList
-            v-for="(item, index) in albumList"
+    <TabMenu
+      :menuList="['专辑', 'MV', '歌手详情', '相似歌手']"
+      @menuClick="handleClick"
+    ></TabMenu>
+    <!-- 专辑 -->
+    <div v-show="tabIndex === 0">
+      <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+        加载中...
+      </div>
+      <template v-else>
+        <TopFiftyList
+          :list="topList"
+          v-if="topList.length !== 0"
+        ></TopFiftyList>
+        <AlbumList
+          v-for="(item, index) in albumList"
+          :key="index"
+          :albumInfo="item.album"
+          :list="item.songs"
+        ></AlbumList>
+      </template>
+    </div>
+    <!-- MV -->
+    <div v-show="tabIndex === 1">
+      <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+        加载中...
+      </div>
+      <div v-else-if="mvList.length === 0">没有MV</div>
+      <MvList v-else :disabled="true" :list="mvList"></MvList>
+    </div>
+    <!-- 歌手详情 -->
+    <div v-show="tabIndex === 2">
+      <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+        加载中...
+      </div>
+      <div v-else-if="introduction.length === 0">没有歌手详情</div>
+      <template v-else>
+        <div class="mtop-20" v-for="text in introduction" :key="text.ti">
+          <h2 class="font-bold font-14">{{ text.ti }}</h2>
+          <div
+            class="my-pre font-14"
+            v-for="(t, index) in text.txt"
             :key="index"
-            :albumInfo="item.album"
-            :list="item.songs"
-          ></AlbumList>
-        </template>
-      </el-tab-pane>
-      <el-tab-pane label="MV" name="MV">
-        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
-          加载中...
+          >
+            <p>{{ t }}</p>
+          </div>
         </div>
-        <div v-else-if="mvList.length === 0">没有MV</div>
-        <MvList v-else :disabled="true" :list="mvList"></MvList>
-      </el-tab-pane>
-      <el-tab-pane label="歌手详情" name="desc">
-        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
-          加载中...
-        </div>
-        <div v-else-if="introduction.length === 0">没有歌手详情</div>
-        <template v-else>
-          <div class="mtop-20" v-for="text in introduction" :key="text.ti">
-            <h2 class="font-bold font-14">{{ text.ti }}</h2>
-            <div
-              class="my-pre font-14"
-              v-for="(t, index) in text.txt"
-              :key="index"
-            >
-              <p>{{ t }}</p>
-            </div>
+      </template>
+    </div>
+    <!-- 相似歌手 -->
+    <div v-show="tabIndex === 3">
+      <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
+        加载中...
+      </div>
+      <div v-else-if="sameArtistList.length === 0">没有相似歌手</div>
+      <ImgList
+        v-else
+        @clickImg="toArtistDetail"
+        :list="sameArtistList"
+        type="artist"
+        :isLoading="isLoading"
+      >
+        <template v-slot="{ item }">
+          <div class="text-hidden">
+            {{ item.name }}
           </div>
         </template>
-      </el-tab-pane>
-      <el-tab-pane label="相似歌手" name="same">
-        <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
-          加载中...
-        </div>
-        <div v-else-if="sameArtistList.length === 0">没有相似歌手</div>
-        <ImgList
-          v-else
-          @clickImg="toArtistDetail"
-          :list="sameArtistList"
-          type="artist"
-          :isLoading="isLoading"
-        >
-          <template v-slot="{ item }">
-            <div class="text-hidden">
-              {{ item.name }}
-            </div>
-          </template>
-        </ImgList>
-      </el-tab-pane>
-    </el-tabs>
+      </ImgList>
+    </div>
   </div>
 </template>
 
@@ -110,6 +118,7 @@ import {
 } from '@/api/api_artist'
 import { getAlbumDetail } from '@/api/api_album'
 import { mapState } from 'vuex'
+import TabMenu from '@/components/menu/TabMenu'
 export default {
   props: {
     id: {
@@ -117,10 +126,9 @@ export default {
       required: true
     }
   },
-  components: { AlbumList, TopFiftyList, MvList, ImgList },
+  components: { AlbumList, TopFiftyList, MvList, ImgList, TabMenu },
   data() {
     return {
-      activeName: 'album', //激活的tab页
       artistInfo: {
         //歌手的信息
         name: '',
@@ -136,9 +144,10 @@ export default {
       introduction: [], //歌手详细描述,
       userId: 0, //歌手用户ID
       mvList: [], //歌手MV列表
-      sameArtistList: [],
+      sameArtistList: [], //相似歌手
       isLoading: false,
-      subList: []
+      subList: [], //收藏的歌手列表
+      tabIndex: 0 //tab页的索引值
     }
   },
   computed: {
@@ -276,35 +285,29 @@ export default {
         this.$router.push('/userdetail/' + this.userId)
     },
     /* tab点击事件回调 */
-    handleClick() {
-      if (this.activeName === 'desc') {
+    handleClick(index) {
+      this.tabIndex = index
+      if (index === 2) {
         if (this.introduction.length !== 0) return
         console.log('desc')
         this.isLoading = true
         this.getIntroduction()
-        return
-      }
-      if (this.activeName === 'album') {
+      } else if (index === 0) {
         console.log('album')
         if (this.albumList.length !== 0) return
         this.isLoading = true
         this.getTop()
         this.getAlbum()
-        return
-      }
-      if (this.activeName === 'MV') {
+      } else if (index === 1) {
         console.log('mv')
         if (this.mvList.length !== 0) return
         this.isLoading = true
         this.getMv()
-        return
-      }
-      if (this.activeName === 'same') {
+      } else if (index === 3) {
         console.log('same')
         if (this.sameArtistList.length !== 0) return
         this.isLoading = true
         this.getSame()
-        return
       }
     },
     toArtistDetail(id) {
@@ -317,6 +320,10 @@ export default {
 .artist-info {
   height: 200px;
   display: flex;
+  .img-wrap {
+    width: 200px;
+    height: 200px;
+  }
   .info {
     margin-left: 30px;
     line-height: 50px;
@@ -333,9 +340,25 @@ export default {
 .mtop-60:nth-child(1) {
   margin-top: 10px;
 }
-@media screen and (max-width: 532px) {
-  .artist-info .img-h {
-    display: none;
+@media screen and (max-width: 415px) {
+  .artist-info {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    .img-wrap {
+      width: 100%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+    }
+    .info {
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      .info-btn {
+        display: inline-block;
+      }
+    }
   }
 }
 </style>
