@@ -1,9 +1,7 @@
 import Vue from "vue";
 import Vuex from 'vuex'
-import { getPersonalFm, fmTrash } from '@/api/api_music'
-import { getAcount, logout } from '@/api/api_user'
-import { getLikeIdList } from '@/api/api_music.js'
-import { getUserPlayList } from '@/api/api_user'
+import { getPersonalFm, fmTrash, getLikeIdList } from '@/api/api_music'
+import { getAcount, logout, getUserPlayList } from '@/api/api_user'
 
 Vue.use(Vuex)
 

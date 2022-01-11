@@ -26,6 +26,9 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 ### 预览地址
 
 [仿网易云音乐预览地址 ](http://47.102.159.133/)
+### uni-app版
+
+[uni-app版仓库 ](https://gitee.com/crazybox521/vue-music/tree/uni-app/)
 
 ### 目前完成功能
 
