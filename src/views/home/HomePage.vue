@@ -4,7 +4,7 @@
     <div class="router-list">
       <TabMenu :menuList="routeList" mode="router"></TabMenu>
     </div>
-    <div class="home-page-view" ref="ref">
+    <div class="home-page-view">
       <transition name="el-fade-in">
         <router-view></router-view>
       </transition>
@@ -29,8 +29,3 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-.home-page-view {
-  height: 100%;
-}
-</style>

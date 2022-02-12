@@ -4,6 +4,7 @@
     <div class="logo-wrap pointer" @click="toHomePage">
       <i class="iconfont icon-logView"></i>
     </div>
+    <!-- 移动端菜单按钮 -->
     <div class="menu-btn pointer" @click="openMenu">
       <span :class="{ span_active: showMenuInPhone }"></span>
     </div>
@@ -458,6 +459,7 @@ export default {
 
 @media screen and (max-width: 768px) {
   .menu-btn {
+    /* 移动端菜单按钮 */
     display: inline-block;
     width: 24px;
     height: 24px;

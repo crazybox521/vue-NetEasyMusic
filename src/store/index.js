@@ -21,7 +21,7 @@ const state = {
         totalTime: 0,
         currenTime: 0
     },
-    /* 轮播图的高度 */
+    /* 登录态 */
     isLogin: window.sessionStorage.getItem('isLogin') !== 'true' ? false : true,
     /* 账号信息 */
     account: {},

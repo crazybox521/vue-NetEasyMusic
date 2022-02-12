@@ -1,4 +1,5 @@
 <template>
+  <!-- 图片裁剪组件 -->
   <div class="img-cut">
     <div class="img-wrap">
       <img class="edit-img" :src="imgUrl" />

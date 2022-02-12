@@ -1,4 +1,5 @@
 <template>
+<!-- 搜索建议的列表 -->
   <div class="suggest-list">
     <header class="suggest-list-header"><slot name="title"></slot></header>
     <main class="suggest-list-main">

@@ -263,9 +263,6 @@
     border-top: 1px solid #e0e0e0;
 }
 
-#nprogress .bar {
-    background-color: #ffffff !important;
-}
 
 /* 部分二级路由页面头部导航 */
 .router-list {
