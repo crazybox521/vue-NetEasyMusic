@@ -18,7 +18,7 @@ module.exports = {
                 'vue-router': 'VueRouter',
                 axios: 'axios',
                 vuex: 'Vuex',
-                'js-md5': 'md5'
+                /* 'js-md5': 'md5' */
             })
 
             config.plugin('html').tap(args => {
