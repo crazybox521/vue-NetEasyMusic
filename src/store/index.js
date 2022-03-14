@@ -100,8 +100,12 @@ const actions = {
             Vue.prototype.$notify({
                 title: '提示',
                 type: 'warning',
+                dangerouslyUseHTMLString: true,
                 message:
-                    '部分功能需要登录后才能使用，如每日推荐等，本网站不会收集用户信息，点击头像可以登录,建议使用二维码或验证码登录',
+                    `<section>部分功能需要登录后才能使用，如每日推荐等，本网站不会收集用户信息，点击头像可以登录,建议使用二维码或验证码登录</section>
+                     <br/>
+                    <section>点击访问<a style="margin:0 10px" href="https://gitee.com/crazybox521/vue-music" target="_blank">Gitee</a><a href="https://github.com/crazybox521/vue-NetEasyMusic" target="_blank">GitHub</a></section>
+                    `,
                 duration: 0
             })
         }
