@@ -7,7 +7,7 @@
           <el-image
               style="width: 100%; height: auto"
               :src="nl.cover + '?param=320y180'"
-              lazy
+              
             >
               <template v-slot:placeholder>
                 <img src="@/assets/img/loading-2.gif" alt="" />
