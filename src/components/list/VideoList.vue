@@ -8,7 +8,6 @@
             <el-image
               style="width: 100%; height: auto"
               :src="v.data.coverUrl + '?param=320y180'"
-              lazy
             >
               <template v-slot:placeholder>
                 <img src="@/assets/img/loading-2.gif" alt="" />
@@ -42,7 +41,6 @@
             <el-image
               style="width: 100%; height: auto"
               :src="v.data.coverUrl + '?param=320y180'"
-              lazy
             >
               <template v-slot:placeholder>
                 <img src="@/assets/img/loading-2.gif" alt="" />
