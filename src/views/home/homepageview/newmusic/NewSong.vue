@@ -24,8 +24,8 @@
       </div>
     </div>
     <div class="new-song-view">
-      <el-skeleton v-show="isLoading" :rows="6" animated />
-      <InfoList v-show="!isLoading" :list="list" @clickitem="playMusic">
+      <!-- <el-skeleton v-show="isLoading" :rows="6" animated /> -->
+      <InfoList  :list="list" @clickitem="playMusic">
         <template #index="{ index }">
           <div class="sub-index">
             {{ index > 8 ? index + 1 : '0' + (index + 1) }}
@@ -34,7 +34,7 @@
         <template #img="{ item }">
           <img
             class="sub-img mleft-10"
-            :src="item.al.picUrl + '?param=100y100'"
+            v-lazy="item.al.picUrl + '?param=100y100'"
           />
         </template>
         <template #title="{ item }">

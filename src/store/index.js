@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from 'vuex'
 import { getPersonalFm, fmTrash, getLikeIdList } from '@/api/api_music'
 import { getAcount, logout, getUserPlayList } from '@/api/api_user'
-
+import router from '@/router/index'
 Vue.use(Vuex)
 
 const state = {
@@ -124,9 +124,11 @@ const actions = {
                 Vue.prototype.$message.success('退出成功')
                 commit('setLoginInfo', { account: null, profile: null })
                 commit('setIsLogin', false)
-                Vue.prototype.$router.push('/personalrecom')
+                /* Vue.prototype.$router.push('/') */
+                router.push('/')
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log(err);
                 Vue.prototype.$message({
                     type: 'info',
                     message: '已取消'

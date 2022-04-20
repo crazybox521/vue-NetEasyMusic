@@ -3,11 +3,9 @@ import Vue from 'vue'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 10000
 /* 项目大部分为get请求，封装一个统一的处理错误、传递参数和url的get方法 */
-export default (url, params) => {
-    return axios.get(url, { params })
-        .then(res => res.data)
-        .catch(err => err)
-}
+export default (url, params) => axios.get(url, { params })
+    .then(res => res.data)
+    .catch(err => err)
 
 /* 下载 */
 export const downloadMusic = (url, fileName) => {
@@ -34,6 +32,7 @@ export const downloadMusic = (url, fileName) => {
         });
 
 }
+/* 上传歌单图片 */
 export const uploadPlayListImg = ({ id, imgSize, data, imgX = 0, imgY = 0 }) =>
     axios({
         method: 'post',

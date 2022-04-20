@@ -27,7 +27,7 @@
           <div class="detail-desc">
             <!-- 歌单图片 -->
             <div class="detail-img-wrapper">
-              <img class="img img-radius-8 img-border" :src="ImgUrl" />
+              <img class="img img-radius-8 img-border" v-lazy="ImgUrl" />
             </div>
             <!-- 歌单信息 -->
             <div class="detail-desc-info">

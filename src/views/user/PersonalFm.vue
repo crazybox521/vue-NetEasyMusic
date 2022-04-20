@@ -3,7 +3,7 @@
     <div class="playview-wrap mtop-20">
       <div class="playview-left">
         <div class="img-wrap">
-          <img class="img img-h" :src="imgInfo.imgUrl" alt="" />
+          <img class="img img-h" v-lazy="imgInfo.imgUrl" alt="" />
           <div class="play-btn  pointer" @click="pause" :class="{'play-btn_active':isPlay}">
             <i v-show="!isPlay" class="iconfont icon-bofang"></i>
             <i v-show="isPlay" class="iconfont icon-zanting"></i>
@@ -83,7 +83,7 @@ export default {
     return {
       imgInfo: {
         //img区域信息，图片，歌名，歌手
-        imgUrl: 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg',
+        imgUrl: '',
         name: '未知歌名',
         author: {
           name: '未知歌手名',

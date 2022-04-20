@@ -5,10 +5,19 @@
       <li v-for="(v, index) in list" :key="index" class="mtop-10">
         <template v-if="v.type === 1">
           <div class="mtop-10 img-wrap" @click="toVideoDetail(v.data.vid)">
-            <img
+            <el-image
+              style="width: 100%; height: auto"
+              :src="v.data.coverUrl + '?param=320y180'"
+              lazy
+            >
+              <template v-slot:placeholder>
+                <img src="@/assets/img/loading-2.gif" alt="" />
+              </template>
+            </el-image>
+            <!--  <img
               class="video-img pointer img-border"
               :src="v.data.coverUrl + '?param=300y170'"
-            />
+            /> -->
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
               {{ v.data.playTime | countFormat }}
@@ -30,7 +39,16 @@
         <template v-else>
           <!-- 视频列表中的MV标签下视频 -->
           <div class="mtop-10 img-wrap" @click="toMvDetail(v.data.id)">
-            <img class="video-img" :src="v.data.coverUrl + '?param=300y170'" />
+            <el-image
+              style="width: 100%; height: auto"
+              :src="v.data.coverUrl + '?param=320y180'"
+              lazy
+            >
+              <template v-slot:placeholder>
+                <img src="@/assets/img/loading-2.gif" alt="" />
+              </template>
+            </el-image>
+            <!-- <img class="video-img" :src="v.data.coverUrl + '?param=300y170'" /> -->
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
               {{ v.data.playCount | countFormat }}

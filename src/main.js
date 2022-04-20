@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
+
 import './plugins/my-element'
 import './utils/filters'
 
@@ -11,6 +12,17 @@ import './assets/css/my-element.css'
 import './assets/css/btn.css'
 import VueCropper from 'vue-cropper'
 Vue.use(VueCropper)
+import VueLazyload from 'vue-lazyload'
+ 
+// Vue.use(VueLazyload)
+ 
+// with options
+Vue.use(VueLazyload, {
+  preLoad: 1.9,
+  error: require('./assets/img/error.jpg'),
+  loading:  require('./assets/img/loading.gif'),
+  attempt: 3
+})
 
 Vue.config.productionTip = false
 
@@ -19,6 +31,7 @@ new Vue({
   store,
   render: h => h(App),
   created() {
+    console.log(router);
     // 有关浏览器类型的信息都藏在USER-AGENT里面，首先读取navigator.userAgent里面的信息，为了方便利用toLowerCase方法转成小写的形式
     var sUserAgent = navigator.userAgent.toLowerCase();
     //调用match方法进行匹配属于哪一类浏览器，一下判断都是移动端浏览器

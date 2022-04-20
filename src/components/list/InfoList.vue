@@ -9,7 +9,7 @@
     >
       <slot name="index" :index="index"></slot>
       <slot name="img" :item="item">
-        <img class="sub-img mleft-10" :src="item.picUrl + '?param=100y100'" />
+        <img class="sub-img mleft-10" v-lazy="item.picUrl + '?param=100y100'" />
       </slot>
       <div class="sub-title font-14 mleft-10">
         <slot name="title" :item="item">

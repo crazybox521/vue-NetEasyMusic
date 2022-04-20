@@ -1,8 +1,8 @@
 <template>
   <div class="new-album">
     <div class="new-song-view">
-      <el-skeleton v-show="isLoading" :rows="6" animated />
-      <div v-show="!isLoading" class="new-album-list">
+      <!-- <el-skeleton v-show="isLoading" :rows="6" animated /> -->
+      <div  class="new-album-list">
         <div class="time-info">
           <div class="time-info-content">本周新碟</div>
         </div>

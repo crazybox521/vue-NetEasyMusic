@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import artistData from '@/listData/artistData'
+const artistData =require('@/assets/json/artistData')
 import ImgList from '@/components/list/ImgList.vue'
 import { getArtistList } from '@/api/api_artist'
 export default {

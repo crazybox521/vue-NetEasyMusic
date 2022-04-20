@@ -4,10 +4,19 @@
     <ul v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
       <li v-for="(nl, index) in list" :key="index">
         <div class="mtop-10 img-wrap" @click="toMvDetail(nl.id)">
-          <img
+          <el-image
+              style="width: 100%; height: auto"
+              :src="nl.cover + '?param=320y180'"
+              lazy
+            >
+              <template v-slot:placeholder>
+                <img src="@/assets/img/loading-2.gif" alt="" />
+              </template>
+            </el-image>
+          <!-- <img
             class="video-img img-border"
             :src="nl.cover + '?param=300y170'"
-          />
+          /> -->
           <div class="video-playcount font-12">
             <i class="iconfont icon-24gl-play"></i>
             {{ nl.playCount | countFormat }}

@@ -1,8 +1,8 @@
 <template>
   <div class="top-list mtop-60">
-    <el-skeleton :rows="6" v-if="guanfangList.length !== 4" animated />
+    <!-- <el-skeleton :rows="6" v-if="guanfangList.length !== 4" animated /> -->
     <!-- 官方榜区域 -->
-    <div class="guanfang-list" v-if="guanfangList.length == 4">
+    <div class="guanfang-list" >
       <h2 class="font-bold font-20">官方榜</h2>
       <div
         class="guanfang-item mtop-10"
@@ -13,7 +13,7 @@
           <div class="img-wrap">
             <img
               class="img-h img-radius-4 pointer"
-              :src="item.coverImgUrl"
+              v-lazy="item.coverImgUrl"
               @click="toPlayListDetail(item.id)"
             />
             <div class="play-btn pointer" @click="toPlayListDetail(item.id)">

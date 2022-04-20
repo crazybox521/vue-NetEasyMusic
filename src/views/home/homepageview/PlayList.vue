@@ -77,9 +77,9 @@
         </li>
       </ul>
     </div>
-    <el-skeleton class="mtop-10" v-show="isLoading" :rows="6" animated />
+   <!--  <el-skeleton class="mtop-10" v-show="isLoading" :rows="6" animated /> -->
     <ImgList
-      v-show="!isLoading"
+      
       @clickImg="toPlayListDetail"
       :list="playList"
       type="playlist"

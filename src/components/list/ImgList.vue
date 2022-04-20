@@ -9,7 +9,7 @@
     >
       <li class="img-item-li" v-for="item in list" :key="item.id">
         <div class="img-wrap pointer" @click="clickImg(item.id)">
-          <img class="img img-radius-8 img-border" :src="picUrl(item)" />
+          <img class="img img-radius-8 img-border" v-lazy="picUrl(item)" />
           <div class="video-playcount font-12" v-if="item.playCount">
             <i class="iconfont icon-24gl-play"></i>
             {{ item.playCount | countFormat }}
