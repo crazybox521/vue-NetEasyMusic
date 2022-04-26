@@ -53,7 +53,7 @@ export default {
     return {
       catList: {
         area: ['全部', '内地', '港台', '欧美', '日本', '韩国'],
-        type: ['全部', '官方版', '原生', '现场版', '网易出品'],
+        type: ['全部', '官方版', '现场版', '网易出品'],
         order: ['上升最快', '最热', '最新']
       },
       queryInfo: {
@@ -90,15 +90,16 @@ export default {
   methods: {
     /* 获取列表数据 */
     async getMvList() {
-      console.log(1111)
       if (this.isLoading) return
       this.isLoading = true
-      console.log(222)
       const res = await getAllMv({
         ...this.queryInfo,
         offset: this.offset
       })
-      if (res.code !== 200) return
+      if (res.code !== 200) {
+        this.isLoading = false
+        return
+      }
       if (this.mode == 'first') this.mvList = res.data
       else this.mvList.push(...res.data)
       this.hasMore = res.hasMore

@@ -5,18 +5,13 @@
       <li v-for="(nl, index) in list" :key="index">
         <div class="mtop-10 img-wrap" @click="toMvDetail(nl.id)">
           <el-image
-              style="width: 100%; height: auto"
-              :src="nl.cover + '?param=320y180'"
-              
-            >
-              <template v-slot:placeholder>
-                <img src="@/assets/img/loading-2.gif" alt="" />
-              </template>
-            </el-image>
-          <!-- <img
-            class="video-img img-border"
-            :src="nl.cover + '?param=300y170'"
-          /> -->
+            style="width: 100%; height: auto; border-radius: 4px"
+            :src="nl.cover + '?param=320y180'"
+          >
+            <template v-slot:placeholder>
+              <img src="@/assets/img/loading-2.gif" alt="" />
+            </template>
+          </el-image>
           <div class="video-playcount font-12">
             <i class="iconfont icon-24gl-play"></i>
             {{ nl.playCount | countFormat }}
@@ -91,10 +86,6 @@ export default {
 }
 .img-wrap {
   position: relative;
-  .video-img {
-    width: 100%;
-    border-radius: 4px;
-  }
   .video-playcount {
     color: #ffffff;
     position: absolute;

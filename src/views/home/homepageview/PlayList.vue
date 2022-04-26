@@ -77,9 +77,10 @@
         </li>
       </ul>
     </div>
-   <!--  <el-skeleton class="mtop-10" v-show="isLoading" :rows="6" animated /> -->
+    <!--  <el-skeleton class="mtop-10" v-show="isLoading" :rows="6" animated /> -->
     <ImgList
-      
+      v-loading="isLoading"
+      element-loading-text="拼命加载中"
       @clickImg="toPlayListDetail"
       :list="playList"
       type="playlist"

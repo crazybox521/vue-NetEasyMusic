@@ -17,15 +17,11 @@
           <i class="iconfont icon-bofang"></i>
           <span class="btn-text">播放全部</span>
         </button>
-        <button class="btn btn-white mleft-10">
-          <i class="el-icon-folder-add"></i>
-          <span class="btn-text">收藏全部</span>
-        </button>
       </div>
     </div>
     <div class="new-song-view">
-      <!-- <el-skeleton v-show="isLoading" :rows="6" animated /> -->
-      <InfoList  :list="list" @clickitem="playMusic">
+      <el-skeleton v-show="isLoading" :rows="6" animated />
+      <InfoList v-show="!isLoading"  :list="list" @clickitem="playMusic">
         <template #index="{ index }">
           <div class="sub-index">
             {{ index > 8 ? index + 1 : '0' + (index + 1) }}
@@ -171,7 +167,7 @@ export default {
 }
 @media screen and (max-width: 415px) {
   .btn-wrap {
-    width: 100px;
+    width: 50px;
     .btn {
       margin-left: 2px;
     }

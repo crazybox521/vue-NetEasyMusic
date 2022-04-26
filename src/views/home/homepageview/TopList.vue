@@ -2,7 +2,8 @@
   <div class="top-list mtop-60">
     <!-- <el-skeleton :rows="6" v-if="guanfangList.length !== 4" animated /> -->
     <!-- 官方榜区域 -->
-    <div class="guanfang-list" >
+    <div v-loading="guanfangList.length !== 4"></div>
+    <div class="guanfang-list">
       <h2 class="font-bold font-20">官方榜</h2>
       <div
         class="guanfang-item mtop-10"
