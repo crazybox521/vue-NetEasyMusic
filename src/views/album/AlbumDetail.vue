@@ -6,8 +6,7 @@
       <div class="detail-img-wrapper">
         <img
           class="img img-radius-8 img-border"
-          :src="imgUrl + '?param=300y300'"
-          alt=""
+          v-lazy="imgUrl + '?param=300y300'"
         />
       </div>
       <!-- 专辑信息 -->

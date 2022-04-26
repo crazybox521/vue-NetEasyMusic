@@ -6,17 +6,13 @@
         <template v-if="v.type === 1">
           <div class="mtop-10 img-wrap" @click="toVideoDetail(v.data.vid)">
             <el-image
-              style="width: 100%; height: auto"
+              style="width: 100%; height: auto; border-radius: 4px"
               :src="v.data.coverUrl + '?param=320y180'"
             >
               <template v-slot:placeholder>
                 <img src="@/assets/img/loading-2.gif" alt="" />
               </template>
             </el-image>
-            <!--  <img
-              class="video-img pointer img-border"
-              :src="v.data.coverUrl + '?param=300y170'"
-            /> -->
             <div class="video-playcount font-12">
               <i class="iconfont icon-24gl-play"></i>
               {{ v.data.playTime | countFormat }}
@@ -135,10 +131,6 @@ export default {
 }
 .img-wrap {
   position: relative;
-  .video-img {
-    width: 100%;
-    border-radius: 4px;
-  }
   .video-playcount {
     color: #ffffff;
     position: absolute;

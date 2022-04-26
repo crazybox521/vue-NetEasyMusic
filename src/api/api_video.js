@@ -12,8 +12,8 @@ export const getAllVideo = (offset) => get('/video/timeline/all', { offset })
 /* 根据标签获取视频列表 */
 export const getVideoByTag = (id, offset) => get('/video/group', { id, offset })
 
-/* 获取全部MV area limit offset order*/
-export const getAllMv = ({ area, limit, offset, order }) => get('/mv/all', { area, limit, offset, order })
+/* 获取全部MV area limit offset order type*/
+export const getAllMv = ({ area, limit, offset, order ,type}) => get('/mv/all', { area, limit, offset, order,type })
 
 /* 获取最新MV */
 export const getNewMv = (area, limit) => get('/mv/first', { area, limit })
