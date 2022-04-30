@@ -184,10 +184,10 @@ export default {
   data() {
     return {
       keywords: '',
-      showInfoTip: false,
-      hotList: [],
-      historySearchList: [],
-      suggestInfo: {},
+      showInfoTip: false,//展示搜索建议
+      hotList: [],//热搜列表
+      historySearchList: [],//历史搜索
+      suggestInfo: {},//建议
       showMenuInPhone: false
     }
   },
@@ -223,7 +223,8 @@ export default {
       if (this.keywords == '') return
       this.$refs.inputRef.blur()
       if (this.$route.path != '/search/' + this.keywords) {
-        this.$router.push('/search/' + this.keywords)
+        console.log(encodeURIComponent(this.keywords));
+        this.$router.push(`/search/${encodeURIComponent (encodeURIComponent(this.keywords))}`)
       }
       this.setHistory(this.keywords)
     },
@@ -247,9 +248,12 @@ export default {
         this.getSuggest(val)
       }, 500)
     },
-    /* 获取热搜及搜索记录 */
+    /* 无输入时获取热搜及搜索记录，有输入时获取建议 */
     async getHotSearch() {
       this.showInfoTip = true
+      if(this.keywords!==''){
+        this.getSuggest(this.keywords)
+      }
       if (this.hotList.length !== 0) return
       const res = await getHotSearch()
       if (res.code !== 200) return

@@ -181,8 +181,10 @@ export default {
       this.activeMenu = window.sessionStorage.getItem('activeMenu')
   },
   watch: {
-    '$route.path'() {
+    /* 监听route,改变激活项 */
+    '$route.path'(val) {
       this.$refs.scrollWrapRef.scrollTop = 0
+      this.activeMenu = val
     }
   },
   methods: {
@@ -190,7 +192,6 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
       window.sessionStorage.setItem('activeMenu', key)
-      this.activeMenu = key
     },
     handMusicListClose() {
       this.$store.commit('setDrawerMusicList', false)
