@@ -1,7 +1,7 @@
 <template>
   <div class="layout" :class="{ layout_gray: isGray }">
     <!-- 头部 -->
-    <div class="header"><HeaderBar></HeaderBar></div>
+    <div class="header"><HeaderBar /></div>
     <!-- 内容区域 -->
     <div class="main">
       <!-- 左侧导航栏 -->
@@ -29,7 +29,7 @@
             <template slot="title">创建的歌单</template>
             <el-menu-item
               :index="subPath(item.id)"
-              v-for="(item, index) in creList"
+              v-for="(item, index) in createPlaylist"
               :key="item.id"
               ><div slot="title" class="text-hidden">
                 <i v-if="index === 0" class="iconfont icon-aixin"></i>
@@ -41,7 +41,7 @@
             <template slot="title">收藏的歌单</template>
             <el-menu-item
               :index="subPath(item.id)"
-              v-for="item in subList"
+              v-for="item in subscribePlaylist"
               :key="item.id"
               ><div slot="title" class="text-hidden">
                 <i class="iconfont icon-gedan"></i>{{ item.name }}
@@ -109,13 +109,13 @@
     </div>
     <!-- 底部播放器容器 -->
     <div class="footer">
-      <FooterBar></FooterBar>
+      <FooterBar />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import FooterBar from '@/components/footer/FooterBar.vue'
 import HeaderBar from '@/components/header/HeaderBar.vue'
 export default {
@@ -133,7 +133,7 @@ export default {
         { path: '/personalfm', title: '私人FM', Login: true, type: 0 },
         { path: '/historyplay', title: '最近播放', Login: false, type: 1 },
         { path: '/subscribe', title: '我的收藏', Login: true, type: 1 }
-      ],
+      ]
     }
   },
   computed: {
@@ -144,8 +144,7 @@ export default {
       'isLogin',
       'currenIndex',
       'isPlay',
-      'profile',
-      'myPlayList'
+      'profile'
     ]),
     length() {
       return this.musicList.length
@@ -158,17 +157,9 @@ export default {
     myList() {
       return this.menuList.filter((item) => item.type == 1)
     },
-    /* 创建的歌单 */
-    creList() {
-      return this.myPlayList.filter((item) => item.userId == this.userId)
-    },
-    /* 收藏的歌单 */
-    subList() {
-      return this.myPlayList.filter((item) => item.userId !== this.userId)
-    },
-    userId() {
-      return this.isLogin ? this.profile.userId : 0
-    },
+    /* 创建的歌单、收藏的歌单 */
+    ...mapGetters(['createPlaylist', 'subscribePlaylist', 'userId']),
+
     /* 灰色滤镜 */
     isGray() {
       const time_today = new Date()

@@ -10,8 +10,12 @@
         <div class="font-24 font-bold">{{ info.nickname }}</div>
         <div class="info-btn">
           <div>
-            <span class="font-12 level-wrap">Lv{{ level }}</span
-            ><span class="mleft-10 font-14 sex-wrap">
+            <Tag
+              :text="`Lv ${level}`"
+              :fontSize="'12px'"
+              :height="'20px'"
+            ></Tag>
+            <span class="mleft-10 font-14 sex-wrap">
               <i
                 v-if="info.gender == 1"
                 style="color: #3da1d1"
@@ -70,29 +74,46 @@
     </div>
     <!--列表 -->
     <div class="mtop-20" v-show="showTab === 1">
-      <ImgList @clickImg="toPlayListDetail" :list="creList" type="playlist">
-        <template v-slot="{ item }">
-          <div class="text-hidden">
-            {{ item.name }}
-          </div>
-        </template>
-      </ImgList>
+      <template v-if="list.length===0">
+        <span>加载中...</span>
+      </template>
+      <template v-else-if="creList.length !== 0">
+        <ImgList @clickImg="toPlayListDetail" :list="creList" type="playlist">
+          <template v-slot="{ item }">
+            <div class="text-hidden">
+              {{ item.name }}
+            </div>
+          </template>
+        </ImgList>
+      </template>
+      <template v-else>
+        <span>该用户没有创建的歌单或用户设置了隐私模式</span>
+      </template>
     </div>
     <div class="mtop-20" v-show="showTab === 2">
-      <ImgList @clickImg="toPlayListDetail" :list="subList" type="playlist">
-        <template v-slot="{ item }">
-          <div class="text-hidden">
-            {{ item.name }}
-          </div>
-        </template>
-      </ImgList>
+      <template v-if="list.length===0">
+        <span>加载中...</span>
+      </template>
+      <template v-else-if="subList.length !== 0">
+        <ImgList @clickImg="toPlayListDetail" :list="subList" type="playlist">
+          <template v-slot="{ item }">
+            <div class="text-hidden">
+              {{ item.name }}
+            </div>
+          </template>
+        </ImgList>
+      </template>
+      <template v-else>
+        <span>该用户没有收藏的歌单或用户设置了隐私模式</span>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import ImgList from '@/components/list/ImgList.vue'
-import TabMenu from '@/components/menu/TabMenu'
+import TabMenu from '@/components/menu/TabMenu.vue'
+import Tag from '@/components/simple/Tag.vue'
 import { getUserDetail, getUserPlayList, follow } from '@/api/api_user'
 import { mapState } from 'vuex'
 export default {
@@ -102,7 +123,7 @@ export default {
       required: true
     }
   },
-  components: { ImgList, TabMenu },
+  components: { ImgList, TabMenu, Tag },
   data() {
     return {
       info: {}, //基本信息
@@ -110,7 +131,7 @@ export default {
       level: 0, //等级
       followed: false,
       offset: 0,
-      showTab: 1
+      showTab: 1,
     }
   },
   computed: {
@@ -120,6 +141,7 @@ export default {
     userId() {
       return this.info.userId
     },
+    /* 用户/个人 创建/收藏的歌单 */
     creList() {
       return this.list.filter((item) => item.userId == this.userId)
     },
@@ -130,7 +152,7 @@ export default {
   },
   watch: {
     id() {
-      this.list=[]
+      this.list = []
       this.getDetail()
       this.getUserPlayList()
     }

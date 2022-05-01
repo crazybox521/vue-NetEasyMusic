@@ -32,7 +32,7 @@
         @like="handleLike"
         @reply="handleReply"
         @clickUser="toUserDetail"
-      ></ComentItem>
+      />
       <div class="more-btn-wrap mtop-20">
         <button class="btn btn-white">更多精彩评论></button>
       </div>
@@ -48,7 +48,7 @@
         @like="handleLike"
         @reply="handleReply"
         @clickUser="toUserDetail"
-      ></ComentItem>
+      />
       <div class="flex_center" style="margin-top: 10px">
         <el-pagination
           @current-change="handleCurrentChange"

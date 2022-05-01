@@ -2,7 +2,7 @@
   <!-- 收藏页父路由 -->
   <div class="subscribe-view">
     <div class="router-list">
-      <TabMenu :menuList="subRouteList" mode="router"></TabMenu>
+      <TabMenu :menuList="subRouteList" mode="router" />
     </div>
     <div class="sub-main mtop-60">
       <transition name="el-fade-in">

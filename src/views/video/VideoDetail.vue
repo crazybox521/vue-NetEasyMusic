@@ -92,7 +92,7 @@
           :type="resoureType"
           :id="id"
           scrollDom=".main-right"
-        ></Comment>
+        />
       </div>
     </div>
     <!-- 右侧推荐区 -->

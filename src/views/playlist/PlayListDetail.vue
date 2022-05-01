@@ -3,7 +3,7 @@
   <div class="play-list-detail mtop-20">
     <el-skeleton :loading="isLoading" animated>
       <!-- 骨架 -->
-       <template v-if="!isPhone" slot="template">
+      <template v-if="!isPhone" slot="template">
         <el-skeleton-item variant="image" style="width: 180px; height: 180px" />
         <div style="padding-top: 14px">
           <el-skeleton-item variant="text" style="width: 50%" />
@@ -261,9 +261,8 @@ export default {
     },
     showEditIcon() {
       return (
-        this.isLogin &&
-        this.profile.userId === this.creator.userId /* &&
-        this.info.specialType === 0 */
+        this.isLogin && this.profile.userId === this.creator.userId
+        /* &&this.info.specialType === 0 */
       )
     }
   },

@@ -38,7 +38,7 @@
         </el-radio-group>
       </div>
     </div>
-    <MvList :list="mvList" :disabled="disabled" @loadMore="load"></MvList>
+    <MvList :list="mvList" :disabled="disabled" @loadMore="load" />
   </div>
 </template>
 

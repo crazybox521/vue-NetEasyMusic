@@ -2,7 +2,7 @@
   <!-- 视频页首屏 -->
   <div class="video-view">
     <div class="router-list">
-      <TabMenu :menuList="routeList" mode="router"></TabMenu>
+      <TabMenu :menuList="routeList" mode="router"/>
     </div>
     <div class="video-wrap mtop-60">
       <transition name="el-fade-in">

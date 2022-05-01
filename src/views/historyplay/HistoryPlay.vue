@@ -16,7 +16,7 @@
       </button>
     </div>
     <div class="div-line mtop-20"></div>
-    <MusicList ref="listRef" :list="historyList"></MusicList>
+    <MusicList ref="listRef" :list="historyList" />
   </div>
 </template>
 

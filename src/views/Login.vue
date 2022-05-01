@@ -14,7 +14,7 @@
             {{ item }}
           </button>
         </div>
-        <component :is="currenComponent" ref="loginRef"></component>
+        <component :is="currenComponent" ref="loginRef" />
         <div class="form-btn-container" v-show="loginType !== 1">
           <div class="form-btn-wrap">
             <div class="btn-bg"></div>

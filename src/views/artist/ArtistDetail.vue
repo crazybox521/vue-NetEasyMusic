@@ -32,23 +32,20 @@
     <TabMenu
       :menuList="['专辑', 'MV', '歌手详情', '相似歌手']"
       @menuClick="handleClick"
-    ></TabMenu>
+    />
     <!-- 专辑 -->
     <div v-show="tabIndex === 0">
       <div style="height: 200px" v-if="isLoading" v-loading="isLoading">
         加载中...
       </div>
       <template v-else>
-        <TopFiftyList
-          :list="topList"
-          v-if="topList.length !== 0"
-        ></TopFiftyList>
+        <TopFiftyList :list="topList" v-if="topList.length !== 0" />
         <AlbumList
           v-for="(item, index) in albumList"
           :key="index"
           :albumInfo="item.album"
           :list="item.songs"
-        ></AlbumList>
+        />
       </template>
     </div>
     <!-- MV -->
@@ -57,7 +54,7 @@
         加载中...
       </div>
       <div v-else-if="mvList.length === 0">没有MV</div>
-      <MvList v-else :disabled="true" :list="mvList"></MvList>
+      <MvList v-else :disabled="true" :list="mvList" />
     </div>
     <!-- 歌手详情 -->
     <div v-show="tabIndex === 2">

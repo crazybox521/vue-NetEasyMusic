@@ -23,7 +23,7 @@
         </el-form-item>
       </el-form>
       <div class="edit-img-container">
-        <ImgCut btnText="编辑封面" :imgUrl="imgUrl" @upload="upload"></ImgCut>
+        <ImgCut btnText="编辑封面" :imgUrl="imgUrl" @upload="upload" />
       </div>
     </div>
     <div class="submit-wrap">
