@@ -273,7 +273,9 @@ export default {
       if (cancel) return
       let t = this.isSub ? 0 : 1
       const res = await subArtist(this.id, t)
-      if (res.code !== 200) return this.$message.error('操作失败')
+      console.log(res)
+      if (res.code !== 200)
+        return this.$message.error(res?.data?.blockText || '操作失败')
       this.$message.success(`${t === 1 ? '收藏' : '取消收藏'}成功`)
       this.getSubArtists()
     },

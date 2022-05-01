@@ -193,7 +193,7 @@ export default {
         t: this.followed ? 0 : 1
       }
       const res = await follow(followObj)
-      if (res.code !== 200) return this.$message.error('操作失败')
+      if (res.code !== 200) return this.$message.error(res?.data?.blockText || '操作失败')
       this.$message.success(this.followed ? '取关成功' : '关注成功')
       this.followed = !this.followed
     },

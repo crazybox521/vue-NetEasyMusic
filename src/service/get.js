@@ -5,7 +5,11 @@ axios.defaults.timeout = 10000
 /* 项目大部分为get请求，封装一个统一的处理错误、传递参数和url的get方法 */
 export default (url, params) => axios.get(url, { params })
     .then(res => res.data)
-    .catch(err => err)
+    .catch(err => {
+        console.warn(err.response.statusText)
+        /* 返回后端返回的错误信息，如果有的话 */
+        return err.response.data
+    })
 
 /* 下载 */
 export const downloadMusic = (url, fileName) => {

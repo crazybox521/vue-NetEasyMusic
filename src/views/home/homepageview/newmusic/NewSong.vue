@@ -17,11 +17,15 @@
           <i class="iconfont icon-bofang"></i>
           <span class="btn-text">播放全部</span>
         </button>
+        <button class="btn btn-white mleft-12" @click="openAddDialog">
+          <i class="el-icon-folder-add"></i>
+          <span class="btn-text">收藏全部</span>
+        </button>
       </div>
     </div>
     <div class="new-song-view">
       <el-skeleton v-show="isLoading" :rows="6" animated />
-      <InfoList v-show="!isLoading"  :list="list" @clickitem="playMusic">
+      <InfoList v-show="!isLoading" :list="list" @clickitem="playMusic">
         <template #index="{ index }">
           <div class="sub-index">
             {{ index > 8 ? index + 1 : '0' + (index + 1) }}
@@ -55,15 +59,18 @@
         </template>
       </InfoList>
     </div>
+    <AddMusicDialog ref="addDialog" :musicIdList="idList" />
   </div>
 </template>
 
 <script>
 import { getTopMusic } from '@/api/api_music.js'
 import InfoList from '@/components/list/InfoList'
+import AddMusicDialog from '@/components/addDialog/AddMusicDialog'
+
 import { mapState } from 'vuex'
 export default {
-  components: { InfoList },
+  components: { InfoList, AddMusicDialog },
   data() {
     return {
       // 华语:7 欧美:96 日本:8 韩国:16
@@ -85,6 +92,9 @@ export default {
       return function (areaId) {
         return this.type === areaId
       }
+    },
+    idList() {
+      return this.list.map((item) => item.id)
     }
   },
   methods: {
@@ -94,7 +104,7 @@ export default {
       const res = await getTopMusic(this.type)
       if (res.code !== 200) return
       let list = []
-      console.log(res);
+      console.log(res)
       res.data.forEach((item) => {
         list.push({
           id: item.id,
@@ -136,6 +146,11 @@ export default {
       this.$store.commit('setPlayState', true)
       this.getIndex(id)
     },
+    openAddDialog() {
+      if (this.idList.length === 0) return this.$message.error('歌曲列表为空')
+      /* 调用组件实例上的方法打开对话框 */
+      this.$refs['addDialog'].openDialog()
+    },
     toArtistDetail(id) {
       if (typeof id === 'number' && id !== 0)
         this.$router.push('/artistdetail/' + id)
@@ -165,11 +180,16 @@ export default {
 .area_active {
   font-weight: bold;
 }
+.btn-wrap {
+  display: flex;
+}
 @media screen and (max-width: 415px) {
   .btn-wrap {
-    width: 50px;
     .btn {
       margin-left: 2px;
+      i {
+        font-size: 12px;
+      }
     }
   }
 }
