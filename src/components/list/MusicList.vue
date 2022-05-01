@@ -152,7 +152,8 @@ export default {
       if (typeof id !== 'number') return
       let liked = this.isLiked(id)
       const res = await likeMusic(id, !liked)
-      if (res.code !== 200) return
+      console.log(res);
+      if (res.code !== 200) return this.$message.error(res.msg)
       this.$message.success(`${liked ? '取消喜欢' : '喜欢'}成功`)
       if (liked) {
         this.$store.commit('setLikeIdList', {

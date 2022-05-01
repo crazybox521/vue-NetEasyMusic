@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="new-music-view mtop-20">
-      <component :is="compo"></component>
+      <component :is="compo" />
     </div>
   </div>
 </template>

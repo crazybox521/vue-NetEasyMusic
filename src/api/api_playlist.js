@@ -34,3 +34,6 @@ export const setPlaylistSub = (id, t) => get('/playlist/subscribe', { id, t, tim
 
 /* login 更新歌单信息 */
 export const updateMyPlayList = ({ id, name, desc, tags }) => get('/playlist/update', { id, name, desc, tags })
+
+/* login 添加/删除歌曲到自己创建的歌单 op:del/add pid:playlistId  tracks:musicId 用逗号隔开的字符串*/
+export const MusicToPlaylist=({op,pid,tracks})=>get('/playlist/tracks',{op,pid,tracks})

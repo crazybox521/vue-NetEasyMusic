@@ -51,7 +51,7 @@
       :disabled="disabled"
       :type="listType"
       :list="videoList"
-    ></VideoList>
+    />
   </div>
 </template>
 

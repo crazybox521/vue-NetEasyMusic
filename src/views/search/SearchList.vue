@@ -165,7 +165,8 @@ export default {
   },
   watch: {
     '$route.params.key'(val) {
-      this.searchInfo.keywords = val
+      this.searchInfo.keywords = decodeURIComponent(val)
+      console.log(val,'---',this.searchInfo.keywords);
       this.search()
     },
     vIndex(val) {
@@ -175,7 +176,7 @@ export default {
     }
   },
   created() {
-    this.searchInfo.keywords = this.$route.params.key
+    this.searchInfo.keywords = decodeURIComponent(this.$route.params.key)
     this.search()
   },
   methods: {

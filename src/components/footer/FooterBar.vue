@@ -1,6 +1,6 @@
 <template>
   <div class="footer-bar">
-    <Player></Player>
+    <Player />
   </div>
 </template>
 

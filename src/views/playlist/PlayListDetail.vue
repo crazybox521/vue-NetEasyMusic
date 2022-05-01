@@ -261,9 +261,8 @@ export default {
     },
     showEditIcon() {
       return (
-        this.isLogin &&
-        this.profile.userId === this.creator.userId &&
-        this.info.specialType === 0
+        this.isLogin && this.profile.userId === this.creator.userId
+        /* &&this.info.specialType === 0 */
       )
     }
   },

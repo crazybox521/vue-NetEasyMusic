@@ -54,7 +54,7 @@
           :musicId="currenMusicId"
           lyricAlign="left"
           :width="400"
-        ></LyricWrap>
+        />
       </div>
     </div>
     <div class="comment-view mtop-60">
@@ -64,7 +64,7 @@
         :id="currenMusicId"
         scrollDom=".main-right"
         :scrollOffset="10"
-      ></Comment>
+      />
     </div>
   </div>
 </template>

@@ -45,7 +45,7 @@
             :fixedBox="option.fixedBox"
             :mode="option.mode"
             :canScale="option.canScale"
-          ></vueCropper>
+           />
         </div>
       </div>
       <div slot="footer" class="dialog-footer">

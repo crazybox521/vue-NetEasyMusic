@@ -60,16 +60,16 @@
       <TabMenu
         :menuList="['歌曲列表', '评论', '专辑详情']"
         @menuClick="handMenuClick"
-      ></TabMenu>
+      />
     </div>
-    <MusicList v-show="showtab === 1" ref="listRef" :list="list"></MusicList>
+    <MusicList v-show="showtab === 1" ref="listRef" :list="list" />
     <Comment
       v-show="showtab == 2"
       :active="showtab == 2"
       :type="3"
       :id="$route.params.id"
       scrollDom=".main-right"
-    ></Comment>
+    />
     <div v-show="showtab == 3">
       <div class="font-bold">专辑介绍</div>
       <div class="my-pre" v-if="description.lengtj !== 0">

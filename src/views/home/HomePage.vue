@@ -2,7 +2,7 @@
   <!-- 发现音乐页容器及导航 -->
   <div class="home-page">
     <div class="router-list">
-      <TabMenu :menuList="routeList" mode="router"></TabMenu>
+      <TabMenu :menuList="routeList" mode="router" />
     </div>
     <div class="home-page-view">
       <transition name="el-fade-in">

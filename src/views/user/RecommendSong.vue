@@ -14,30 +14,35 @@
       <button class="btn btn-red" @click="playAll">
         <i class="iconfont icon-bofang"></i> 播放全部
       </button>
-      <button class="btn btn-white mleft-12">
+      <button class="btn btn-white mleft-12" @click="openAddDialog">
         <i class="el-icon-folder-add"></i> 收藏全部
       </button>
     </div>
     <div class="div-line mtop-20"></div>
-    <MusicList v-if="showList" ref="listRef" :list="list"></MusicList>
+    <MusicList v-if="showList" ref="listRef" :list="list"/>
     <el-skeleton class="mtop-10" v-else :rows="8" animated />
+    <AddMusicDialog ref="addDialog" :musicIdList="idList" />
   </div>
 </template>
 
 <script>
 import MusicList from '@/components/list/MusicList.vue'
+import AddMusicDialog from '@/components/addDialog/AddMusicDialog'
 import { getRecommendSong } from '@/api/api_music'
 export default {
-  components: { MusicList },
+  components: { MusicList,AddMusicDialog },
   data() {
     return {
       list: [],
-      today: '1'
+      today: '1',
     }
   },
   computed: {
     showList() {
       return this.list.length !== 0 ? true : false
+    },
+    idList(){
+      return this.list.map(item =>item.id)
     }
   },
   created() {
@@ -59,6 +64,11 @@ export default {
       let day = new Date().getDate()
       day = day < 10 ? '0' + day : '' + day
       this.today = day
+    },
+    openAddDialog(){
+      if(this.idList.length===0) return this.$message.error('歌曲列表为空')
+      /* 调用组件实例上的方法打开对话框 */
+     this.$refs['addDialog'].openDialog()
     }
   }
 }

@@ -1,11 +1,11 @@
 <template>
-<!-- MV页 -->
+  <!-- MV页 -->
   <div class="music-video">
     <div class="mv-item">
       <div class="new-head">
         <div>
           <button
-            class="no-btn font-16 font-bold mtop-10 "
+            class="no-btn font-16 font-bold mtop-10"
             @click="toAllMv('new')"
           >
             最新MV <i class="el-icon-arrow-right"></i>
@@ -23,7 +23,7 @@
           </li>
         </ul>
       </div>
-      <MvList :list="newList"></MvList>
+      <MvList :list="newList" />
     </div>
     <div class="mv-item mtop-20">
       <div class="hot-head">
@@ -34,7 +34,7 @@
           网易出品 <i class="el-icon-arrow-right"></i>
         </button>
       </div>
-      <MvList :list="netEasyList"></MvList>
+      <MvList :list="netEasyList" />
     </div>
     <div class="mv-item mtop-20">
       <div class="new-head">
@@ -55,7 +55,7 @@
           </li>
         </ul>
       </div>
-      <MvTopList :list="topList"></MvTopList>
+      <MvTopList :list="topList" />
     </div>
   </div>
 </template>
@@ -187,13 +187,13 @@ export default {
   }
 }
 @media screen and(max-width:768px) {
- .cat-list{
-   overflow-x: scroll;
- }
+  .cat-list {
+    overflow-x: scroll;
+  }
 }
-@media screen and (max-width:415px) {
- .new-head{
-   display: block;
- }
+@media screen and (max-width: 415px) {
+  .new-head {
+    display: block;
+  }
 }
 </style>

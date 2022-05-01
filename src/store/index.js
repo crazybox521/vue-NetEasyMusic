@@ -38,6 +38,19 @@ const state = {
     /* 我的歌单，包括创建、收藏 */
     myPlayList: []
 }
+const getters = {
+    createPlaylist(state) {
+        // 创建的歌单
+        return state.isLogin ? state.myPlayList.filter((item) => item.userId === state.profile.userId) : []
+    },
+    subscribePlaylist(state) {
+        // 收藏的歌单
+        return state.isLogin ? state.myPlayList.filter((item) => item.userId !== state.profile.userId) : []
+    },
+    userId(state) {
+        return state.isLogin ? state.profile.userId : 0
+    }
+}
 const actions = {
     /* 私人FM */
     async personalFm({ commit, state, dispatch }, operate) {
@@ -257,7 +270,8 @@ const mutations = {
 const store = new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+    getters
 })
 
 export default store

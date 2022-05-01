@@ -15,7 +15,7 @@
         </button>
       </div>
     </div>
-    <MvTopList :list="list"></MvTopList>
+    <MvTopList :list="list" />
   </div>
 </template>
 
