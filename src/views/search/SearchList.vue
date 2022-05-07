@@ -120,6 +120,12 @@ export default {
     InfoList,
     MvList
   },
+  props:{
+    keywords:{
+      type:String,
+      required:true
+    }
+  },
   data() {
     return {
       /* 搜索分页信息 */
@@ -137,7 +143,7 @@ export default {
       /* 检索到的列表 */
       searchList: {
         musicList: [],
-        albumListL: [],
+        albumList: [],
         artistList: [],
         playList: [],
         userList: [],
@@ -164,7 +170,7 @@ export default {
     }
   },
   watch: {
-    '$route.params.key'(val) {
+    keywords(val) {
       this.searchInfo.keywords = decodeURIComponent(val)
       console.log(val,'---',this.searchInfo.keywords);
       this.search()
@@ -176,7 +182,7 @@ export default {
     }
   },
   created() {
-    this.searchInfo.keywords = decodeURIComponent(this.$route.params.key)
+    this.searchInfo.keywords = decodeURIComponent(this.keywords)
     this.search()
   },
   methods: {

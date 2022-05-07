@@ -18,18 +18,9 @@
     </div>
     <!-- 搜索框 -->
     <div class="search-input">
-      <el-input
-        style="width: 200px"
-        placeholder="搜索"
-        v-model="keywords"
-        @change="toSearch"
-        @input="handleInput"
-        ref="inputRef"
-        clearable
-        @focus="getHotSearch"
-        @blur="showInfoTip = false"
-        prefix-icon="el-icon-search"
-      ></el-input>
+      <el-input style="width: 200px" placeholder="搜索" v-model="keywords" @change="toSearch" @input="handleInput"
+        ref="inputRef" clearable @focus="getHotSearch" @blur="showInfoTip = false" prefix-icon="el-icon-search">
+      </el-input>
       <transition name="el-fade-in">
         <!-- 热搜及搜索建议 -->
         <div class="search-info_tip" v-show="showInfoTip">
@@ -42,36 +33,27 @@
                 </button>
               </div>
               <div class="his-wrap">
-                <button
-                  class="btn btn-white his-item font-12"
-                  v-for="val in historySearchList"
-                  :key="val"
-                  @click="clickHot(val)"
-                >
+                <button class="btn btn-white his-item font-12" v-for="val in historySearchList" :key="val"
+                  @click="clickHot(val)">
                   {{ val }}
                 </button>
               </div>
             </div>
             <div class="hot-search">
               <div class="hot-title font-14">热搜榜</div>
-              <div
-                class="hot-item pointer"
-                :class="{ 'top-item': index < 3 }"
-                v-for="(item, index) in hotList"
-                :key="index"
-                @click="clickHot(item.searchWord)"
-              >
+              <div class="hot-item pointer" :class="{ 'top-item': index < 3 }" v-for="(item, index) in hotList"
+                :key="index" @click="clickHot(item.searchWord)">
                 <div class="item-index">{{ index + 1 }}</div>
                 <div class="item-info">
                   <div class="key-word">
                     <span class="font-12 item-key">{{ item.searchWord }}</span>
                     <span style="color: #c2c1c1" class="font-12 mleft-10">{{
-                      item.score
+                        item.score
                     }}</span>
                   </div>
                   <div>
                     <span style="color: #999999" class="font-12">{{
-                      item.content
+                        item.content
                     }}</span>
                   </div>
                 </div>
@@ -82,55 +64,37 @@
             <div class="search-suggest">
               <div class="search-btn-wrap">
                 <button class="no-btn">
-                  搜“{{ keywords }}”相关的内容<i
-                    class="el-icon-arrow-right"
-                  ></i>
+                  搜“{{ keywords }}”相关的内容<i class="el-icon-arrow-right"></i>
                 </button>
               </div>
               <SuggestList v-if="showMusic">
                 <template #title>
-                  <i class="iconfont icon-yinle font-16"></i
-                  ><span class="mleft-10">单曲</span>
+                  <i class="iconfont icon-yinle font-16"></i><span class="mleft-10">单曲</span>
                 </template>
                 <template #item>
-                  <div
-                    v-for="s in suggestInfo.songs"
-                    :key="s.id"
-                    class="item pointer text-hidden"
-                    @click="playMusic(s.id)"
-                  >
+                  <div v-for="s in suggestInfo.songs" :key="s.id" class="item pointer text-hidden"
+                    @click="playMusic(s.id)">
                     {{ s.name }} - {{ s.artists[0].name }}
                   </div>
                 </template>
               </SuggestList>
               <SuggestList v-if="showAlbum">
                 <template #title>
-                  <i class="iconfont icon-zhuanji font-16"></i
-                  ><span class="mleft-10">专辑</span>
+                  <i class="iconfont icon-zhuanji font-16"></i><span class="mleft-10">专辑</span>
                 </template>
                 <template #item>
-                  <div
-                    v-for="al in suggestInfo.albums"
-                    :key="al.id"
-                    class="item pointer text-hidden"
-                    @click="toAlbumDetail(al.id)"
-                  >
+                  <div v-for="al in suggestInfo.albums" :key="al.id" class="item pointer text-hidden"
+                    @click="toAlbumDetail(al.id)">
                     {{ al.name }} - {{ al.artist.name }}
                   </div>
                 </template>
               </SuggestList>
               <SuggestList v-if="showArtist">
-                <template #title
-                  ><i class="el-icon-user font-16"></i
-                  ><span class="mleft-10">歌手</span>
+                <template #title><i class="el-icon-user font-16"></i><span class="mleft-10">歌手</span>
                 </template>
                 <template #item>
-                  <div
-                    v-for="ar in suggestInfo.artists"
-                    :key="ar.id"
-                    class="item pointer text-hidden"
-                    @click="toArtistDetail(ar.id)"
-                  >
+                  <div v-for="ar in suggestInfo.artists" :key="ar.id" class="item pointer text-hidden"
+                    @click="toArtistDetail(ar.id)">
                     {{ ar.name }}
                   </div>
                 </template>
@@ -138,16 +102,11 @@
 
               <SuggestList v-if="showPlaylist">
                 <template #title>
-                  <i class="iconfont icon-gedan font-16"></i
-                  ><span class="mleft-10">歌单</span>
+                  <i class="iconfont icon-gedan font-16"></i><span class="mleft-10">歌单</span>
                 </template>
                 <template #item>
-                  <div
-                    v-for="p in suggestInfo.playlists"
-                    :key="p.id"
-                    class="item pointer text-hidden"
-                    @click="toPlayListDetail(p.id)"
-                  >
+                  <div v-for="p in suggestInfo.playlists" :key="p.id" class="item pointer text-hidden"
+                    @click="toPlayListDetail(p.id)">
                     {{ p.name }}
                   </div>
                 </template>
@@ -158,17 +117,9 @@
       </transition>
     </div>
     <div class="avatar-wrap mleft-12 pointer" @click="loginView">
-      <el-avatar
-        :size="30"
-        icon="el-icon-user-solid"
-        :src="avatarUrl"
-      ></el-avatar>
+      <el-avatar :size="30" icon="el-icon-user-solid" :src="avatarUrl"></el-avatar>
     </div>
-    <div
-      class="login-info mleft-10 font-12 text-hidden"
-      :class="{ pointer: isLogin }"
-      @click="doLogout"
-    >
+    <div class="login-info mleft-10 font-12 text-hidden" :class="{ pointer: isLogin }" @click="doLogout">
       {{ name }}
     </div>
   </div>
@@ -222,9 +173,10 @@ export default {
     toSearch() {
       if (this.keywords == '') return
       this.$refs.inputRef.blur()
-      if (this.$route.path != '/search/' + this.keywords) {
+      console.log(this.$route.path);
+      if (this.$route.path != '/search?keywords=' + this.keywords) {
         console.log(encodeURIComponent(this.keywords));
-        this.$router.push(`/search/${encodeURIComponent (encodeURIComponent(this.keywords))}`)
+        this.$router.push(`/search?keywords=${encodeURIComponent(encodeURIComponent(this.keywords))}`)
       }
       this.setHistory(this.keywords)
     },
@@ -251,7 +203,7 @@ export default {
     /* 无输入时获取热搜及搜索记录，有输入时获取建议 */
     async getHotSearch() {
       this.showInfoTip = true
-      if(this.keywords!==''){
+      if (this.keywords !== '') {
         this.getSuggest(this.keywords)
       }
       if (this.hotList.length !== 0) return
@@ -361,19 +313,24 @@ export default {
   align-items: center;
   color: #ffffff;
 }
+
 .logo-wrap {
   height: 60px;
   line-height: 60px;
+
   .icon-logView {
     font-size: 48px;
   }
 }
+
 .menu-btn {
   display: none;
 }
+
 .btn-history {
   margin-left: 100px;
   display: flex;
+
   /* 圆按钮 */
   .btn-circle {
     display: flex;
@@ -390,10 +347,12 @@ export default {
     cursor: pointer;
   }
 }
+
 /* 搜索框容器 */
 .search-input {
   margin-left: 10px;
   position: relative;
+
   /* 搜索建议等的弹出层 */
   .search-info_tip {
     position: absolute;
@@ -411,46 +370,56 @@ export default {
     color: #000;
   }
 }
+
 /* 标题 */
 .hot-title {
   color: #666666;
   margin: 10px auto 10px 10px;
 }
+
 /* 热搜区域 */
 .hot-search {
   margin-top: 20px;
+
   .hot-item {
     height: 50px;
     display: flex;
     align-items: center;
+
     &:hover {
       background-color: #f2f2f2;
     }
+
     .item-index {
       color: #c2c2c2;
       width: 40px;
       text-align: center;
     }
   }
+
   .top-item {
     .item-index {
       color: #e13e3e;
     }
+
     .item-key {
       font-weight: bold;
     }
   }
 }
+
 /* 历史记录区域 */
 .his-wrap {
   padding: 0 18px;
   display: flex;
   flex-wrap: wrap;
+
   .his-item {
     margin: 0 10px 10px 0;
     height: 26px;
   }
 }
+
 /* 搜索建议顶部按钮区域 */
 .search-btn-wrap {
   height: 30px;
@@ -468,6 +437,7 @@ export default {
     width: 24px;
     height: 24px;
     position: relative;
+
     span {
       position: absolute;
       display: inline-block;
@@ -487,43 +457,53 @@ export default {
         height: 2px;
         background-color: #fff;
       }
+
       &::before {
         top: 8px;
         left: 0;
       }
+
       &::after {
         left: 0;
         top: 16px;
       }
     }
+
     .span_active {
       transition: transform 0.5s;
       transform: rotate(-45deg);
       top: 10px;
+
       &::before {
         opacity: 0;
       }
+
       &::after {
         transform: rotate(-90deg);
         top: 0px;
       }
     }
   }
+
   .btn-history {
     margin-left: 10px;
+
     .btn-circle {
       &:nth-child(2) {
         display: none;
       }
     }
   }
+
   .logo-wrap {
     display: none;
   }
+
   .search-input {
     margin: 0;
   }
 }
+
 @media screen and (max-width: 415px) {
   .search-input {
     .search-info_tip {
