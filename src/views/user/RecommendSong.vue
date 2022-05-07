@@ -27,7 +27,7 @@
 
 <script>
 import MusicList from '@/components/list/MusicList.vue'
-import AddMusicDialog from '@/components/addDialog/AddMusicDialog'
+import AddMusicDialog from '@/components/add-music-dialog/AddMusicDialog'
 import { getRecommendSong } from '@/api/api_music'
 export default {
   components: { MusicList,AddMusicDialog },

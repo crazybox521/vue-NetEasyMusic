@@ -80,8 +80,8 @@ const routes = [
                 ]
 
             },
-            { path: "search/:key", component: SearchList, props: true, meta: { title: '搜索结果' } },// 搜索展示页
-            { path: "playlistdetail/:id", component:  PlayListDetail, props: true, meta: { title: '歌单' } },//歌单详情页
+            { path: "search", component: SearchList, props: (route) => ({ keywords: route.query.keywords }), meta: { title: '搜索结果' } },// 搜索展示页
+            { path: "playlistdetail/:id", component: PlayListDetail, props: true, meta: { title: '歌单' } },//歌单详情页
             { path: "playlistedit/:id", component: PlayListEdit, props: true, meta: { check: true, title: '编辑歌单' } },//歌单编辑页
             { path: "artistdetail/:id", component: ArtistDetail, props: true, meta: { title: '歌手主页' } },//歌手详情页
             { path: "albumdetail/:id", component: AlbumDetail, props: true, meta: { title: '专辑' } },//专辑详情页

@@ -81,3 +81,5 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 - 歌手页取消使用ELTABS，改用项目中的TabMenu；修改封装的axios请求的get方法，改变处理错误的方式，使其能被async/await接收
 - 部分插件cdn加载有些慢，导致第一次加载白屏时间过长
 - 解决退出登录不退回首页的bug,部分页面图片懒加载
+- 新增了部分图片懒加载，去除部分不合理的骨架，更改了组件使用的规范性
+- 以及更改vue3 + ts版本重构中发现的bug

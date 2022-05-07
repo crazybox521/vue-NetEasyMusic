@@ -92,7 +92,7 @@ import {
   getAllCat
 } from '@/api/api_playlist.js'
 import { uploadPlayListImg } from '@/service/get.js'
-import ImgCut from '@/components/imgcut/ImgCut'
+import ImgCut from '@/components/img-cut/ImgCut'
 
 export default {
   components: {

@@ -66,7 +66,7 @@
 <script>
 import { getTopMusic } from '@/api/api_music.js'
 import InfoList from '@/components/list/InfoList'
-import AddMusicDialog from '@/components/addDialog/AddMusicDialog'
+import AddMusicDialog from '@/components/add-music-dialog/AddMusicDialog'
 
 import { mapState } from 'vuex'
 export default {
