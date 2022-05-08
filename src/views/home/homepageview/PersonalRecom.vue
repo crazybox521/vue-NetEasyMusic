@@ -71,7 +71,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['bannerHeight', 'isLogin', 'isPhone']),
+    ...mapState(['isLogin', 'isPhone']),
     bannerHeight() {
       return this.isPhone ? 80 : 200
     }

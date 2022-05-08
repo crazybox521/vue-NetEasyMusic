@@ -32,7 +32,7 @@ export const downloadMusic = (url, fileName) => {
         })
         .catch((err) => {
             console.log(err);
-            Vue.prototype.$message.$message.error('下载失败,请稍后重试!')
+            Vue.prototype.$message.error('下载失败,请稍后重试!')
         });
 
 }

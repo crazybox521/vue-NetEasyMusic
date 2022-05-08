@@ -4,11 +4,7 @@
     <div class="player-container">
       <!-- 歌曲信息 -->
       <div class="player-left">
-        <img
-          class="pointer img-border"
-          v-lazy="imgInfo.imgUrl"
-          @click="openPlayView"
-        />
+        <img class="pointer img-border" v-lazy="imgInfo.imgUrl" @click="openPlayView" />
         <div class="music-info">
           <div class="font-14 w-150 text-hidden">{{ imgInfo.name }}</div>
           <div class="font-12 w-100 text-hidden">{{ imgInfo.author }}</div>
@@ -21,11 +17,8 @@
           <button class="player-bar-btn" @click="changePlayModel">
             <i class="iconfont icon-liebiaoshunxu"></i>
           </button>
-          <button
-            class="player-bar-btn"
-            @click="lastMusic"
-            :class="{ 'player-bar-btn_disabled': playType === 'personalFm' }"
-          >
+          <button class="player-bar-btn" @click="lastMusic"
+            :class="{ 'player-bar-btn_disabled': playType === 'personalFm' }">
             <i class="iconfont icon-shangyishou"></i>
           </button>
           <button class="player-bar-btn" @click="pause">
@@ -37,44 +30,29 @@
           </button>
           <button class="player-bar-btn" @click="likeMusic">
             <i v-show="!isLiked" class="iconfont icon-aixin"></i>
-            <i
-              v-show="isLiked"
-              style="color: #ec4141"
-              class="iconfont icon-aixin1"
-            ></i>
+            <i v-show="isLiked" style="color: #ec4141" class="iconfont icon-aixin1"></i>
           </button>
         </div>
         <!-- 进度条 -->
         <div class="time-progress">
           <span class="font-12">{{
-            currenMusicInfo.currenTime | timeFormat
+              currenMusicInfo.currenTime | timeFormat
           }}</span>
-          <el-slider
-            v-model="curren"
-            class="timeSlider"
-            :show-tooltip="false"
-            @change="changeCurrenTime"
-            :disabled="musicUrl == ''"
-          ></el-slider>
+          <el-slider v-model="curren" class="timeSlider" :show-tooltip="false" @change="changeCurrenTime"
+            :disabled="musicUrl == ''"></el-slider>
           <span class="font-12">{{
-            (currenMusicInfo.totalTime / 1000) | timeFormat
+              (currenMusicInfo.totalTime / 1000) | timeFormat
           }}</span>
         </div>
       </div>
       <div class="btn-other">
         <!-- 音量按钮 -->
         <div class="dowmload">
-          <i
-            class="el-icon-download volume-icon mright-20 pointer"
-            @click="download"
-          ></i>
+          <i class="el-icon-download volume-icon mright-20 pointer" @click="download"></i>
         </div>
         <div class="volume">
           <div @click="isMute = !isMute">
-            <i
-              v-if="volume == 0"
-              class="iconfont icon-shengyinguanbi volume-icon pointer"
-            ></i>
+            <i v-if="volume == 0" class="iconfont icon-shengyinguanbi volume-icon pointer"></i>
             <i v-else class="iconfont icon-shengyin volume-icon pointer"></i>
           </div>
 
@@ -84,28 +62,16 @@
         </div>
         <!-- 当前播放列表 -->
         <div class="curren-list" v-show="playType !== 'personalFm'">
-          <i
-            @click="showList"
-            class="iconfont icon-liebiaoshunxu volume-icon pointer"
-          ></i>
+          <i @click="showList" class="iconfont icon-liebiaoshunxu volume-icon pointer"></i>
         </div>
       </div>
     </div>
     <!-- 播放界面 -->
-    <el-drawer
-      :visible.sync="PlayViewDrawer"
-      direction="btt"
-      size="100%"
-      :before-close="handleClose"
-      :show-close="false"
-      :modal="false"
-    >
+    <el-drawer :visible.sync="PlayViewDrawer" direction="btt" size="100%" :before-close="handleClose"
+      :show-close="false" :modal="false">
       <template #title>
         <div>
-          <i
-            class="el-icon-arrow-down pointer"
-            @click="PlayViewDrawer = false"
-          ></i>
+          <i class="el-icon-arrow-down pointer" @click="PlayViewDrawer = false"></i>
         </div>
       </template>
       <div class="play-view">
@@ -114,11 +80,7 @@
           <div class="music-author">{{ imgInfo.author }}</div>
           <div class="lyric-view">
             <div class="img-wrap">
-              <div
-                class="changzhen pointer"
-                :class="{ 'changzhen-active': isPlay }"
-                @click="pause"
-              >
+              <div class="changzhen pointer" :class="{ 'changzhen-active': isPlay }" @click="pause">
                 <img src="../../assets/img/changzhen.png" alt="" />
               </div>
               <div class="changpian" :class="{ 'changpian-active': isPlay }">
@@ -127,31 +89,16 @@
                 </div>
               </div>
             </div>
-            <LyricWrap
-              :currenTime="currenMusicInfo.currenTime"
-              :musicId="currenMusicId"
-            ></LyricWrap>
+            <LyricWrap :currenTime="currenMusicInfo.currenTime" :musicId="currenMusicId"></LyricWrap>
           </div>
         </div>
         <div class="comment-view mtop-50">
-          <Comment
-            :active="true"
-            :type="0"
-            @closePlayView="PlayViewDrawer = false"
-            :id="this.currenMusicId"
-            scrollDom=".player .el-drawer__body"
-            :scrollOffset="80"
-          ></Comment>
+          <Comment :active="true" :type="0" @closePlayView="PlayViewDrawer = false" :id="this.currenMusicId"
+            scrollDom=".player .el-drawer__body" :scrollOffset="80"></Comment>
         </div>
       </div>
     </el-drawer>
-    <audio
-      ref="audioRef"
-      :src="musicUrl"
-      autoplay
-      @ended="nextMusic"
-      @timeupdate="updateCurrenTime"
-    ></audio>
+    <audio ref="audioRef" :src="musicUrl" autoplay @ended="nextMusic" @timeupdate="updateCurrenTime"></audio>
   </div>
 </template>
 
@@ -344,7 +291,7 @@ export default {
           this.$store.commit('setPlayState', false)
           this.$message.error('已经是第一首了')
         }
-      } else if (this.type == 'personalFm') {
+      } else if (this.playType == 'personalFm') {
         return false
       }
     },
@@ -421,10 +368,12 @@ export default {
 
 <style lang="less" scoped>
 @import '@/assets/less/lessConfig.less';
+
 /* 整体 */
 .player {
   height: 100%;
 }
+
 .player-container {
   box-sizing: border-box;
   border-top: 1px solid #eeeeee;
@@ -435,21 +384,25 @@ export default {
   align-items: center;
   background-color: #ffffff;
 }
+
 /* 播放器左边的信息区 */
 .player-left {
   display: flex;
   align-items: center;
   position: relative;
   width: 300px;
+
   img {
     margin: 0 10px;
     height: 50px;
     width: 50px;
     border-radius: 8px;
   }
+
   &-info {
     margin: 10px;
     line-height: 20px;
+
     .info-title {
       div {
         display: inline-block;
@@ -457,6 +410,7 @@ export default {
     }
   }
 }
+
 /* 中间的按钮区 */
 .player-bar {
   width: 300px;
@@ -465,14 +419,17 @@ export default {
   align-items: center;
   margin-top: 6px;
   justify-content: space-around;
+
   &-btn {
     outline: none;
     border: none;
     background-color: #fff;
     cursor: pointer;
+
     .iconfont {
       font-size: 18px;
     }
+
     &:nth-child(3) {
       height: 32px;
       width: 32px;
@@ -481,25 +438,31 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+
       .iconfont {
         font-size: 16px;
       }
     }
+
     &:hover {
       color: red;
     }
+
     &:nth-child(3):hover {
       background-color: #e5e5e5;
     }
   }
+
   &-btn_disabled {
     cursor: not-allowed;
     color: #e5e5e5;
+
     &:hover {
       color: #e5e5e5;
     }
   }
 }
+
 /* 时间进度条 */
 .time-progress {
   line-height: 1;
@@ -507,23 +470,28 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .timeSlider {
   width: 460px;
   margin: 0 10px;
 }
+
 /* 右侧按钮 */
 .btn-other {
   display: flex;
   width: 300px;
   justify-content: flex-end;
 }
+
 /* 音量图标 */
 .volume-icon {
   font-size: 30px;
 }
+
 .volume {
   position: relative;
   margin-right: 20px;
+
   .volume-slider {
     display: none;
     position: absolute;
@@ -534,34 +502,43 @@ export default {
     border-radius: 5px;
     box-shadow: 0 0 10px #bbbbbb;
   }
+
   &:hover .volume-slider {
     display: block;
   }
 }
+
 /* 播放界面抽屉 */
 .play-view {
   width: 100%;
   margin: 0 auto;
   padding: 0 20%;
+
   .music-info {
     margin: 0 auto;
+
     .music-title {
       text-align: center;
       font-size: 30px;
     }
+
     .music-author {
       text-align: center;
     }
   }
+
   .comment-view {
     margin-bottom: 80px;
   }
 }
+
 /* 歌词及唱片区域 */
 .lyric-view {
   display: flex;
+
   .img-wrap {
     position: relative;
+
     .changzhen {
       position: absolute;
       top: -20px;
@@ -570,10 +547,12 @@ export default {
       transform-origin: 3px 3px;
       transition: all 0.5s;
       z-index: 20;
+
       img {
         width: 120px;
       }
     }
+
     .changpian {
       margin-top: 40px;
       width: 260px;
@@ -583,6 +562,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+
       .changpian-wrap {
         width: 240px;
         height: 240px;
@@ -592,6 +572,7 @@ export default {
         justify-content: center;
         align-items: center;
       }
+
       img {
         width: 180px;
         height: 180px;
@@ -600,39 +581,49 @@ export default {
     }
   }
 }
+
 .changzhen-active {
   transform: rotate(30deg);
 }
+
 .changpian-active {
   animation: circle 30s infinite linear;
 }
+
 @keyframes circle {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 @media screen and(max-width:768px) {
   .btn-other {
     display: none;
   }
+
   .time-progress {
     display: none;
   }
+
   .player-bar {
     margin-top: 0;
     width: 150px;
+
     &-btn {
       &:nth-child(1) {
         display: none;
       }
     }
   }
+
   .play-view {
     padding: 0 10px;
   }
+
   .img-wrap {
     display: none;
   }
