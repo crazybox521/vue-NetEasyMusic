@@ -35,4 +35,3 @@ export const follow = ({ id, t }) => get('/follow', { id, t, timestamp: Date.now
 
 /* 更新用户信息 */
 export const updateUserInfo = ({ gender, signature, city, nickname, birthday, province }) => get('/user/update', { gender, signature, city, nickname, birthday, province })
-

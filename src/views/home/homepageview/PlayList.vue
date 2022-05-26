@@ -30,20 +30,16 @@
           <div class="tag-list" v-for="(item, index) in allCats" :key="index">
             <div class="tag-title">
               <template v-if="index === 0">
-                <i class="iconfont icon-diqiuquanqiu font-24"></i
-                ><span class="mleft-6">语种</span>
+                <i class="iconfont icon-diqiuquanqiu font-24"></i><span class="mleft-6">语种</span>
               </template>
               <template v-if="index === 1">
-                <i class="iconfont icon-fengge font-24"></i
-                ><span class="mleft-6">风格</span>
+                <i class="iconfont icon-fengge font-24"></i><span class="mleft-6">风格</span>
               </template>
               <template v-if="index === 2">
-                <i class="iconfont icon-xiazai47 font-24"></i
-                ><span class="mleft-6">场景</span>
+                <i class="iconfont icon-xiazai47 font-24"></i><span class="mleft-6">场景</span>
               </template>
               <template v-if="index === 3">
-                <i class="iconfont icon-smiling font-24"></i
-                ><span class="mleft-6">情感</span>
+                <i class="iconfont icon-smiling font-24"></i><span class="mleft-6">情感</span>
               </template>
               <template v-if="index === 4">
                 <i class="iconfont icon-zhuti font-24"></i>
@@ -52,11 +48,7 @@
             </div>
             <ul>
               <li v-for="cat in item" :key="cat.name">
-                <button
-                  @click="changefromAll(cat.name)"
-                  class="no-btn"
-                  :class="{ isActive: cat.isActive }"
-                >
+                <button @click="changefromAll(cat.name)" class="no-btn" :class="{ isActive: cat.isActive }">
                   {{ cat.name }}
                 </button>
               </li>
@@ -66,25 +58,15 @@
       </div>
       <!-- 热门标签 -->
       <ul class="tag-ul">
-        <li
-          class="mright-10 font-12"
-          v-for="h in hotCats"
-          :key="h.id"
-          :class="{ isActive: h.isActive }"
-          @click="changeCat(h.name)"
-        >
+        <li class="mright-10 font-12" v-for="h in hotCats" :key="h.id" :class="{ isActive: h.isActive }"
+          @click="changeCat(h.name)">
           {{ h.name }}
         </li>
       </ul>
     </div>
     <!--  <el-skeleton class="mtop-10" v-show="isLoading" :rows="6" animated /> -->
-    <ImgList
-      v-loading="isLoading"
-      element-loading-text="拼命加载中"
-      @clickImg="toPlayListDetail"
-      :list="playList"
-      type="playlist"
-    >
+    <ImgList v-loading="isLoading" element-loading-text="拼命加载中" @clickImg="toPlayListDetail" :list="playList"
+      type="playlist">
       <template v-slot="{ item }">
         <div class="text-hidden">
           {{ item.name }}
@@ -93,14 +75,8 @@
     </ImgList>
 
     <div class="flex_center" style="width: 100%">
-      <el-pagination
-        @current-change="handleCurrentChange"
-        :current-page="pageInfo.currentPage"
-        :page-size="50"
-        layout="prev, pager, next"
-        :total="pageInfo.total"
-        background
-      >
+      <el-pagination @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-size="50"
+        layout="prev, pager, next" :total="pageInfo.total" background>
       </el-pagination>
     </div>
   </div>
@@ -263,6 +239,7 @@ export default {
   align-items: center;
   overflow: hidden;
   position: relative;
+
   .back-img {
     position: absolute;
     top: -400px;
@@ -279,18 +256,22 @@ export default {
     border-radius: 6px;
     z-index: 2;
   }
+
   .info-wrapper {
     z-index: 2;
   }
 }
+
 /* 精品歌单下的标签区 */
 .list-tag {
   display: flex;
   justify-content: space-between;
+
   .tag-ul {
     display: flex;
     align-items: center;
     height: 26px;
+
     li {
       height: 26px;
       line-height: 26px;
@@ -299,24 +280,29 @@ export default {
     }
   }
 }
+
 /* 标签激活的样式 */
 .isActive {
   background-color: #fdf5f5;
   color: #ec4141;
   border-radius: 13px;
 }
+
 /* 打开全部标签的按钮 */
 .tag-btn {
   color: #343434;
   border-color: #d8d8d8;
   padding: 0 30px;
+
   &:hover {
     background-color: #f2f2f2;
   }
 }
+
 /* 弹出层 */
 .layer-wrapper {
   position: relative;
+
   .layer {
     position: absolute;
     width: 720px;
@@ -328,26 +314,31 @@ export default {
     border-radius: 4px;
     font-size: 14px;
     min-height: 400px;
+
     .h-80 {
       line-height: 80px;
       padding-left: 20px;
     }
   }
 }
+
 /* 弹出层内的标签 */
 .tag-list {
   display: flex;
   line-height: 26px;
   margin: 10px 0px 30px 0;
+
   .tag-title {
     width: 120px;
     height: 26px;
     color: #cfcfcf;
     margin: 0 40px 0 20px;
+
     .iconfont {
       color: #b1b1b1;
     }
   }
+
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -360,6 +351,7 @@ export default {
       .no-btn {
         cursor: pointer;
         padding: 4px 10px;
+
         &:hover {
           color: #ec4141;
         }
@@ -367,19 +359,23 @@ export default {
     }
   }
 }
+
 @media screen and(max-width:768px) {
   .tag-btn {
     padding: 0 10px;
     white-space: nowrap;
   }
+
   .layer-wrapper {
     .layer {
       width: 90vw;
     }
   }
+
   .list-tag {
     .tag-ul {
       overflow-x: auto;
+
       li {
         height: 26px;
         line-height: 26px;

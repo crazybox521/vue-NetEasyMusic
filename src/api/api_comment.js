@@ -3,9 +3,6 @@ import get from '@/service/get'
 /* 获取热门评论 */
 export const getHotComment = (id, type, limit, offset, before) => get('/comment/hot', { id, type, limit, offset, before, timestamp: Date.now() })
 
-/* 获取专辑评论 */
-export const getAlbumComment = ({ id, limit, offset, before }) => get('/comment/album', { id, limit, offset, before, timestamp: Date.now() })
-
 /* login 发送删除评论 */
 export const sendComment = ({ t, type, id, content, commentId }) => get('/comment', { t, type, id, content, commentId, timestamp: Date.now() })
 

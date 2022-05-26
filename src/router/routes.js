@@ -61,10 +61,10 @@ const routes = [
                 path: 'videoview',
                 component: VideoView,
                 redirect: '/video',
-                meta: { check: true },
+                meta: { check: false },
                 children: [
-                    { path: '/video', component: Video, meta: { check: true, title: '视频' } },//video的首屏
-                    { path: '/mv', component: MusicVideo, meta: { check: true, title: 'MV' } }//mv的首屏
+                    { path: '/video', component: Video, meta: { check: false, title: '视频' } },//video的首屏
+                    { path: '/mv', component: MusicVideo, meta: { check: false, title: 'MV' } }//mv的首屏
                 ]
             },
             /* 收藏页 */
@@ -85,7 +85,7 @@ const routes = [
             { path: "playlistedit/:id", component: PlayListEdit, props: true, meta: { check: true, title: '编辑歌单' } },//歌单编辑页
             { path: "artistdetail/:id", component: ArtistDetail, props: true, meta: { title: '歌手主页' } },//歌手详情页
             { path: "albumdetail/:id", component: AlbumDetail, props: true, meta: { title: '专辑' } },//专辑详情页
-            { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: true, title: '视频' }, props: true },//视频和MV详情页 type v:video mv:mv
+            { path: "videodetail/:type/:id", component: VideoDetail, meta: { check: false, title: '视频' }, props: true },//视频和MV详情页 type v:video mv:mv
             { path: "userdetail/:id", component: UserDetail, props: true, meta: { title: '用户主页' } },//用户详情页
             { path: "useredit", component: UserEdit, meta: { check: true, title: '编辑个人信息' } },//用户编辑页
             { path: 'recomsongs', component: RecommendSong, meta: { check: true, title: '每日推荐' } },//每日推荐歌曲页
