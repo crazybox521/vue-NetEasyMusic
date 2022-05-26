@@ -47,5 +47,6 @@ new Vue({
       //Pc端进入不需要其他操作
       this.$store.commit('setIsPhone', false)
     }
+    this.$store.dispatch('getRealIP')
   }
 }).$mount('#app')

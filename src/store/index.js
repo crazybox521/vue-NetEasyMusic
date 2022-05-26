@@ -35,7 +35,8 @@ const state = {
     /* 播放类型 */
     playType: 'music',//music,personalFm
     /* 我的歌单，包括创建、收藏 */
-    myPlayList: []
+    myPlayList: [],
+    ip:''
 }
 const getters = {
     createPlaylist(state) {

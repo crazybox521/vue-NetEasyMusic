@@ -2,15 +2,21 @@ import axios from "axios";
 import Vue from 'vue'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.timeout = 10000
-axios.defaults.baseURL="http://47.102.159.133/"
+axios.defaults.baseURL = "http://47.102.159.133/"
+import store from "@/store";
 /* 项目大部分为get请求，封装一个统一的处理错误、传递参数和url的get方法 */
-export default (url, params) => axios.get(url, { params })
-    .then(res => res.data)
-    .catch(err => {
-        console.warn(err.response.statusText)
-        /* 返回后端返回的错误信息，如果有的话 */
-        return err.response.data
-    })
+export default (url, params) => {
+    if (!params) params = {}
+    if (store.state.ip)
+        params.realIP = store.state.ip
+    return axios.get(url, { params })
+        .then(res => res.data)
+        .catch(err => {
+            console.warn(err.response.statusText)
+            /* 返回后端返回的错误信息，如果有的话 */
+            return err.response.data
+        })
+}
 
 /* 下载 */
 export const downloadMusic = (url, fileName) => {
@@ -57,3 +63,5 @@ export const uploadAvatar = ({ imgSize, data, imgX = 0, imgY = 0 }) => axios({
     },
     data,
 }).then((res) => res.data).catch(err => err)
+
+export const getIp = () => axios.get('http://47.102.159.133:3333/real')

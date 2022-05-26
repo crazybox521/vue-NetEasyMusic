@@ -92,5 +92,8 @@ export default{
     },
     setMyPlayList(state, list) {
         state.myPlayList = list
+    },
+    setIp(state,ip){
+        state.ip =ip
     }
 }
