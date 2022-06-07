@@ -38,8 +38,7 @@
 </template>
 
 <script>
-import { uploadAvatar } from '@/service/get'
-import { updateUserInfo } from '@/api/api_user'
+import { updateUserInfo ,uploadAvatar} from '@/api/api_user'
 import ImgCut from '@/components/img-cut/ImgCut'
 import { mapState } from 'vuex'
 export default {

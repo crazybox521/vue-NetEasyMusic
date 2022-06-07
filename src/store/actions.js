@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { getPersonalFm, fmTrash, getLikeIdList } from '@/api/api_music'
 import { getAcount, logout, getUserPlayList } from '@/api/api_user'
-import { getIp } from "@/service/get";
+import { getIp } from "@/request";
 import router from '@/router/index'
 export default {
     /* 私人FM */

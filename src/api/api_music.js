@@ -1,4 +1,5 @@
-import get from '@/service/get'
+import { get, getBlob } from '@/request'
+import Vue from 'vue'
 
 /* 获取音乐url */
 export const getMusicUrl = (id) => get('/song/url', { id })
@@ -23,7 +24,30 @@ export const likeMusic = (id, like = true) => get('/like?', { id, like, timestam
 export const getTopMusic = (type) => get('/top/song', { type })
 
 /* login 私人FM */
-export const getPersonalFm = () => get('/personal_fm',{timestamp: Date.now()})
+export const getPersonalFm = () => get('/personal_fm', { timestamp: Date.now() })
 
 /* login 私人FM垃圾桶 */
-export const fmTrash =(id)=>get('/fm_trash',{id})
+export const fmTrash = (id) => get('/fm_trash', { id })
+
+/* 下载 */
+export const downloadMusic = (musicUrl, fileName) => {
+
+    getBlob(musicUrl)
+        .then((res) => {
+            let blob = res;
+            let href = URL.createObjectURL(blob);
+            console.log(href);
+            let a = document.createElement("a");
+            a.href = href;
+            a.download = fileName
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            Vue.prototype.$message.success(`${fileName}下载成功`)
+        })
+        .catch((err) => {
+            console.log(err);
+            Vue.prototype.$message.$message.error('下载失败,请稍后重试!')
+        });
+
+}

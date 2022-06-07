@@ -1,4 +1,4 @@
-import get from '@/service/get'
+import {get} from '@/request'
 /* 获取歌手列表 */
 export const getArtistList = ({ limit, offset, type, area, initial }) => get('/artist/list', { limit, offset, type, area, initial })
 
