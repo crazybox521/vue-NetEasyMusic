@@ -1,4 +1,4 @@
-import get from '@/service/get'
+import { get, post } from '@/request'
 /* login */
 
 /* 手机号密码登录 */
@@ -35,3 +35,12 @@ export const follow = ({ id, t }) => get('/follow', { id, t, timestamp: Date.now
 
 /* 更新用户信息 */
 export const updateUserInfo = ({ gender, signature, city, nickname, birthday, province }) => get('/user/update', { gender, signature, city, nickname, birthday, province })
+
+/* 更新用户头像 */
+export const uploadAvatar = ({ imgSize, data, imgX = 0, imgY = 0 }) => post(
+    `/avatar/upload?imgSize=${imgSize}&imgX=${imgX}&imgY=${imgY}&timestamp=${Date.now()}`,
+    data,
+    {
+        'Content-Type': 'multipart/form-data',
+    }
+)

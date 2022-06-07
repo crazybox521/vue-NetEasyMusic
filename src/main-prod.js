@@ -13,6 +13,17 @@ import './assets/css/btn.css'
 /* Vue.use(window['vue-cropper'].default) */
 import VueCropper from 'vue-cropper'
 Vue.use(VueCropper)
+import VueLazyload from 'vue-lazyload'
+ 
+// Vue.use(VueLazyload)
+ 
+// with options
+Vue.use(VueLazyload, {
+  preLoad: 1.9,
+  error: require('./assets/img/error.jpg'),
+  loading:  require('./assets/img/loading.gif'),
+  attempt: 3
+})
 
 Vue.config.productionTip = false
 
@@ -36,5 +47,6 @@ new Vue({
       //Pc端进入不需要其他操作
       this.$store.commit('setIsPhone', false)
     }
+    this.$store.dispatch('getRealIP')
   }
 }).$mount('#app')

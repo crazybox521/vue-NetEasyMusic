@@ -5,6 +5,7 @@
       <li v-for="(nl, index) in list" :key="index">
         <div class="mtop-10 img-wrap" @click="toMvDetail(nl.id)">
           <el-image
+
             style="width: 100%; height: auto; border-radius: 4px"
             :src="nl.cover + '?param=320y180'"
           >

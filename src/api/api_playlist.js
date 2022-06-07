@@ -1,4 +1,4 @@
-import get from '@/service/get'
+import { get, post } from '@/request'
 /* 获取推荐歌单 */
 export const getPersonalized = (limit) => get('/personalized', { limit })
 
@@ -36,4 +36,15 @@ export const setPlaylistSub = (id, t) => get('/playlist/subscribe', { id, t, tim
 export const updateMyPlayList = ({ id, name, desc, tags }) => get('/playlist/update', { id, name, desc, tags })
 
 /* login 添加/删除歌曲到自己创建的歌单 op:del/add pid:playlistId  tracks:musicId 用逗号隔开的字符串*/
-export const MusicToPlaylist=({op,pid,tracks})=>get('/playlist/tracks',{op,pid,tracks})
+export const MusicToPlaylist = ({ op, pid, tracks }) => get('/playlist/tracks', { op, pid, tracks })
+
+/* 上传歌单图片 */
+export const uploadPlayListImg = ({ id, imgSize, data, imgX = 0, imgY = 0 }) =>
+    post(
+
+        `/playlist/cover/update?id=${id}&imgSize=${imgSize}&imgX=${imgX}&imgY=${imgY}&timestamp=${Date.now()}`,
+        data,
+        {
+            'Content-Type': 'multipart/form-data',
+        },
+    )

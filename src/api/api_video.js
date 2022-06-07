@@ -1,4 +1,4 @@
-import get from '@/service/get'
+import {get} from '@/request'
 
 /* 视频分类 */
 export const getVideoAlltag = () => get('/video/group/list')

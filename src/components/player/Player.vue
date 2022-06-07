@@ -104,8 +104,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getMusicUrl, likeMusic } from '@/api/api_music'
-import { downloadMusic } from '@/service/get'
+import { getMusicUrl, likeMusic ,downloadMusic} from '@/api/api_music'
 import notifyMixin from '@/mixins/notifyMixin'
 import Comment from '@/components/comment/Comment.vue'
 import LyricWrap from './LyricWrap.vue'

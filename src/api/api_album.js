@@ -1,4 +1,4 @@
-import get from '@/service/get'
+import {get} from '@/request'
 
 /* 获取专辑内容 */
 export const getAlbumDetail = (id) => get('/album', { id })

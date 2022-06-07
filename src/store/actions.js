@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { getPersonalFm, fmTrash, getLikeIdList } from '@/api/api_music'
 import { getAcount, logout, getUserPlayList } from '@/api/api_user'
+import { getIp } from "@/request";
 import router from '@/router/index'
 export default {
     /* 私人FM */
@@ -117,5 +118,19 @@ export default {
         const res = await getUserPlayList(state.profile.userId)
         if (res.code !== 200) return
         commit('setMyPlayList', res.playlist)
+    },
+
+    async getRealIP({ commit }) {
+        try {
+            const res = await getIp()
+            let arr = res.data.match(/[0-9]+(\.[0-9]+)+/)
+            let ip =arr?arr[0]:''
+            console.log(ip);
+            commit('setIp', ip)
+        } catch (error) {
+            console.log(error);
+        }
+
+
     }
 }
