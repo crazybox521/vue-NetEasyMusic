@@ -295,4 +295,9 @@ export default {
     bottom: 51px;
   }
 }
+@media screen and (min-width: 769px){
+  .aside{
+    left: 0!important;
+  }
+}
 </style>
