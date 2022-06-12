@@ -54,7 +54,7 @@ export default {
         /* 获取登录信息 */
         const res = await getAcount()
         if (res.code !== 200) return
-        if (res.account !== null) {
+        if (res.profile !== null) {
             commit('setLoginInfo', res)
             commit('setIsLogin', true)
             dispatch('getMyPlayList')
