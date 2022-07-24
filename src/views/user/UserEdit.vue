@@ -17,17 +17,21 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="生日：">
-          <el-date-picker
-            v-model="form.birthday"
-            type="date"
-            placeholder="选择日期"
-            :editable="false"
-          >
+          <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" :editable="false">
           </el-date-picker>
         </el-form-item>
+        <!--         <el-form-item label="地区：">
+          <el-select v-model="form.provinceSelect" placeholder="请选择省份">
+            <el-option v-for="item in province" :label="item.name" :value="item.code" :key="item.code"></el-option>
+          </el-select>
+          <el-select v-model="form.citySelect" placeholder="请选择地区">
+            <el-option v-for="item in city" :label="item.name" :value="item.code" :key="item.code"></el-option>
+
+          </el-select>
+        </el-form-item> -->
       </el-form>
       <div class="edit-img-container">
-        <ImgCut btnText="修改头像" :imgUrl="imgUrl" @upload="upload"/>
+        <ImgCut btnText="修改头像" :imgUrl="imgUrl" @upload="upload" />
       </div>
     </div>
     <div class="submit-wrap">
@@ -38,7 +42,7 @@
 </template>
 
 <script>
-import { updateUserInfo ,uploadAvatar} from '@/api/api_user'
+import { updateUserInfo, uploadAvatar } from '@/api/api_user'
 import ImgCut from '@/components/img-cut/ImgCut'
 import { mapState } from 'vuex'
 export default {
@@ -52,8 +56,8 @@ export default {
         nickname: '',
         signature: '',
         gender: 0,
-        birthday: {}
-      }
+        birthday: {},
+      },
     }
   },
   computed: {
@@ -121,12 +125,15 @@ export default {
 <style lang="less" scoped>
 .edit-form {
   width: 500px;
+
   @media screen and (max-width: 415px) {
     width: auto;
   }
 }
+
 .edit-wrap {
   display: flex;
+
   @media screen and (max-width: 415px) {
     display: block;
   }
@@ -134,14 +141,18 @@ export default {
 
 .edit-img-container {
   margin-left: 30px;
+
   @media screen and (max-width: 415px) {
     margin: 0;
   }
 }
+
 .submit-wrap {
   margin: 10px 0 0 80px;
+
   .btn {
     width: 80px;
+
     &:nth-child(2) {
       margin-left: 20px;
     }
