@@ -103,6 +103,7 @@
 </template>
 
 <script>
+let imgUrl =require('@/assets/img/music.jpg')
 import { mapState } from 'vuex'
 import { getMusicUrl, likeMusic ,downloadMusic} from '@/api/api_music'
 import notifyMixin from '@/mixins/notifyMixin'
@@ -119,7 +120,7 @@ export default {
       isMute: false, //是否是静音
       imgInfo: {
         //img区域信息，图片，歌名，歌手
-        imgUrl: 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg',
+        imgUrl: imgUrl,
         name: '未知歌名',
         author: '未知歌手名'
       },
@@ -248,7 +249,7 @@ export default {
         this.imgInfo.imgUrl = this.musicList[this.currenIndex].al.picUrl
       } else {
         this.imgInfo.imgUrl =
-          'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
+          imgUrl
       }
       this.imgInfo.author = this.musicList[this.currenIndex].ar[0].name
       this.imgInfo.name = this.musicList[this.currenIndex].name

@@ -116,6 +116,7 @@ import {
 import { getAlbumDetail } from '@/api/api_album'
 import { mapState } from 'vuex'
 import TabMenu from '@/components/menu/TabMenu'
+let imgUrl =require('@/assets/img/music.jpg')
 export default {
   props: {
     id: {
@@ -151,7 +152,7 @@ export default {
     imgUrl() {
       return this.artistInfo.cover
         ? this.artistInfo.cover + '?param=300y300'
-        : 'https://cdn.jsdelivr.net/gh/crazybox521/blogImg/music.jpg'
+        : imgUrl
     },
     isSub() {
       return this.subList.findIndex((item) => item.id == this.id) !== -1
@@ -304,10 +305,12 @@ export default {
         this.getMv()
       } else if (index === 3) {
         console.log('same')
+        if(!this.isLogin) return this.$message.error('需要登录')
         if (this.sameArtistList.length !== 0) return
         this.isLoading = true
         this.getSame()
       }
+      
     },
     toArtistDetail(id) {
       if (typeof id === 'number') this.$router.push('/artistdetail/' + id)

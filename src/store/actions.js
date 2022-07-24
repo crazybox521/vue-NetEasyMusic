@@ -67,21 +67,11 @@ export default {
                 type: 'warning',
                 dangerouslyUseHTMLString: true,
                 message:
-                    `<section>部分功能需要登录后才能使用，如每日推荐等，点击头像可以登录,建议使用二维码登录</section>`,
-                duration: 0,
-                position: 'top-left'
-            })
-            Vue.prototype.$notify({
-                title: 'IP已被限制',
-                type: 'warning',
-                dangerouslyUseHTMLString: true,
-                message:
-                    `<section>服务器IP已被限制，未登录情况下已无法正常使用，登陆后正常，或将前后端项目都克隆到本地运行进行预览</section>
-                     <br/>
+                    `<section>部分功能需要登录后才能使用，如每日推荐等，点击头像可以登录,建议使用二维码登录</section>
+                    <br/>
                     <section>点击访问<a style="margin:0 10px" href="https://gitee.com/crazybox521/vue-music" target="_blank">Gitee</a><a href="https://github.com/crazybox521/vue-NetEasyMusic" target="_blank">GitHub</a></section>
                     `,
                 duration: 0,
-                offset:120,
                 position: 'top-left'
             })
         }

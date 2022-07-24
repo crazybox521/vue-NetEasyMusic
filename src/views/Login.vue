@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="login-container">
+    <div class="login-container" :style="{backgroundImage:'url('+picUrl+')'}">
       <div class="login-wrapper">
         <span class="title">{{ currenType }}登录</span>
         <div class="type-btn-wrap type-btn-wrap_active">
@@ -39,7 +39,8 @@ export default {
       isLoading: false,
       loginType: 1, //1:手机号 2:,
       loginComponent: ['LoginByPhone', 'LoginByQr', 'LoginByCode'],
-      type: ['手机号', '二维码', '验证码']
+      type: ['手机号', '二维码', '验证码'],
+      picUrl:require('@/assets/img/login.jpg')
     }
   },
   computed: {
@@ -78,7 +79,7 @@ export default {
   overflow: hidden;
   .login-container {
     min-height: 100vh;
-    background-image: url('https://cdn.jsdelivr.net/gh/crazybox521/blogImg/login.jpg');
+    
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
